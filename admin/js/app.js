@@ -22,12 +22,12 @@ app.config(function($stateProvider, $urlRouterProvider){
 				title: 'Home'
 			}
 		})
-		.state('kites', {
-			url: '/kites',
-			templateUrl: 'html/pages/kites.html',
-			controller: 'KitesController',
+		.state('products', {
+			url: '/products',
+			templateUrl: 'html/pages/products.html',
+			controller: 'ProductsController',
 			data: {
-				title: 'Kites'
+				title: 'Products'
 			}
 		})
 		.state('manufacturers', {

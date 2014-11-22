@@ -41,7 +41,7 @@ if ($result['admin'] !== '1') {
 		<script type="text/javascript" src="js/app.js"></script>
 		<script type="text/javascript" src="js/controllers/designs.js"></script>
 		<script type="text/javascript" src="js/controllers/home.js"></script>
-		<script type="text/javascript" src="js/controllers/kites.js"></script>
+		<script type="text/javascript" src="js/controllers/products.js"></script>
 		<script type="text/javascript" src="js/controllers/manufacturers.js"></script>
 		<script type="text/javascript" src="js/controllers/primary.js"></script>
 		<script type="text/javascript" src="js/controllers/retailers.js"></script>
@@ -54,7 +54,7 @@ if ($result['admin'] !== '1') {
 			<ul class="unstyled">	
 				<a ui-sref="home" ng-class="{active: 'home' === current_page.name}"><li>Dashboard</li></a>
 				<a ui-sref="designs" ng-class="{active: 'designs' === current_page.name}"><li>Designs</li></a>
-				<a ui-sref="kites" ng-class="{active: 'kites' === current_page.name}"><li>Kites</li></a>
+				<a ui-sref="products" ng-class="{active: 'products' === current_page.name}"><li>Products</li></a>
 				<a ui-sref="manufacturers" ng-class="{active: 'manufacturers' === current_page.name}"><li>Manufacturers</li></a>
 				<a ui-sref="retailers" ng-class="{active: 'retailers' === current_page.name}"><li>Retailers</li></a>
 				<a ui-sref="users" ng-class="{active: 'users' === current_page.name}"><li>Users</li></a>
