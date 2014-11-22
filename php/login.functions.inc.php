@@ -56,6 +56,18 @@ function checkLogin($u, $p){
 
         $actcode = $row['actcode'];
 
+        $query = sprintf("
+            SELECT email
+            FROM login
+            WHERE
+            loginid = '%s'
+            LIMIT 1;", mysql_real_escape_string($loginid));
+
+        $result = mysql_query($query);
+        $row = mysql_fetch_array($result);
+
+        $email = $row['email'];
+
         //update last login time
         $query = sprintf("update login set last_login = now() where loginid = '%s'",
             mysql_real_escape_string($loginid));
@@ -73,12 +85,14 @@ function checkLogin($u, $p){
         $_SESSION['username'] = $u;
         //save act code for use later
         $_SESSION['actcode'] = $actcode;
+        //save email
+        $_SESSION['email'] = $email;
         // Now we show the userbox
         return $response;
     }
 }
 
-function updateLogin($username, $userid, $actcode) {
+function updateLogin($username, $loginid, $actcode) {
     $response = (object) array();
     $response->valid = true;
 
@@ -96,7 +110,7 @@ function updateLogin($username, $userid, $actcode) {
         WHERE
         username = '%s' AND loginid = '%s'
         AND actcode = '%s'
-        LIMIT 1;", mysql_real_escape_string($username), mysql_real_escape_string($userid), mysql_real_escape_string($actcode));
+        LIMIT 1;", mysql_real_escape_string($username), mysql_real_escape_string($loginid), mysql_real_escape_string($actcode));
 
     $result = mysql_query($query);
 
@@ -106,10 +120,17 @@ function updateLogin($username, $userid, $actcode) {
         return $response;
     }
 
+    $row = mysql_fetch_array($result);
+    $email = $row['email'];
+
     $query = sprintf("update login set last_login = now() where loginid = '%s'",
-            mysql_real_escape_string($userid));
+            mysql_real_escape_string($loginid));
      
     if (mysql_query($query)) {
+        $_SESSION['username'] = $username;
+        $_SESSION['loginid'] = $loginid;
+        $_SESSION['actcode'] = $actcode;
+        $_SESSION['email'] = $email;
         return $response;
     } else {
         $response->valid = false;

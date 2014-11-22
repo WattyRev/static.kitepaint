@@ -17,7 +17,7 @@
 		<a ui-sref="create" ng-click="show = false">
 			<li>Create</li>
 		</a>
-		<a ui-sref="account" ng-click="show = false">
+		<a ui-sref="account" ng-click="show = false" ng-show="$root.user">
 			<li>Account</li>
 		</a>
 		<a ui-sref="contact" ng-click="show = false">

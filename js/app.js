@@ -22,6 +22,14 @@ app.config(function($stateProvider, $urlRouterProvider){
 				title: 'Activate'
 			}
 		})
+		.state('account', {
+			url: '/account',
+			templateUrl: 'html/pages/account.html',
+			controller: 'AccountController',
+			data: {
+				title: 'Account'
+			}
+		})
 		.state('changePassword', {
 			url: '/changePassword',
 			templateUrl: 'html/pages/changePassword.html',

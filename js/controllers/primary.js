@@ -148,11 +148,20 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 				console.log('success', data);
 				if (!data.logged_in){
 					root.user = false;
+					if (scope.current_page === 'account') {
+						state.go('home');
+					}
+				} else {
+					root.user = data;
 				}
 				root.$apply();
 			},
 			error: function(data) {
 				console.log('error', data);
+				root.user = false;
+				if (scope.current_page === 'account') {
+					state.go('home');
+				}
 			}
 		});
 	}

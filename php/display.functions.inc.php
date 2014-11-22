@@ -83,6 +83,7 @@ function return_user() {
     'username' => $_SESSION['username'],
     'user_id' => $_SESSION['loginid'],
     'actcode' => $_SESSION['actcode'],
+    'email' => $_SESSION['email'],
     'logged_in' => true
   );
   echo json_encode($content);
