@@ -1,1 +1,279 @@
 <h1>Manufacturers</h1>
+<div class="section">
+	<label>Search</label>
+	<select ng-model="search" ng-change="filter();">
+		<option value="id">ID</option>
+		<option value="created">Created</option>
+		<option selected value="name">Name</option>
+		<option value="contact_name">Contact Name</option>
+		<option value="contact_phone">Contact Phone</option>
+		<option value="contact_email">Contact Email</option>
+		<option value="billing_name">Billing Name</option>
+		<option value="billing_phone">Billing Phone</option>
+		<option value="billing_email">Billing Email</option>
+		<option value="billing_address">Billing Address</option>
+		<option value="billing_city">Billing City</option>
+		<option value="billing_state">Billing State</option>
+		<option value="billing_postal">Billing Postal</option>
+		<option value="billing_country">Billing Country</option>
+		<option value="website">Website</option>
+	</select>
+	<input type="text" ng-model="query" ng-change="filter();"/>
+</div>
+
+<div class="section">
+	<div class="block">
+		<button class="button" ng-click="add_manufacturer();">Add Manufacturer</button>
+	</div>
+
+	<p ng-show="loading">Loading...</p>
+
+	<table ng-show="display_manufacturers.length">
+		<thead>
+			<tr>
+				<th 
+					ng-click="sort_by('id')" 
+					ng-class="{sorted: sort.metric === 'id', ascending: sort.metric === 'id' && sort.ascending, descending: sort.metric === 'id' && !sort.ascending}"
+				>ID</th>
+				<th 
+					ng-click="sort_by('activated')"
+					ng-class="{sorted: sort.metric === 'activated', ascending: sort.metric === 'activated' && sort.ascending, descending: sort.metric === 'activated' && !sort.ascending}"
+				>Activated</th>
+				<th 
+					ng-click="sort_by('created')"
+					ng-class="{sorted: sort.metric === 'created', ascending: sort.metric === 'created' && sort.ascending, descending: sort.metric === 'created' && !sort.ascending}"
+				>Created</th>
+				<th 
+					ng-click="sort_by('name')"
+					ng-class="{sorted: sort.metric === 'name', ascending: sort.metric === 'name' && sort.ascending, descending: sort.metric === 'name' && !sort.ascending}"
+				>Name</th>
+				<th 
+					ng-click="sort_by('contact_name')"
+					ng-class="{sorted: sort.metric === 'contact_name', ascending: sort.metric === 'contact_name' && sort.ascending, descending: sort.metric === 'contact_name' && !sort.ascending}"
+				>Contact Name</th>
+				<th 
+					ng-click="sort_by('contact_phone')"
+					ng-class="{sorted: sort.metric === 'contact_phone', ascending: sort.metric === 'contact_phone' && sort.ascending, descending: sort.metric === 'contact_phone' && !sort.ascending}"
+				>Contact Phone</th>
+				<th 
+					ng-click="sort_by('contact_email')"
+					ng-class="{sorted: sort.metric === 'contact_email', ascending: sort.metric === 'contact_email' && sort.ascending, descending: sort.metric === 'contact_email' && !sort.ascending}"
+				>Contact Email</th>
+				<th 
+					ng-click="sort_by('billing_name')"
+					ng-class="{sorted: sort.metric === 'billing_name', ascending: sort.metric === 'billing_name' && sort.ascending, descending: sort.metric === 'billing_name' && !sort.ascending}"
+				>Billing Name</th>
+				<th 
+					ng-click="sort_by('billing_phone')"
+					ng-class="{sorted: sort.metric === 'billing_phone', ascending: sort.metric === 'billing_phone' && sort.ascending, descending: sort.metric === 'billing_phone' && !sort.ascending}"
+				>Billing Phone</th>
+				<th 
+					ng-click="sort_by('billing_email')"
+					ng-class="{sorted: sort.metric === 'billing_email', ascending: sort.metric === 'billing_email' && sort.ascending, descending: sort.metric === 'billing_email' && !sort.ascending}"
+				>Billing Email</th>
+				<th 
+					ng-click="sort_by('billing_address')"
+					ng-class="{sorted: sort.metric === 'billing_address', ascending: sort.metric === 'billing_address' && sort.ascending, descending: sort.metric === 'billing_address' && !sort.ascending}"
+				>Billing Address</th>
+				<th 
+					ng-click="sort_by('billing_city')"
+					ng-class="{sorted: sort.metric === 'billing_city', ascending: sort.metric === 'billing_city' && sort.ascending, descending: sort.metric === 'billing_city' && !sort.ascending}"
+				>Billing City</th>
+				<th 
+					ng-click="sort_by('billing_state')"
+					ng-class="{sorted: sort.metric === 'billing_state', ascending: sort.metric === 'billing_state' && sort.ascending, descending: sort.metric === 'billing_state' && !sort.ascending}"
+				>Billing State</th>
+				<th 
+					ng-click="sort_by('billing_postal')"
+					ng-class="{sorted: sort.metric === 'billing_postal', ascending: sort.metric === 'billing_postal' && sort.ascending, descending: sort.metric === 'billing_postal' && !sort.ascending}"
+				>Billing Postal</th>
+				<th 
+					ng-click="sort_by('billing_country')"
+					ng-class="{sorted: sort.metric === 'billing_country', ascending: sort.metric === 'billing_country' && sort.ascending, descending: sort.metric === 'billing_country' && !sort.ascending}"
+				>Billing Country</th>
+				<th 
+					ng-click="sort_by('invoice_amount')"
+					ng-class="{sorted: sort.metric === 'invoice_amount', ascending: sort.metric === 'invoice_amount' && sort.ascending, descending: sort.metric === 'invoice_amount' && !sort.ascending}"
+				>Invoice Amount</th>
+				<th 
+					ng-click="sort_by('last_paid')"
+					ng-class="{sorted: sort.metric === 'last_paid', ascending: sort.metric === 'last_paid' && sort.ascending, descending: sort.metric === 'last_paid' && !sort.ascending}"
+				>Last Paid</th>
+				<th>Products</th>
+				<th>Logo</th>
+				<th 
+					ng-click="sort_by('website')"
+					ng-class="{sorted: sort.metric === 'website', ascending: sort.metric === 'website' && sort.ascending, descending: sort.metric === 'website' && !sort.ascending}"
+				>Website</th>
+			</tr>
+		</thead>
+		<tbody>	
+			<tr ng-repeat="manufacturer in manufacturers" ng-click="edit_manufacturer(manufacturer)">
+				<td>{{manufacturer.id}}</td>
+				<td>{{manufacturer.activated ? 'Yes' : 'No'}}</td>
+				<td>{{manufacturer.created}}</td>
+				<td>{{manufacturer.name}}</td>
+				<td>{{manufacturer.contact_name}}</td>
+				<td>{{manufacturer.contact_phone}}</td>
+				<td><a href="mailto:{{manufacturer.contact_email}}">{{manufacturer.contact_email}}</a></td>
+				<td>{{manufacturer.billing_name}}</td>
+				<td>{{manufacturer.billing_phone}}</td>
+				<td><a href="mailto:{{manufacturer.billing_email}}">{{manufacturer.billing_email}}</a></td>
+				<td class="nowrap">{{manufacturer.billing_address}}</td>
+				<td>{{manufacturer.billing_city}}</td>
+				<td>{{manufacturer.billing_state}}</td>
+				<td>{{manufacturer.billing_postal}}</td>
+				<td>{{manufacturer.billing_country}}</td>
+				<td>{{manufacturer.invoice_amount}}</td>
+				<td>{{manufacturer.last_paid}}</td>
+				<td>{{manufacturer.products}}</td>
+				<td>{{manufacturer.logo}}</td>
+				<td>{{manufacturer.website}}</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<div class="block">
+		<button class="button" ng-show="!loading && display_manufacturers.length < manufacturers.length" ng-click="show_more();">Show More</button>
+	</div>
+
+	<!-- create/edit -->
+	<div class="lightbox" ng-show="show_edit">
+		<div class="content">
+			<a ng-click="show_edit = false" class="close right">Close</a>
+			<h2 ng-show="editing.new">Creating New Manufacturer</h2>
+			<h2 ng-hide="editing.new">Editing {{editing.name}}</h2>
+			<form ng-submit="save_manufacturer(editing)">
+				<div class="half" ng-hide="editing.new">
+					<label for="input-activated">Activated</label>
+					<input 
+						type="checkbox" 
+						id="input-activated"
+						ng-model="editing.activated" 
+					>
+				</div>
+				<div class="half left">
+					<label for="input-name">Name</label>
+					<input 
+						type="text" 
+						id="input-name"
+						ng-model="editing.name"
+						required 
+					>
+				</div>
+				<div class="half right">
+					<label for="input-contact-name">Contact Name</label>
+					<input 
+						type="text" 
+						id="input-contact-name"
+						ng-model="editing.contact_name"
+						required 
+					>
+				</div>
+				<div class="half left">
+					<label for="input-contact-phone">Contact Phone</label>
+					<input 
+						type="tel" 
+						id="input-contact-phone"
+						ng-model="editing.contact_phone" 
+					>
+				</div>
+				<div class="half right">
+					<label for="input-contact-email">Contact Email</label>
+					<input 
+						type="email" 
+						id="input-contact-email"
+						ng-model="editing.contact_email"
+						required 
+					>
+				</div>
+				<div class="half left">
+					<label for="input-billing-name">Billing Name</label>
+					<input 
+						type="text" 
+						id="input-billing-name"
+						ng-model="editing.billing_name" 
+					>
+				</div>
+				<div class="half right">
+					<label for="input-billing-phone">Billing Phone</label>
+					<input 
+						type="tel" 
+						id="input-billing-phone"
+						ng-model="editing.billing_phone" 
+					>
+				</div>
+				<div class="half left">
+					<label for="input-billing-email">Billing Email</label>
+					<input 
+						type="email" 
+						id="input-billing-email"
+						ng-model="editing.billing_email" 
+					>
+				</div>
+				<div class="half right">
+					<label for="input-billing-address">Billing Address</label>
+					<input 
+						type="text" 
+						id="input-billing-address"
+						ng-model="editing.billing_address" 
+					>
+				</div>
+				<div class="half left">
+					<label for="input-billing-city">Billing City</label>
+					<input 
+						type="text" 
+						id="input-billing-city"
+						ng-model="editing.billing_city" 
+					>
+				</div>
+				<div class="half right">
+					<label for="input-billing-state">Billing State</label>
+					<input 
+						type="text" 
+						id="input-billing-state"
+						ng-model="editing.billing_state" 
+					>
+				</div>
+				<div class="half left">
+					<label for="input-billing-country">Billing Country</label>
+					<input 
+						type="text" 
+						id="input-billing-country"
+						ng-model="editing.billing_country" 
+					>
+				</div>
+				<div class="half right">
+					<label for="input-invoice-amount">Invoice Amount</label>
+					<input 
+						type="number" 
+						id="input-invoice-amount"
+						ng-model="editing.invoice_amount" 
+					>
+				</div>
+				<div class="half left">
+					<label for="input-logo">Logo</label>
+					<input 
+						type="text" 
+						id="input-logo"
+						ng-model="editing.logo" 
+					>
+				</div>
+				<div class="half right">
+					<label for="input-website">Website</label>
+					<input 
+						type="url" 
+						id="input-website"
+						ng-model="editing.website" 
+					>
+				</div>
+				<div class="clearfix"></div>
+				<input type="submit" value="Save" class="button"  tabindex="4"/>
+				<div class="clearfix"></div>
+			</form>
+			<button class="button red right" ng-click="delete_manufacturer(editing)" ng-hide="editing.new">Delete</button>
+			<button class="button right" ng-click="update_paid(editing)" ng-hide="editing.new">Invoice Paid</button>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>

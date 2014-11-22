@@ -45,7 +45,7 @@
 	button {
 		cursor:pointer;
 	}
-	input[type="text"], input[type="password"], input[type="email"] {
+	input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="number"], input[type="url"] {
 		background:#fff;
 		border: 1px solid #cdcdcd;
 		padding: 10px;
@@ -201,11 +201,13 @@
 	.lightbox .content {
 		width: 100%;
 		max-width: 500px;
-		margin: 20% auto;
+		margin: 50px auto;
 		border: 1px solid #cdcdcd;
 		border-radius:10px;
 		background: #fff;
 		padding: 15px;
+		max-height:90%;
+		overflow:auto;
 	}
 	.lightbox h2 {
 		margin: 0 0 10px;
@@ -223,6 +225,9 @@
 		width: 46%;
 		padding: 2%;
 	}
+	.nowrap {
+		white-space: nowrap;
+	}
 
 /* SIDEBAR */
 	aside {
@@ -233,6 +238,7 @@
 		margin: 0;
 		background: #f1f1f1;
 		border-right: 1px solid #cdcdcd;
+		z-index:20;
 	}
 	aside a {
 		color:#444;
