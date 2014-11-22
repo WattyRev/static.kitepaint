@@ -1,0 +1,31 @@
+<button class="menu-button" ng-click="show = true">
+	<svg viewBox="0 0 811.628 600">
+		<line fill="none" stroke="#231F20" stroke-width="78" stroke-linecap="round" stroke-miterlimit="10" x1="98.843" y1="93.924" x2="718.612" y2="92.761"/>
+		<line fill="none" stroke="#231F20" stroke-width="78" stroke-linecap="round" stroke-miterlimit="10" x1="98.843" y1="292.715" x2="718.612" y2="291.552"/>
+		<line fill="none" stroke="#231F20" stroke-width="78" stroke-linecap="round" stroke-miterlimit="10" x1="98.843" y1="491.506" x2="718.612" y2="490.343"/>
+	</svg>
+</button>
+<div id="menu" ng-show="show">
+	<button class="hide" ng-click="show = false">Close ></button>
+	<ul class="pages">
+		<a ui-sref="home" ng-click="show = false">
+			<li>Home</li>
+		</a>
+		<a ui-sref="about" ng-click="show = false">
+			<li>About</li>
+		</a>
+		<a ui-sref="create" ng-click="show = false">
+			<li>Create</li>
+		</a>
+		<a ui-sref="account" ng-click="show = false">
+			<li>Account</li>
+		</a>
+		<a ui-sref="contact" ng-click="show = false">
+			<li>Contact</li>
+		</a>
+	</ul>
+	<ul class="user" ng-show="$root.user">
+		<a ui-sref="home" ng-click="$root.logout(); show = false;"><li>Sign Out</li>
+	</ul>
+</div>
+<div class="overlay" ng-show="show" ng-click="show = false"></div>
