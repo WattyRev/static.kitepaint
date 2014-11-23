@@ -1,1 +1,11 @@
 <h1>Create a New Design</h1>
+<p>Select a kite that you want to design.</p>
+<label for="query">Search</label>
+<select>
+	<option value="name">Name</option>
+	<option value="manufacturer">Manufacturer</option>
+</select>
+<input id="query" />
+<ul>
+	<li ng-repeat="product in products"><a ui-sref="edit({type: 'new', id: product.id})">{{product.name}}</a></li>
+</ul>

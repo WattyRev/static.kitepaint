@@ -55,7 +55,7 @@ app.config(function($stateProvider, $urlRouterProvider){
 			}
 		})
 		.state('edit', {
-			url: '/edit',
+			url: '/edit/:type?id',
 			templateUrl: 'html/pages/edit.html',
 			controller: 'EditController',
 			data: {
@@ -69,5 +69,5 @@ app.config(function($stateProvider, $urlRouterProvider){
 			data: {
 				title: ''
 			}
-		})
+		});
 });
