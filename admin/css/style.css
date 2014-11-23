@@ -45,7 +45,7 @@
 	button {
 		cursor:pointer;
 	}
-	input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="number"], input[type="url"] {
+	input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="number"], input[type="url"], textarea {
 		background:#fff;
 		border: 1px solid #cdcdcd;
 		padding: 10px;
@@ -262,6 +262,14 @@
 	main {
 		margin-left:220px;
 		padding:30px;
+	}
+
+	.edit-colors .button.remove, .edit-variations .button.remove {
+		margin-top:18px;
+		margin-bottom:0px;
+	}
+	.edit-colors .half, .edit-variations .half {
+		width:43%!important;
 	}
 
 /* FONTS */

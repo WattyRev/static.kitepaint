@@ -1,7 +1,9 @@
 <?php
 require_once "header.php"; 
 if ($_GET){
-	if (isset($_GET['activated'])) {
+	if (isset($_GET['id'])) {
+		$query = sprintf("SELECT * FROM products WHERE id = " . $_GET['id']);
+	} else if (isset($_GET['activated'])) {
 		$query = sprintf("SELECT * FROM products WHERE activated = 1");
 	} else {
 		$query = sprintf("SELECT * FROM products");
@@ -14,8 +16,6 @@ if ($_GET){
 	for ($i = 0; $i < $num; $i++) {
 		$products = (object) array();
 		$products->id = mysql_result($result,$i,"id");
-		$products->activated = mysql_result($result,$i,"activated") === '1' ? true : false;
-		$products->created = date("m/d/Y", strtotime(mysql_result($result,$i,"created")));
 		$products->name = mysql_result($result,$i,"name");
 		$products->manufacturer = mysql_result($result,$i,"manufacturer");
 		$products->url = mysql_result($result,$i,"url");

@@ -47,7 +47,7 @@ app.controller('UsersController', ['$scope', '$rootScope', function(scope, root)
 			}
 		});
 		scope.sort_users();
-	}
+	};
 
 	//Put the first X num of users into the displayed table
 	scope.update_users = function() {
@@ -55,14 +55,14 @@ app.controller('UsersController', ['$scope', '$rootScope', function(scope, root)
 		for(var i = 0; i < scope.num_display && i < scope.filtered_users.length; i++) {
 			scope.display_users.push(scope.filtered_users[i]);
 		}
-	}
+	};
 
 	//sort array of users
 	scope.sort_users = function() {
 		scope.filtered_users.sort(function(a,b) {
 			var metric = scope.sort.metric;
 			var a_ = a[metric],
-				b_ = b[metric]
+				b_ = b[metric];
 			if (metric === 'create_time' || metric === 'last_login'){
 				a_ = new Date(a_);
 				b_ = new Date(b_);
@@ -72,17 +72,17 @@ app.controller('UsersController', ['$scope', '$rootScope', function(scope, root)
 					return -1;
 				if (a_ > b_)
 					return 1;
-				return 0
+				return 0;
 			} else {
 				if (a_ < b_)
 					return 1;
 				if (a_ > b_)
 					return -1;
-				return 0
+				return 0;
 			}
 		});
 		scope.update_users();
-	}
+	};
 
 	//set sorting parameters
 	scope.sort_by = function(metric) {
@@ -97,27 +97,27 @@ app.controller('UsersController', ['$scope', '$rootScope', function(scope, root)
 			}
 		}
 		scope.sort_users();
-	}
+	};
 
 	//show more rows of users
 	scope.show_more = function() {
 		scope.num_display += 20;
 		scope.sort_users();
-	}
+	};
 
 	//set editing user and show edit user lightbox
 	scope.edit_user = function(user) {
 		scope.editing = JSON.parse(JSON.stringify(user));
 		scope.show_edit = true;
-	}
+	};
 
 	//show blank edit window
 	scope.add_user = function() {
 		scope.editing = {
 			new: true
-		}
+		};
 		scope.show_edit = true;
-	}
+	};
 
 	//perform ajax post to save user data
 	scope.save_user = function(user) {
@@ -138,7 +138,7 @@ app.controller('UsersController', ['$scope', '$rootScope', function(scope, root)
 				alert('Could not save user');
 			}
 		});
-	}
+	};
 
 	//delete a user
 	scope.delete_user = function(user) {
@@ -162,7 +162,7 @@ app.controller('UsersController', ['$scope', '$rootScope', function(scope, root)
 				}
 			});
 		}
-	}
+	};
 
 	//trigger reset password
 	scope.reset_password = function(user) {
@@ -192,5 +192,5 @@ app.controller('UsersController', ['$scope', '$rootScope', function(scope, root)
 				alert('Could not reset password');
 			}
 		});
-	}
+	};
 }]);

@@ -1,1 +1,159 @@
 <h1>Products</h1>
+<div class="section">
+	<label>Search</label>
+	<select ng-model="search" ng-change="filter();">
+		<option value="id">ID</option>
+		<option selected value="name">Name</option>
+		<option value="manufacturer">Manufacturer</option>
+		<option value="created">Created</option>
+		<option value="url">url</option>
+	</select>
+	<input type="text" ng-model="query" ng-change="filter();"/>
+</div>
+
+<div class="section">
+	<div class="block">
+		<button class="button" ng-click="add_product();">Add Product</button>
+	</div>
+
+	<p ng-show="loading">Loading...</p>
+
+	<table ng-show="display_products.length">
+		<thead>
+			<tr>
+				<th 
+					ng-click="sort_by('id')" 
+					ng-class="{sorted: sort.metric === 'id', ascending: sort.metric === 'id' && sort.ascending, descending: sort.metric === 'id' && !sort.ascending}"
+				>ID</th>
+				<th 
+					ng-click="sort_by('name')"
+					ng-class="{sorted: sort.metric === 'name', ascending: sort.metric === 'name' && sort.ascending, descending: sort.metric === 'name' && !sort.ascending}"
+				>Name</th>
+				<th 
+					ng-click="sort_by('manufacturer')"
+					ng-class="{sorted: sort.metric === 'manufacturer', ascending: sort.metric === 'manufacturer' && sort.ascending, descending: sort.metric === 'manufacturer' && !sort.ascending}"
+				>Manufacturer</th>
+				<th 
+					ng-click="sort_by('created')"
+					ng-class="{sorted: sort.metric === 'created', ascending: sort.metric === 'created' && sort.ascending, descending: sort.metric === 'created' && !sort.ascending}"
+				>Created</th>
+				<th 
+					ng-click="sort_by('url')"
+					ng-class="{sorted: sort.metric === 'url', ascending: sort.metric === 'url' && sort.ascending, descending: sort.metric === 'url' && !sort.ascending}"
+				>URL</th>
+				<th>Activated</th>
+			</tr>
+		</thead>
+		<tbody>	
+			<tr ng-repeat="product in display_products" ng-click="edit_product(product)">
+				<td>{{product.id}}</td>
+				<td>{{product.name}}</td>
+				<td>{{product.manufacturer}}</td>
+				<td>{{product.created}}</td>
+				<td>{{product.url}}</td>
+				<td>{{product.activated ? 'Yes' : 'No'}}</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<div class="block">
+		<button class="button" ng-show="!loading && display_products.length < products.length" ng-click="show_more();">Show More</button>
+	</div>
+
+	<!-- create/edit -->
+	<div class="lightbox" ng-show="show_edit">
+		<div class="content">
+			<a ng-click="show_edit = false" class="close right">Close</a>
+			<h2 ng-show="editing.new">Creating New product</h2>
+			<h2 ng-hide="editing.new">Editing {{editing.name}}</h2>
+			<form ng-submit="save_product(editing)">
+				<div class="half" ng-hide="editing.new">
+					<label for="input-activated">Activated</label>
+					<input 
+						type="checkbox" 
+						id="input-activated"
+						ng-model="editing.activated" 
+					>
+				</div>
+				<div class="half left">
+					<label for="input-name">Name</label>
+					<input 
+						type="text" 
+						id="input-name"
+						ng-model="editing.name"
+						required 
+					>
+				</div>
+				<div class="half right">
+					<label for="input-manufacturer">Manufacturer</label>
+					<input 
+						type="text" 
+						id="input-manufacturer"
+						ng-model="editing.manufacturer"
+						required 
+					>
+				</div>
+				<div class="half left">
+					<label for="input-url">url</label>
+					<input 
+						type="url" 
+						id="input-url"
+						ng-model="editing.url" 
+					>
+				</div>
+				<div class="clearfix"></div>
+				<div class="edit-colors">
+					<label>Colors</label>
+					<div ng-repeat="(i, color) in colors">
+						<button ng-click="remove_color(i)" type="button" class="button remove red left">X</button>
+						<div class="half left">
+							<input
+								type="text" 
+								ng-model="color.name"
+								placeholder="Color Name"
+							>
+						</div>
+						<div class="half right">
+							<input
+								type="text"
+								ng-model="color.color"
+								placeholder="Color Hex (ex. #000000)"
+								ng-minlength="7"
+								ng-maxlength="7"
+								required
+							>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<button class="button" type="button" ng-click="add_color();">Add</button>
+				</div>
+				<div class="edit-variations">
+					<label>Variations</label>
+					<div ng-repeat="(i, variation) in variations">
+						<button ng-click="remove_variation(i)" type="button" class="button remove red left">X</button>
+						<div class="half left">
+							<input
+								type="text" 
+								ng-model="variation.name"
+								placeholder="Variation Name"
+							>
+						</div>
+						<div class="half right">
+							<textarea
+								ng-model="variation.svg"
+								placeholder="SVG Code"
+								required
+							></textarea>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<button class="button" type="button" ng-click="add_variation();">Add</button>
+				</div>
+				<input type="submit" value="Save" class="button"  tabindex="4"/>
+				<div class="clearfix"></div>
+			</form>
+			<button class="button red right" ng-click="delete_product(editing)" ng-hide="editing.new">Delete</button>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
