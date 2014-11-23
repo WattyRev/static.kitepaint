@@ -1,3 +1,3 @@
-app.controller('DesignsController', ['$scope', '$rootScope', '$state', function(scope, root, state) {
+app.controller('ProductsController', ['$scope', '$rootScope', '$state', function(scope, root, state) {
 
 }]);

@@ -46,6 +46,14 @@ app.config(function($stateProvider, $urlRouterProvider){
 				title: 'Contact'
 			}
 		})
+		.state('create', {
+			url: '/create',
+			templateUrl: 'html/pages/create.html',
+			controller: 'CreateController',
+			data: {
+				title: 'Create'
+			}
+		})
 		.state('edit', {
 			url: '/edit',
 			templateUrl: 'html/pages/edit.html',
