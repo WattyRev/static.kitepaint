@@ -209,6 +209,8 @@
 		#home .create .button {
 			margin: 10px auto;
 			font-size: 20px;
+			text-align:center;
+			margin: 20px auto 10px;
 		}
 		#home .create h2 {
 			color:#fff;
@@ -404,15 +406,18 @@
 		}
 
 	/* EDITOR */
-		.mesh {
-			fill: rgba(50,50,50,.5);
+		#edit .heading .button {
+			display:inline-block;
+			margin: 10px 5px;
 		}
 		.colors ul {
-			list-style:none;
-			margin:15px 0;
-			min-width:125px;
-			width:25%;
-			float:left;
+			list-style: none;
+			margin: 15px;
+			width: 125px;
+			float: left;
+			padding: 15px;
+			border-right: 1px solid #cdcdcd;
+			box-shadow: 6px 0px 4px -5px #737373;
 		}
 		.colors li {
 			text-align:center;
@@ -434,9 +439,16 @@
 			text-align:right;
 		}
 		.template {
-			float:left;
+			float:right;
 			width:75%;
 			height:500px;
+		}
+		.mesh {
+			fill: rgba(50,50,50,.5);
+		}
+		svg *[ng-click] {
+			cursor:pointer;
+			transition:.3s stroke, .3s stroke-width;
 		}
 /* FOOTER */
 	footer {

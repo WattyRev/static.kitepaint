@@ -27,7 +27,7 @@
 		<header ng-controller="HeaderController">
 			<div class="container">
 				<h1><a ui-sref="home">Kite Paint</a></h1>
-				<button class="button left">Create</button>
+				<a ui-sref="create" class="button left">Create</a>
 				<div class="right">
 					<span class="logged-in" ng-show="$root.user">Welcome {{user.username}}!</span>
 					<menu></menu>

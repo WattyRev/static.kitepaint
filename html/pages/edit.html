@@ -1,6 +1,18 @@
 <div class="content">
+	<div class="heading">
+		<div class="left half">
+			<h1>{{product.name}} - Variation</h1>
+			<h2>Unsaved</h2>
+		</div>
+		<div class="right half">
+			<button class="button">Save</button>	
+			<button class="button">More</button>
+		</div>
+		<div class="clearfix"></div>
+	</div>
 	<div class="colors">
 		<ul class="unstyled">
+			<button>&lt;</button>
 			<li ng-repeat="color in colors">
 				<span class="label">{{color.name}}</span> <span class="color" style="background-color:{{color.color}}" ng-click="change_color(color.color)"></span>
 			</li>
