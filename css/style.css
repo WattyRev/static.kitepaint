@@ -541,6 +541,20 @@
 		svg *[ng-click] {
 			transition:.3s stroke, .3s stroke-width;
 		}
+		#edit .variations {
+			height: 50px;
+			width: 76%;
+			float: right;
+		}
+		#edit .variation {
+			height:46px;
+			width:46px;
+			padding:2px;
+		}
+		#edit .variation.selected, #edit .variation:hover {
+			border:1px solid #cdcdcd;
+			border-radius:5px;
+		}
 
 	/* Create */
 		#create table {
