@@ -29,15 +29,16 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', function(
 	scope.get_product();
 
 	scope.color_panel = function(colors, $event) {
-		console.log('test');
-		var panel = $($event.target);
-		panel.css('fill', scope.current_color);
+			var panel = $($event.target);
+			panel.css('fill', scope.current_color);
 	};
 
-	scope.color_group = function() {
+	scope.color_group = function(colors, $event) {
+		var group = $($event.target).parents('g');
+		group.css('fill', scope.current_color);
 	};
 
 	scope.change_color = function(color) {
-		scope.current_color=color;
+		scope.current_color = color;
 	};
 }]);

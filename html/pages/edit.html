@@ -11,14 +11,17 @@
 		<div class="clearfix"></div>
 	</div>
 	<div class="colors">
-		<ul class="unstyled">
-			<button>&lt;</button>
+		<ul class="unstyled" ng-class="{collapse: collapse_colors}">
+			<button ng-click="collapse_colors = !collapse_colors;">{{collapse_colors ? '&gt;' : '&lt;'}}</button>
+			<li class="current">
+				<span class="label">Current</span> <span class="color" style="background-color:{{current_color}}"></span>
+			</li>
 			<li ng-repeat="color in colors">
 				<span class="label">{{color.name}}</span> <span class="color" style="background-color:{{color.color}}" ng-click="change_color(color.color)"></span>
 			</li>
 		</ul>
 	</div>
-	<div class="template">
+	<div class="template" ng-class="{wide: collapse_colors}">
 		<svg viewBox="0 0 754.184 268.507">
 			<path class="svg-vertical-rod" stroke="#000000" stroke-miterlimit="10" d="M94.447,267.621c-0.092,0.587-0.719,0.976-1.401,0.869l-0.494-0.077
 				c-0.682-0.107-1.16-0.669-1.069-1.256L133.346-0.129c0.092-0.587,0.719-0.976,1.401-0.869l0.494,0.077
@@ -67,7 +70,7 @@
 			<polygon class="panel" ng-click="color_panel('all', $event)" fill="#FFFFFF" stroke="#000000" points="526.132,91.487 508.497,133.377 460.501,94.851 486.248,74.138 "/>
 			<polygon class="panel" ng-click="color_panel('all', $event)" fill="#FFFFFF" stroke="#000000" points="540.257,57.934 526.132,91.487 486.248,74.138 476.995,46.128 "/>
 			<polygon class="panel" ng-click="color_panel('all', $event)" fill="#FFFFFF" stroke="#000000" points="553.76,25.859 540.257,57.934 476.995,46.128 469.499,23.438 "/>
-			<g ng-click="color_group('all')">
+			<g ng-click="color_group('all', $event)">
 				<path fill-rule="evenodd" clip-rule="evenodd" stroke="#000000" stroke-linecap="square" stroke-miterlimit="10" d="
 					M410.752,32.575c-2.697,1.524-0.644,6.113,0.058,7.885c0.716,1.807,3.191,5.796,6.29,8.147l-5.715-1.457l-5.488-14.804
 					l-3.506,0.071c2.212,6.265,4.572,12.134,6.64,18.784c-0.454-0.127-5.274-1.488-5.287-1.501l-4.713-12.981l3.766-0.391

@@ -405,7 +405,7 @@
 			left: 21px;
 		}
 
-	/* EDITOR */
+	/* Editor */
 		#edit .heading .button {
 			display:inline-block;
 			margin: 10px 5px;
@@ -413,14 +413,20 @@
 		.colors ul {
 			list-style: none;
 			margin: 15px;
-			width: 125px;
+			width: 127px;
 			float: left;
 			padding: 15px;
 			border-right: 1px solid #cdcdcd;
 			box-shadow: 6px 0px 4px -5px #737373;
+			position:relative;
+			transition: .3s width;
 		}
 		.colors li {
-			text-align:center;
+			text-align:right;
+			white-space:nowrap;
+			overflow:hidden;
+			padding-right:2px;
+			display:block;
 		}
 		.colors .color {
 			height:20px;
@@ -431,17 +437,50 @@
 			cursor:pointer;
 			box-shadow: 1px 1px 2px 0px #444;
 		}
+		.colors .current .color {
+			cursor:auto;
+		}
+		.colors .current {
+			border-bottom:1px solid #cdcdcd;
+			padding-bottom:5px;
+			margin-bottom:5px;
+		}
 		.colors .label {
 			display:inline-block;
 			width:100px;
 			overflow:hidden;
 			white-space:nowrap;
 			text-align:right;
+			transition: .3s width;
+		}
+		.colors button {
+			position:absolute;
+			background: #fff;
+			border: 1px solid #cdcdcd;
+			border-bottom-right-radius:5px;
+			border-top-right-radius:5px;
+			border-left:0px;
+			padding:5px;
+			right:-18px;
+			top:0;
+			font-family:monospace;
+			box-shadow: 2px 2px 4px -1px #737373;
+		}
+		.colors .collapse .label {
+			width:0px;
+		}
+		.colors .collapse {
+			width: 27px;
 		}
 		.template {
 			float:right;
 			width:75%;
 			height:500px;
+			transition:.3s width;
+			position:relative;
+		}
+		.template.wide{
+			width:85%;
 		}
 		.mesh {
 			fill: rgba(50,50,50,.5);
