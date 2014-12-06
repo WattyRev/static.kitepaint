@@ -1,11 +1,40 @@
 <h1>Create a New Design</h1>
 <p>Select a kite that you want to design.</p>
-<label for="query">Search</label>
-<select>
-	<option value="name">Name</option>
-	<option value="manufacturer">Manufacturer</option>
-</select>
-<input id="query" />
-<ul>
-	<li ng-repeat="product in products"><a ui-sref="edit({type: 'new', id: product.id})">{{product.name}}</a></li>
-</ul>
+<div class="search">
+	<label for="query">Search</label>
+	<select ng-model="search" ng-change="filter();">
+		<option selected value="name">Name</option>
+		<option value="manufacturer">Manufacturer</option>
+	</select>
+	<input type="text" id="query" ng-model="query" ng-change="filter();"/>
+</div>
+
+<table ng-show="display_products.length">
+	<thead>
+		<tr>
+			<th 
+				ng-click="sort_by('name')" 
+				ng-class="{sorted: sort.metric === 'name', ascending: sort.metric === 'name' && sort.ascending, descending: sort.metric === 'name' && !sort.ascending}"
+			>Name</th>
+			<th 
+				ng-click="sort_by('manufacturer')"
+				ng-class="{sorted: sort.metric === 'manufacturer', ascending: sort.metric === 'manufacturer' && sort.ascending, descending: sort.metric === 'manufacturer' && !sort.ascending}"
+			>Manufacturer</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>	
+		<tr ng-repeat="product in display_products" ng-click="create(product.id)">
+			<td class="name">{{product.name}}</td>
+			<td class="logo"><img src="img/logos/{{manufacturers[product.manufacturer].logo}}" alt="{{manufacturers[product.manufacturer].name}}" /></td>
+			<td class="variations">
+				<div class="variation" ng-repeat="variation in product.variations" title="variation.name" ng-bind-html="variation.svg">
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<div class="block">
+	<button class="button" ng-show="!loading && display_products.length < products.length" ng-click="show_more();">Show More</button>
+</div>

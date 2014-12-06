@@ -65,6 +65,36 @@
 	ul:not(.unstyled) {
 		margin: 10px 0 10px 30px;
 	}
+	table{
+		border-collapse: collapse;
+	}
+	th, td {
+		padding: 10px;
+	}
+	tr {
+		border-bottom: 1px solid #cdcdcd;
+		transition: .3s background;
+	}
+	tbody tr:hover {
+		background: #f1f1f1;
+	}
+	select {
+		padding:7px;
+		border-radius:5px;
+		border: 1px solid #cdcdcd;
+		font-family: 'Open Sans', sans-serif;
+		font-size: 16px;
+	}
+	input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="number"], input[type="url"], textarea {
+		background:#fff;
+		border: 1px solid #cdcdcd;
+		padding: 10px;
+		font-size: 16px;
+		color :#444;
+		border-radius: 5px;
+		font-family: 'Open Sans', sans-serif;
+		font-size: 16px;
+	}
 
 /* CLASSES */
 	.clearfix {
@@ -127,6 +157,26 @@
 	}
 	.small {
 		font-size: 70%;
+	}
+	.sorted {
+		position:relative;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+	}
+	.sorted:after {
+		content:">";
+		display:inline-block;
+		margin-left:5px;
+		position:absolute;
+		right: 0px;
+		transition: .3s transform;
+	}
+	.sorted.ascending:after {
+		transform: rotate(-90deg);
+	}
+	.sorted.descending:after {
+		transform: rotate(90deg);
 	}
 
 /* HEADER */
@@ -485,10 +535,36 @@
 		.mesh {
 			fill: rgba(50,50,50,.5);
 		}
-		svg *[ng-click] {
+		*[ng-click] {
 			cursor:pointer;
+		}
+		svg *[ng-click] {
 			transition:.3s stroke, .3s stroke-width;
 		}
+
+	/* Create */
+		#create table {
+			width:100%;
+			text-align:center;
+		}
+		#create td {
+			width:33%;
+		}
+		#create .logo img {
+			max-width:100%;
+			max-height:80px;
+		}
+		#create .variation {
+			height: 80px;
+			width: 80px;
+			transform: rotate(-45deg);
+		}
+		#create .search {
+			margin-top: 25px;
+			margin-bottom: 10px;
+		}
+
+
 /* FOOTER */
 	footer {
 		text-align:center;

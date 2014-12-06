@@ -1,9 +1,15 @@
 var app = angular.module('kitePaint', ['ui.router']);
 
+app.config(function($sceProvider) {
+  // Completely disable SCE.  For demonstration purposes only!
+  // Do not use in new projects.
+  $sceProvider.enabled(false);
+});
+
 app.config(function($stateProvider, $urlRouterProvider){
 
 	// For any unmatched url, send to /route1
-	$urlRouterProvider.otherwise("/")
+	$urlRouterProvider.otherwise("/");
 
 	$stateProvider
 		.state('about', {
