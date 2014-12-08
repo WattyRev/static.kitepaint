@@ -95,6 +95,21 @@
 		font-family: 'Open Sans', sans-serif;
 		font-size: 16px;
 	}
+	input[type="checkbox"] {
+		-webkit-appearance:none;
+		width: 20px!important;
+		height: 20px!important;
+		display:inline-block;
+		border: 2px solid #cdcdcd;
+		border-radius: 5px;
+		margin-left: auto;
+		margin-right: auto;
+		cursor: pointer;
+		transition: .3s background;
+	}
+	input[type="checkbox"]:checked {
+		background: #485BE7;
+	}
 
 /* CLASSES */
 	.clearfix {
@@ -177,6 +192,43 @@
 	}
 	.sorted.descending:after {
 		transform: rotate(90deg);
+	}
+	.dropdown {
+		position: absolute!important;
+		text-align: left;
+		background: #fff;
+		border: 1px solid #cdcdcd;
+		border-radius: 10px;
+		padding: 10px!important;
+		width: 155px;
+		right: -10px;
+		top: 120%;
+		box-shadow: 3px 3px 3px 0 #C2C1C1;
+		z-index:100;
+	}
+	.dropdown label {
+		display:inline-block;
+		width:80%;
+	}
+	.dropdown>div {
+		padding: 5px 0;
+		border-bottom: 1px solid #cdcdcd;
+	}
+	.dropdown.ng-hide {
+		height:auto!important;
+	}
+	.dropdown:before {
+		content: "";
+		background: #fff;
+		border-top: 1px solid #cdcdcd;
+		border-right: 1px solid #cdcdcd;
+		border-top-right-radius: 4px;
+		transform: rotate(-45deg);
+		position: absolute;
+		top: -5px;
+		right: 21px;
+		height: 10px;
+		width: 10px;
 	}
 
 /* HEADER */
@@ -529,6 +581,12 @@
 			transition:.3s width;
 			position:relative;
 		}
+		.template svg * {
+			stroke:none;
+		}
+		.template.outlines svg * {
+			stroke: #000;
+		}
 		.template.wide{
 			width:85%;
 		}
@@ -541,15 +599,29 @@
 		svg *[ng-click] {
 			transition:.3s stroke, .3s stroke-width;
 		}
+		#edit .settings-button {
+			height: 35px;
+			width: 35px;
+			background: none;
+			border: 0;
+			position: relative;
+			top: 11px;
+			margin-left: 20px;
+		}
 		#edit .variations {
 			height: 50px;
 			width: 76%;
 			float: right;
 		}
 		#edit .variation {
-			height:46px;
-			width:46px;
-			padding:2px;
+			height: 46px;
+			width: 46px;
+			padding: 2px;
+			display: inline-block;
+			margin: 0 5px;
+			border: 1px solid #fff;
+			border-radius: 5px;
+			transition: .3s border;
 		}
 		#edit .variation.selected, #edit .variation:hover {
 			border:1px solid #cdcdcd;

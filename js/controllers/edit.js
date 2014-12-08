@@ -4,6 +4,9 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$compile
 	scope.colors = [];
 	scope.variations = [];
 	scope.loading = true;
+	scope.show_settings = false;
+	scope.show_outlines = true;
+	scope.autofill = false;
 
 	//FUNCTIONS
 	scope.get_product = function() {
@@ -53,4 +56,10 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$compile
 	scope.change_color = function(color) {
 		scope.current_color = color;
 	};
+
+	scope.select_variation = function(variation) {
+		scope.current_variation = {};
+		scope.current_variation = variation;
+	};
+
 }]);

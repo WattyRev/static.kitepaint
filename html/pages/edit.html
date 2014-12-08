@@ -6,7 +6,49 @@
 		</div>
 		<div class="right half">
 			<button class="button">Save</button>	
-			<button class="button">More</button>
+			<button title="Settings" class="settings-button">
+				<svg viewBox="0 0 1000 1000" ng-click="show_settings = !show_settings;">
+				<defs>
+					<filter id="Adobe_OpacityMaskFilter" filterUnits="userSpaceOnUse" x="-0.656" y="-0.587" width="1001.312" height="1001.312">
+						<feFlood  style="flood-color:white;flood-opacity:1" result="back"/>
+						<feBlend  in="SourceGraphic" in2="back" mode="normal"/>
+					</filter>
+				</defs>
+				<mask maskUnits="userSpaceOnUse" x="-0.656" y="-0.587" width="1001.312" height="1001.312" id="SVGID_1_">
+					<g filter="url(#Adobe_OpacityMaskFilter)">
+						<g>
+							<circle stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="500" cy="500.069" r="245.407"/>
+							<circle stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="1035.433" cy="500.069" r="152.231"/>
+							<circle stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="878.608" cy="121.461" r="152.231"/>
+							<circle stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="500" cy="-35.364" r="152.231"/>
+							<circle stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="121.392" cy="121.461" r="152.231"/>
+							<circle stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="-35.433" cy="500.069" r="152.231"/>
+							<circle stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="121.392" cy="878.678" r="152.231"/>
+							<circle stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="500" cy="1035.503" r="152.231"/>
+							<circle stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="878.608" cy="878.678" r="152.231"/>
+						</g>
+					</g>
+				</mask>
+				<circle mask="url(#SVGID_1_)" stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="500" cy="500.069" r="500"/>
+				</svg>
+				<div class="settings-dropdown dropdown" ng-show="show_settings">
+					<div>
+						<label for="input-show-outlines">Show Outlines</label>
+						<input type="checkbox" id="input-show-outlines" ng-model="show_outlines"/>
+					</div>
+					<div>
+						<label for="input-copy-design">AutoFill</label>
+						<input type="checkbox" id="input-copy-design" ng-model="autofill"/>
+					</div>
+					<div>
+						<label for="input-public">Make Design Public</label>
+						<input type="checkbox" id="input-public" ng-model="public"/>
+					</div>
+					<div>
+						<label for="input-background">Background</label>
+					</div>
+				</div>
+			</button>
 		</div>
 		<div class="clearfix"></div>
 	</div>
@@ -22,10 +64,17 @@
 		</ul>
 	</div>
 	<div class="variations">
-		<div class="variation" ng-repeat="variation in variations" title="variation.name" ng-bind-html="variation.svg" ng-click="current_variation = variation" ng-class="{selected: current_variation.name === variation.name}">
+		<div 
+			class="variation" 
+			ng-repeat="variation in variations" 
+			title="{{variation.name}}" 
+			ng-bind-html="variation.svg" 
+			ng-click="select_variation(variation);" 
+			ng-class="{selected: current_variation.name === variation.name}"
+		>
 		</div>
 	</div>
-	<div class="template" ng-class="{wide: collapse_colors}" compile="current_variation.svg">
+	<div class="template" ng-class="{wide: collapse_colors, outlines: show_outlines}" compile="current_variation.svg">
 	</div>
 	<div class="clearfix"></div>
 </div>
