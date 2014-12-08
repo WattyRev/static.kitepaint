@@ -585,7 +585,7 @@
 			stroke:none;
 		}
 		.template.outlines svg * {
-			stroke: #000;
+			stroke: #484848;
 		}
 		.template.outlines svg *[stroke="none"] {
 			stroke: none;
