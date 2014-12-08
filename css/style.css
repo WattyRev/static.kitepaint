@@ -559,18 +559,21 @@
 	/* Create */
 		#create table {
 			width:100%;
-			text-align:center;
+			text-align:left;
 		}
-		#create td {
-			width:33%;
+		#create .logo {
+			width:50px;
 		}
-		#create .logo img {
-			max-width:100%;
-			max-height:80px;
+		#create .logo div {
+			width: 50px;
+			height:50px;
+			border:1px solid #cdcdcd;
+			border-radius:50px;
+			background-size: 90%!important;
 		}
 		#create .variation {
-			height: 80px;
-			width: 80px;
+			height: 50px;
+			width: 50px;
 			transform: rotate(-45deg);
 		}
 		#create .search {
