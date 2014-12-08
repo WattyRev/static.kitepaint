@@ -587,6 +587,9 @@
 		.template.outlines svg * {
 			stroke: #000;
 		}
+		.template.outlines svg *[stroke="none"] {
+			stroke: none;
+		}
 		.template.wide{
 			width:85%;
 		}
@@ -647,6 +650,7 @@
 			height: 50px;
 			width: 50px;
 			transform: rotate(-45deg);
+			display:inline-block;
 		}
 		#create .search {
 			margin-top: 25px;
