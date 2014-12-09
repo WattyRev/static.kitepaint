@@ -2,7 +2,12 @@
 <html ng-app="kitePaint">
 	<head>
 		<title>Kite Paint</title>
-		<meta name="viewport" content="width=device-width, user-scalable=no">
+
+		<?php if(!isset($_COOKIE['desktop'])): ?>
+			<meta name="viewport" content="width=device-width">
+		<?php else:?>
+			<meta name="viewport" content="width=1080px">
+		<?php endif;?>
 
 		<script type="text/javascript" src="js/libraries/jquery.min.js"></script>
 		<script type="text/javascript" src="js/libraries/angular.min.js"></script>
@@ -23,6 +28,9 @@
 		<script type="text/javascript" src="js/directives/tooltip.js"></script>
 
 		<link rel="stylesheet" href="css/style.css" />
+		<?php if(!isset($_COOKIE['desktop'])): ?>
+			<link rel="stylesheet" href="css/responsive.css" />
+		<?php endif; ?>
 	</head>
 	<body ng-controller="PrimaryController">
 		<header ng-controller="HeaderController">
@@ -40,6 +48,12 @@
 			
 		</main>
 		<footer>
+
+			<?php if(!isset($_COOKIE['desktop'])): ?>
+				<button class="mobile" ng-click="$root.request_desktop_version();">Request Desktop Version</button>
+			<?php else:?>
+				<button ng-click="$root.return_mobile_version();">Return to Mobile Version</button>
+			<?php endif;?>
 			<p>&copy; 2014 <a href="http://www.wattydev.com">Spencer Watson</a></p>
 		</footer>
 	</body>

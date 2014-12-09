@@ -1,0 +1,58 @@
+body, header {
+	min-width:300px;
+}
+
+/* ~Tablet Portrait */
+@media only screen and (max-width : 800px) {
+	/* GENERAL */
+
+	/* CLASSES */
+		.half {
+			width:100%;
+		}
+		.mobile {
+			display:initial;
+		}
+
+	/* HEADER */
+		header .logged-in {
+			display:none;
+		}
+		header .container>.right {
+			width:auto;
+		}
+		
+	/* MAIN */
+		/* HOME */
+			#home .user .content>div {
+				float:none;
+				width:90%
+			}
+			#home .user form {
+				width:73%;
+				float:none;
+				margin:0 auto;
+			}
+
+	/* FOOTER */
+}
+
+/* ~Phone */
+@media only screen and (max-width : 450px) {
+	/* GENERAL */
+		tooltip {
+			display:none;
+		}
+
+	/* CLASSES */
+
+	/* HEADER */
+
+	/* MAIN */
+		/* HOME */
+			#home .news .content {
+				padding:15px;
+			}
+
+	/* FOOTER */
+}

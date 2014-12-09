@@ -2,7 +2,7 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 
 	//VARIABLES
 	scope.current_page = '';
-	root.has_account = localStorage['kp_has_account'] ? localStorage['kp_has_account'] === 'true' : false;
+	root.has_account = localStorage.kp_has_account ? localStorage.kp_has_account === 'true' : false;
 	root.sign_in = {
 		username: '',
 		password: '',
@@ -22,9 +22,9 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 		password: '',
 		password2: '',
 		username: ''
-	}
+	};
 	root.invalid_login = false;
-	root.user = localStorage['user'] ? JSON.parse(localStorage['user']) : false;
+	root.user = localStorage.user ? JSON.parse(localStorage.user) : false;
 	root.register_status = false;
 	root.reset_status = false;
 	root.lost_password = false;
@@ -103,7 +103,7 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 				root.$apply();
 			}
 		});
-	}
+	};
 	root.reset_password = function() {
 		root.resetting = true;
 		$.ajax({
@@ -133,10 +133,10 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 		});
 	};
 	root.check_login = function() {
-		if (!localStorage['user'] || localStorage['user'] === 'false') {
+		if (!localStorage.user || localStorage.user === 'false') {
 			return;
 		}
-		var user_data = JSON.parse(localStorage['user']);
+		var user_data = JSON.parse(localStorage.user);
 		user_data.update_login = true;
 		root.login_loading = true;
 		$.ajax({
@@ -164,8 +164,19 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 				}
 			}
 		});
-	}
+	};
 	root.check_login();
+
+	root.request_desktop_version = function() {
+		console.log('test');
+		create_cookie('desktop', true, 30);
+		location.reload();
+	};
+
+	root.return_mobile_version = function() {
+		erase_cookie('desktop');
+		location.reload();
+	};
 
 	//LISTENERS
 	//Update current page data
@@ -181,11 +192,11 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 
 	//update has_account local storage variable
 	root.$watch('has_account', function(has_account) {
-		localStorage['kp_has_account'] = has_account;
+		localStorage.kp_has_account = has_account;
 	});
 
 	root.$watch('user', function(user) {
-		localStorage['user'] = JSON.stringify(user);
+		localStorage.user = JSON.stringify(user);
 	}, true);
 
 	window.root = root;
