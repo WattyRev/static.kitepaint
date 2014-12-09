@@ -33,25 +33,76 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$compile
 	scope.get_product();
 
 	scope.color_panel = function(colors, $event) {
-		var panel = $($event.target);
-		panel.attr('fill', scope.current_color);
-		$.each(scope.variations, function(i, variation) {
-			if (variation.name === scope.current_variation.name) {
-				variation.svg = $('.template').html();
-				return false;
-			}
-		});
+		var panel = $($event.target),
+			can_color = true;
+
+		if (colors !== 'all') {
+			var current_name;
+
+			can_color = false;
+			colors = colors.split(', ');
+
+			$.each(scope.colors, function(i, color) {
+				if (color.color === scope.current_color) {
+					current_name = color.name;
+					return false;
+				}
+			});
+
+			$.each(colors, function(i, color) {
+				if (current_name === color) {
+					can_color = true;
+					return false;
+				}
+			});
+		}
+
+		if (can_color) {
+			panel.attr('fill', scope.current_color);
+			$.each(scope.variations, function(i, variation) {
+				if (variation.name === scope.current_variation.name) {
+					variation.svg = $('.template').html();
+					return false;
+				}
+			});
+		}
 	};
 
 	scope.color_group = function(colors, $event) {
-		var group = $($event.target).parents('g');
-		group.find('*').attr('fill', scope.current_color);
-		$.each(scope.variations, function(i, variation) {
-			if (variation.name === scope.current_variation.name) {
-				variation.svg = $('.template').html();
-				return false;
-			}
-		});	};
+		var group = $($event.target).parents('g'),
+			can_color = true;
+
+		if (colors !== 'all') {
+			var current_name;
+
+			can_color = false;
+			colors = colors.split(', ');
+
+			$.each(scope.colors, function(i, color) {
+				if (color.color === scope.current_color) {
+					current_name = color.name;
+					return false;
+				}
+			});
+
+			$.each(colors, function(i, color) {
+				if (current_name === color) {
+					can_color = true;
+					return false;
+				}
+			});
+		}
+
+		if (can_color){
+			group.find('*').attr('fill', scope.current_color);
+			$.each(scope.variations, function(i, variation) {
+				if (variation.name === scope.current_variation.name) {
+					variation.svg = $('.template').html();
+					return false;
+				}
+			});	
+		}
+	};
 
 	scope.change_color = function(color) {
 		scope.current_color = color;
