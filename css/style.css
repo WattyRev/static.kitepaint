@@ -65,8 +65,13 @@
 		cursor: pointer;
 		-webkit-appearance: none;
 	}
-	ul:not(.unstyled) {
+	ul{
 		margin: 10px 0 10px 30px;
+	}
+	ul.unstyled {
+		list-style:none;
+		margin:0;
+		padding:0;
 	}
 	table{
 		border-collapse: collapse;
@@ -188,12 +193,16 @@
 		margin-left:5px;
 		position:absolute;
 		right: 0px;
-		transition: .3s transform;
+		transition: .3s -ms-transform, .3s -webkit-transform, .3s transform;
 	}
 	.sorted.ascending:after {
+		-ms-transform: rotate(-90deg);
+		-webkit-transform: rotate(-90deg);
 		transform: rotate(-90deg);
 	}
 	.sorted.descending:after {
+		-ms-transform: rotate(90deg);
+		-webkit-transform: rotate(90deg);
 		transform: rotate(90deg);
 	}
 	.dropdown {
@@ -208,6 +217,7 @@
 		top: 120%;
 		box-shadow: 3px 3px 3px 0 #C2C1C1;
 		z-index:100;
+		max-width:9999px;
 	}
 	.dropdown label {
 		display:inline-block;
@@ -226,6 +236,8 @@
 		border-top: 1px solid #cdcdcd;
 		border-right: 1px solid #cdcdcd;
 		border-top-right-radius: 4px;
+		-ms-transform: rotate(-45deg);
+		-webkit-transform: rotate(-45deg);
 		transform: rotate(-45deg);
 		position: absolute;
 		top: -5px;
@@ -512,6 +524,8 @@
 			border-top: 1px solid #cdcdcd;
 			border-left: 1px solid #cdcdcd;
 			border-top-left-radius: 5px;
+			-ms-transform: rotate(225deg);
+			-webkit-transform: rotate(225deg);
 			transform: rotate(225deg);
 			position:absolute;
 			bottom: -7px;
@@ -587,7 +601,7 @@
 		}
 		.template {
 			float:right;
-			width:75%;
+			width:73%;
 			height:500px;
 			transition:.3s width;
 			position:relative;
@@ -624,8 +638,12 @@
 		}
 		#edit .variations {
 			height: 50px;
-			width: 76%;
+			width: 73%;
 			float: right;
+			transition:.3s width;
+		}
+		#edit .variations.wide {
+			width:85%;
 		}
 		#edit .variation {
 			height: 46px;
@@ -641,11 +659,30 @@
 			border:1px solid #cdcdcd;
 			border-radius:5px;
 		}
+		#edit .actions {
+			text-align:right;
+		}
 
 	/* Create */
-		#create table {
+		#create ul {
 			width:100%;
 			text-align:left;
+		}
+		#create ul>li {
+			position:relative;
+			border-bottom: 1px solid #cdcdcd;
+			transition: .3s background;
+		}
+		#create ul>li:hover {
+			background:#f1f1f1;
+		}
+		#create ul>li>div {
+			display:inline-block;
+			margin: 0 15px;
+			width:84%;
+		}
+		#create ul>li>div>div {
+			display:inline-block;
 		}
 		#create .logo {
 			width:50px;
@@ -657,9 +694,18 @@
 			border-radius:50px;
 			background-size: 90%!important;
 		}
+		#create .name {
+			position: relative;
+			height: 20px;
+			padding: 15px 0;
+			top: -20px;
+			width:50%;
+		}
 		#create .variation {
 			height: 50px;
 			width: 50px;
+			-ms-transform: rotate(-45deg);
+			-webkit-transform: rotate(-45deg);
 			transform: rotate(-45deg);
 			display:inline-block;
 		}

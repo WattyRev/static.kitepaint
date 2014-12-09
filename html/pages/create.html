@@ -9,21 +9,22 @@
 	<input type="text" id="query" ng-model="query" ng-change="filter();"/>
 </div>
 
-<table ng-show="display_products.length">
-	<tbody>	
-		<tr ng-repeat="product in display_products" ng-click="create(product.id)">
-			<td class="logo">
-				<div style="background: #fff url(img/logos/{{manufacturers[product.manufacturer].logo}}) no-repeat center">
-				</div>
-			</td>
-			<td class="name">{{product.name}}</td>
-			<td class="variations">
+<ul class="unstyled" ng-show="display_products.length">
+	<li ng-repeat="product in display_products" ng-click="create(product.id)">
+		<div class="logo">
+			<div style="background: #fff url(img/logos/{{manufacturers[product.manufacturer].logo}}) no-repeat center">
+			</div>
+		</div>
+		<div class="details">
+			<div class="name">{{product.name}}</div>
+			<div class="variations">
 				<div class="variation" ng-repeat="variation in product.variations" title="variation.name" ng-bind-html="variation.svg">
 				</div>
-			</td>
-		</tr>
-	</tbody>
-</table>
+			</div>
+		</div>
+		<span class="clearfix"></span>
+	</li>
+</ul>
 
 <div class="block">
 	<button class="button" ng-show="!loading && display_products.length < products.length" ng-click="show_more();">Show More</button>

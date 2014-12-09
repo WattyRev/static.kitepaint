@@ -4,7 +4,7 @@
 			<h1>{{product.name}} - {{current_variation.name}}</h1>
 			<h2>Unsaved</h2>
 		</div>
-		<div class="right half">
+		<div class="right half actions">
 			<button class="button">Save</button>	
 			<button title="Settings" class="settings-button">
 				<svg viewBox="0 0 1000 1000" ng-click="show_settings = !show_settings;">
@@ -63,7 +63,7 @@
 			</li>
 		</ul>
 	</div>
-	<div class="variations">
+	<div class="variations"ng-class="{wide: collapse_colors}">
 		<div 
 			class="variation" 
 			ng-repeat="variation in variations" 
