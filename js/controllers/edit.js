@@ -6,7 +6,6 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$compile
 	scope.loading = true;
 	scope.show_settings = false;
 	scope.show_outlines = true;
-	scope.autofill = false;
 
 	//FUNCTIONS
 	scope.get_product = function() {
@@ -112,5 +111,38 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$compile
 		scope.current_variation = {};
 		scope.current_variation = variation;
 	};
+
+	scope.autofill = function() {
+		var layout = {};
+		//create array of autofill panels and colors
+		$.each($('.template svg *[ng-click]'), function(i, elem) {
+			var elem = $(elem),
+				item = elem.attr('data-autofill'),
+				color;
+
+			if (item[0] === 'g') {
+				color = $(elem.children()[0]).attr('fill') || '#FFFFFF';
+			} else {
+				color = elem.attr('fill');
+			}
+			layout[item] = color;
+		});
+		console.log(scope.variations);
+
+		//loop through visible variations and update html
+		$.each($('.variations .variation'), function(i, elem) {
+			var variation = $(elem);
+			$.each(layout, function(item, color){
+				console.log(variation.find('*[data-autofill="' + item + '"]'));
+				variation.find('*[data-autofill="' + item + '"]').attr('fill', color);
+			});
+		});
+		//Update scope.variations
+		$.each(scope.variations, function(i, variation) {
+			var html = $('.variation[title="' + variation.name + '"]').html();
+			scope.variations[i].svg = html;
+		});
+		scope.$apply();
+	}
 
 }]);
