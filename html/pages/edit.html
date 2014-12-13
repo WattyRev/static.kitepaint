@@ -2,9 +2,23 @@
 	<div class="heading">
 		<div class="left half">
 			<h1>{{product.name}} - {{current_variation.name}}</h1>
-			<h2>Unsaved</h2>
+			<h2 class="design-name" ng-click="show_rename = true">
+				{{design ? design.name : 'Unsaved'}} 
+				<span class="icon" ng-show="design">
+					<svg viewBox="0 0 637.468 628.469" enable-background="new 0 0 637.468 628.469" xml:space="preserve">
+						<path fill="none" stroke="#CDCDCD" stroke-width="45" stroke-miterlimit="10" d="M200.363,560.679
+							c-4.72,4.652-12.318,4.597-16.97-0.122L74.586,450.167c-4.652-4.72-4.598-12.318,0.122-16.97L478.521,35.171
+							c4.72-4.652,12.318-4.598,16.97,0.122l108.808,110.39c4.652,4.72,4.598,12.318-0.122,16.97L200.363,560.679z"/>
+						
+							<line fill="none" stroke="#CDCDCD" stroke-width="45" stroke-miterlimit="10" x1="404.814" y1="107.12" x2="530.469" y2="234.602"/>
+						<polygon fill="none" stroke="#CDCDCD" stroke-width="45" stroke-linejoin="round" stroke-miterlimit="10" points="33.427,599.204 
+							188.307,565.542 70.023,445.537 	"/>
+					</svg>
+				</span>
+			</h2>
 		</div>
 		<div class="right half actions">
+			<button class="button" ng-click="save();" ng-show="design">{{saving ? 'Saving' : 'Save'}}</button>
 			<button class="button" ng-click="show_save_as = true" ng-show="$root.user.logged_in">Save As</button>	
 			<button title="Settings" class="settings-button">
 				<svg viewBox="0 0 1000 1000" ng-click="show_settings = !show_settings;">
@@ -80,6 +94,13 @@
 		<input type="text" id="save_as_name" ng-model="save_as_name" />
 		<button class="button" ng-click="save_as();">Save</button>
 		<button class="button" ng-click="show_save_as = false">Cancel</button>
+	</div>
+
+	<div class="prompt rename" ng-show="show_rename">
+		<label for="rename_name">What do you want to name your design?</label>
+		<input type="text" id="rename_name" ng-model="design.name" />
+		<button class="button" ng-click="rename();">Save</button>
+		<button class="button" ng-click="show_rename = false">Cancel</button>
 	</div>
 	<div class="clearfix"></div>
 </div>

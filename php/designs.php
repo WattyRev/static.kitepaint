@@ -1,6 +1,36 @@
 <?php
 require_once "header.php"; 
 if ($_GET){
+	if (isset($_GET['filter'])) {
+		$filter = "";
+		$count = 0;
+		foreach($_GET['filter'] as $metric => $value){
+			$count ++;
+			if ($count > 1) {
+				$filter .= ' AND ';
+			}
+			$filter .= "$metric  =  $value";
+		}
+		$query = sprintf("SELECT * FROM designs WHERE $filter");
+
+		$result = mysql_query($query);
+		$num = mysql_num_rows($result);
+		mysql_close();
+		$response = array();
+		for ($i = 0; $i < $num; $i++) {
+			$designs = (object) array();
+			foreach ($_GET['return'] as $key=>$metric){
+				$designs->$metric = mysql_result($result,$i,$metric);
+				if ($metric === 'created' || $metric === 'updated') {
+					$designs->$metric = date("m/d/Y", strtotime($designs->$metric));
+				}
+			}
+			array_push($response, $designs);
+		}
+		echo JSON_encode($response);
+		return;
+	}
+
 	if (isset($_GET['id'])) {
 		$query = sprintf("SELECT * FROM designs WHERE id = " . $_GET['id']);
 	} else if (isset($_GET['public'])) {
@@ -21,33 +51,18 @@ if ($_GET){
 		$designs->name = mysql_result($result,$i,"name");
 		$designs->user = mysql_result($result,$i,"user");
 		$designs->product = mysql_result($result,$i,"product");
-		$designs->product = mysql_result($result,$i,"variations");
-		$designs->product = mysql_result($result,$i,"pulbic");
+		$designs->variations = mysql_result($result,$i,"variations");
+		$designs->public = mysql_result($result,$i,"public");
 		array_push($response, $designs);
 	}
 	echo json_encode($response);
+	return;
+
 } elseif ($_POST) {
 	$response = (object) array(
 		'valid' => true,
 		'message' => ''
 	);
-
-	//Delete
-	// if (isset($_POST['delete'])) {
-	// 	$query = sprintf("delete from login where loginid = '%s'", 
-	// 		mysql_real_escape_string($_POST['loginid']));
-
-	// 	if (mysql_query($query)) {
-
-	// 	} else {
-	// 		$response->valid = false;
-	// 		$response->message = 'Unable to delete user';
-	// 	}
-
-	// 	echo json_encode($response);
-
-	// 	return;
-	// }
 
 	//Create
 	if (isset($_POST['new'])) {
@@ -87,23 +102,38 @@ if ($_GET){
 	}
 
 	//Update
-	// $id = $_POST['loginid'];
-	// $vars = array(
-	// 	'username' => $_POST['username'],
-	// 	'email' => $_POST['email'],
-	// 	'activated' => $_POST['activated'] === 'true' ? '1' : '0'
-	// );
+	if (isset($_POST['id'])) {
+		$id = $_POST['id'];
+		$vars = array();
 
-	// foreach($vars as $metric => $val){
-	// 	$query = sprintf("update login set $metric = '%s' where loginid = '%s'",
-	// 		mysql_real_escape_string($val), mysql_real_escape_string($id));
+		if (isset($_POST['variations'])) {
+			$vars['variations'] = $_POST['variations'];
+		}
+		if (isset($_POST['name'])) {
+			$vars['name'] = $_POST['name'];
+		}
+		if (isset($_POST['public'])) {
+			$vars['public'] = $_POST['public'];
+		}
 
-	// 	if (mysql_query($query)) {
-	// 	} else {
-	// 		$response->valid = false;
-	// 		$response->message = 'Unable to change ' . $metric;
-	// 	}
-	// }
+		foreach($vars as $metric => $val){
+			$query = sprintf("update designs set $metric = '%s' where id = '%s'",
+				mysql_real_escape_string($val), mysql_real_escape_string($id));
 
-	// echo json_encode($response);
+			if (mysql_query($query)) {
+			} else {
+				$response->valid = false;
+				$response->message = 'Unable to change ' . $metric;
+			}
+		}
+		$query = sprintf("update designs set updated = now() where id = '%s'",
+		mysql_real_escape_string($val), mysql_real_escape_string($id));
+
+		if (mysql_query($query)) {
+		} else {
+			$response->valid = false;
+			$response->message = 'Unable to change updated';
+		}
+		echo json_encode($response);
+	}
 }

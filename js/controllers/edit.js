@@ -1,6 +1,7 @@
 app.controller('EditController', ['$scope', '$rootScope', '$location', '$state', function(scope, root, location, state) {
 	scope.current_color = '#ffffff';
 	scope.product = {};
+	scope.design = {};
 	scope.colors = [];
 	scope.variations = [];
 	scope.loading = true;
@@ -12,15 +13,23 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 	//FUNCTIONS
 	scope.get_product = function() {
 		scope.loading = true;
+		var id;
+		if (state.params.type === 'new') {
+			id = location.$$search.id;
+		} else {
+			id = scope.design.product;
+		}
 		$.ajax({
 			type: 'GET',
-			url: 'php/products.php?id=' + location.$$search.id,
+			url: 'php/products.php?id=' + id,
 			dataType: 'json',
 			success: function(data) {
 				scope.product = data[0];
 				scope.colors = JSON.parse(scope.product.colors);
-				scope.variations = JSON.parse(scope.product.variations);
-				scope.current_variation = scope.variations[0];
+				if (state.params.type === 'new') {
+					scope.variations = JSON.parse(scope.product.variations);
+					scope.current_variation = scope.variations[0];
+				}
 				scope.loading = false;
 				scope.$apply();
 			},
@@ -35,7 +44,30 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 	}
 
 	scope.get_design = function() {
-
+		scope.loading = true;
+		$.ajax({
+			type: 'GET',
+			url: 'php/designs.php?id=' + location.$$search.id,
+			dataType: 'json',
+			success: function(data) {
+				scope.design = data[0];
+				if (scope.design.user !== root.user.user_id) {
+					var params = {type:'new', id:scope.design.product};
+ 					state.go('edit', params);
+				}
+				console.log(scope.design);
+				scope.variations = JSON.parse(scope.design.variations);
+				scope.current_variation = scope.variations[0];
+				console.log(scope.design.public);
+				scope.public = scope.design.public === '1' ? true : false;
+				scope.$apply();
+				scope.get_product();
+			},
+			error: function(data) {
+				console.log('error', data);
+				alert('Could not get design');
+			}
+		});
 	};
 	if (state.params.type === 'saved') {
 		scope.get_design();
@@ -126,8 +158,8 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 		var layout = {};
 		//create array of autofill panels and colors
 		$.each($('.template svg *[ng-click]'), function(i, elem) {
-			var elem = $(elem),
-				item = elem.attr('data-autofill'),
+			elem = $(elem);
+			var item = elem.attr('data-autofill'),
 				color;
 
 			if (item[0] === 'g') {
@@ -192,6 +224,49 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 		});
 	};
 
+	scope.save = function() {
+		scope.saving = true;
+		var design = {
+			id: scope.design.id,
+			variations: JSON.stringify(scope.variations)
+		};
+		scope.update_design(design, function() {
+		});
+	};
+
+	scope.rename = function() {
+		scope.saving = true;
+		var design = {
+			id: scope.design.id,
+			name: scope.design.name
+		};
+		scope.update_design(design, function() {
+			scope.show_rename = false;
+		});
+	};
+
+	scope.update_design = function(design, callback) {
+		$.ajax({
+			type: 'POST',
+			url: 'php/designs.php',
+			data: design,
+			dataType: 'json',
+			success: function(data) {
+				console.log('success', data);
+				scope.saving = false;
+				callback();
+				scope.$apply();
+			},
+			error: function(data) {
+				console.log('error', data);
+				alert('Could not save');
+				scope.saving = false;
+				callback();
+				scope.$apply();
+			}
+		});
+	};
+
 	scope.edit_design = function(id) {
 		var params = {type:'saved', id:id};
  		state.go('edit', params);
@@ -203,6 +278,20 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 		if (!elem.parents('.settings-button').length && !elem.hasClass('settings-button') && scope.show_settings) {
 			scope.show_settings = false;
 			scope.$apply();
+		}
+	});
+
+	/* LISTENERS */
+	scope.$watch('public', function(public) {
+		console.log(public);
+		if (state.params.type === 'saved' && !scope.loading) {
+			scope.saving = true;
+			scope.design.public = public ? 1 : 0;
+			var design = {
+				id: scope.design.id,
+				public: scope.design.public
+			};
+			scope.update_design(design, function(){});
 		}
 	});
 

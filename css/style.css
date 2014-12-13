@@ -334,6 +334,36 @@
 		padding: 15px 5%;
 	}
 
+	/* Account Page */
+		#account .section {
+			border-bottom: 1px solid #cdcdcd;
+			padding: 15px 0;
+			margin: 0 15px;
+		}
+		#account .design {
+			background: #f1f1f1;
+			border-radius: 15px;
+			margin: 10px 0;
+			padding: 10px;
+		}
+		#account .variations {
+			width:200px;
+			height:200px;
+			float:left;
+			background: #fff;
+			border-radius: 15px;
+			margin-right: 10px;
+		}
+		#account .variation {
+			width:80px;
+			height:80px;
+			padding: 10px;
+			float:left;
+		}
+		#account .content {
+			float:left;
+		}
+	
 	/* Home Page */
 		#home {
 			width: 100%;
@@ -570,6 +600,18 @@
 		#edit .heading .button {
 			display:inline-block;
 			margin: 10px 5px;
+		}
+		#edit .design-name {
+			display:inline-block;
+		}
+		#edit .design-name .icon {
+			display:inline-block;
+			height:16px;
+			width:16px;
+			opacity:0;
+		}
+		#edit .design-name:hover .icon {
+			opacity:1;
 		}
 		.colors ul {
 			list-style: none;
