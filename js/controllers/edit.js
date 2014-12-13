@@ -1,4 +1,4 @@
-app.controller('EditController', ['$scope', '$rootScope', '$location', '$compile', function(scope, root, location, compile) {
+app.controller('EditController', ['$scope', '$rootScope', '$location', '$state', function(scope, root, location, state) {
 	scope.current_color = '#ffffff';
 	scope.product = {};
 	scope.colors = [];
@@ -6,6 +6,8 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$compile
 	scope.loading = true;
 	scope.show_settings = false;
 	scope.show_outlines = true;
+	scope.public = false;
+	console.log(state);
 
 	//FUNCTIONS
 	scope.get_product = function() {
@@ -20,7 +22,6 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$compile
 				scope.variations = JSON.parse(scope.product.variations);
 				scope.current_variation = scope.variations[0];
 				scope.loading = false;
-				console.log(scope.product);
 				scope.$apply();
 			},
 			error: function(data) {
@@ -29,7 +30,16 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$compile
 			}
 		});
 	};
-	scope.get_product();
+	if (state.params.type === 'new') {
+		scope.get_product();
+	}
+
+	scope.get_design = function() {
+
+	};
+	if (state.params.type === 'saved') {
+		scope.get_design();
+	}
 
 	scope.color_panel = function(colors, $event) {
 		var panel = $($event.target),
@@ -127,14 +137,19 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$compile
 			}
 			layout[item] = color;
 		});
-		console.log(scope.variations);
 
 		//loop through visible variations and update html
 		$.each($('.variations .variation'), function(i, elem) {
 			var variation = $(elem);
+
+			//loop through autofill array and set colors
 			$.each(layout, function(item, color){
-				console.log(variation.find('*[data-autofill="' + item + '"]'));
-				variation.find('*[data-autofill="' + item + '"]').attr('fill', color);
+				if (item[0] === 'g') {
+					variation.find('*[data-autofill="' + item + '"]').children().attr('fill', color);
+				} else {
+					variation.find('*[data-autofill="' + item + '"]').attr('fill', color);
+				}
+
 			});
 		});
 		//Update scope.variations
@@ -142,7 +157,53 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$compile
 			var html = $('.variation[title="' + variation.name + '"]').html();
 			scope.variations[i].svg = html;
 		});
-		scope.$apply();
-	}
+	};
+
+	scope.save_as = function() {
+		scope.saving = true;
+		var design = {
+			name: scope.save_as_name,
+			user: root.user.user_id,
+			product: scope.product.id,
+			variations: JSON.stringify(scope.variations),
+			public: scope.public ? 1 : 0,
+			new: 1
+		};
+
+		$.ajax({
+			type: 'POST',
+			url: 'php/designs.php',
+			data: design,
+			dataType: 'json',
+			success: function(data) {
+				console.log('success', data);
+				scope.edit_design(data.id);
+				scope.saving = false;
+				scope.show_save_as = false;
+				scope.$apply();
+			},
+			error: function(data) {
+				console.log('error', data);
+				alert('Could not save design');
+				scope.saving = false;
+				scope.show_save_as = false;
+				scope.$apply();
+			}
+		});
+	};
+
+	scope.edit_design = function(id) {
+		var params = {type:'saved', id:id};
+ 		state.go('edit', params);
+	};
+
+	//Close dropdown when clicking out of it
+	$(document).click(function(e) {
+		var elem = $(e.target);
+		if (!elem.parents('.settings-button').length && !elem.hasClass('settings-button') && scope.show_settings) {
+			scope.show_settings = false;
+			scope.$apply();
+		}
+	});
 
 }]);

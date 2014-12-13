@@ -145,7 +145,6 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 			data: user_data,
 			dataType: 'json',
 			success: function(data) {
-				console.log('success', data);
 				if (!data.logged_in){
 					root.user = false;
 					if (scope.current_page === 'account') {

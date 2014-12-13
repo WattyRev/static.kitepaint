@@ -5,7 +5,7 @@
 			<h2>Unsaved</h2>
 		</div>
 		<div class="right half actions">
-			<button class="button">Save</button>	
+			<button class="button" ng-click="show_save_as = true" ng-show="$root.user.logged_in">Save As</button>	
 			<button title="Settings" class="settings-button">
 				<svg viewBox="0 0 1000 1000" ng-click="show_settings = !show_settings;">
 				<defs>
@@ -39,8 +39,9 @@
 					<div>
 						<a ng-click="autofill();">AutoFill</a>
 					</div>
-					<div>
-						<a>Make Design Public</a>
+					<div ng-show="$root.user.logged_in">
+						<a ng-click="public = true;" ng-hide="public">Make Design Public</a>
+						<a ng-click="public = false;" ng-show="public">Make Design Private</a>
 					</div>
 					<div>
 						<label for="input-background">Background</label>
@@ -73,6 +74,12 @@
 		</div>
 	</div>
 	<div class="template" ng-class="{wide: collapse_colors, outlines: show_outlines}" compile="current_variation.svg">
+	</div>
+	<div class="prompt save_as" ng-show="show_save_as">
+		<label for="save_as_name">What do you want to name your design?</label>
+		<input type="text" id="save_as_name" ng-model="save_as_name" />
+		<button class="button" ng-click="save_as();">Save</button>
+		<button class="button" ng-click="show_save_as = false">Cancel</button>
 	</div>
 	<div class="clearfix"></div>
 </div>

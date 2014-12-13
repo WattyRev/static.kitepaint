@@ -251,6 +251,40 @@
 	.mobile {
 		display:none;
 	}
+	.prompt {
+		position: fixed;
+		width: 260px;
+		height: 133px;
+		background: #fff;
+		padding: 15px;
+		border-radius: 10px;
+		border: 1px solid #cdcdcd;
+		box-shadow: 3px 3px 3px 0px #000;
+		display: block;
+		top: 100px;
+		left: 50%;
+		margin-left: -130px;
+		text-align:center;
+	}
+	.prompt input[type="text"] {
+		width:91%;
+		margin: 10px auto;
+	}
+	.prompt button {
+		display:inline-block;
+		width:100px;
+	}
+	.prompt:before {
+		content: "";
+		display:block;
+		position:fixed;
+		top:0;
+		left:0;
+		height:100%;
+		width:100%;
+		background:rgba(255,255,255,.5);
+		z-index:-1;
+	}
 
 /* HEADER */
 	header {
