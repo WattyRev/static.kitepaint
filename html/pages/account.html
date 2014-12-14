@@ -1,8 +1,8 @@
 <div class="section">
 	<h1>Account - {{$root.user.username}} <span class="small">({{$root.user.email}})</span></h1>
 	<a ui-sref="changePassword">Change Password</a> | 
-	<a ng-click="change_email($root.user.user_id);">Change Email Address</a> | 
-	<a ng-click="delete_account($root.user.user_id);">Delete Account</a>
+	<a ng-click="show_change_email = true;">Change Email Address</a> | 
+	<a ng-click="show_delete_account = true;">Delete Account</a>
 </div>
 <div class="section">
 	<h2>Designs</h2>
@@ -135,4 +135,22 @@
 			<div class="clearfix"></div>
 		</li>
 	</ul>
+</div>
+<div class="prompt" ng-show="show_change_email">
+	<form ng-submit="change_email(new_email_address)">
+		<label for="input-change-email" >What do you want to change your email address to?</label>
+		<input type="email" id="input-change-email" ng-model="new_email_address" required/>
+		<button class="button">Submit</button>
+		<button type="button" class="button" ng-click="show_change_email = false">Cancel</button>
+	</form>
+</div>
+<div class="prompt" ng-show="show_delete_account">
+	<form ng-submit="delete_account()">
+		<label>Are you sure you want to delete your account?</label><br/>
+		<label for="input-delete-account">Insert your password</label>
+		<input type="password" id="input-delete-account" ng-model="delete_account_password" required>
+		<div class="clearfix"></div>
+		<button class="button">Delete</button>
+		<button type="button" class="button" ng-click="show_delete_account = false">Cancel</button>
+	</form>
 </div>

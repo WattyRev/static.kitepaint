@@ -41,6 +41,40 @@ function change_password_success() {
   echo json_encode($content);
 }
 
+function change_email_error($message) {
+  $content = (object) array(
+      'changed' => false,
+      'message' => $message
+  );
+
+  echo json_encode($content);
+}
+
+function change_email_success() {
+  $content = (object) array(
+      'changed' => true
+  );
+
+  echo json_encode($content);
+}
+
+function delete_account_error($message) {
+  $content = (object) array(
+      'changed' => false,
+      'message' => $message
+  );
+
+  echo json_encode($content);
+}
+
+function delete_account_success() {
+  $content = (object) array(
+      'changed' => true
+  );
+
+  echo json_encode($content);
+}
+
 function lost_password_error($message) {
   $content = (object) array(
     'reset' => false,

@@ -1,4 +1,4 @@
-app.controller('AccountController', ['$scope', '$rootScope', function(scope, root) {
+app.controller('AccountController', ['$scope', '$rootScope', '$state', function(scope, root, state) {
 	//VARIABLES
 	scope.designs = [];
 	scope.manufacturers = [];
@@ -103,4 +103,59 @@ app.controller('AccountController', ['$scope', '$rootScope', function(scope, roo
 	};
 	scope.get_product_names();
 
+	scope.change_email = function(new_email) {
+		var content = {
+			id: root.user.user_id,
+			email: new_email
+		};
+		$.ajax({
+			type: 'POST',
+			url: 'php/change_email.php',
+			data: content,
+			dataType: 'json',
+			success: function(data) {
+				console.log(data.changed);
+				if (data.changed) {
+					root.user.email = new_email;
+					scope.show_change_email = false;
+					scope.$apply();
+				} else {
+					console.log(data);
+					alert(data.message);
+				}
+			},
+			error: function(data) {
+				console.log('error', data);
+				alert('Could not change email');
+			}
+		});
+	};
+
+	scope.delete_account = function() {
+		var content = {
+			id: root.user.user_id,
+			password: scope.delete_account_password
+		};
+		$.ajax({
+			type: 'POST',
+			url: 'php/delete_account.php',
+			data: content,
+			dataType: 'json',
+			success: function(data) {
+				console.log(data);
+				if (data.changed) {
+					localStorage.user = '';
+					root.user = null;
+					state.go('home');
+				} else {
+					console.log(data);
+					alert(data.message);
+				}
+			},
+			error: function(data) {
+				console.log('error', data);
+				alert('Could not change email');
+			}
+		});
+	};
 }]);

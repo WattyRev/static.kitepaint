@@ -1,6 +1,31 @@
 <?php
  
 ##### User Functions #####
+function changeEmail($loginid, $email){
+    global $seed;
+    $response = (object) array();
+    $response->valid = true;
+    if (!valid_email($email)) {
+
+        $response->valid = false;
+        $response->message = 'Invalid email address';
+        return $response;
+
+    }
+ 
+    // now we update the email in the database
+    $query = sprintf("update login set email = '%s' where loginid = '%s'",
+        mysql_real_escape_string($email), mysql_real_escape_string($loginid));
+ 
+    if (mysql_query($query)) {
+        return $response;
+    } else {
+        $response->valid = false;
+        $response->message = 'Unable to change email';
+        return $response;
+    }
+}
+
 function changePassword($username, $currentpassword, $newpassword, $newpassword2){
     global $seed;
     $response = (object) array();
@@ -57,6 +82,51 @@ function changePassword($username, $currentpassword, $newpassword, $newpassword2
     }
 }
  
+function delete_account($loginid, $password){
+    global $seed;
+    $response = (object) array();
+    $response->valid = true;
+    if (!valid_password($password) ){
+
+        $response->valid = false;
+        $response->message = 'Password is invalid';
+        return $response;
+
+    }
+ 
+    // we get the current password from the database
+    $query = sprintf("SELECT password FROM login WHERE loginid = '%s' LIMIT 1",
+        mysql_real_escape_string($loginid));
+ 
+    $result = mysql_query($query);
+    $row= mysql_fetch_row($result);
+ 
+    // compare it with the password the user entered, if they don't match, we return false, he needs to enter the correct password.
+    if ($row[0] != sha1($password.$seed)){
+        $response->valid = false;
+        $response->message = 'Incorrect password';
+        return $response;
+    }
+ 
+    // now we update 'deleted' in the database
+    $query = sprintf("update login set deleted = 1 where loginid = '%s'",
+        mysql_real_escape_string(mysql_real_escape_string($loginid)));
+ 
+    if (mysql_query($query)) {
+    } else {
+        $response->valid = false;
+        $response->message = 'Unable to delete account';
+        return $response;
+    }
+
+    // now we update 'deleted time' in the database
+    $query = sprintf("update login set deleted_time = now() where loginid = '%s'",
+        mysql_real_escape_string(mysql_real_escape_string($loginid)));
+ 
+    if (mysql_query($query)) {
+        return $response;
+    }
+}
  
 function user_exists($username) {
     if (!valid_username($username)) {
