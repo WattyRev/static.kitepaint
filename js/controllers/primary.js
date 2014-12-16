@@ -133,7 +133,7 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 		});
 	};
 	root.check_login = function() {
-		if (!localStorage.user || localStorage.user === 'false') {
+		if (!localStorage.user || localStorage.user === 'false' || localStorage.user === 'null') {
 			return;
 		}
 		var user_data = JSON.parse(localStorage.user);

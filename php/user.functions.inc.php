@@ -145,7 +145,6 @@ function user_exists($username) {
     }
  
     return false;
- 
 }
  
 function activateUser($uid, $actcode) {
@@ -170,8 +169,7 @@ function activateUser($uid, $actcode) {
  
         return false;
  
-    }
- 
+    } 
 }
  
 function registerNewUser($username, $password, $password2, $email) {
@@ -225,7 +223,6 @@ function registerNewUser($username, $password, $password2, $email) {
         $response->message = 'Unable to register';
         return $response;
     }
- 
 }
  
 function lostPassword($username, $email) {

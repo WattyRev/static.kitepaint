@@ -35,13 +35,29 @@ function checkLogin($u, $p){
         $response->valid = false;
         $response->message = 'Invalid username or password';
         return $response;
-    } else
-    {
+    } else {
 
+        //Check to see if the user has been deleted
+        $query = sprintf("
+            SELECT deleted
+            FROM login
+            WHERE
+            username = '%s' AND password = '%s'
+            AND disabled = 0 AND activated = 1
+            LIMIT 1;", mysql_real_escape_string($u), mysql_real_escape_string(sha1($p . $seed)));
+        $deleted_result = mysql_query($query);
+        $deleted_row = mysql_fetch_array($deleted_result);
+        $deleted = $deleted_row['deleted'];
+
+        if ($deleted === "1") {
+            $response->valid = false;
+            $response->message = 'Invalid username or password';
+            return $response;
+        }
 
         // Login was successfull
         $row = mysql_fetch_array($result);
-
+        
         $loginid = $row['loginid'];
 
         $query = sprintf("
