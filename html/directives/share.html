@@ -1,0 +1,85 @@
+<div class="lightbox" ng-show="$root.show_share">
+	<a ng-click="$root.show_share = false" class="close right">Close</a>
+	{{root.share_design}}
+	<ul class="options">
+		<li class="link" ng-class="{selected: selected === 'link'}" title="Share a link" ng-click="selected = 'link'">
+			<svg viewBox="0 0 1000 1000">
+				<path fill="none" stroke="#FFFFFF" stroke-width="93.1711" stroke-miterlimit="10" d="M745.9,765.3c0,85.6-69.4,155-155,155H227.1
+					c-85.6,0-155-69.4-155-155V401.5c0-85.6,69.4-155,155-155h363.8c85.6,0,155,69.4,155,155V765.3z"/>
+				<path fill="#FFFFFF" d="M602.4,659.5c-29.9,29.9-78.3,29.9-108.1,0L348.1,513.3c-29.9-29.9-29.9-78.3,0-108.1l239.3-239.3
+						c29.9-29.9,78.3-29.9,108.1,0l146.2,146.2c29.9,29.9,29.9,78.3,0,108.1L602.4,659.5z"/>
+				<path fill="#FFFFFF" d="M466,93.5l448,448c5.2,5.2,14,1.4,13.8-5.9l-8.2-439.8c-0.1-4.4-3.6-7.9-7.9-7.9l-439.8-8.2
+					C464.6,79.6,460.9,88.4,466,93.5z"/>
+			</svg>
+		</li>
+		<li class="email" ng-class="{selected: selected === 'email'}" title="Share through email" ng-click="selected = 'email'">
+			<svg viewBox="0 0 1000 676">
+				<path fill="#FFFFFF" stroke="#FFFFFF" stroke-width="7.3753" stroke-miterlimit="10" d="M500,354.1L937.4,38.6
+					c0,0-24.1-12.2-44.9-12.2c-20.8,0-785,0-785,0s-16.4-3.2-45.4,12.5L500,354.1z"/>
+				<path fill="#FFFFFF" stroke="#FFFFFF" stroke-width="7.3753" stroke-miterlimit="10" d="M371,299.3L35.7,614.8
+					c0,0-16.7-27.2-16.7-51.7c0-24.5,0-448.3,0-448.3s-1.8-29,19.1-54.9L371,299.3z"/>
+				<path fill="#FFFFFF" stroke="#FFFFFF" stroke-width="7.3753" stroke-miterlimit="10" d="M397,319.3l102.8,74l103.2-74l339.3,317
+					c0,0-22.3,15.3-49.8,15.3c-27.5,0-785,0-785,0s-23.2,0.9-49.8-15.4L397,319.3z"/>
+				<path fill="#FFFFFF" stroke="#FFFFFF" stroke-width="7.3753" stroke-miterlimit="10" d="M629,300L961.5,59.4c0,0,19.5,27,19.5,55.5
+					s0,448.3,0,448.3s1.8,20.8-16.8,51.8L629,300z"/>
+			</svg>
+		</li>
+		<li class="facebook" ng-class="{selected: selected === 'facebook'}" title="Share on Facebook" ng-click="selected = 'facebook'">
+			<svg viewBox="0 0 478.5 1000">
+				<path fill="#FFFFFF" d="M112.2,991.8V494.5H9.1V330.9h103.1V199.9c0,0,6.2-191.7,183.9-191.7s171.5,0,171.5,0l0,158.8l-116.9,0.2
+					c0,0-37.4-1.1-37.4,37.8s0.6,125.8,0.6,125.8h153.8l-17.6,161.8l-136.7-0.1v499.2H112.2z"/>
+				<path fill="#231F20" d="M348.5,67"/>
+				<path fill="none" stroke="#231F20" stroke-miterlimit="10" d="M348.5,825.6"/>
+			</svg>
+		</li>
+		<li class="twitter" ng-class="{selected: selected === 'twitter'}" title="Share on Twitter" ng-click="selected = 'twitter'">
+			<svg viewBox="0 0 1000 820">
+				<path fill="#FFFFFF" d="M982.7,113.6c-35.5,15.8-73.7,26.4-113.8,31.2c40.9-24.5,72.3-63.3,87.1-109.6
+					c-38.3,22.7-80.7,39.2-125.8,48.1c-36.1-38.5-87.6-62.5-144.6-62.5c-109.4,0-198.1,88.7-198.1,198.1c0,15.5,1.8,30.6,5.1,45.1
+					C328.1,255.7,182.2,176.8,84.5,57c-17,29.3-26.8,63.3-26.8,99.6c0,68.7,35,129.3,88.1,164.9c-32.5-1-63-9.9-89.7-24.8
+					c0,0.8,0,1.7,0,2.5c0,96,68.3,176,158.9,194.2c-16.6,4.5-34.1,6.9-52.2,6.9c-12.8,0-25.2-1.2-37.3-3.6c25.2,78.7,98.3,136,185,137.6
+					c-67.8,53.1-153.2,84.8-246,84.8c-16,0-31.8-0.9-47.2-2.8c87.7,56.2,191.8,89,303.6,89c364.3,0,563.5-301.8,563.5-563.5
+					c0-8.6-0.2-17.1-0.6-25.6C922.6,188.2,956.1,153.3,982.7,113.6z"/>
+			</svg>
+		</li>
+		<li class="google" ng-class="{selected: selected === 'google'}" title="Share on Google Plus" ng-click="selected = 'google'">
+			<svg viewBox="0 0 1000 1000">
+				<polygon fill="#FFFFFF" points="982.2,161.8 851,161.8 851,30.6 785.4,30.6 785.4,161.8 654.1,161.8 654.1,227.4 785.4,227.4 
+					785.4,358.6 851,358.6 851,227.4 982.2,227.4 		"/>
+				<path fill="#FFFFFF" d="M516.3,569.7c-26.4-19.8-83.8-60.3-83.8-87.6c0-31.9,9.1-47.6,57.1-85.1c49.2-38.5,84.1-89.2,84.1-152
+					c0-68.5-28-130.7-80.7-160.9h74.7l63.6-66.7c0,0-210.1,0-284.5,0C202.4,17.4,82.1,123.9,82.1,241c0,119.7,79.1,215,214.8,215
+					c9.4,0,18.6-0.5,27.6-1.1c-8.8,16.9-15.1,35.7-15.1,55.4c0,33.2,18.3,52.2,40.9,74.2c-17.1,0-33.6,0.5-51.6,0.5
+					c-165.3,0-281,113.7-281,222.9c0,107.5,139.5,174.7,304.7,174.7c188.4,0,304.3-106.9,304.3-214.4
+					C626.8,682,608.2,638.6,516.3,569.7z M351.9,412.5c-76.7-2.3-149.5-72.6-162.8-173.3C175.9,138.5,227.3,61.4,304,63.7
+					c76.7,2.3,142.2,84.9,155.5,185.6C472.7,350,428.6,414.8,351.9,412.5z M321.9,935.1c-114.2,0-196.7-72.3-196.7-159.2
+					c0-85.1,96.8-158.6,211-157.3c26.7,0.3,51.5,4.6,74,11.9c62,43.1,112,70.1,124.6,119.2c2.4,9.9,3.6,20.2,3.6,30.7
+					C538.5,867.2,482.5,935.1,321.9,935.1z"/>
+			</svg>
+		</li>
+	</ul>
+	<div class="content">
+		<div class="link-content" ng-show="selected === 'link'">
+			<label for="share-url">Copy and share this url:</label>
+			<input id="share-url" type="text" disabled ng-model="url" />
+		</div>
+		<div class="email-content" ng-show="selected === 'email'">
+			<form ng-submit="share_email();">
+				<label for="share-email-to">Send an email to</label>
+				<input id="share-email-to" type="email" required placeholder="e.g. coolguy@website.com" ng-model="share_email_to" />
+				<label for="share-email-name">Your Name</label>
+				<input id="share-email-name" type="text" required ng-model="share_email_name" />
+				<label for="share-email-from">Your email address</label>
+				<input id="share-email-from" type="email" required placeholder="e.g. isharestuff@website.com" ng-model="share_email_from" />
+				<input type="submit" class="button" value="Send" />
+			</form>
+		</div>
+		<div class="facebook-content" ng-show="selected === 'facebook'">
+		</div>
+		<div class="twitter-content" ng-show="selected === 'twitter'">
+			
+		</div>
+		<div class="google-content" ng-show="selected === 'google'">
+			
+		</div>
+	</div>
+</div>

@@ -23,8 +23,10 @@
 		<script type="text/javascript" src="js/controllers/header.js"></script>
 		<script type="text/javascript" src="js/controllers/home.js"></script>
 		<script type="text/javascript" src="js/controllers/primary.js"></script>
+		<script type="text/javascript" src="js/controllers/view.js"></script>
 		<script type="text/javascript" src="js/directives/compile.js"></script>
 		<script type="text/javascript" src="js/directives/menu.js"></script>
+		<script type="text/javascript" src="js/directives/share.js"></script>
 		<script type="text/javascript" src="js/directives/tooltip.js"></script>
 
 		<link rel="stylesheet" href="css/style.css" />

@@ -2,6 +2,7 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 
 	//VARIABLES
 	scope.current_page = '';
+	root.base_url = 'http://www.wattydev.com/projects/kite_paint';
 	root.has_account = localStorage.kp_has_account ? localStorage.kp_has_account === 'true' : false;
 	root.sign_in = {
 		username: '',

@@ -75,6 +75,14 @@ app.config(function($stateProvider, $urlRouterProvider){
 			data: {
 				title: ''
 			}
+		})
+		.state('view', {
+			url: '/view?id',
+			templateUrl: 'html/pages/view.html',
+			controller: 'ViewController',
+			data: {
+				title: 'View'
+			}
 		});
 });
 

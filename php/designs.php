@@ -64,6 +64,28 @@ if ($_GET){
 		'message' => ''
 	);
 
+	//Delete
+	if (isset($_POST['delete'])) {
+		$id = $_POST['id'];
+
+		$query = sprintf("update designs set active = 0 where id = '%s'",
+			mysql_real_escape_string($id));
+
+		if (mysql_query($query)) {
+		} else {
+			$response->valid = false;
+			$response->message = 'Unable to delete design';
+		}
+		$query = sprintf("update designs set updated = now() where id = '%s'",
+		mysql_real_escape_string($id));
+
+		if (mysql_query($query)) {
+		} else {
+		}
+		echo json_encode($response);
+		return;
+	}
+
 	//Create
 	if (isset($_POST['new'])) {
 
@@ -127,7 +149,7 @@ if ($_GET){
 			}
 		}
 		$query = sprintf("update designs set updated = now() where id = '%s'",
-		mysql_real_escape_string($val), mysql_real_escape_string($id));
+		mysql_real_escape_string($id));
 
 		if (mysql_query($query)) {
 		} else {

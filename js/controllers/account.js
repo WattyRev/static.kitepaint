@@ -3,6 +3,8 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 	scope.designs = [];
 	scope.manufacturers = [];
 	scope.products = [];
+	scope.deleting_design = {};
+	scope.show_delete_design = false;
 
 	//FUNCTIONS
 	scope.get_designs = function() {
@@ -154,8 +156,49 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 			},
 			error: function(data) {
 				console.log('error', data);
-				alert('Could not change email');
+				alert('Could not delete account');
 			}
 		});
 	};
+
+	scope.delete_design = function(design) {
+		if (!scope.show_delete_design) {
+			scope.show_delete_design = true;
+			scope.deleting_design = design.id;
+			return;
+		}
+		var data = {
+			delete: true,
+			id: scope.deleting_design
+		}
+		$.ajax({
+			type: 'POST',
+			url: 'php/designs.php',
+			data: data,
+			dataType: 'json',
+			success: function(data) {
+				console.log('success', data);
+				scope.show_delete_design = false;
+				scope.deleting_design = null;
+				scope.get_designs();
+				scope.$apply();
+			},
+			error: function(data) {
+				console.log('error', data);
+				alert('Could not delete design');
+				scope.show_delete_design = false;
+				scope.deleting_design = null;
+				scope.get_designs();
+				scope.$apply();
+			}
+		})
+
+
+	};
+
+	scope.show_share = function(design) {
+		root.share_design = design.id;
+		root.show_share = true;
+	}
+
 }]);

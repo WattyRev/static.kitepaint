@@ -5,136 +5,150 @@
 	<a ng-click="show_delete_account = true;">Delete Account</a>
 </div>
 <div class="section">
-	<h2>Designs</h2>
-	<ul class="designs unstyled">
-		<li class="design" ng-repeat="design in designs">
-			<div class="variations">
-				<div 
-					class="variation" 
-					ng-repeat="variation in design.variations" 
-					title="{{variation.name}}" 
-					ng-bind-html="variation.svg"
-				>
-				</div>
-				<div class="clearfix"></div>
-			</div>
-			<div class="content">
-				<h3><a ui-sref="edit({type:'saved',id:{{design.id}}})">{{design.name}}</a></h3>
-				<h4><a href="{{products[design.product].url}}" target="_blank">{{products[design.product].name}}</a> by {{manufacturers[products[design.product].manufacturer].name}}</h4>
-				<div class="actions">
-					<a ui-sref="view({id:{{design.id}}})">
-						<span class="icon view">
-							<svg viewBox="0 0 1000 558.612" enable-background="new 0 0 1000 558.612" xml:space="preserve">
-								<path fill="none" stroke="#CDCDCD" stroke-width="55.9153" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
-									M917.278,279.306c0,0-186.822,230.918-417.278,230.918S82.722,279.306,82.722,279.306S269.544,48.388,500,48.388
-									S917.278,279.306,917.278,279.306z"/>
-								<ellipse fill="#CDCDCD" cx="500" cy="279.306" rx="138.936" ry="230.918"/>
-							</svg>
-						</span>
-					</a>
-					<a ui-sref="edit({type:'saved',id:{{design.id}}})">
-						<span class="icon edit">
-							<svg viewBox="0 0 637.468 628.469">
-								<path fill="none" stroke="#CDCDCD" stroke-width="45" stroke-miterlimit="10" d="M200.363,560.679
-									c-4.72,4.652-12.318,4.597-16.97-0.122L74.586,450.167c-4.652-4.72-4.598-12.318,0.122-16.97L478.521,35.171
-									c4.72-4.652,12.318-4.598,16.97,0.122l108.808,110.39c4.652,4.72,4.598,12.318-0.122,16.97L200.363,560.679z"/>
-								
-								<line fill="none" stroke="#CDCDCD" stroke-width="45" stroke-miterlimit="10" x1="404.814" y1="107.12" x2="530.469" y2="234.602"/>
-								<polygon fill="none" stroke="#CDCDCD" stroke-width="45" stroke-linejoin="round" stroke-miterlimit="10" points="33.427,599.204 
-									188.307,565.542 70.023,445.537 	"/>
-							</svg>
-						</span>
-					</a>
-					<span ng-click="share(design);" class="icon share">
-						<svg viewBox="0 0 823.459 830.958">
-							<polyline fill="none" stroke="#CDCDCD" stroke-width="60" stroke-miterlimit="10" points="677.387,140.997 151.387,414.997 
-								677.387,686.997 "/>
-							<circle fill="#CDCDCD" cx="677.387" cy="140.997" r="133.696"/>
-							<circle fill="#CDCDCD" cx="151.387" cy="414.997" r="133.696"/>
-							<circle fill="#CDCDCD" cx="677.387" cy="686.997" r="133.696"/>
-						</svg>
-					</span>
-					<span ng-click="delete(design);" class="icon delete">
+	<div class="tab-wrapper">
+		<div class="tab-section">
+			<input type="radio" class="tab-radio" name="tabs" id="tab-designs" checked />
+			<label for="tab-designs" class="tab-label">Designs</label>
+			<div class="tab-content">
+				<ul class="designs unstyled">
+				<li class="design" ng-repeat="design in designs">
+					<div class="variations">
+						<div 
+							class="variation" 
+							ng-repeat="variation in design.variations" 
+							title="{{variation.name}}" 
+							ng-bind-html="variation.svg"
+						>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="content">
+						<h3><a ui-sref="edit({type:'saved',id:{{design.id}}})">{{design.name}}</a></h3>
+						<h4><a href="{{products[design.product].url}}" target="_blank">{{products[design.product].name}}</a> by {{manufacturers[products[design.product].manufacturer].name}}</h4>
+						<div class="actions">
+							<a ui-sref="view({id:{{design.id}}})">
+								<span class="icon view">
+									<svg viewBox="0 0 1000 558.612" enable-background="new 0 0 1000 558.612" xml:space="preserve">
+										<path fill="none" stroke="#CDCDCD" stroke-width="55.9153" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+											M917.278,279.306c0,0-186.822,230.918-417.278,230.918S82.722,279.306,82.722,279.306S269.544,48.388,500,48.388
+											S917.278,279.306,917.278,279.306z"/>
+										<ellipse fill="#CDCDCD" cx="500" cy="279.306" rx="138.936" ry="230.918"/>
+									</svg>
+								</span>
+							</a>
+							<a ui-sref="edit({type:'saved',id:{{design.id}}})">
+								<span class="icon edit">
+									<svg viewBox="0 0 637.468 628.469">
+										<path fill="none" stroke="#CDCDCD" stroke-width="45" stroke-miterlimit="10" d="M200.363,560.679
+											c-4.72,4.652-12.318,4.597-16.97-0.122L74.586,450.167c-4.652-4.72-4.598-12.318,0.122-16.97L478.521,35.171
+											c4.72-4.652,12.318-4.598,16.97,0.122l108.808,110.39c4.652,4.72,4.598,12.318-0.122,16.97L200.363,560.679z"/>
+										
+										<line fill="none" stroke="#CDCDCD" stroke-width="45" stroke-miterlimit="10" x1="404.814" y1="107.12" x2="530.469" y2="234.602"/>
+										<polygon fill="none" stroke="#CDCDCD" stroke-width="45" stroke-linejoin="round" stroke-miterlimit="10" points="33.427,599.204 
+											188.307,565.542 70.023,445.537 	"/>
+									</svg>
+								</span>
+							</a>
+							<span ng-click="show_share(design);" class="icon share">
+								<svg viewBox="0 0 823.459 830.958">
+									<polyline fill="none" stroke="#CDCDCD" stroke-width="60" stroke-miterlimit="10" points="677.387,140.997 151.387,414.997 
+										677.387,686.997 "/>
+									<circle fill="#CDCDCD" cx="677.387" cy="140.997" r="133.696"/>
+									<circle fill="#CDCDCD" cx="151.387" cy="414.997" r="133.696"/>
+									<circle fill="#CDCDCD" cx="677.387" cy="686.997" r="133.696"/>
+								</svg>
+							</span>
+							<span ng-click="delete_design(design)" class="icon delete">
+								<svg viewBox="0 0 1000 1000">
+									<line fill="none" stroke="#CDCDCD" stroke-width="151.1962" stroke-linecap="round" stroke-miterlimit="10" x1="100" y1="100" x2="900" y2="900"/>
+									<line fill="none" stroke="#CDCDCD" stroke-width="151.1962" stroke-linecap="round" stroke-miterlimit="10" x1="900" y1="100" x2="100" y2="900"/>
+								</svg>
+							</span>
+						</div>
+					</div>
+					<span class="icon public" title="This design is public" ng-show="design.public === '1'">
 						<svg viewBox="0 0 1000 1000">
-							<line fill="none" stroke="#CDCDCD" stroke-width="151.1962" stroke-linecap="round" stroke-miterlimit="10" x1="100" y1="100" x2="900" y2="900"/>
-							<line fill="none" stroke="#CDCDCD" stroke-width="151.1962" stroke-linecap="round" stroke-miterlimit="10" x1="900" y1="100" x2="100" y2="900"/>
+							<path fill="#CDCDCD" d="M500.101,70.076c238.973,0,432.698,193.726,432.698,432.698S739.073,935.473,500.101,935.473
+								S67.402,741.747,67.402,502.774S261.128,70.076,500.101,70.076 M500.101,11.527c-66.292,0-130.633,12.997-191.233,38.629
+								c-58.505,24.745-111.034,60.158-156.131,105.254c-45.096,45.096-80.509,97.626-105.254,156.131
+								C21.85,372.142,8.853,436.482,8.853,502.774S21.85,633.407,47.482,694.008c24.745,58.504,60.158,111.034,105.254,156.131
+								c45.096,45.096,97.626,80.509,156.131,105.254c60.601,25.632,124.941,38.629,191.233,38.629s130.633-12.997,191.234-38.629
+								c58.504-24.745,111.034-60.158,156.131-105.254c45.096-45.096,80.509-97.626,105.254-156.131
+								c25.632-60.601,38.629-124.941,38.629-191.234s-12.997-130.633-38.629-191.233c-24.745-58.505-60.158-111.034-105.254-156.131
+								c-45.096-45.096-97.626-80.509-156.131-105.254C630.733,24.524,566.393,11.527,500.101,11.527L500.101,11.527z"/>
+							<path fill="#CDCDCD" d="M493.259,911.714c0,0-32.013-40.312,6.83-103.402c0.555-0.901,1.124-1.807,1.708-2.718
+								C543.27,740.947,594.5,653.124,594.5,653.124s18.296-47.571-29.274-75.625c-47.571-28.055-48.791-51.23-74.406-60.988
+								c-25.615-9.758-100.021-15.274-115.878-13.736c-15.857,1.538-28.055,5.197-30.494-38.714c0,0-3.659-19.516-32.934-19.516
+								c-29.274,0-36.593-59.768,17.077-59.768s37.813,8.538,40.252,12.198c2.44,3.659,20.736,18.296,13.417-29.274
+								c0,0-4.879-13.417,81.724-60.988s84.164-81.724,53.67-103.68s-71.966,36.593-100.021,29.274s-16.776-60.988,25.765-60.988
+								s76.695-29.274,58.398-39.032s106.12-58.549,85.384,45.131c0,0-2.44,24.395,28.055,28.055c0,0,11.722,2.155,118.079-67.23
+								l8.776-7.176c0,0-112.218-75.625-234.195-74.406s-245.173,59.768-290.304,97.581c0,0,24.395,73.186-23.176,119.537
+								s4.879,118.317,19.516,131.735s28.055,20.736,25.615,37.813s7.319,19.516,25.615,23.176s107.339,52.45,97.581,87.823
+								s2.44,71.966,35.373,118.317s31.714,150.031,37.813,182.965C442.029,888.538,474.963,911.714,493.259,911.714z"/>
+							<path fill="#CDCDCD" d="M908.078,358.337c0,0-29.373-1.616-41.571-16.254c-12.198-14.637-25.615-14.637-41.472-13.417
+								s-80.505,35.373-82.944,50.01s-20.736,29.274-28.055,29.274c-7.319,0-20.736,56.109-14.637,82.944s57.329,63.428,121.977,52.45
+								c64.648-10.978,37.813,48.791,37.813,48.791s21.08,42.196,16.639,125.388c-4.441,83.192,7.757,14.885,7.757,14.885
+								s97.581-62.208,54.889-373.248L908.078,358.337z"/>
 						</svg>
 					</span>
-				</div>
+					<span class="icon public" title="This design is private" ng-show="design.public === '0'">
+						<svg viewBox="0 0 1000 1000">
+							<path fill="#CDCDCD" d="M500.101,67.076c238.973,0,432.698,193.726,432.698,432.698S739.073,932.473,500.101,932.473
+								S67.402,738.747,67.402,499.774S261.128,67.076,500.101,67.076 M500.101,8.527c-66.292,0-130.633,12.997-191.233,38.629
+								c-58.505,24.745-111.034,60.158-156.131,105.254c-45.096,45.096-80.509,97.626-105.254,156.131
+								C21.85,369.142,8.853,433.482,8.853,499.774S21.85,630.407,47.482,691.008c24.745,58.504,60.158,111.034,105.254,156.131
+								c45.096,45.096,97.626,80.509,156.131,105.254c60.601,25.632,124.941,38.629,191.233,38.629s130.633-12.997,191.234-38.629
+								c58.504-24.745,111.034-60.158,156.131-105.254c45.096-45.096,80.509-97.626,105.254-156.131
+								c25.632-60.601,38.629-124.941,38.629-191.234s-12.997-130.633-38.629-191.233c-24.745-58.505-60.158-111.034-105.254-156.131
+								c-45.096-45.096-97.626-80.509-156.131-105.254C630.733,21.524,566.393,8.527,500.101,8.527L500.101,8.527z"/>
+							<defs>
+								<filter id="Adobe_OpacityMaskFilter" filterUnits="userSpaceOnUse" x="353" y="246.667" width="288.667" height="288.667">
+									<feFlood  style="flood-color:white;flood-opacity:1" result="back"/>
+									<feBlend  in="SourceGraphic" in2="back" mode="normal"/>
+								</filter>
+							</defs>
+							<mask maskUnits="userSpaceOnUse" x="353" y="246.667" width="288.667" height="288.667" id="SVGID_1_">
+								<g filter="url(#Adobe_OpacityMaskFilter)">
+									<g>
+										<circle stroke="#CDCDCD" stroke-width="3.3857" stroke-miterlimit="10" cx="498.333" cy="391" r="100.667"/>
+										<rect x="344" y="392" width="304" height="153"/>
+									</g>
+								</g>
+							</mask>
+							<circle mask="url(#SVGID_1_)" fill="#CDCDCD" cx="497.333" cy="391" r="144.333"/>
+							<defs>
+								<filter id="Adobe_OpacityMaskFilter_1_" filterUnits="userSpaceOnUse" x="316" y="427" width="364" height="293">
+									<feFlood  style="flood-color:white;flood-opacity:1" result="back"/>
+									<feBlend  in="SourceGraphic" in2="back" mode="normal"/>
+								</filter>
+							</defs>
+							<mask maskUnits="userSpaceOnUse" x="316" y="427" width="364" height="293" id="SVGID_2_">
+								<g filter="url(#Adobe_OpacityMaskFilter_1_)">
+									<g>
+										<circle cx="497.333" cy="541.333" r="45.333"/>
+										<path d="M499.167,645h-3.333C484.327,645,475,635.673,475,624.167v-62.333c0-11.506,9.327-20.833,20.833-20.833h3.333
+											c11.506,0,20.833,9.327,20.833,20.833v62.333C520,635.673,510.673,645,499.167,645z"/>
+									</g>
+								</g>
+							</mask>
+							<path mask="url(#SVGID_2_)" fill="#CDCDCD" d="M624.833,720H371.167C340.699,720,316,695.301,316,664.833V482.167
+								C316,451.699,340.699,427,371.167,427h253.667C655.301,427,680,451.699,680,482.167v182.667C680,695.301,655.301,720,624.833,720z"
+								/>
+						</svg>
+					</span>
+					<div class="clearfix"></div>
+				</li>
+				</ul>
 			</div>
-			<span class="icon public" title="This design is public" ng-show="design.public === '1'">
-				<svg viewBox="0 0 1000 1000">
-					<path fill="#CDCDCD" d="M500.101,70.076c238.973,0,432.698,193.726,432.698,432.698S739.073,935.473,500.101,935.473
-						S67.402,741.747,67.402,502.774S261.128,70.076,500.101,70.076 M500.101,11.527c-66.292,0-130.633,12.997-191.233,38.629
-						c-58.505,24.745-111.034,60.158-156.131,105.254c-45.096,45.096-80.509,97.626-105.254,156.131
-						C21.85,372.142,8.853,436.482,8.853,502.774S21.85,633.407,47.482,694.008c24.745,58.504,60.158,111.034,105.254,156.131
-						c45.096,45.096,97.626,80.509,156.131,105.254c60.601,25.632,124.941,38.629,191.233,38.629s130.633-12.997,191.234-38.629
-						c58.504-24.745,111.034-60.158,156.131-105.254c45.096-45.096,80.509-97.626,105.254-156.131
-						c25.632-60.601,38.629-124.941,38.629-191.234s-12.997-130.633-38.629-191.233c-24.745-58.505-60.158-111.034-105.254-156.131
-						c-45.096-45.096-97.626-80.509-156.131-105.254C630.733,24.524,566.393,11.527,500.101,11.527L500.101,11.527z"/>
-					<path fill="#CDCDCD" d="M493.259,911.714c0,0-32.013-40.312,6.83-103.402c0.555-0.901,1.124-1.807,1.708-2.718
-						C543.27,740.947,594.5,653.124,594.5,653.124s18.296-47.571-29.274-75.625c-47.571-28.055-48.791-51.23-74.406-60.988
-						c-25.615-9.758-100.021-15.274-115.878-13.736c-15.857,1.538-28.055,5.197-30.494-38.714c0,0-3.659-19.516-32.934-19.516
-						c-29.274,0-36.593-59.768,17.077-59.768s37.813,8.538,40.252,12.198c2.44,3.659,20.736,18.296,13.417-29.274
-						c0,0-4.879-13.417,81.724-60.988s84.164-81.724,53.67-103.68s-71.966,36.593-100.021,29.274s-16.776-60.988,25.765-60.988
-						s76.695-29.274,58.398-39.032s106.12-58.549,85.384,45.131c0,0-2.44,24.395,28.055,28.055c0,0,11.722,2.155,118.079-67.23
-						l8.776-7.176c0,0-112.218-75.625-234.195-74.406s-245.173,59.768-290.304,97.581c0,0,24.395,73.186-23.176,119.537
-						s4.879,118.317,19.516,131.735s28.055,20.736,25.615,37.813s7.319,19.516,25.615,23.176s107.339,52.45,97.581,87.823
-						s2.44,71.966,35.373,118.317s31.714,150.031,37.813,182.965C442.029,888.538,474.963,911.714,493.259,911.714z"/>
-					<path fill="#CDCDCD" d="M908.078,358.337c0,0-29.373-1.616-41.571-16.254c-12.198-14.637-25.615-14.637-41.472-13.417
-						s-80.505,35.373-82.944,50.01s-20.736,29.274-28.055,29.274c-7.319,0-20.736,56.109-14.637,82.944s57.329,63.428,121.977,52.45
-						c64.648-10.978,37.813,48.791,37.813,48.791s21.08,42.196,16.639,125.388c-4.441,83.192,7.757,14.885,7.757,14.885
-						s97.581-62.208,54.889-373.248L908.078,358.337z"/>
-				</svg>
-			</span>
-			<span class="icon public" title="This design is private" ng-show="design.public === '0'">
-				<svg viewBox="0 0 1000 1000">
-					<path fill="#CDCDCD" d="M500.101,67.076c238.973,0,432.698,193.726,432.698,432.698S739.073,932.473,500.101,932.473
-						S67.402,738.747,67.402,499.774S261.128,67.076,500.101,67.076 M500.101,8.527c-66.292,0-130.633,12.997-191.233,38.629
-						c-58.505,24.745-111.034,60.158-156.131,105.254c-45.096,45.096-80.509,97.626-105.254,156.131
-						C21.85,369.142,8.853,433.482,8.853,499.774S21.85,630.407,47.482,691.008c24.745,58.504,60.158,111.034,105.254,156.131
-						c45.096,45.096,97.626,80.509,156.131,105.254c60.601,25.632,124.941,38.629,191.233,38.629s130.633-12.997,191.234-38.629
-						c58.504-24.745,111.034-60.158,156.131-105.254c45.096-45.096,80.509-97.626,105.254-156.131
-						c25.632-60.601,38.629-124.941,38.629-191.234s-12.997-130.633-38.629-191.233c-24.745-58.505-60.158-111.034-105.254-156.131
-						c-45.096-45.096-97.626-80.509-156.131-105.254C630.733,21.524,566.393,8.527,500.101,8.527L500.101,8.527z"/>
-					<defs>
-						<filter id="Adobe_OpacityMaskFilter" filterUnits="userSpaceOnUse" x="353" y="246.667" width="288.667" height="288.667">
-							<feFlood  style="flood-color:white;flood-opacity:1" result="back"/>
-							<feBlend  in="SourceGraphic" in2="back" mode="normal"/>
-						</filter>
-					</defs>
-					<mask maskUnits="userSpaceOnUse" x="353" y="246.667" width="288.667" height="288.667" id="SVGID_1_">
-						<g filter="url(#Adobe_OpacityMaskFilter)">
-							<g>
-								<circle stroke="#CDCDCD" stroke-width="3.3857" stroke-miterlimit="10" cx="498.333" cy="391" r="100.667"/>
-								<rect x="344" y="392" width="304" height="153"/>
-							</g>
-						</g>
-					</mask>
-					<circle mask="url(#SVGID_1_)" fill="#CDCDCD" cx="497.333" cy="391" r="144.333"/>
-					<defs>
-						<filter id="Adobe_OpacityMaskFilter_1_" filterUnits="userSpaceOnUse" x="316" y="427" width="364" height="293">
-							<feFlood  style="flood-color:white;flood-opacity:1" result="back"/>
-							<feBlend  in="SourceGraphic" in2="back" mode="normal"/>
-						</filter>
-					</defs>
-					<mask maskUnits="userSpaceOnUse" x="316" y="427" width="364" height="293" id="SVGID_2_">
-						<g filter="url(#Adobe_OpacityMaskFilter_1_)">
-							<g>
-								<circle cx="497.333" cy="541.333" r="45.333"/>
-								<path d="M499.167,645h-3.333C484.327,645,475,635.673,475,624.167v-62.333c0-11.506,9.327-20.833,20.833-20.833h3.333
-									c11.506,0,20.833,9.327,20.833,20.833v62.333C520,635.673,510.673,645,499.167,645z"/>
-							</g>
-						</g>
-					</mask>
-					<path mask="url(#SVGID_2_)" fill="#CDCDCD" d="M624.833,720H371.167C340.699,720,316,695.301,316,664.833V482.167
-						C316,451.699,340.699,427,371.167,427h253.667C655.301,427,680,451.699,680,482.167v182.667C680,695.301,655.301,720,624.833,720z"
-						/>
-				</svg>
-			</span>
-			<div class="clearfix"></div>
-		</li>
-	</ul>
+		</div>
+		<div class="tab-section">
+			<input type="radio" class="tab-radio" name="tabs" id="tab-favorites" />
+			<label for="tab-favorites" class="tab-label">Favorites</label>
+			<div class="tab-content">
+				<p>Coming soon...</p>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="prompt" ng-show="show_change_email">
 	<form ng-submit="change_email(new_email_address)">
@@ -150,7 +164,18 @@
 		<label for="input-delete-account">Insert your password</label>
 		<input type="password" id="input-delete-account" ng-model="delete_account_password" required>
 		<div class="clearfix"></div>
-		<button class="button">Delete</button>
+		<button class="button red">Delete</button>
 		<button type="button" class="button" ng-click="show_delete_account = false">Cancel</button>
 	</form>
 </div>
+
+<div class="prompt" ng-show="show_delete_design">
+	<form ng-submit="delete_design()">
+		<label>Are you sure you want to delete this design?</label><br/>
+		<div class="clearfix"></div>
+		<button class="button red">Delete</button>
+		<button type="button" class="button" ng-click="show_delete_design = false">Cancel</button>
+	</form>
+</div>
+
+<share></share>
