@@ -18,9 +18,11 @@ app.controller('ChangePasswordController', ['$scope', '$rootScope', function(sco
 				console.log('success', data);
 				if (data.changed) {
 					root.change_status = 'changed';
+					root.success('Your password has been changed');
 				} else {
 					root.change_status = 'invalid';
 					root.change_message = data.message;
+					root.error(data.message);
 				}
 				root.changing_password = undefined;
 				root.$apply();
@@ -31,6 +33,7 @@ app.controller('ChangePasswordController', ['$scope', '$rootScope', function(sco
 				root.changing_password = undefined;
 				root.change_message = data.message || 'Unable to change password. Try again later.';
 				root.$apply();
+				root.error(root.change_message);
 			}
 		});
 	};

@@ -478,6 +478,9 @@
 			margin-top: 10px;
 			margin-bottom: 15px;
 		}
+		#changePassword .button {
+			margin: 0 auto;
+		}
 
 	/* Create */
 		#create ul {
