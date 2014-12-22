@@ -84,6 +84,22 @@ app.config(function($stateProvider, $urlRouterProvider){
 				title: ''
 			}
 		})
+		.state('manufacturer', {
+			url: '/manufacturer',
+			templateUrl: 'html/pages/manufacturer.html',
+			controller: 'ManufacturerController',
+			data: {
+				title: 'Manufacturer'
+			}
+		})
+		.state('retailer', {
+			url: '/retailer',
+			templateUrl: 'html/pages/retailer.html',
+			controller: 'RetailerController',
+			data: {
+				title: 'Retailer'
+			}
+		})
 		.state('view', {
 			url: '/view?id',
 			templateUrl: 'html/pages/view.html',

@@ -23,7 +23,9 @@
 		<script type="text/javascript" src="js/controllers/edit.js"></script>
 		<script type="text/javascript" src="js/controllers/header.js"></script>
 		<script type="text/javascript" src="js/controllers/home.js"></script>
+		<script type="text/javascript" src="js/controllers/manufacturer.js"></script>
 		<script type="text/javascript" src="js/controllers/primary.js"></script>
+		<script type="text/javascript" src="js/controllers/retailer.js"></script>
 		<script type="text/javascript" src="js/controllers/view.js"></script>
 		<script type="text/javascript" src="js/directives/compile.js"></script>
 		<script type="text/javascript" src="js/directives/alert.js"></script>

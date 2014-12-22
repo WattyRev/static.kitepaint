@@ -806,6 +806,7 @@
 		#home .marketing .button {
 			margin: 15px auto;
 			font-size: 18px;
+			width: 100px;
 		}
 
 	/* Lightbox */
@@ -1019,6 +1020,9 @@
 		padding: 10px
 		display:block;
 		clear:both;
+	}
+	footer p {
+		padding: 10px 0;
 	}
 	footer button {
 		width: 100%;
