@@ -44,6 +44,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 			error: function(data) {
 				console.log('error', data);
 				root.error('Could not retrieve designs. Try again later.');
+				root.$apply();
 			}
 		});
 	};
@@ -73,6 +74,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 			error: function(data) {
 				console.log('error', data);
 				root.error('Could not retrieve manufacturers. Try again later.');
+				root.$apply();
 			}
 		});
 	};
@@ -104,6 +106,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 			error: function(data) {
 				console.log('error', data);
 				root.error('Could not retrieve products. Try again later.');
+				root.$apply();
 			}
 		});
 	};
@@ -111,6 +114,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 	scope.check_user = function() {
 		if (!root.user) {
 			root.error('You must be logged in to view this page.');
+			root.$apply();
 			state.go('home');
 		} else {
 			scope.get_designs();
@@ -135,16 +139,15 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 				if (data.changed) {
 					root.user.email = new_email;
 					scope.show_change_email = false;
-					scope.$apply();
 					root.success('Your email address has been changed');
 				} else {
-					console.log(data);
 					root.error(data.message);
 				}
+				scope.$apply();
 			},
 			error: function(data) {
-				console.log('error', data);
 				root.error('We could not change your email address. Try again later.');
+				root.$apply();
 			}
 		});
 	};
@@ -170,10 +173,12 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 					console.log(data);
 					root.error(data.message);
 				}
+				root.$apply();
 			},
 			error: function(data) {
 				console.log('error', data);
 				root.error('We could not delete your account. Try again later.');
+				root.$apply();
 			}
 		});
 	};
@@ -198,8 +203,8 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 				scope.show_delete_design = false;
 				scope.deleting_design = null;
 				scope.get_designs();
-				scope.$apply();
 				root.success('Your design has been deleted');
+				scope.$apply();
 			},
 			error: function(data) {
 				console.log('error', data);
@@ -207,8 +212,8 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 				scope.show_delete_design = false;
 				scope.deleting_design = null;
 				scope.get_designs();
-				scope.$apply();
 				root.error('We could not delete your design. Try again later.');
+				scope.$apply();
 			}
 		});
 	};

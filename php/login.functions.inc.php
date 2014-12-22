@@ -116,7 +116,7 @@ function checkLogin($u, $p){
         //save email
         $_SESSION['email'] = $email;
         //save favorites
-        $_SESSION['favoirtes'] = $favorites;
+        $_SESSION['favorites'] = $favorites;
         // Now we show the userbox
         return $response;
     }

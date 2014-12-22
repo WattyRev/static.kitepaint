@@ -58,8 +58,8 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 				console.log('error', data);
 				root.login_loading = undefined;
 				root.login_message = data.message || 'Unable to log in. Try again later.';
-				root.$apply();
 				root.error(root.login_message);
+				root.$apply();
 			}
 		});
 	};
@@ -72,14 +72,14 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 			success: function(data) {
 				root.user = false;
 				root.logging_out = undefined;
-				root.$apply();
 				root.success('You have signed out');
+				root.$apply();
 			},
 			error: function(data) {
 				console.log('error', data);
 				root.logging_out = undefined;
-				root.$apply();
 				root.error('Unable to sign out');
+				root.$apply();
 			}
 		});
 	};
@@ -108,8 +108,8 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 				root.register_status = 'invalid';
 				root.registering = undefined;
 				root.register_message = data.message || 'Unable to register. Try again later.';
-				root.$apply();
 				root.error(root.register_message);
+				root.$apply();
 			}
 		});
 	};
@@ -139,8 +139,8 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 				root.reset_status = 'invalid';
 				root.resetting = undefined;
 				root.reset_message = data.message || 'Unable to reset password. Try again later.';
-				root.$apply();
 				root.error(root.reset_message);
+				root.$apply();
 			}
 		});
 	};
