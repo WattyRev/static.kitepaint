@@ -29,6 +29,7 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 	root.register_status = false;
 	root.reset_status = false;
 	root.lost_password = false;
+	root.alert_content = {};
 
 	//FUNCTIONS
 	root.login = function() {
@@ -42,7 +43,9 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 				console.log('success', data);
 				if (!data.logged_in) {
 					root.invalid_login = true;
+					console.log(data);
 					//invalid login
+					root.error(data.message);
 				} else {
 					root.user = data;
 					root.invalid_login = false;
@@ -56,6 +59,7 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 				root.login_loading = undefined;
 				root.login_message = data.message || 'Unable to log in. Try again later.';
 				root.$apply();
+				root.error(root.login_message);
 			}
 		});
 	};
@@ -66,15 +70,16 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 			url: 'php/logout.php',
 			data: root.sign_in,
 			success: function(data) {
-				console.log('success', data);
 				root.user = false;
 				root.logging_out = undefined;
 				root.$apply();
+				root.success('You have signed out');
 			},
 			error: function(data) {
 				console.log('error', data);
 				root.logging_out = undefined;
 				root.$apply();
+				root.error('Unable to sign out');
 			}
 		});
 	};
@@ -89,9 +94,11 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 				console.log('success', data);
 				if (data.registered) {
 					root.register_status = 'registered';
+					root.success('You have created an account');
 				} else {
 					root.register_status = 'invalid';
 					root.register_message = data.message;
+					root.error(data.message);
 				}
 				root.registering = undefined;
 				root.$apply();
@@ -102,6 +109,7 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 				root.registering = undefined;
 				root.register_message = data.message || 'Unable to register. Try again later.';
 				root.$apply();
+				root.error(root.register_message);
 			}
 		});
 	};
@@ -117,9 +125,11 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 				if (data.reset) {
 					root.reset_status = 'reset';
 					root.lost_password = false;
+					root.success('You have reset your password');
 				} else {
 					root.reset_status = 'invalid';
 					root.reset_message = data.message;
+					root.error(data.message);
 				}
 				root.resetting = undefined;
 				root.$apply();
@@ -130,6 +140,7 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 				root.resetting = undefined;
 				root.reset_message = data.message || 'Unable to reset password. Try again later.';
 				root.$apply();
+				root.error(root.reset_message);
 			}
 		});
 	};
@@ -176,6 +187,21 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 	root.return_mobile_version = function() {
 		erase_cookie('desktop');
 		location.reload();
+	};
+
+	root.alert = function(type, message, confirm) {
+		root.alert_content = {
+			type: type,
+			message: message,
+			confirm: confirm ? true : false
+		};
+		root.$apply();
+	};
+	root.error = function(message, confirm) {
+		root.alert('error', message, confirm);
+	};
+	root.success = function(message, confirm) {
+		root.alert('success', message, confirm);
 	};
 
 	//LISTENERS

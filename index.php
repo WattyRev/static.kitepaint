@@ -19,12 +19,14 @@
 		<script type="text/javascript" src="js/controllers/changePassword.js"></script>
 		<script type="text/javascript" src="js/controllers/contact.js"></script>
 		<script type="text/javascript" src="js/controllers/create.js"></script>
+		<script type="text/javascript" src="js/controllers/designs.js"></script>
 		<script type="text/javascript" src="js/controllers/edit.js"></script>
 		<script type="text/javascript" src="js/controllers/header.js"></script>
 		<script type="text/javascript" src="js/controllers/home.js"></script>
 		<script type="text/javascript" src="js/controllers/primary.js"></script>
 		<script type="text/javascript" src="js/controllers/view.js"></script>
 		<script type="text/javascript" src="js/directives/compile.js"></script>
+		<script type="text/javascript" src="js/directives/alert.js"></script>
 		<script type="text/javascript" src="js/directives/menu.js"></script>
 		<script type="text/javascript" src="js/directives/share.js"></script>
 		<script type="text/javascript" src="js/directives/tooltip.js"></script>
@@ -49,6 +51,7 @@
 		<main ui-view id="{{current_page.name}}">
 			
 		</main>
+		<alert></alert>
 		<footer>
 
 			<?php if(!isset($_COOKIE['desktop'])): ?>

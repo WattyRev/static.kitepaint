@@ -424,6 +424,34 @@
 			opacity:1;
 		}
 	
+	/* Alert */
+		alert .alert.ng-hide {
+			position: fixed!important;
+			height: auto!important;
+			padding: 15px!important;
+		}
+		alert .alert {
+			display: block;
+			width: 250px;
+			position: fixed;
+			top: 50px;
+			left: 50%;
+			margin-left: -140px;
+			padding: 15px;
+			text-align: center;
+			z-index: 400;
+		}
+		alert .error {
+			background: #FF9595;
+			color:#ff0000;
+			border: 1px solid #ff0000;
+		}
+		alert .success {
+			background: #CEFFCE;
+			color: #008000;
+			border: 1px solid #008000;
+		}
+
 	/* Change Password */
 		#changePassword form {
 			border: 10px solid #ededed;

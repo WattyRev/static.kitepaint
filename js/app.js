@@ -60,6 +60,14 @@ app.config(function($stateProvider, $urlRouterProvider){
 				title: 'Create'
 			}
 		})
+		.state('designs', {
+			url: '/designs',
+			templateUrl: 'html/pages/designs.html',
+			controller: 'DesignsController',
+			data: {
+				title: 'Designs'
+			}
+		})
 		.state('edit', {
 			url: '/edit/:type?id',
 			templateUrl: 'html/pages/edit.html',
