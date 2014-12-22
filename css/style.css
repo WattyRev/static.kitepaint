@@ -528,6 +528,7 @@
 			position:relative;
 			border-bottom: 1px solid #cdcdcd;
 			transition: .3s background;
+			padding-top: 10px;
 		}
 		#create ul>li:hover {
 			background:#f1f1f1;
@@ -568,6 +569,42 @@
 		#create .search {
 			margin-top: 25px;
 			margin-bottom: 10px;
+		}
+
+	/* Designs */
+		#designs ul {
+			margin: 0;
+			list-style:none;
+			margin-top: 15px;
+		}
+		#designs ul li {
+			display: inline-block;
+			width: 200px;
+			margin: 10px;
+			background: #cdcdcd;
+			padding: 10px;
+			border-radius: 10px;
+			position:relative;
+		}
+		#designs ul li .design {
+			padding: 10px;
+			background: #fff;
+			border-top-left-radius: 10px;
+			border-top-right-radius: 10px
+		}
+		#designs ul li .manufacturer {
+			width: 40px;
+			height: 40px;
+			display: block;
+			background-size: 100%;
+			background-repeat: no-repeat;
+			background-position: center;
+			background-color: #fff;
+			border-radius: 40px;
+			border: 1px solid #cdcdcd;
+			position: absolute;
+			top: -17px;
+			left: -17px;
 		}
 
 	/* Editor */
