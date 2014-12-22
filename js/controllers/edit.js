@@ -28,7 +28,15 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 				scope.colors = JSON.parse(scope.product.colors);
 				if (state.params.type === 'new') {
 					scope.variations = JSON.parse(scope.product.variations);
+					$.each(scope.variations, function(i, variation) {
+						if (i < 1) {
+							variation.primary = true;
+						} else {
+							variation.primary = false;
+						}
+					});
 					scope.current_variation = scope.variations[0];
+					console.log(scope.variations);
 				}
 				scope.loading = false;
 				scope.$apply();
@@ -267,6 +275,16 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 		});
 	};
 
+	scope.set_primary = function(current) {
+		$.each(scope.variations, function(i, variation) {
+			if (variation.name === current.name) {
+				variation.primary = true;
+			} else {
+				variation.primary = false;
+			}
+		});
+	};
+
 	scope.edit_design = function(id) {
 		var params = {type:'saved', id:id};
  		state.go('edit', params);
@@ -283,7 +301,6 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 
 	/* LISTENERS */
 	scope.$watch('public', function(public) {
-		console.log(public);
 		if (state.params.type === 'saved' && !scope.loading) {
 			scope.saving = true;
 			scope.design.public = public ? 1 : 0;

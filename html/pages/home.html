@@ -6,7 +6,7 @@
 		</div>
 	</div>
 </div>
-<div class="user">
+<div class="user" ng-hide="$root.user">
 	<div class="content" ng-show="has_account && !$root.user">
 		<div class="left">
 			<h2>Welcome Back!</h2>
@@ -133,8 +133,21 @@
 		</form>
 		<div class="clearfix"></div>
 	</div>
-	<div class="content" ng-show="$root.user">
-		<h2>Welcome {{$root.user.username}}!</h2>
+</div>
+<div class="designs">
+	<div class="content">
+		<h2>Recent Designs</h2>
+		<ul>
+			<a ng-repeat="design in designs" ui-sref="view({id:{{design.id}}})">
+				<li class="design">
+					<div ng-bind-html="design.primary.svg"></div>
+					<p>{{design.name}}</p>
+				</li>
+			</a>
+			<div class="clearfix"></div>
+		</ul>
+		<a>See All</a>
+		<div class="clearfix"></div>
 	</div>
 </div>
 <div class="news">

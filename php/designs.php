@@ -11,7 +11,9 @@ if ($_GET){
 			}
 			$filter .= "$metric  =  $value";
 		}
-		$query = sprintf("SELECT * FROM designs WHERE $filter");
+		$limit = isset($_GET['limit']) ? "LIMIT " . $_GET['limit'] : "";
+		$order = isset($_GET['order']) ? "ORDER BY " . $_GET['order'][0] . " " . $_GET['order'][1] : "";
+		$query = sprintf("SELECT * FROM designs WHERE $filter $order $limit");
 
 		$result = mysql_query($query);
 		$num = mysql_num_rows($result);
@@ -94,14 +96,6 @@ if ($_GET){
 		$product = $_POST['product'];
 		$variations = $_POST['variations'];
 		$public = $_POST['public'];
-
-
-		if (!valid_username($name)) {
-			$response->valid = false;
-			$response->message = 'Invalid name';
-			echo json_encode($response);
-			return;
-		}
 
 		$code = generate_code(20);
 		$sql = sprintf("insert into designs (created, updated, name, user, product, variations, public) value (now(), now(), '%s', '%s', '%s', '%s', '%s')",
