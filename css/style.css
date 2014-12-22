@@ -339,6 +339,12 @@
 		padding: 15px 5%;
 	}
 
+	/* About Page */
+		#about img {
+			margin: 20px
+			border-radius: 10px;
+		}
+
 	/* Account Page */
 		#account .section {
 			border-bottom: 1px solid #cdcdcd;
