@@ -83,6 +83,18 @@ function checkLogin($u, $p){
         $row = mysql_fetch_array($result);
 
         $email = $row['email'];
+        
+        $query = sprintf("
+            SELECT favorites
+            FROM login
+            WHERE
+            loginid = '%s'
+            LIMIT 1;", mysql_real_escape_string($loginid));
+
+        $result = mysql_query($query);
+        $row = mysql_fetch_array($result);
+
+        $favorites = $row['favorites'];
 
         //update last login time
         $query = sprintf("update login set last_login = now() where loginid = '%s'",
@@ -103,6 +115,8 @@ function checkLogin($u, $p){
         $_SESSION['actcode'] = $actcode;
         //save email
         $_SESSION['email'] = $email;
+        //save favorites
+        $_SESSION['favoirtes'] = $favorites;
         // Now we show the userbox
         return $response;
     }
@@ -139,6 +153,25 @@ function updateLogin($username, $loginid, $actcode) {
     $row = mysql_fetch_array($result);
     $email = $row['email'];
 
+    $query = sprintf("
+        SELECT favorites
+        FROM login
+        WHERE
+        username = '%s' AND loginid = '%s'
+        AND actcode = '%s'
+        LIMIT 1;", mysql_real_escape_string($username), mysql_real_escape_string($loginid), mysql_real_escape_string($actcode));
+
+    $result = mysql_query($query);
+
+    if (mysql_num_rows($result) != 1) {
+        $response->valid = false;
+        $response->message = 'Invalid credentials';
+        return $response;
+    }
+
+    $row = mysql_fetch_array($result);
+    $favorites = $row['favorites'];
+
     $query = sprintf("update login set last_login = now() where loginid = '%s'",
             mysql_real_escape_string($loginid));
      
@@ -147,6 +180,7 @@ function updateLogin($username, $loginid, $actcode) {
         $_SESSION['loginid'] = $loginid;
         $_SESSION['actcode'] = $actcode;
         $_SESSION['email'] = $email;
+        $_SESSION['favorites'] = $favorites;
         return $response;
     } else {
         $response->valid = false;

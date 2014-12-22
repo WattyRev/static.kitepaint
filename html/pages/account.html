@@ -15,9 +15,8 @@
 					<div class="variations">
 						<div 
 							class="variation" 
-							ng-repeat="variation in design.variations" 
-							title="{{variation.name}}" 
-							ng-bind-html="variation.svg"
+							title="{{design.primary.name}}" 
+							ng-bind-html="design.primary.svg"
 						>
 						</div>
 						<div class="clearfix"></div>
@@ -141,7 +140,7 @@
 				</ul>
 			</div>
 		</div>
-		<div class="tab-section">
+		<div class="tab-section" ng-show="$root.user.favorites.length">
 			<input type="radio" class="tab-radio" name="tabs" id="tab-favorites" />
 			<label for="tab-favorites" class="tab-label">Favorites</label>
 			<div class="tab-content">

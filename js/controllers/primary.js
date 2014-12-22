@@ -157,13 +157,20 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 			data: user_data,
 			dataType: 'json',
 			success: function(data) {
+
 				if (!data.logged_in){
 					root.user = false;
 					if (scope.current_page === 'account') {
 						state.go('home');
 					}
 				} else {
+					if (data.favorites) {
+						data.favorites = JSON.parse(data.favorites);
+					} else {
+						data.favorites = [];
+					}
 					root.user = data;
+
 				}
 				root.$apply();
 			},
@@ -195,7 +202,6 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 			message: message,
 			confirm: confirm ? true : false
 		};
-		root.$apply();
 	};
 	root.error = function(message, confirm) {
 		root.alert('error', message, confirm);

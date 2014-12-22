@@ -21,7 +21,8 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 				'product',
 				'variations',
 				'public'
-			]
+			],
+			order: ['id', 'DESC']
 		};
 		$.ajax({
 			type: 'GET',
@@ -32,6 +33,11 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 				scope.designs = data;
 				$.each(scope.designs, function(i, design) {
 					design.variations = JSON.parse(design.variations);
+					$.each(design.variations, function(i, variation) {
+						if (variation.primary) {
+							design.primary = variation;
+						}
+					});
 				});
 				scope.$apply();
 			},
@@ -41,7 +47,6 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 			}
 		});
 	};
-	scope.get_designs();
 
 	scope.get_manufacturer_names = function() {
 		var content = {
@@ -71,7 +76,6 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 			}
 		});
 	};
-	scope.get_manufacturer_names();
 
 	scope.get_product_names = function() {
 		var content = {
@@ -103,7 +107,18 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 			}
 		});
 	};
-	scope.get_product_names();
+
+	scope.check_user = function() {
+		if (!root.user) {
+			root.error('You must be logged in to view this page.');
+			state.go('home');
+		} else {
+			scope.get_designs();
+			scope.get_manufacturer_names();
+			scope.get_product_names();
+		}
+	};
+	scope.check_user();
 
 	scope.change_email = function(new_email) {
 		var content = {
@@ -170,7 +185,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 		var data = {
 			delete: true,
 			id: scope.deleting_design
-		}
+		};
 		$.ajax({
 			type: 'POST',
 			url: 'php/designs.php',
@@ -191,14 +206,12 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 				scope.get_designs();
 				scope.$apply();
 			}
-		})
-
-
+		});
 	};
 
 	scope.show_share = function(design) {
 		root.share_design = design.id;
 		root.show_share = true;
-	}
+	};
 
 }]);

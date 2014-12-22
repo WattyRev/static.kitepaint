@@ -367,11 +367,11 @@
 			margin-right: 10px;
 		}
 		#account .variation {
-			width:80px;
-			height:80px;
+			width: 181px;
+			height: 181px;
 			padding: 10px;
-			float:left;
-			pointer-events:none;
+			float: left;
+			pointer-events: none;
 		}
 		#account .content {
 			float:left;
