@@ -7,7 +7,7 @@
 	</div>
 </div>
 <div class="user" ng-hide="$root.user">
-	<div class="content" ng-show="has_account && !$root.user">
+	<div class="content" ng-show="$root.has_account && !$root.user">
 		<div class="left">
 			<h2>Welcome Back!</h2>
 			<p>Sign in to get back to your saved designs.</p>
@@ -69,7 +69,7 @@
 		</form>
 		<div class="clearfix"></div>
 	</div>
-	<div class="content register" ng-show="!has_account && !$root.user">
+	<div class="content register" ng-show="!$root.has_account && !$root.user">
 		<div class="left">
 			<h2>Create an Account</h2>
 			<p>By creating a free account, you get access to features such as:</p>
@@ -81,7 +81,6 @@
 		</div>
 		<form class="right" ng-submit="$root.register()">
 			<div ng-show="$root.register_status !== 'registered'">
-				<p class="error" ng-show="$root.register_status === 'invalid' && $root.register_message">{{$root.register_message}}</p>
 				<label for="register-username">Username <tooltip content="username"></tooltip></label>
 				<input 
 					type="text" 
@@ -129,7 +128,7 @@
 				<button class="button action" ng-show="$root.registering">Signing Up</button>
 				<p>Already registered? <a ng-click="$root.has_account = true">Sign In</a></p>
 			</div>
-			<p class="success" ng-show="$root.register_status === 'registered'">You have successfully registered! An activation email has been sent to your inbox. You may log in once your account has been activated.<br/><a ng-click="has_account = true;">Log In</a></p>
+			<p class="success" ng-show="$root.register_status === 'registered'">You have successfully registered! An activation email has been sent to your inbox. You may log in once your account has been activated.</p>
 		</form>
 		<div class="clearfix"></div>
 	</div>

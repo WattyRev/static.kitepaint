@@ -38,25 +38,28 @@
 						<a ng-click="show_outlines = false" ng-show="show_outlines">Hide Outlines</a>
 					</div>
 					<div>
-						<label for="input-background">Background</label>
+						<label for="set-background">Background</label>
+						<select name="background" id="set-background" ng-options="item.img as item.label for item in $root.backgrounds" ng-model="background"></select>
 					</div>
 				</div>
 			</button>
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	<div class="variations"ng-class="{wide: collapse_colors}">
-		<div 
-			class="variation" 
-			ng-repeat="variation in variations" 
-			title="{{variation.name}}" 
-			ng-bind-html="variation.svg" 
-			ng-click="select_variation(variation);" 
-			ng-class="{selected: current_variation.name === variation.name}"
-		>
+	<div class="canvas-wrap" ng-class="{wide: collapse_colors}" style="background-image:url(img/backgrounds/{{background}})">
+		<div class="variations"ng-class="{wide: collapse_colors}">
+			<div 
+				class="variation" 
+				ng-repeat="variation in variations" 
+				title="{{variation.name}}" 
+				ng-bind-html="variation.svg" 
+				ng-click="select_variation(variation);" 
+				ng-class="{selected: current_variation.name === variation.name}"
+			>
+			</div>
 		</div>
-	</div>
-	<div class="template" ng-class="{wide: collapse_colors, outlines: show_outlines}" compile="current_variation.svg">
+		<div class="template" ng-class="{wide: collapse_colors, outlines: show_outlines}" compile="current_variation.svg">
+		</div>
 	</div>
 	<div class="clearfix"></div>
 </div>

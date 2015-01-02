@@ -5,6 +5,7 @@ app.controller('ViewController', ['$scope', '$rootScope', '$location', function(
 	scope.loading = true;
 	scope.show_settings = false;
 	scope.show_outlines = true;
+	scope.background = '';
 
 	//FUNCTIONS
 	scope.get_product = function() {

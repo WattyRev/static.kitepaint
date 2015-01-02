@@ -52,7 +52,7 @@ if (!valid_email($_POST['to'])) {
 	return;
 }
 
-$message = $_POST['comments'] . "\n From: " . $_POST['name'];
+$message = $_POST['comments'] . "\n - " . $_POST['name'];
 $subject = '[KitePaint] ' . $_POST['subject'];
 
 if (sendMail($_POST['to'], $subject, $message, $_POST['email'])) {

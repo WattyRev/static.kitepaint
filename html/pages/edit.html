@@ -1,7 +1,7 @@
 <div class="content">
 	<div class="heading">
 		<div class="left half">
-			<h1>{{product.name}} - {{current_variation.name}} <span class="small" ng-show="current_variation.primary">Primary</span><a ng-click="set_primary(current_variation)" class="small" ng-hide="current_variation.primary">Set as primary</a></h1>
+			<h1>{{product.name}} - {{current_variation.name}} <span class="small small" ng-show="current_variation.primary">Primary</span><a ng-click="set_primary(current_variation)" class="small" ng-hide="current_variation.primary">Set as primary</a></h1>
 			<h2 class="design-name" ng-click="show_rename = true">
 				{{design ? design.name : 'Unsaved'}} 
 				<span class="icon" ng-show="design">
@@ -58,7 +58,8 @@
 						<a ng-click="public = false;" ng-show="public">Make Design Private</a>
 					</div>
 					<div>
-						<label for="input-background">Background</label>
+						<label for="set-background">Background</label>
+						<select name="background" id="set-background" ng-options="item.img as item.label for item in $root.backgrounds" ng-model="background"></select>
 					</div>
 				</div>
 			</button>
@@ -76,18 +77,20 @@
 			</li>
 		</ul>
 	</div>
-	<div class="variations"ng-class="{wide: collapse_colors}">
-		<div 
-			class="variation" 
-			ng-repeat="variation in variations" 
-			title="{{variation.name}}" 
-			ng-bind-html="variation.svg" 
-			ng-click="select_variation(variation);" 
-			ng-class="{selected: current_variation.name === variation.name}"
-		>
+	<div class="canvas-wrap" ng-class="{wide: collapse_colors}" style="background-image:url(img/backgrounds/{{background}})">
+		<div class="variations">
+			<div 
+				class="variation" 
+				ng-repeat="variation in variations" 
+				title="{{variation.name}}" 
+				ng-bind-html="variation.svg" 
+				ng-click="select_variation(variation);" 
+				ng-class="{selected: current_variation.name === variation.name}"
+			>
+			</div>
 		</div>
-	</div>
-	<div class="template" ng-class="{wide: collapse_colors, outlines: show_outlines}" compile="current_variation.svg">
+		<div class="template" ng-class="{outlines: show_outlines}" compile="current_variation.svg">
+		</div>
 	</div>
 	<div class="prompt save_as" ng-show="show_save_as">
 		<label for="save_as_name">What do you want to name your design?</label>

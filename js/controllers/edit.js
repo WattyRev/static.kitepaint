@@ -8,6 +8,7 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 	scope.show_settings = false;
 	scope.show_outlines = true;
 	scope.public = false;
+	scope.background = '';
 	console.log(state);
 
 	//FUNCTIONS

@@ -30,6 +30,15 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 	root.reset_status = false;
 	root.lost_password = false;
 	root.alert_content = {};
+	root.backgrounds = [
+		{label: 'None', img: ''},
+		{label: 'Beach', img : 'beach.jpg'},
+		{label: 'Blue Sky', img : 'blue-sky.jpg'},
+		{label: 'Dark Sky', img : 'dark-sky.jpg'},
+		{label: 'Grass', img : 'grass.jpg'},
+		{label: 'Orange Sky', img : 'orange-sky.jpg'},
+		{label: 'Water', img : 'water.jpg'}
+	]
 
 	//FUNCTIONS
 	root.login = function() {

@@ -5,6 +5,7 @@ app.controller('ActivateController', ['$scope', '$rootScope', '$location', funct
 			uid: location.search().uid,
 			actcode: location.search().actcode
 		};
+		root.has_account = true;
 
 	//FUNCTIONS
 		scope.activate = function() {

@@ -14,7 +14,6 @@ if ($_GET){
 		$user->email = mysql_result($result,$i,"email");
 		$user->create_time = date("m/d/Y", strtotime(mysql_result($result,$i,"create_time")));
 		$user->last_login = date("m/d/Y", strtotime(mysql_result($result,$i,"last_login")));
-		$user->designs = mysql_result($result,$i,"designs");
 		$user->favorites = mysql_result($result,$i,"favorites");
 		$user->activated = mysql_result($result,$i,"activated") === '1' ? true : false; 
 		array_push($response, $user);
