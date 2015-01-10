@@ -939,6 +939,29 @@
 			width: 100%!important;
 		}
 
+	/* Manufacturer */
+		#manufacturer {
+			font-size: 24px;
+			color: #444;
+		}
+		#manufacturer #landing{
+			padding: 40px 0;
+		}
+		#manufacturer #landing h2{
+			width: 30%;
+			padding: 40px 5% 40px 15%;
+			float:left;
+		}
+		#manufacturer #landing form {
+			width: 30%;
+			padding: 45px 20% 45px 0;
+			text-align:center;
+			float:right;
+		}
+		#manufacturer #landing .button {
+			display:inline-block;
+		}
+
 	/* Menu */
 		menu .menu-button {
 			height:35px;
