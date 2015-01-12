@@ -124,7 +124,9 @@
 		display:block;
 		clear:both;
 	}
-
+	.hidden {
+		display:none;
+	}
 	.button {
 		padding: 10px;
 		border: 0;
@@ -314,7 +316,6 @@
 	form.form label {
 		margin: 0;
 	}
-
 
 /* HEADER */
 	header {
@@ -937,6 +938,46 @@
 		}
 		.lightbox .content {
 			width: 100%!important;
+		}
+	
+	/* Loading */
+		loading>div {
+			position:fixed;
+			top: 250px;
+			width: 100%;
+			text-align:center;
+			transition: .3s opacity;
+		}
+		@-webkit-keyframes spin {
+		  0%   { transform: rotateX(0deg); }
+		  50% { opacity: rotateX(180deg); }
+		  100% { opacity: rotateX(360deg); }
+		}
+		@-moz-keyframes spin {
+		  0%   { transform: rotateX(0deg); }
+		  50% { opacity: rotateX(180deg); }
+		  100% { opacity: rotateX(360deg); }
+		}
+		@-o-keyframes spin {
+		  0%   { transform: rotateX(0deg); }
+		  50% { opacity: rotateX(180deg); }
+		  100% { opacity: rotateX(360deg); }
+		}
+		@keyframes spin {
+		  0%   { transform: rotateX(0deg); }
+		  50% { opacity: rotateX(180deg); }
+		  100% { opacity: rotateX(360deg); }
+		}
+		loading>div div {
+			margin: 10px auto;
+			width: 100px;
+			height: 100px;
+			border-left: 2px solid #ea541e;
+			border-radius: 100px;
+			-webkit-animation: spin 1s infinite;
+			-moz-animation: spin 1s infinite;
+			-o-animation: spin 1s infinite;
+			animation: spin 1s infinite;
 		}
 
 	/* Manufacturer */

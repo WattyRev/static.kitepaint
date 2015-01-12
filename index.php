@@ -32,6 +32,8 @@
 		<script type="text/javascript" src="js/directives/menu.js"></script>
 		<script type="text/javascript" src="js/directives/share.js"></script>
 		<script type="text/javascript" src="js/directives/tooltip.js"></script>
+		<script type="text/javascript" src="js/directives/loading.js"></script>
+
 
 		<link rel="stylesheet" href="css/style.css" />
 		<?php if(!isset($_COOKIE['desktop'])): ?>
@@ -53,6 +55,7 @@
 		<main ui-view id="{{current_page.name}}">
 			
 		</main>
+		<loading></loading>
 		<alert></alert>
 		<footer>
 
