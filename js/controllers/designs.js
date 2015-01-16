@@ -43,12 +43,15 @@ app.controller('DesignsController', ['$scope', '$rootScope', function(scope, roo
 						}
 					});
 				});
+				root.done(4);
 				scope.$apply();
 				console.log(scope.designs);
 			},
 			error: function(data) {
 				console.log('error', data);
 				root.error('Could not retrieve designs. Try again later.');
+				root.done(4);
+				scope.$apply();
 			}
 		});
 	};
@@ -75,12 +78,15 @@ app.controller('DesignsController', ['$scope', '$rootScope', function(scope, roo
 				$.each(data, function(i, user) {
 					scope.users[user.loginid] = user;
 				});
+				root.done(4);
 				scope.$apply();
 				console.log(scope.users);
 			},
 			error: function(data) {
 				console.log('error', data);
 				root.error('Could not retrieve users. Try again later.');
+				root.done(4);
+				scope.$apply();
 			}
 		});
 	};
@@ -107,11 +113,14 @@ app.controller('DesignsController', ['$scope', '$rootScope', function(scope, roo
 				$.each(data, function(i, manufacturer) {
 					scope.manufacturers[manufacturer.id] = manufacturer;
 				});
+				root.done(4);
 				scope.$apply();
 			},
 			error: function(data) {
 				console.log('error', data);
 				root.error('Could not retrieve manufacturers. Try again later.');
+				root.done(4);
+				scope.$apply();
 			}
 		});
 	};
@@ -139,11 +148,14 @@ app.controller('DesignsController', ['$scope', '$rootScope', function(scope, roo
 				$.each(data, function(i, product) {
 					scope.products[product.id] = product;
 				});
+				root.done(4);
 				scope.$apply();
 			},
 			error: function(data) {
 				console.log('error', data);
 				root.error('Could not retrieve products. Try again later.');
+				root.done(4);
+				scope.$apply();
 			}
 		});
 	};

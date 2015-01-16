@@ -5,6 +5,8 @@ app.controller('ChangePasswordController', ['$scope', '$rootScope', function(sco
 	root.change_status = false;
 
 	//FUNCTIONS
+	
+	root.done(1);
 
 	root.change_password = function() {
 		root.change.username = root.user.username;

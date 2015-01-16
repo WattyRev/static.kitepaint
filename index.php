@@ -52,10 +52,10 @@
 				<div class="clearfix"></div>
 			</div>
 		</header>
-		<main ui-view id="{{current_page.name}}">
+		<main ui-view id="{{current_page.name}}" ng-class="{loading: $root.loading}">
 			
 		</main>
-		<loading></loading>
+		<loading ng-show="$root.loading"></loading>
 		<alert></alert>
 		<footer>
 

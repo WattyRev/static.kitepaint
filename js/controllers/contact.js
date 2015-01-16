@@ -1,5 +1,8 @@
 app.controller('ContactController', ['$scope', '$rootScope', function(scope, root) {
 	//FUNCTIONS
+	
+	root.done(1);
+
 	scope.send = function() {
 		var content = {
 			email: scope.email,

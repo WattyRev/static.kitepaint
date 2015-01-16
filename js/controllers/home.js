@@ -35,12 +35,14 @@ app.controller('HomeController', ['$scope', '$rootScope', '$http', function(scop
 						}
 					});
 				});
+				root.done(1);
 				scope.$apply();
-				console.log(scope.designs);
 			},
 			error: function(data) {
 				console.log('error', data);
 				alert('Could not get designs');
+				root.done(1);
+				scope.$apply();
 			}
 		});
 	};

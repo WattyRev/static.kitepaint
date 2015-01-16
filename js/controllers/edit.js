@@ -40,11 +40,14 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 					console.log(scope.variations);
 				}
 				scope.loading = false;
+				root.done(1);
 				scope.$apply();
 			},
 			error: function(data) {
 				console.log('error', data);
 				alert('Could not get product');
+				root.done(1);
+				scope.$apply();
 			}
 		});
 	};
@@ -71,10 +74,13 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 				scope.public = scope.design.public === '1' ? true : false;
 				scope.$apply();
 				scope.get_product();
+				root.done(2);
 			},
 			error: function(data) {
 				console.log('error', data);
 				alert('Could not get design');
+				root.done(1);
+				scope.$apply();
 			}
 		});
 	};

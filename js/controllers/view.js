@@ -2,14 +2,13 @@ app.controller('ViewController', ['$scope', '$rootScope', '$location', function(
 	scope.product = {};
 	scope.design = {};
 	scope.variations = [];
-	scope.loading = true;
 	scope.show_settings = false;
 	scope.show_outlines = true;
 	scope.background = '';
+	scope.user = {};
 
 	//FUNCTIONS
 	scope.get_product = function() {
-		scope.loading = true;
 		var id = scope.design.product;
 		
 		$.ajax({
@@ -19,35 +18,68 @@ app.controller('ViewController', ['$scope', '$rootScope', '$location', function(
 			success: function(data) {
 				scope.product = data[0];
 				scope.colors = JSON.parse(scope.product.colors);
-				scope.loading = false;
+				root.done(3);
 				scope.$apply();
 			},
 			error: function(data) {
 				console.log('error', data);
 				alert('Could not get product');
+				root.done(3);
+				scope.$apply();
+			}
+		});
+	};
+
+	scope.get_user = function() {
+		var request = {
+			filter: {
+				loginid: scope.design.user
+			},
+			return: [
+				'username'
+			]
+		};
+		$.ajax({
+			type: 'GET',
+			url: 'php/users.php',
+			data: request,
+			dataType: 'json',
+			success: function(data) {
+				scope.design.user = {
+					id: scope.design.user,
+					username: data[0].username
+				};
+				root.done(3);
+				scope.$apply();
+			},
+			error: function(data) {
+				console.log('error', data);
+				root.error('Could not get user');
+				root.done(3);
+				scope.$apply();
 			}
 		});
 	};
 
 	scope.get_design = function() {
-		scope.loading = true;
 		$.ajax({
 			type: 'GET',
 			url: 'php/designs.php?id=' + location.$$search.id,
 			dataType: 'json',
 			success: function(data) {
 				scope.design = data[0];
-				console.log(scope.design);
 				scope.variations = JSON.parse(scope.design.variations);
 				scope.current_variation = scope.variations[0];
-				console.log(scope.design.public);
 				scope.public = scope.design.public === '1' ? true : false;
+				root.done(3);
 				scope.$apply();
 				scope.get_product();
+				scope.get_user();
 			},
 			error: function(data) {
 				console.log('error', data);
 				alert('Could not get design');
+				root.done(1);
 			}
 		});
 	};

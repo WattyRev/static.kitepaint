@@ -1,7 +1,7 @@
 app.directive('share', function() {
 	function link(scope, element, attrs) {
 		//VARIABLES
-			scope.url = root.base_url + '/view?id=' + root.share_design;
+			scope.url = root.base_url + '/#/view?id=' + root.share_design;
 			scope.selected = 'link';
 
 		//FUNCTIONS
@@ -16,10 +16,10 @@ app.directive('share', function() {
 
 		//LISTENERS
 			root.$watch('share_design', function(id) {
-				scope.url = root.base_url + '/view?id=' + id;
+				scope.url = root.base_url + '/#/view?id=' + id;
 				scope.facebok_url = 'https://www.facebook.com/sharer/sharer.php?app_id=113869198637480&u=' + scope.url;
 			});
-	};
+	}
 	return {
 		restrict: 'E',
 		templateUrl: 'html/directives/share.html',

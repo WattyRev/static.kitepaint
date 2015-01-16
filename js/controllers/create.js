@@ -31,11 +31,14 @@ app.controller('CreateController', ['$scope', '$rootScope', '$state', function(s
 				scope.filtered_products = data;
 				scope.loading = false;
 				scope.sort_products();
+				root.done(2);
 				scope.$apply();
 			},
 			error: function(data) {
 				console.log('error', data);
 				alert('Could not get products');
+				root.done(2);
+				scope.$apply();
 			}
 		});
 	};
@@ -52,11 +55,14 @@ app.controller('CreateController', ['$scope', '$rootScope', '$state', function(s
 					scope.manufacturers[manufacturer.id] = manufacturer;
 				});
 				console.log(scope.manufacturers);
+				root.done(2);
 				scope.$apply();
 			},
 			error: function(data) {
 				console.log('error', data);
 				alert('Could not get manufacturers');
+				root.done(2);
+				scope.$apply();
 			}
 		});
 	};

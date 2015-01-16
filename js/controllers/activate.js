@@ -21,15 +21,17 @@ app.controller('ActivateController', ['$scope', '$rootScope', '$location', funct
 					} else {
 						scope.activated = 'invalid';
 					}
+					root.done(1);
 					scope.$apply();
 				},
 				error: function(data) {
 					console.log('error', data);
 					scope.activated = 'invalid';
+					root.done(1);
 					scope.$apply();
 				}
 			});
-		}
+		};
 		scope.activate();
 
 }]);

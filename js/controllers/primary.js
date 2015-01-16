@@ -38,7 +38,8 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 			{label: 'Grass', img : 'grass.jpg'},
 			{label: 'Orange Sky', img : 'orange-sky.jpg'},
 			{label: 'Water', img : 'water.jpg'}
-		]
+		];
+		root.load_count = 0;
 
 	//FUNCTIONS
 		root.login = function() {
@@ -218,13 +219,21 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 		root.success = function(message, confirm) {
 			root.alert('success', message, confirm);
 		};
+		root.done = function(total) {
+			root.load_count++;
+			if (total >= root.load_count) {
+				root.loading = false;
+				root.load_count = 0;
+				return;
+			}
+		};
 
 	//LISTENERS
 		//Update current page data
 		root.$on('$stateChangeStart', function(event, toState) {
 			scope.current_page = toState;
-			//reset variables
 			root.loading = true;
+			//reset variables
 			root.invalid_login = false;
 			root.register_status = false;
 			root.reset_status = false;

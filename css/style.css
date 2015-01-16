@@ -363,6 +363,11 @@
 		width: 90%;
 		margin: 0 auto;
 		padding: 15px 5%;
+		transition: .3s opacity;
+	}
+	main.loading {
+		opacity: 0;
+		transition: 0s opacity;
 	}
 
 	/* About Page */
@@ -941,43 +946,63 @@
 		}
 	
 	/* Loading */
-		loading>div {
-			position:fixed;
-			top: 250px;
+		loading {
+			position: fixed;
+			top: 100px;
+			text-align: center;
 			width: 100%;
-			text-align:center;
-			transition: .3s opacity;
 		}
-		@-webkit-keyframes spin {
-		  0%   { transform: rotateX(0deg); }
-		  50% { opacity: rotateX(180deg); }
-		  100% { opacity: rotateX(360deg); }
+		.spinner {
+			margin: 50px auto 0;
+			width: 50px;
+			height: 30px;
+			text-align: center;
+			font-size: 10px;
 		}
-		@-moz-keyframes spin {
-		  0%   { transform: rotateX(0deg); }
-		  50% { opacity: rotateX(180deg); }
-		  100% { opacity: rotateX(360deg); }
+
+		.spinner > div {
+			background-color: #333;
+			height: 100%;
+			width: 6px;
+			display: inline-block;
+			
+			-webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+			animation: stretchdelay 1.2s infinite ease-in-out;
 		}
-		@-o-keyframes spin {
-		  0%   { transform: rotateX(0deg); }
-		  50% { opacity: rotateX(180deg); }
-		  100% { opacity: rotateX(360deg); }
+
+		.spinner .rect2 {
+			-webkit-animation-delay: -1.1s;
+			animation-delay: -1.1s;
 		}
-		@keyframes spin {
-		  0%   { transform: rotateX(0deg); }
-		  50% { opacity: rotateX(180deg); }
-		  100% { opacity: rotateX(360deg); }
+
+		.spinner .rect3 {
+			-webkit-animation-delay: -1.0s;
+			animation-delay: -1.0s;
 		}
-		loading>div div {
-			margin: 10px auto;
-			width: 100px;
-			height: 100px;
-			border-left: 2px solid #ea541e;
-			border-radius: 100px;
-			-webkit-animation: spin 1s infinite;
-			-moz-animation: spin 1s infinite;
-			-o-animation: spin 1s infinite;
-			animation: spin 1s infinite;
+
+		.spinner .rect4 {
+			-webkit-animation-delay: -0.9s;
+			animation-delay: -0.9s;
+		}
+
+		.spinner .rect5 {
+			-webkit-animation-delay: -0.8s;
+			animation-delay: -0.8s;
+		}
+
+		@-webkit-keyframes stretchdelay {
+			0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
+		  20% { -webkit-transform: scaleY(1.0) }
+		}
+
+		@keyframes stretchdelay {
+			0%, 40%, 100% { 
+				transform: scaleY(0.4);
+				-webkit-transform: scaleY(0.4);
+			}  20% { 
+				transform: scaleY(1.0);
+				-webkit-transform: scaleY(1.0);
+			}
 		}
 
 	/* Manufacturer */
@@ -1012,7 +1037,6 @@
 			float:right;
 			display:inline-block;
 		}
-
 		#menu {
 			position: fixed;
 			display: block;
