@@ -1,4 +1,4 @@
-app.controller('ViewController', ['$scope', '$rootScope', '$location', function(scope, root, location) {
+app.controller('ViewController', ['$scope', '$rootScope', '$location', '$state', function(scope, root, location, state) {
 	scope.product = {};
 	scope.design = {};
 	scope.variations = [];
@@ -73,6 +73,10 @@ app.controller('ViewController', ['$scope', '$rootScope', '$location', function(
 				scope.public = scope.design.public === '1' ? true : false;
 				root.done(3);
 				scope.$apply();
+				if (!scope.public) {
+					console.log(scope.design.user);
+					scope.authorize_user(scope.design.user);
+				}
 				scope.get_product();
 				scope.get_user();
 			},
@@ -84,6 +88,13 @@ app.controller('ViewController', ['$scope', '$rootScope', '$location', function(
 		});
 	};
 	scope.get_design();
+
+	scope.authorize_user = function(user) {
+		if (!root.user || root.user.user_id !== user) {
+			root.error('That design is set to private');
+			state.go('home');
+		}
+	};
 
 	scope.select_variation = function(variation) {
 		scope.current_variation = {};

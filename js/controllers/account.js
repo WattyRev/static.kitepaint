@@ -225,7 +225,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 	};
 
 	scope.show_share = function(design) {
-		root.share_design = design.id;
+		root.share_design = design;
 		root.show_share = true;
 	};
 

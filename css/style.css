@@ -444,6 +444,9 @@
 			transition: .3s opacity;
 			opacity:0;
 		}
+		#account .actions svg {
+			pointer-events: none;
+		}
 		#account .actions .view:before {
 			content:"View";
 		}
@@ -741,6 +744,7 @@
 			position: relative;
 			top: 11px;
 			margin-left: 20px;
+			display:inline-block;
 		}
 		#edit .settings-dropdown #set-background {
 			margin: 5px auto;
@@ -1215,6 +1219,8 @@
 			transition:.3s width;
 			position:relative;
 			pointer-events:none;
+			height: auto;
+			margin-top: 20px;
 		}
 		#view .template svg * {
 			stroke:none;
@@ -1245,8 +1251,8 @@
 			background: none;
 			border: 0;
 			position: relative;
-			top: 11px;
 			margin-left: 20px;
+			float:right;
 		}
 		#view .settings-dropdown #set-background {
 			margin: 5px auto;
@@ -1255,10 +1261,13 @@
 			display: block;
 		}
 		#view .variations {
-			height: 50px;
+			height: 53px;
 			width: 100%;
 			float: right;
 			transition:.3s width;
+			overflow-x:auto;
+			overflow-y:hidden;
+			white-space:nowrap;
 		}
 		#view .variations.wide {
 			width:85%;

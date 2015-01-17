@@ -56,8 +56,8 @@ body, header {
 			#edit .colors .label {
 				width:0px;
 			}
-			#edit .template, #edit .variations, #edit .template.wide, #edit .variations.wide {
-				width:83%;
+			#edit .canvas-wrap {
+				width: 85%;
 			}
 
 		/* HOME */
@@ -125,12 +125,12 @@ body, header {
 				border:0;
 				border-right: 1px solid #cdcdcd;
 			}
-			#edit .variations, #edit .template, #edit .variations.wide, #edit .template.wide {
-				width:100%;
-			}
 			#edit .template {
 				height: auto;
 				margin: 20px 0;
+			}
+			#edit .canvas-wrap {
+				width: 100%;
 			}
 
 		/* HOME */
