@@ -39,6 +39,10 @@
 		<?php if(!isset($_COOKIE['desktop'])): ?>
 			<link rel="stylesheet" href="css/responsive.css" />
 		<?php endif; ?>
+
+		<!--[if IE 9]>
+			<link rel="stylesheet" href="css/style.ie9.css" />
+		<![endif]-->
 	</head>
 	<body ng-controller="PrimaryController">
 		<!-- Scripts -->
