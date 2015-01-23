@@ -1,5 +1,6 @@
 app.controller('EditController', ['$scope', '$rootScope', '$location', '$state', function(scope, root, location, state) {
 	scope.current_color = '#ffffff';
+	scope.current_color_style = {'backgorund-color' : '#ffffff'};
 	scope.product = {};
 	scope.design = {};
 	scope.colors = [];
@@ -9,7 +10,6 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 	scope.show_outlines = true;
 	scope.public = false;
 	scope.background = '';
-	console.log(state);
 
 	//FUNCTIONS
 	scope.get_product = function() {
@@ -75,6 +75,7 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 				scope.$apply();
 				scope.get_product();
 				root.done(2);
+				console.log(scope.design);
 			},
 			error: function(data) {
 				console.log('error', data);
@@ -161,6 +162,7 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 	};
 
 	scope.change_color = function(color) {
+		scope.current_color_style = {'background-color' : color};
 		scope.current_color = color;
 	};
 

@@ -18,7 +18,7 @@
 			</h2>
 		</div>
 		<div class="right half actions">
-			<button class="button" ng-click="save();" ng-show="design">{{saving ? 'Saving' : 'Save'}}</button>
+			<button class="button" ng-click="save();" ng-show="design.id && $root.user.logged_in">{{saving ? 'Saving' : 'Save'}}</button>
 			<button class="button" ng-click="show_save_as = true" ng-show="$root.user.logged_in">Save As</button>	
 			<div title="Settings" class="settings-button">
 				<svg viewBox="0 0 1000 1000" ng-click="show_settings = !show_settings;">
@@ -70,10 +70,10 @@
 		<ul class="unstyled" ng-class="{collapse: collapse_colors}">
 			<button ng-click="collapse_colors = !collapse_colors;">{{collapse_colors ? '&gt;' : '&lt;'}}</button>
 			<li class="current">
-				<span class="label">Current</span> <span class="color" style="background-color:{{current_color}}"></span>
+				<span class="label">Current</span> <span class="color" ng-style="current_color_style"></span>
 			</li>
 			<li ng-repeat="color in colors">
-				<span class="label">{{color.name}}</span> <span class="color" style="background-color:{{color.color}}" ng-click="change_color(color.color)"></span>
+				<span class="label">{{color.name}}</span> <span class="color" ng-style="{'background-color':'{{color.color}}'}" ng-click="change_color(color.color)"></span>
 			</li>
 		</ul>
 	</div>

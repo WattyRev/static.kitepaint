@@ -364,6 +364,7 @@
 		margin: 0 auto;
 		padding: 15px 5%;
 		transition: .3s opacity;
+		display:block;
 	}
 	main.loading {
 		opacity: 0;
@@ -1178,6 +1179,10 @@
 			cursor: help;
 			position:relative;
 		}
+		tooltip .icon {
+			width: 16px;
+			height: 20px;
+		}
 		tooltip .message {
 			position:absolute;
 			bottom: 22px;
@@ -1219,7 +1224,6 @@
 			transition:.3s width;
 			position:relative;
 			pointer-events:none;
-			height: auto;
 			margin-top: 20px;
 		}
 		#view .template svg * {
