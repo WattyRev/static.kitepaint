@@ -66,7 +66,7 @@
 		<main ui-view id="{{current_page.name}}" ng-class="{loading: $root.loading}">
 			
 		</main>
-		<loading ng-show="$roo$(t.loading"></loading>
+		<loading ng-show="$root.loading"></loading>
 		<alert></alert>
 		<footer>
 
