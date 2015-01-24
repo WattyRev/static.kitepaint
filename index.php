@@ -44,12 +44,45 @@
 		<!--[if IE 9]>
 			<link rel="stylesheet" href="css/style.ie9.css" />
 		<![endif]-->
+
+		<?php 
+			$ua = $_SERVER['HTTP_USER_AGENT'];
+			$safariorchrome = strpos($ua, 'Safari') ? true : false;   
+			$chrome = strpos($ua, 'Chrome') ? true : false;    
+			if($safariorchrome == true AND $chrome == false){ $safari = true; }
+
+			// Check for version numbers 
+			$v5 = strpos($ua, 'Version/5.') ? true : false;
+
+			// Test versions of Safari
+			if($safari AND $v5){ 
+				echo '<link rel="stylesheet" href="css/style.ie9.css" />'; 
+			}
+		?>
 	</head>
 	<body ng-controller="PrimaryController">
 		<!-- Scripts -->
 			<!-- Facebook -->
 			<div id="fb-root"></div>
-			
+			<script>
+				window.fbAsyncInit = function() {
+					FB.init({
+						appId      : '410377042472586',
+						xfbml      : true,
+						version    : 'v2.2'
+					});
+				};
+				(function(d, s, id){
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id)) {return;}
+					js = d.createElement(s); js.id = id;
+					js.src = "//connect.facebook.net/en_US/sdk.js";
+					fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+		    </script>
+
+			<!-- Twitter -->
+		    <script type="text/javascript" async src="//platform.twitter.com/widgets.js"></script>
 		<!-- /Scripts -->
 
 		<header ng-controller="HeaderController">

@@ -1,4 +1,4 @@
 /**
  * Javascript to run on unsupported browsers
  */
-window.location.replace('http://wattydev.com/projects/kite_paint/unsupported');
+window.location.replace('http://kitepaint.com/unsupported');

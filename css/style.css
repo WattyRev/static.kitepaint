@@ -407,7 +407,7 @@
 		}
 		#account .content {
 			float:left;
-			width:70%;
+			width:67%;
 		}
 		#account .public {
 			position: absolute;
@@ -604,7 +604,9 @@
 			padding: 10px;
 			background: #fff;
 			border-top-left-radius: 10px;
-			border-top-right-radius: 10px
+			border-top-right-radius: 10px;
+			max-height: 150px;
+			position: relative;
 		}
 		#designs ul li .manufacturer {
 			width: 40px;
@@ -905,7 +907,8 @@
 			opacity:1;
 		}
 		#home .news .content {
-			padding: 45px;
+			padding-top: 45px;
+			padding-bottom: 45px;
 		}
 		#home .news h2 {
 			margin-bottom: 25px;
