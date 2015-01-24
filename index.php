@@ -10,6 +10,7 @@
 		<?php endif;?>
 
 		<script type="text/javascript" src="js/libraries/jquery.min.js"></script>
+		<script type="text/javascript" src="js/modernizr.js"></script>
 		<script type="text/javascript" src="js/libraries/angular.min.js"></script>
 		<script type="text/javascript" src="js/libraries/angular-ui-router.js"></script>
 		<script type="text/javascript" src="js/app.js"></script>
@@ -65,11 +66,11 @@
 		<main ui-view id="{{current_page.name}}" ng-class="{loading: $root.loading}">
 			
 		</main>
-		<loading ng-show="$root.loading"></loading>
+		<loading ng-show="$roo$(t.loading"></loading>
 		<alert></alert>
 		<footer>
 
-			<?php if(!isset($_COOKIE['desktop'])): ?>
+			<?php if(!isset($_COOKIE['de sktop'])): ?>
 				<button class="mobile" ng-click="$root.request_desktop_version();">Request Desktop Version</button>
 			<?php else:?>
 				<button ng-click="$root.return_mobile_version();">Return to Mobile Version</button>
