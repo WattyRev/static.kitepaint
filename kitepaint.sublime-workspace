@@ -335,6 +335,80 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "js/app.js",
+			"settings":
+			{
+				"buffer_size": 3130,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "css/style.css",
+			"settings":
+			{
+				"buffer_size": 26422,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "css/responsive.css",
+			"settings":
+			{
+				"buffer_size": 2252,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "Package Control Messages\n========================\n\nPackage Control:\n---------------\n\n  Version 3.0 Release Notes\n  \n  \n  **** Windows Sublime Text 3 Users ****\n  \n  Due to a bug in Package Control 2.0, Windows ST3 users will need to open the\n  Sublime Text console (ctrl+`) and execute the following Python to properly\n  upgrade. All other users may ignore this part of the message.\n  \n  Make sure NOT to copy the leading two spaces, or an \"unexpected indent\" error\n  will occur.\n  \n  import urllib.request,os; pr='Preferences.sublime-settings'; ip='ignored_packages'; n='Package Control'; s=sublime.load_settings(pr); ig=s.get(ip); ig.append(n); s.set(ip,ig); sublime.save_settings('Preferences.sublime-settings'); pf=n+'.sublime-package'; urllib.request.install_opener(urllib.request.build_opener(urllib.request.ProxyHandler())); by=urllib.request.urlopen('https://packagecontrol.io/'+pf.replace(' ','%20')).read(); open(os.path.join(sublime.installed_packages_path(),pf),'wb').write(by); ig.remove(n); s.set(ip,ig); sublime.save_settings(pr); print('Package Control: 3.0.0 upgrade successful!')\n  \n  ********\n  \n  \n  Package Control 3.0 adds a bunch of polish, improving the Sublime Text\n  experience for users and package developers:\n  \n   - improved upgrades of themes, color schemes and syntaxes\n   - dependency support\n   - SSL for Linux\n   - new secondary Windows HTTP backend\n   - patches for Python in Sublime Text 2 on Windows\n   - commands to easily remove channels and repositories\n   - an events API for packages\n   - improved documentation\n  \n  \n  As of July 2014, I now work for myself. This has allowed me to spend more time\n  working on open source software, including Package Control. If you appreciate\n  the work I've done, please consider a small donation. If even 5% of regular\n  users donated the price of a coffee or beer, that would cover quite a bit of\n  my development time! See https://packagecontrol.io/about for options.\n  \n  \n  Some recent Package Control stats:\n  \n   - every weekday over 1M JSON requests hit the channel server\n   - in December, the channel server will transmit 4TB+ of compressed JSON\n   - users have installed, upgraded or removed 85M+ packages since late 2011\n  \n  \n  Read more about the release at:\n  \n  https://packagecontrol.io/news#2014-12-23-Package_Control_30_Released\n  \n",
+			"settings":
+			{
+				"buffer_size": 2331,
+				"line_ending": "Unix",
+				"name": "Package Control Messages",
+				"scratch": true
+			}
+		},
+		{
+			"file": "js/unsupported.js",
+			"settings":
+			{
+				"buffer_size": 113,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "html/pages/edit.html",
+			"settings":
+			{
+				"buffer_size": 5947,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/controllers/edit.js",
+			"settings":
+			{
+				"buffer_size": 7719,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/directives/share.js",
+			"settings":
+			{
+				"buffer_size": 1425,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "index.php",
+			"settings":
+			{
+				"buffer_size": 4466,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "Packages/Compass/Compass.sublime-build",
 	"command_palette":
@@ -567,10 +641,34 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Users/Spencer/Documents/GitHub/kitepaint"
+		"/C/Users/Spencer/Documents/GitHub/kitepaint",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/html",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/html/pages",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/controllers",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/directives",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/unsupported"
 	],
 	"file_history":
 	[
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/html/directives/share.html",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/sftp-config.json",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/unsupported.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/modernizr.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/style.ie9.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/unsupported/index.html",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/unsupported/style.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/index.php",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/style.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/unsupported",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/extra/todo_list.txt",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/.gitattributes",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/controllers/about.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/controllers/account.js",
+		"/C/Users/Spencer/Downloads/modernizr.custom.97908.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/php/email.php",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/libraries/jquery.min.js",
 		"/C/seniorhomes.com/ash/application/controllers/h_responsive.php",
 		"/C/seniorhomes.com/ash/web/css/pages/home.css",
 		"/C/seniorhomes.com/ash/application/config/seniorhomes/Config.development.php",
@@ -681,28 +779,11 @@
 		"/C/seniorhomes.com/ash/application/vendor/guzzle/guzzle/src/Guzzle/Plugin/Cache/CacheKeyProviderInterface.php",
 		"/C/seniorhomes.com/ash/web/node_modules/karma/node_modules/http-proxy/node_modules/utile/node_modules/i/lib/util.js",
 		"/C/seniorhomes.com/ash/application/classes/Views/Models/Frontend/Sections/SidebarNewsletter.php",
-		"/C/seniorhomes.com/ash/application/views/sections/newsletter_div_view.php",
-		"/C/seniorhomes.com/ash/application/controllers/backend/newrequest.php",
-		"/C/seniorhomes.com/ash/web/node_modules/grunt-contrib-jshint/node_modules/jshint/src/reporters/non_error.js",
-		"/C/seniorhomes.com/ash/application/views/badges-basic-plus_view.php",
-		"/C/seniorhomes.com/ash/application/controllers/b_responsive.php",
-		"/C/seniorhomes.com/ash/.sass-cache/e43ad961b9399a940465aded141eca38b141cec4/listings.scssc",
-		"/C/seniorhomes.com/ash/.sass-cache/871b406ebc94cf1c0561def851ec822ad5cd0c1e/search.scssc",
-		"/C/seniorhomes.com/ash/application/Services/Searching/SearchService.php",
-		"/C/seniorhomes.com/ash/application/controllers/search_responsive.php",
-		"/C/seniorhomes.com/ash/web/js/plugins/send_email.php",
-		"/C/seniorhomes.com/ash/application/views/backend/servicearea_add_view.php",
-		"/C/seniorhomes.com/ash/web/w/wp-includes/theme-compat/header.php",
-		"/C/seniorhomes.com/ash/application/views/header_view.php",
-		"/C/seniorhomes.com/ash/web/node_modules/karma/node_modules/http-proxy/examples/websocket/standalone-websocket-proxy.js",
-		"/C/seniorhomes.com/ash/build/vendor/guzzle/http/Guzzle/Http/Exception/HttpException.php",
-		"/C/seniorhomes.com/ash/application/classes/Views/LayoutInterface.php",
-		"/C/seniorhomes.com/ash/web/css/sections/listings.mobile.css",
-		"/C/seniorhomes.com/ash/web/js/shared_responsive.jquery.js"
+		"/C/seniorhomes.com/ash/application/views/sections/newsletter_div_view.php"
 	],
 	"find":
 	{
-		"height": 28.0
+		"height": 44.0
 	},
 	"find_in_files":
 	{
@@ -821,6 +902,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"loading",
+			"style.css",
+			"scope.design",
+			"current_color",
+			"current_color_style",
 			".reviews-page ",
 			".css",
 			"($,",
@@ -943,12 +1029,7 @@
 			".search-results ",
 			".nearby .search-results ",
 			".search-results ",
-			".css",
-			"#featured ",
-			".article",
-			"#FC7600",
-			"transition: ",
-			"border-radius:"
+			".css"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1094,8 +1175,308 @@
 	"groups":
 	[
 		{
+			"selected": 3,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "js/app.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3130,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/base16-eighties.dark (SL).tmTheme",
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "css/style.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 26422,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								22882,
+								22882
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/base16-eighties.dark (SL).tmTheme",
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3629.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "css/responsive.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2252,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1594,
+								1594
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/base16-eighties.dark (SL).tmTheme",
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1540.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2331,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2331,
+								2331
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/base16-eighties.dark (SL).tmTheme",
+							"incomplete_sync": null,
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "js/unsupported.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 113,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								113,
+								113
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/base16-eighties.dark (SL).tmTheme",
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "html/pages/edit.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5947,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1652,
+								1652
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/base16-eighties.dark (SL).tmTheme",
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "js/controllers/edit.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7719,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2169,
+								2169
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/base16-eighties.dark (SL).tmTheme",
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 360.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 7,
+					"file": "js/directives/share.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1425,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								287,
+								287
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/base16-eighties.dark (SL).tmTheme",
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "index.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4466,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2884,
+								2884
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/base16-eighties.dark (SL).tmTheme",
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1533.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -1116,6 +1497,12 @@
 				0,
 				1,
 				1
+			],
+			[
+				0,
+				1,
+				1,
+				2
 			]
 		],
 		"cols":
@@ -1126,6 +1513,7 @@
 		"rows":
 		[
 			0.0,
+			0.5,
 			1.0
 		]
 	},
@@ -1153,6 +1541,22 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"share.js",
+				"js\\directives\\share.js"
+			],
+			[
+				"edit.js",
+				"js\\controllers\\edit.js"
+			],
+			[
+				"edit.html",
+				"html\\pages\\edit.html"
+			],
+			[
+				"jquery.min",
+				"js\\libraries\\jquery.min.js"
+			],
 			[
 				"home.css",
 				"web\\css\\pages\\home.css"
@@ -1648,33 +2052,21 @@
 			[
 				"helperurl",
 				"application\\helpers\\Helpers\\Url.php"
-			],
-			[
-				"frontend",
-				"application\\classes\\Views\\Html\\Frontend\\Layouts\\FrontendLayout.html.php"
-			],
-			[
-				"configd",
-				"application\\config\\seniorhomes\\Config.development.php"
-			],
-			[
-				"config.pp",
-				"benchmark\\config.php"
-			],
-			[
-				"browsede",
-				"application\\classes\\Views\\Html\\Frontend\\Sections\\BrowseDetailed.html.php"
 			]
 		],
 		"width": 0.0
 	},
 	"select_project":
 	{
-		"height": 0.0,
+		"height": 500.0,
 		"selected_items":
 		[
+			[
+				"",
+				"C:\\seniorhomes.com\\ash\\seniorhomes_project.sublime-project"
+			]
 		],
-		"width": 0.0
+		"width": 380.0
 	},
 	"select_symbol":
 	{
