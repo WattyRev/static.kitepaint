@@ -1,3 +1,8 @@
+<?php 
+	//Determine if using an embed url//
+	
+	$embed = isset($_GET['embed']) && isset($_GET['id']);
+?>
 <!DOCTYPE html>
 <html ng-app="kitePaint">
 	<head>
@@ -7,6 +12,17 @@
 			<meta name="viewport" content="width=device-width">
 		<?php else:?>
 			<meta name="viewport" content="width=1080px">
+		<?php endif;?>
+
+		<?php if ($embed) :?>
+			<script type="text/javascript">
+				var embed = true;
+				var product = <?php echo $_GET['id']; ?>;
+			</script>
+		<?php else:?>
+			<script type="text/javascript">
+				var embed = false;
+			</script>
 		<?php endif;?>
 
 		<script type="text/javascript" src="js/libraries/jquery.min.js"></script>
@@ -35,7 +51,6 @@
 		<script type="text/javascript" src="js/directives/tooltip.js"></script>
 		<script type="text/javascript" src="js/directives/loading.js"></script>
 
-
 		<link rel="stylesheet" href="css/style.css" />
 		<?php if(!isset($_COOKIE['desktop'])): ?>
 			<link rel="stylesheet" href="css/responsive.css" />
@@ -59,6 +74,13 @@
 				echo '<link rel="stylesheet" href="css/style.ie9.css" />'; 
 			}
 		?>
+
+		<?php if ($embed) :?>
+			<link rel="stylesheet" href="css/embed.css" />
+			<script type="text/javascript">
+				var embed = true;
+			</script>
+		<?php endif;?>
 	</head>
 	<body ng-controller="PrimaryController">
 		<!-- Scripts -->
@@ -84,18 +106,19 @@
 			<!-- Twitter -->
 		    <script type="text/javascript" async src="//platform.twitter.com/widgets.js"></script>
 		<!-- /Scripts -->
-
-		<header ng-controller="HeaderController">
-			<div class="container">
-				<h1><a ui-sref="home">Kite Paint</a></h1>
-				<a ui-sref="create" class="button left">Create</a>
-				<div class="right">
-					<span class="logged-in" ng-show="$root.user">Welcome {{user.username}}!</span>
-					<menu></menu>
-				</line>
-				<div class="clearfix"></div>
-			</div>
-		</header>
+		<?php if (!$embed):?>
+			<header ng-controller="HeaderController">
+				<div class="container">
+					<h1><a ui-sref="home">Kite Paint</a></h1>
+					<a ui-sref="create" class="button left">Create</a>
+					<div class="right">
+						<span class="logged-in" ng-show="$root.user">Welcome {{user.username}}!</span>
+						<menu></menu>
+					</line>
+					<div class="clearfix"></div>
+				</div>
+			</header>
+		<?php endif;?>
 		<main ui-view id="{{current_page.name}}" ng-class="{loading: $root.loading}">
 			
 		</main>
@@ -103,12 +126,16 @@
 		<alert></alert>
 		<footer>
 
-			<?php if(!isset($_COOKIE['de sktop'])): ?>
+			<?php if(!isset($_COOKIE['desktop'])): ?>
 				<button class="mobile" ng-click="$root.request_desktop_version();">Request Desktop Version</button>
 			<?php else:?>
 				<button ng-click="$root.return_mobile_version();">Return to Mobile Version</button>
 			<?php endif;?>
-			<p>&copy; 2014 <a href="http://www.wattydev.com">Spencer Watson</a></p>
+			<?php if ($embed) :?>
+				<p>Powered by <a target="_blank" href="http://www.kitepaint.com">KitePaint.com</a></p>
+			<?php else:?>
+				<p>&copy; 2014 <a href="http://www.wattydev.com">Spencer Watson</a></p>
+			<?php endif;?>
 		</footer>
 	</body>
 </html>

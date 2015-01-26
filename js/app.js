@@ -110,6 +110,59 @@ app.config(function($stateProvider, $urlRouterProvider){
 		});
 });
 
+if (embed) {
+	verify_embed();
+} else {
+	if (parent !== window) {
+		//don't allow embeds of site
+		window.location.replace('error.php?m=embedding_prohibited');
+	}
+}
+
+function verify_embed() {
+	if (parent === window) {
+		//don't allow embed url unless in iframe
+		window.location.replace('http://kitepaint.com');
+	}
+	var parent_url = document.referrer;
+	var parent_domain = parent_url.split('://')[1]; //take of protocol
+	parent_domain = parent_domain.split('/')[0]; //take off path
+	if (parent_domain.split('.').length === 3) {
+		parent_domain = parent_domain.split('.')[1] + '.' + parent_domain.split('.')[2]; //take of subdomain if exists
+	}
+	var path = window.location.href.split('#')[1];
+	if ( path !== '/edit/new?id=' + product) {
+		window.location.replace('error.php?m=bed_embed_url');
+	}
+
+	//Check domain
+	var content = {
+		filter: {
+			id: product
+		},
+		return: [
+			'embed'
+		]
+	};
+	$.ajax({
+		type: 'GET',
+		url: 'php/products.php',
+		data: content,
+		dataType: 'json',
+		success: function(data) {
+			var urls = data[0].embed.split(',');
+			console.log(urls);
+
+			if(urls.indexOf(parent_domain) < 0) {
+				window.location.replace('error.php?m=bad_embed_domain');
+			}
+		},
+		error: function(data) {
+			window.location.replace('error.php?m=cannot_verify_embed_domain');
+		}
+	});
+}
+
 function create_cookie(name, value, days) {
     var expires;
 
