@@ -55,6 +55,16 @@
 	button {
 		cursor:pointer;
 	}
+	input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="number"], input[type="url"], textarea {
+		background:$white;
+		border: 1px solid $light_grey;
+		padding: 10px;
+		font-size: 16px;
+		color :$dark_grey;
+		@include border-radius(5px);
+		font-family: 'Open Sans', sans-serif;
+		font-size: 16px;
+	}
 	input{
 		&[type="text"], &[type="password"], &[type="email"] {
 			background:$white;
@@ -67,16 +77,6 @@
 		&[type="submit"] {
 			cursor: pointer;
 			@include appearance(none);
-		}
-		&[type="text"], &[type="password"], &[type="email"], &[type="tel"], &[type="number"], &[type="url"], textarea {
-			background:$white;
-			border: 1px solid $light_grey;
-			padding: 10px;
-			font-size: 16px;
-			color :$dark_grey;
-			@include border-radius(5px);
-			font-family: 'Open Sans', sans-serif;
-			font-size: 16px;
 		}
 		&[type="checkbox"] {
 			@include appearance(none);

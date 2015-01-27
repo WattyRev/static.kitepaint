@@ -78,25 +78,8 @@ button {
   cursor: pointer;
 }
 
-/* line 59, ../../scss/layout/style.scss */
-input[type="text"], input[type="password"], input[type="email"] {
-  background: #fff;
-  border: 1px solid #cdcdcd;
-  padding: 10px;
-  font-size: 16px;
-  color: #444;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-}
-/* line 67, ../../scss/layout/style.scss */
-input[type="submit"] {
-  cursor: pointer;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-}
-/* line 71, ../../scss/layout/style.scss */
-input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="number"], input[type="url"], input textarea {
+/* line 58, ../../scss/layout/style.scss */
+input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="number"], input[type="url"], textarea {
   background: #fff;
   border: 1px solid #cdcdcd;
   padding: 10px;
@@ -107,6 +90,24 @@ input[type="text"], input[type="password"], input[type="email"], input[type="tel
   border-radius: 5px;
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
+}
+
+/* line 69, ../../scss/layout/style.scss */
+input[type="text"], input[type="password"], input[type="email"] {
+  background: #fff;
+  border: 1px solid #cdcdcd;
+  padding: 10px;
+  font-size: 16px;
+  color: #444;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+/* line 77, ../../scss/layout/style.scss */
+input[type="submit"] {
+  cursor: pointer;
+  -moz-appearance: none;
+  -webkit-appearance: none;
 }
 /* line 81, ../../scss/layout/style.scss */
 input[type="checkbox"] {
