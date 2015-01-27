@@ -234,6 +234,11 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 			root.reset_status = false;
 			root.lost_password = false;
 			root.change_status = false;
+			if (toState.data.title.length) {
+				$('title').text(toState.data.title + ' | Kite Paint');
+			} else {
+				$('title').text('Kite Paint');
+			}
 		});
 
 		//update has_account local storage variable
