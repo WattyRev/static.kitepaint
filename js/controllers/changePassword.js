@@ -17,7 +17,6 @@ app.controller('ChangePasswordController', ['$scope', '$rootScope', function(sco
 			data: root.change,
 			dataType: 'json',
 			success: function(data) {
-				console.log('success', data);
 				if (data.changed) {
 					root.change_status = 'changed';
 					root.success('Your password has been changed');

@@ -127,7 +127,6 @@ app.controller('UsersController', ['$scope', '$rootScope', function(scope, root)
 			data: user,
 			dataType: 'json',
 			success: function(data) {
-				console.log('success', data);
 				scope.get_users();
 				scope.show_edit = false;
 				scope.$apply();
@@ -150,7 +149,6 @@ app.controller('UsersController', ['$scope', '$rootScope', function(scope, root)
 				data: {loginid: user.loginid, delete: true},
 				dataType: 'json',
 				success: function(data) {
-					console.log('success', data);
 					scope.get_users();
 					scope.show_edit = false;
 					scope.$apply();
@@ -181,7 +179,6 @@ app.controller('UsersController', ['$scope', '$rootScope', function(scope, root)
 			},
 			dataType: 'json',
 			success: function(data) {
-				console.log('success', data);
 				scope.get_users();
 				scope.show_edit = false;
 				scope.$apply();

@@ -37,7 +37,6 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 						}
 					});
 					scope.current_variation = scope.variations[0];
-					console.log(scope.variations);
 				}
 				scope.loading = false;
 				root.done(1);
@@ -67,15 +66,12 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 					var params = {type:'new', id:scope.design.product};
  					state.go('edit', params);
 				}
-				console.log(scope.design);
 				scope.variations = JSON.parse(scope.design.variations);
 				scope.current_variation = scope.variations[0];
-				console.log(scope.design.public);
 				scope.public = scope.design.public === '1' ? true : false;
 				scope.$apply();
 				scope.get_product();
 				root.done(2);
-				console.log(scope.design);
 			},
 			error: function(data) {
 				console.log('error', data);
@@ -225,7 +221,6 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			data: design,
 			dataType: 'json',
 			success: function(data) {
-				console.log('success', data);
 				scope.edit_design(data.id);
 				scope.saving = false;
 				scope.show_save_as = false;
@@ -269,7 +264,6 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			data: design,
 			dataType: 'json',
 			success: function(data) {
-				console.log('success', data);
 				scope.saving = false;
 				callback();
 				scope.$apply();

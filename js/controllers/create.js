@@ -26,7 +26,6 @@ app.controller('CreateController', ['$scope', '$rootScope', '$state', function(s
 					product.colors = JSON.parse(product.colors);
 					product.variations = JSON.parse(product.variations);
 				});
-				console.log(data);
 				scope.products = data;
 				scope.filtered_products = data;
 				scope.loading = false;
@@ -54,7 +53,6 @@ app.controller('CreateController', ['$scope', '$rootScope', '$state', function(s
 				$.each(data, function(i, manufacturer){
 					scope.manufacturers[manufacturer.id] = manufacturer;
 				});
-				console.log(scope.manufacturers);
 				root.done(2);
 				scope.$apply();
 			},

@@ -21,7 +21,6 @@ app.controller('ContactController', ['$scope', '$rootScope', function(scope, roo
 					root.success('Your message has been sent');
 					scope.comments = '';
 					scope.$apply();
-					console.log('success');
 				} else {
 					root.error(data.message);
 					root.$apply();

@@ -8,7 +8,6 @@ app.directive('share', function() {
 		//FUNCTIONS
 			
 			scope.share_facebook = function() {
-				console.log(root.share_design);
 				FB.ui(
 					{
 						method: 'feed',

@@ -141,7 +141,6 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 			data: content,
 			dataType: 'json',
 			success: function(data) {
-				console.log(data.changed);
 				if (data.changed) {
 					root.user.email = new_email;
 					scope.show_change_email = false;
@@ -169,14 +168,13 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 			data: content,
 			dataType: 'json',
 			success: function(data) {
-				console.log(data);
 				if (data.changed) {
 					localStorage.user = '';
 					root.user = null;
 					state.go('home');
 					root.success('Your account has been deleted.');
 				} else {
-					console.log(data);
+					console.log('error', data);
 					root.error(data.message);
 				}
 				root.$apply();
@@ -205,7 +203,6 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 			data: data,
 			dataType: 'json',
 			success: function(data) {
-				console.log('success', data);
 				scope.show_delete_design = false;
 				scope.deleting_design = null;
 				scope.get_designs();

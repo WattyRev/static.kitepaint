@@ -47,7 +47,7 @@ app.controller('ManufacturersController', ['$scope', '$rootScope', '$state', fun
 			}
 		});
 		scope.sort_manufacturers();
-	}
+	};
 
 	//Put the first X num of manufacturers into the displayed table
 	scope.update_manufacturers = function() {
@@ -55,14 +55,14 @@ app.controller('ManufacturersController', ['$scope', '$rootScope', '$state', fun
 		for(var i = 0; i < scope.num_display && i < scope.filtered_manufacturers.length; i++) {
 			scope.display_manufacturers.push(scope.filtered_manufacturers[i]);
 		}
-	}
+	};
 
 	//sort array of manufacturers
 	scope.sort_manufacturers = function() {
 		scope.filtered_manufacturers.sort(function(a,b) {
 			var metric = scope.sort.metric;
 			var a_ = a[metric],
-				b_ = b[metric]
+				b_ = b[metric];
 			if (metric === 'created' || metric === 'last_paid'){
 				a_ = new Date(a_);
 				b_ = new Date(b_);
@@ -72,17 +72,17 @@ app.controller('ManufacturersController', ['$scope', '$rootScope', '$state', fun
 					return -1;
 				if (a_ > b_)
 					return 1;
-				return 0
+				return 0;
 			} else {
 				if (a_ < b_)
 					return 1;
 				if (a_ > b_)
 					return -1;
-				return 0
+				return 0;
 			}
 		});
 		scope.update_manufacturers();
-	}
+	};
 
 	//set sorting parameters
 	scope.sort_by = function(metric) {
@@ -97,27 +97,27 @@ app.controller('ManufacturersController', ['$scope', '$rootScope', '$state', fun
 			}
 		}
 		scope.sort_manufacturers();
-	}
+	};
 
 	//show more rows of manufacturers
 	scope.show_more = function() {
 		scope.num_display += 20;
 		scope.sort_manufacturers();
-	}
+	};
 
 	//set editing manufacturer and show edit manufacturer lightbox
 	scope.edit_manufacturer = function(manufacturer) {
 		scope.editing = JSON.parse(JSON.stringify(manufacturer));
 		scope.show_edit = true;
-	}
+	};
 
 	//show blank edit window
 	scope.add_manufacturer = function() {
 		scope.editing = {
 			new: true
-		}
+		};
 		scope.show_edit = true;
-	}
+	};
 
 	//perform ajax post to save manufacturer data
 	scope.save_manufacturer = function(manufacturer) {
@@ -127,7 +127,6 @@ app.controller('ManufacturersController', ['$scope', '$rootScope', '$state', fun
 			data: manufacturer,
 			dataType: 'json',
 			success: function(data) {
-				console.log('success', data);
 				scope.get_manufacturers();
 				scope.show_edit = false;
 				scope.$apply();
@@ -138,7 +137,7 @@ app.controller('ManufacturersController', ['$scope', '$rootScope', '$state', fun
 				alert('Could not save manufacturer');
 			}
 		});
-	}
+	};
 
 	//delete a manufacturer
 	scope.delete_manufacturer = function(manufacturer) {
@@ -162,7 +161,7 @@ app.controller('ManufacturersController', ['$scope', '$rootScope', '$state', fun
 				}
 			});
 		}
-	}
+	};
 
 	//trigger reset password
 	scope.update_paid = function(manufacturer) {
@@ -190,5 +189,5 @@ app.controller('ManufacturersController', ['$scope', '$rootScope', '$state', fun
 				alert('Could not reset password');
 			}
 		});
-	}
+	};
 }]);

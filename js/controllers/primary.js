@@ -50,10 +50,8 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 				data: root.sign_in,
 				dataType: 'json',
 				success: function(data) {
-					console.log('success', data);
 					if (!data.logged_in) {
 						root.invalid_login = true;
-						console.log(data);
 						//invalid login
 						root.error(data.message);
 					} else {
@@ -101,7 +99,6 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 				data: root.register,
 				dataType: 'json',
 				success: function(data) {
-					console.log('success', data);
 					if (data.registered) {
 						root.register_status = 'registered';
 						root.success('You have created an account');
@@ -131,7 +128,6 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 				data: root.reset,
 				dataType: 'json',
 				success: function(data) {
-					console.log('success', data);
 					if (data.reset) {
 						root.reset_status = 'reset';
 						root.lost_password = false;
@@ -196,7 +192,6 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 		root.check_login();
 
 		root.request_desktop_version = function() {
-			console.log('test');
 			create_cookie('desktop', true, 30);
 			location.reload();
 		};

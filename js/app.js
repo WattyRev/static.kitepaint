@@ -151,7 +151,6 @@ function verify_embed() {
 		dataType: 'json',
 		success: function(data) {
 			var urls = data[0].embed.split(',');
-			console.log(urls);
 
 			if(urls.indexOf(parent_domain) < 0) {
 				window.location.replace('error.php?m=bad_embed_domain');

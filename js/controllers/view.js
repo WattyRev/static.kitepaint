@@ -74,7 +74,6 @@ app.controller('ViewController', ['$scope', '$rootScope', '$location', '$state',
 				root.done(3);
 				scope.$apply();
 				if (!scope.public) {
-					console.log(scope.design.user);
 					scope.authorize_user(scope.design.user);
 				}
 				scope.get_product();

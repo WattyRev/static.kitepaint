@@ -13,11 +13,9 @@ app.directive('alert', function() {
 			scope.timer = setTimeout(function() {
 				scope.show = false;
 				scope.$apply();
-				console.log('hide');
 				setTimeout(function() {
 					root.alert_content = {};
 					root.$apply();
-					console.log('clear');
 				}, 400);
 			}, 5 * 1000);
 		};

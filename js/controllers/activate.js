@@ -15,7 +15,6 @@ app.controller('ActivateController', ['$scope', '$rootScope', '$location', funct
 				data: scope.activate_data,
 				dataType: 'json',
 				success: function(data) {
-					console.log('success', data);
 					if (data.activated) {
 						scope.activated = 'activated';
 					} else {

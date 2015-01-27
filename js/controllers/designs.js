@@ -45,7 +45,6 @@ app.controller('DesignsController', ['$scope', '$rootScope', function(scope, roo
 				});
 				root.done(4);
 				scope.$apply();
-				console.log(scope.designs);
 			},
 			error: function(data) {
 				console.log('error', data);
@@ -80,7 +79,6 @@ app.controller('DesignsController', ['$scope', '$rootScope', function(scope, roo
 				});
 				root.done(4);
 				scope.$apply();
-				console.log(scope.users);
 			},
 			error: function(data) {
 				console.log('error', data);
@@ -197,7 +195,6 @@ app.controller('DesignsController', ['$scope', '$rootScope', function(scope, roo
 					scope.designs.push(design);
 				});
 				scope.$apply();
-				console.log(scope.designs);
 			},
 			error: function(data) {
 				console.log('error', data);

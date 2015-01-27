@@ -157,7 +157,6 @@ app.controller('ProductsController', ['$scope', '$rootScope', function(scope, ro
 			data: product,
 			dataType: 'json',
 			success: function(data) {
-				console.log('success', data);
 				scope.get_products();
 				scope.show_edit = false;
 				scope.$apply();
@@ -180,7 +179,6 @@ app.controller('ProductsController', ['$scope', '$rootScope', function(scope, ro
 				data: {id: product.id, delete: true},
 				dataType: 'json',
 				success: function(data) {
-					console.log('success', data);
 					scope.get_products();
 					scope.show_edit = false;
 					scope.$apply();
