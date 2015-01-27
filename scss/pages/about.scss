@@ -1,0 +1,10 @@
+/**
+ * Styles for about page
+ */
+
+@import "base";
+
+#about img {
+	margin: 20px;
+	@include border-radius(10px);
+}

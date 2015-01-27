@@ -1,0 +1,62 @@
+/**
+ * Styles for responsive edit page
+ */
+
+@import "base";
+
+
+/* ~Tablet Portrait */
+@media only screen and (max-width : 800px) {
+	#edit {
+		.colors button {
+			display:none;
+		}
+		.colors {
+			width:27px;
+
+			ul {
+				margin-left:0;
+				padding-left:0;
+			}
+			.label {
+				width:0px;
+			}
+		}
+		.canvas-wrap {
+			width: 85%;
+		}
+	}
+}
+
+/* ~Phone */
+@media only screen and (max-width : 450px) {
+	#edit {
+		.colors {
+			width:100%;
+
+			ul {
+				float:none;
+				width:100%;
+				@include box-shadow(none);
+				border:0;
+
+				li {
+					display:inline-block;
+				}
+			}
+			.current {
+				padding:0 3px 0 0;
+				margin:0 -6px 0 0;
+				border:0;
+				border-right: 1px solid $light_grey;
+			}
+		}
+		.template {
+			height: auto;
+			margin: 20px 0;
+		}
+		.canvas-wrap {
+			width: 100%;
+		}
+	}
+}

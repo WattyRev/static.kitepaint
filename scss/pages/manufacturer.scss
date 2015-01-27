@@ -1,0 +1,29 @@
+/**
+ * Styles for manufacturer page
+ */
+
+@import "base";
+
+#manufacturer {
+	font-size: 24px;
+	color: $dark_grey;
+
+	#landing{
+		padding: 40px 0;
+
+		h2{
+			width: 30%;
+			padding: 40px 5% 40px 15%;
+			float:left;
+		}
+		form {
+			width: 30%;
+			padding: 45px 20% 45px 0;
+			text-align:center;
+			float:right;
+		}
+		.button {
+			display:inline-block;
+		}
+	}
+}

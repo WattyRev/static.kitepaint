@@ -1,0 +1,12 @@
+/**
+ * Styles for embedded page
+ */
+
+@import "base";
+
+body {
+	margin: 0;
+}
+.heading h1 a, .heading h1 span{
+	display:none;
+}

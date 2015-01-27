@@ -1,0 +1,38 @@
+/**
+ * Styles for responsive functionality
+ */
+
+@import "base";
+
+body, header {
+	min-width:300px;
+}
+
+/* ~Tablet Portrait */
+@media only screen and (max-width : 800px) {
+	/* GENERAL */
+
+	/* CLASSES */
+		.half {
+			width:100%;
+		}
+		.mobile {
+			display:initial;
+		}
+		.lightbox {
+			max-width: 600px;
+			width: 90%;
+			margin: 0 auto;
+			left: 0;
+		}
+
+	/* HEADER */
+		header {
+			.logged-in {
+				display:none;
+			}
+			.container>.right {
+				width:auto;
+			}
+		}
+}

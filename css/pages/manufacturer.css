@@ -1,0 +1,35 @@
+/**
+ * Styles for manufacturer page
+ */
+/**
+ * Base
+ * Declare variables and mixins for frontend layout
+ */
+/* Colors */
+/* Mixins */
+/* line 7, ../../scss/pages/manufacturer.scss */
+#manufacturer {
+  font-size: 24px;
+  color: #444;
+}
+/* line 11, ../../scss/pages/manufacturer.scss */
+#manufacturer #landing {
+  padding: 40px 0;
+}
+/* line 14, ../../scss/pages/manufacturer.scss */
+#manufacturer #landing h2 {
+  width: 30%;
+  padding: 40px 5% 40px 15%;
+  float: left;
+}
+/* line 19, ../../scss/pages/manufacturer.scss */
+#manufacturer #landing form {
+  width: 30%;
+  padding: 45px 20% 45px 0;
+  text-align: center;
+  float: right;
+}
+/* line 25, ../../scss/pages/manufacturer.scss */
+#manufacturer #landing .button {
+  display: inline-block;
+}

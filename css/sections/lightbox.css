@@ -1,0 +1,45 @@
+/**
+ * Styles for lightboxes
+ */
+/**
+ * Base
+ * Declare variables and mixins for frontend layout
+ */
+/* Colors */
+/* Mixins */
+/* line 7, ../../scss/sections/lightbox.scss */
+.lightbox {
+  width: 600px;
+  left: 50%;
+  margin-left: -300px;
+  top: 100px;
+  background: #fff;
+  position: fixed;
+  padding: 15px;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+  -moz-box-shadow: 3px 3px 3px 0 #cdcdcd;
+  -webkit-box-shadow: 3px 3px 3px 0 #cdcdcd;
+  box-shadow: 3px 3px 3px 0 #cdcdcd;
+  z-index: 200;
+  border: 1px solid #cdcdcd;
+}
+/* line 20, ../../scss/sections/lightbox.scss */
+.lightbox:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: #fff;
+  opacity: .5;
+  -webkit-pointer-events: none;
+  pointer-events: none;
+}
+/* line 33, ../../scss/sections/lightbox.scss */
+.lightbox .content {
+  width: 100% !important;
+}

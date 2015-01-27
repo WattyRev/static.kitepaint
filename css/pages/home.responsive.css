@@ -1,0 +1,30 @@
+/**
+ * Styles for responsive account page
+ */
+/**
+ * Base
+ * Declare variables and mixins for frontend layout
+ */
+/* Colors */
+/* Mixins */
+/* ~Tablet Portrait */
+@media only screen and (max-width: 800px) {
+  /* line 11, ../../scss/pages/home.responsive.scss */
+  #home .user .content > div {
+    float: none;
+    width: 90%;
+  }
+  /* line 15, ../../scss/pages/home.responsive.scss */
+  #home .user form {
+    width: 73%;
+    float: none;
+    margin: 0 auto;
+  }
+}
+/* ~Phone */
+@media only screen and (max-width: 450px) {
+  /* line 25, ../../scss/pages/home.responsive.scss */
+  #home .news .content {
+    padding: 15px;
+  }
+}

@@ -10,6 +10,8 @@
 		$environment = 'production';
 	}
 	$js_files = json_decode(file_get_contents("dependencies.json"), true)[$environment]["js"];
+	$css_files = json_decode(file_get_contents("dependencies.json"), true)[$environment]["css"]["layout"];
+	$dependencies = file_get_contents("dependencies.json");
 ?>
 <!DOCTYPE html>
 <html ng-app="kitePaint">
@@ -21,53 +23,65 @@
 		<?php else:?>
 			<meta name="viewport" content="width=1080px">
 		<?php endif;?>
+		
+		<!-- Scripts -->
+			<?php if ($embed) :?>
+				<script type="text/javascript">
+					var embed = true;
+					var product = <?php echo $_GET['id']; ?>;
+				</script>
+			<?php else:?>
+				<script type="text/javascript">
+					var embed = false;
+				</script>
+			<?php endif;?>
 
-		<?php if ($embed) :?>
 			<script type="text/javascript">
-				var embed = true;
-				var product = <?php echo $_GET['id']; ?>;
+				var dependencies = <?php echo $dependencies ?>;
+				var environment = '<?php echo $environment ?>';
 			</script>
-		<?php else:?>
-			<script type="text/javascript">
-				var embed = false;
-			</script>
-		<?php endif;?>
 
 		<!-- JavaScript Files -->
-		<?php foreach($js_files as $file):?>
-			<script type="text/javascript" src="js/<?php echo $file ?>"></script>
-		<?php endforeach;?>
+			<?php foreach($js_files as $file):?>
+				<script type="text/javascript" src="js/<?php echo $file ?>"></script>
+			<?php endforeach;?>
 
-		<link rel="stylesheet" href="css/style.css" />
-		<?php if(!isset($_COOKIE['desktop'])): ?>
-			<link rel="stylesheet" href="css/responsive.css" />
-		<?php endif; ?>
+		<!-- StyleSheets -->
+			<?php foreach($css_files['main'] as $file):?>
+				<link rel="stylesheet" href="css/<?php echo $file ?>" />
+			<?php endforeach;?>
 
-		<!--[if IE 9]>
-			<link rel="stylesheet" href="css/style.ie9.css" />
-		<![endif]-->
+			<?php if(!isset($_COOKIE['desktop'])): 
+				foreach($css_files['responsive'] as $file): ?>
+					<link rel="stylesheet" href="css/<?php echo $file ?>" />
+				<?php endforeach;
+			endif; ?>
 
-		<?php 
-			$ua = $_SERVER['HTTP_USER_AGENT'];
-			$safariorchrome = strpos($ua, 'Safari') ? true : false;   
-			$chrome = strpos($ua, 'Chrome') ? true : false;    
-			if($safariorchrome == true AND $chrome == false){ $safari = true; }
+			<!--[if IE 9]>
+				<link rel="stylesheet" href="css/<?php echo $css_files['legacy'] ?>" />
+			<![endif]-->
 
-			// Check for version numbers 
-			$v5 = strpos($ua, 'Version/5.') ? true : false;
+			<?php 
+				$ua = $_SERVER['HTTP_USER_AGENT'];
+				$safariorchrome = strpos($ua, 'Safari') ? true : false;   
+				$chrome = strpos($ua, 'Chrome') ? true : false;    
+				if($safariorchrome == true AND $chrome == false){ $safari = true; }
 
-			// Test versions of Safari
-			if($safari AND $v5){ 
-				echo '<link rel="stylesheet" href="css/style.ie9.css" />'; 
-			}
-		?>
+				// Check for version numbers 
+				$v5 = strpos($ua, 'Version/5.') ? true : false;
 
-		<?php if ($embed) :?>
-			<link rel="stylesheet" href="css/embed.css" />
-			<script type="text/javascript">
-				var embed = true;
-			</script>
-		<?php endif;?>
+				// Test versions of Safari
+				if($safari AND $v5){ 
+					echo '<link rel="stylesheet" href="css/' , $css_files['legacy'] , '" />'; 
+				}
+			?>
+
+			<?php if ($embed) :?>
+				<link rel="stylesheet" href="css/<?php echo $css_files['embed'] ?>" />
+				<script type="text/javascript">
+					var embed = true;
+				</script>
+			<?php endif;?>
 	</head>
 	<body id="body" ng-controller="PrimaryController">
 

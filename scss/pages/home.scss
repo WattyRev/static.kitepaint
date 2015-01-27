@@ -1,0 +1,160 @@
+/**
+ * Styles for home page
+ */
+
+@import "base";
+
+#home {
+	width: 100%;
+	padding: 0;
+	max-width: 100%;
+
+	>div {
+		width: 100%;
+		border-bottom: 1px solid $light_grey;
+		position:relative;
+
+		>.content {
+			width: 90%;
+			max-width: 1300px;
+			padding: 15px 5%;
+			margin: 0 auto;
+			position:relative;
+		}
+	}
+	.landing {
+		background: $dark_grey image-url('bg-rev.jpg') no-repeat center;
+		background-size: cover;
+	}
+	.create {
+		width: 90%;
+		max-width: 400px;
+		margin: 90px auto;
+		padding: 3%;
+		background: rgba(0,0,0,.5);
+		@include border-radius(15px);
+		text-align:center;
+
+		.button {
+			margin: 10px auto;
+			font-size: 20px;
+			text-align:center;
+			margin: 20px auto 10px;
+		}
+		h2 {
+			color:$white;
+		}
+	}
+	.user {
+		form{
+			border: 10px solid $lighter_grey;
+			padding: 15px;
+			width: 33%;
+			margin: 10px 6%;
+			@include border-radius(15px);
+			background: $white;
+			position:relative;
+
+			p{
+				font-size: 14px;
+			}
+		}
+		label, input{
+			display:block;
+		}
+		input{
+			width: 90%;
+			padding-left: 5%;
+			padding-right: 5%;
+			margin: 5px auto 10px;
+		}
+		.button {
+			width: 90%;
+			padding-left:5%;
+			padding-right:5%;
+			margin: 5px auto 10px;
+			display:block;
+		}
+		.content>div{
+			margin: 45px 5%;
+			width:37%;
+		}
+	}
+	>div:nth-child(even){
+		background: $lighter_grey image-url('paper.png');
+	}
+	.designs {
+		ul {
+			margin: 15px 0;
+			list-style: none;
+			height: 150px;
+			overflow: hidden;
+			width: 88%;
+			float: left;
+		}
+		.content>a {
+			float: right;
+			display: block;
+			width: 12%;
+			text-align: center;
+			font-weight: bold;
+			font-size: 20px;
+			padding: 61px 0px;
+		}
+		li {
+			display:block;
+			float:left;
+			position:relative;
+			width: 150px;
+			height: 150px;
+			margin: 0 15px;
+
+			>div {
+				position:absolute;
+				top:0;
+				left:0;
+				width:100%;
+				height:100%;
+				z-index: -1;
+			}
+			p {
+				font-weight:bold;
+				white-space:nowrap;
+				overflow:hidden;
+				text-overflow:ellipsis;
+				position:absolute;
+				width: 100%;
+				bottom:0;
+				padding: 5px;
+				opacity: 0;
+				background: rgba(0,0,0,.5);
+				color:$white;
+			}
+			&:hover p{
+				opacity:1;
+			}
+		}
+		svg {
+			@include rotate(45deg);
+		}
+	}
+	.news {
+		.content {
+			padding-top: 45px;
+			padding-bottom: 45px;
+		}
+		h2 {
+			margin-bottom: 25px;
+		}
+	}
+	.marketing {
+		.content>div {
+			text-align:center;
+		}
+		.button {
+			margin: 15px auto;
+			font-size: 18px;
+			width: 100px;
+		}
+	}
+}

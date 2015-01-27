@@ -1,0 +1,26 @@
+/**
+ * Styles for noscript message
+ */
+
+@import "base";
+
+noscript {
+	position:fixed;
+	background:$white;
+	top:0;
+	left:0;
+	height:100%;
+	width:100%;
+	z-index: 10000;
+
+	div {
+		width: 90%;
+		margin: 10% auto;
+		max-width: 400px;
+		max-height: 90%;
+		padding: 15px;
+		background: $light_grey;
+		@include border-radius(15px);
+		@include box-shadow(2px 2px 2px 0 $dark_grey);
+	}
+}

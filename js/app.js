@@ -1,4 +1,4 @@
-var app = angular.module('kitePaint', ['ui.router']);
+var app = angular.module('kitePaint', ['ui.router', 'uiRouterStyles']);
 
 app.config(function($sceProvider) {
   // Completely disable SCE.  For demonstration purposes only!
@@ -17,7 +17,8 @@ app.config(function($stateProvider, $urlRouterProvider){
 			templateUrl: 'html/pages/about.html',
 			controller: 'AboutController',
 			data: {
-				title: 'About'
+				title: 'About',
+				css: get_dependency('about')
 			}
 		})
 		.state('activate', {
@@ -25,7 +26,8 @@ app.config(function($stateProvider, $urlRouterProvider){
 			templateUrl: 'html/pages/activate.html',
 			controller: 'ActivateController',
 			data: {
-				title: 'Activate'
+				title: 'Activate',
+				css: get_dependency('activate')
 			}
 		})
 		.state('account', {
@@ -33,7 +35,8 @@ app.config(function($stateProvider, $urlRouterProvider){
 			templateUrl: 'html/pages/account.html',
 			controller: 'AccountController',
 			data: {
-				title: 'Account'
+				title: 'Account',
+				css: get_dependency('account')
 			}
 		})
 		.state('changePassword', {
@@ -41,7 +44,8 @@ app.config(function($stateProvider, $urlRouterProvider){
 			templateUrl: 'html/pages/changePassword.html',
 			controller: 'ChangePasswordController',
 			data: {
-				title: 'Change Password'
+				title: 'Change Password',
+				css: get_dependency('changePassword')
 			}
 		})
 		.state('contact', {
@@ -49,7 +53,8 @@ app.config(function($stateProvider, $urlRouterProvider){
 			templateUrl: 'html/pages/contact.html',
 			controller: 'ContactController',
 			data: {
-				title: 'Contact'
+				title: 'Contact',
+				css: get_dependency('contact')
 			}
 		})
 		.state('create', {
@@ -57,7 +62,8 @@ app.config(function($stateProvider, $urlRouterProvider){
 			templateUrl: 'html/pages/create.html',
 			controller: 'CreateController',
 			data: {
-				title: 'Create'
+				title: 'Create',
+				css: get_dependency('create')
 			}
 		})
 		.state('designs', {
@@ -65,7 +71,8 @@ app.config(function($stateProvider, $urlRouterProvider){
 			templateUrl: 'html/pages/designs.html',
 			controller: 'DesignsController',
 			data: {
-				title: 'Designs'
+				title: 'Designs',
+				css: get_dependency('designs')
 			}
 		})
 		.state('edit', {
@@ -73,7 +80,8 @@ app.config(function($stateProvider, $urlRouterProvider){
 			templateUrl: 'html/pages/edit.html',
 			controller: 'EditController',
 			data: {
-				title: 'Edit'
+				title: 'Edit',
+				css: get_dependency('edit')
 			}
 		})
 		.state('home', {
@@ -81,7 +89,8 @@ app.config(function($stateProvider, $urlRouterProvider){
 			templateUrl: 'html/pages/home.html',
 			controller: 'HomeController',
 			data: {
-				title: ''
+				title: '',
+				css: get_dependency('home')
 			}
 		})
 		.state('manufacturer', {
@@ -89,7 +98,8 @@ app.config(function($stateProvider, $urlRouterProvider){
 			templateUrl: 'html/pages/manufacturer.html',
 			controller: 'ManufacturerController',
 			data: {
-				title: 'Manufacturer'
+				title: 'Manufacturer',
+				css: get_dependency('manufacturer')
 			}
 		})
 		.state('retailer', {
@@ -97,7 +107,8 @@ app.config(function($stateProvider, $urlRouterProvider){
 			templateUrl: 'html/pages/retailer.html',
 			controller: 'RetailerController',
 			data: {
-				title: 'Retailer'
+				title: 'Retailer',
+				css: get_dependency('retailer')
 			}
 		})
 		.state('view', {
@@ -105,10 +116,29 @@ app.config(function($stateProvider, $urlRouterProvider){
 			templateUrl: 'html/pages/view.html',
 			controller: 'ViewController',
 			data: {
-				title: 'View'
+				title: 'View',
+				css: get_dependency('view')
 			}
 		});
 });
+
+function get_dependency(page) {
+	var css = dependencies[environment].css.pages[page],
+		responsive = !read_cookie('desktop'),
+		dependency;
+	if (!css) {
+		return;
+	}
+	if (responsive) {
+		dependency = ['css/' + css.main, 'css/' + css.responsive];
+		if (!css.responsive.length) {
+			dependency = 'css/' + css.main;
+		}
+	} else {
+		dependency = 'css/' + css.main;
+	}
+	return dependency;
+}
 
 if (embed) {
 	verify_embed();

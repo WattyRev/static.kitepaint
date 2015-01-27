@@ -1,0 +1,39 @@
+/**
+ * Styles for alert directive
+ */
+/**
+ * Base
+ * Declare variables and mixins for frontend layout
+ */
+/* Colors */
+/* Mixins */
+/* line 8, ../../scss/sections/alert.scss */
+alert .alert {
+  display: block;
+  width: 250px;
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  margin-left: -140px;
+  padding: 15px;
+  text-align: center;
+  z-index: 400;
+}
+/* line 19, ../../scss/sections/alert.scss */
+alert .alert.ng-hide {
+  position: fixed !important;
+  height: auto !important;
+  padding: 15px !important;
+}
+/* line 25, ../../scss/sections/alert.scss */
+alert .error {
+  background: #FF9595;
+  color: #D50000;
+  border: 1px solid #D50000;
+}
+/* line 30, ../../scss/sections/alert.scss */
+alert .success {
+  background: #B9E0BB;
+  color: #2E6C27;
+  border: 1px solid #2E6C27;
+}

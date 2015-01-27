@@ -1,0 +1,182 @@
+/**
+ * Styles for home page
+ */
+/**
+ * Base
+ * Declare variables and mixins for frontend layout
+ */
+/* Colors */
+/* Mixins */
+/* line 7, ../../scss/pages/home.scss */
+#home {
+  width: 100%;
+  padding: 0;
+  max-width: 100%;
+}
+/* line 12, ../../scss/pages/home.scss */
+#home > div {
+  width: 100%;
+  border-bottom: 1px solid #cdcdcd;
+  position: relative;
+}
+/* line 17, ../../scss/pages/home.scss */
+#home > div > .content {
+  width: 90%;
+  max-width: 1300px;
+  padding: 15px 5%;
+  margin: 0 auto;
+  position: relative;
+}
+/* line 25, ../../scss/pages/home.scss */
+#home .landing {
+  background: #444 url('//wattydev.com/projects/kite_paint/img/bg-rev.jpg?1417813794') no-repeat center;
+  background-size: cover;
+}
+/* line 29, ../../scss/pages/home.scss */
+#home .create {
+  width: 90%;
+  max-width: 400px;
+  margin: 90px auto;
+  padding: 3%;
+  background: rgba(0, 0, 0, 0.5);
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+  text-align: center;
+}
+/* line 38, ../../scss/pages/home.scss */
+#home .create .button {
+  margin: 10px auto;
+  font-size: 20px;
+  text-align: center;
+  margin: 20px auto 10px;
+}
+/* line 44, ../../scss/pages/home.scss */
+#home .create h2 {
+  color: #fff;
+}
+/* line 49, ../../scss/pages/home.scss */
+#home .user form {
+  border: 10px solid #ededed;
+  padding: 15px;
+  width: 33%;
+  margin: 10px 6%;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+  background: #fff;
+  position: relative;
+}
+/* line 58, ../../scss/pages/home.scss */
+#home .user form p {
+  font-size: 14px;
+}
+/* line 62, ../../scss/pages/home.scss */
+#home .user label, #home .user input {
+  display: block;
+}
+/* line 65, ../../scss/pages/home.scss */
+#home .user input {
+  width: 90%;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin: 5px auto 10px;
+}
+/* line 71, ../../scss/pages/home.scss */
+#home .user .button {
+  width: 90%;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin: 5px auto 10px;
+  display: block;
+}
+/* line 78, ../../scss/pages/home.scss */
+#home .user .content > div {
+  margin: 45px 5%;
+  width: 37%;
+}
+/* line 83, ../../scss/pages/home.scss */
+#home > div:nth-child(even) {
+  background: #ededed url('//wattydev.com/projects/kite_paint/img/paper.png?1417813794');
+}
+/* line 87, ../../scss/pages/home.scss */
+#home .designs ul {
+  margin: 15px 0;
+  list-style: none;
+  height: 150px;
+  overflow: hidden;
+  width: 88%;
+  float: left;
+}
+/* line 95, ../../scss/pages/home.scss */
+#home .designs .content > a {
+  float: right;
+  display: block;
+  width: 12%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 61px 0px;
+}
+/* line 104, ../../scss/pages/home.scss */
+#home .designs li {
+  display: block;
+  float: left;
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 15px;
+}
+/* line 112, ../../scss/pages/home.scss */
+#home .designs li > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+/* line 120, ../../scss/pages/home.scss */
+#home .designs li p {
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  padding: 5px;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+/* line 133, ../../scss/pages/home.scss */
+#home .designs li:hover p {
+  opacity: 1;
+}
+/* line 137, ../../scss/pages/home.scss */
+#home .designs svg {
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+/* line 142, ../../scss/pages/home.scss */
+#home .news .content {
+  padding-top: 45px;
+  padding-bottom: 45px;
+}
+/* line 146, ../../scss/pages/home.scss */
+#home .news h2 {
+  margin-bottom: 25px;
+}
+/* line 151, ../../scss/pages/home.scss */
+#home .marketing .content > div {
+  text-align: center;
+}
+/* line 154, ../../scss/pages/home.scss */
+#home .marketing .button {
+  margin: 15px auto;
+  font-size: 18px;
+  width: 100px;
+}

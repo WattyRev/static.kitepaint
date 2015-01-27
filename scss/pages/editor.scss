@@ -1,0 +1,164 @@
+/**
+ * Styles for about page
+ */
+
+@import "base";
+
+#edit {
+	.heading .button {
+		display:inline-block;
+		margin: 10px 5px;
+	}
+	.design-name {
+		display:inline-block;
+
+		.icon {
+			display:inline-block;
+			height:16px;
+			width:16px;
+			opacity:0;
+		}
+		&:hover .icon {
+			opacity:1;
+		}
+	}
+	.canvas-wrap {
+		float: right;
+		width: 73%;
+		@include transition(.3s width);
+		padding: 20px;
+		@include box-sizing(border-box);
+		@include box-shadow(0 0 20px 20px $white inset);
+		background-size: cover;
+		background-position:center;
+
+		&.wide{
+			width: 85%;
+		}
+	}
+	.settings-button {
+		height: 35px;
+		width: 35px;
+		background: none;
+		border: 0;
+		position: relative;
+		top: 11px;
+		margin-left: 20px;
+		display:inline-block;
+	}
+	.settings-dropdown #set-background {
+		margin: 5px auto;
+		padding: 2px;
+		font-size: 14px;
+		display: block;
+	}
+	.variations {
+		height: 50px;
+		width: 100%;
+		float: right;
+		@include transition(.3s width);
+	}
+	.variation {
+		height: 46px;
+		width: 46px;
+		padding: 2px;
+		display: inline-block;
+		margin: 0 5px;
+		border: 1px solid transparent;
+		@include border-radius(5px);
+		@include transition(.3s border);
+
+		&.selected, &:hover {
+			border:1px solid $light_grey;
+			@include border-radius(5px);
+		}
+	}
+	.actions {
+		text-align:right;
+	}
+}
+.colors {
+	ul {
+		list-style: none;
+		margin: 15px;
+		width: 127px;
+		float: left;
+		padding: 15px;
+		border-right: 1px solid $light_grey;
+		@include box-shadow(6px 0px 4px -5px #737373);
+		position:relative;
+		@include transition(.3s width);
+	}
+	li {
+		text-align:right;
+		white-space:nowrap;
+		overflow:hidden;
+		padding-right:2px;
+		display:block;
+	}
+	.color {
+		height:20px;
+		width:20px;
+		display:inline-block;
+		@include border-radius(5px);
+		margin:0;
+		cursor:pointer;
+		@include box-shadow(1px 1px 2px 0px #444);
+	}
+	.current {
+		border-bottom:1px solid $light_grey;
+		padding-bottom:5px;
+		margin-bottom:5px;
+
+		.color {
+			cursor:auto;
+		}
+	}
+	.label {
+		display:inline-block;
+		width:100px;
+		overflow:hidden;
+		white-space:nowrap;
+		text-align:right;
+		@include transition(.3s width);
+	}
+	button {
+		position:absolute;
+		background: $white;
+		border: 1px solid $light_grey;
+		@include border-right-radius(5px);
+		border-left:0px;
+		padding:5px;
+		right:-18px;
+		top:0;
+		font-family:monospace;
+		@include box-shadow(2px 2px 4px -1px #737373);
+	}
+	.collapse {
+		width: 27px;
+
+		.label {
+			width:0px;
+		}
+	}
+}
+.template {
+	float:right;
+	width:100%;
+	height:500px;
+	position:relative;
+
+	svg * {
+		stroke:none;
+	}
+	&.outlines svg * {
+		stroke: $grey;
+
+		&[stroke="none"] {
+			stroke: none;
+		}
+	}
+}
+svg *[ng-click] {
+	@include transition(.3s stroke, .3s stroke-width);
+}

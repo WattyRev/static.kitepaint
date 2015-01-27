@@ -1,0 +1,61 @@
+/**
+ * Styles for tabbed navigation
+ */
+/**
+ * Base
+ * Declare variables and mixins for frontend layout
+ */
+/* Colors */
+/* Mixins */
+/* line 7, ../../scss/sections/tabbedNavigation.scss */
+.tab-wrapper {
+  position: relative;
+}
+
+/* line 10, ../../scss/sections/tabbedNavigation.scss */
+.tab-radio {
+  display: none;
+}
+
+/* line 13, ../../scss/sections/tabbedNavigation.scss */
+.tab-label {
+  cursor: pointer;
+  font-size: 24px;
+  color: #444;
+  opacity: .5;
+  position: absolute;
+  top: -50px;
+  left: 0;
+}
+
+/* line 22, ../../scss/sections/tabbedNavigation.scss */
+.tab-section:nth-child(2) .tab-label {
+  left: 110px;
+}
+
+/* line 25, ../../scss/sections/tabbedNavigation.scss */
+.tab-radio:checked + .tab-label {
+  opacity: 1;
+}
+
+/* line 28, ../../scss/sections/tabbedNavigation.scss */
+.tab-label:hover {
+  opacity: 1;
+}
+
+/* line 31, ../../scss/sections/tabbedNavigation.scss */
+.tab-section {
+  margin-top: 50px;
+}
+
+/* line 34, ../../scss/sections/tabbedNavigation.scss */
+.tab-content {
+  position: absolute;
+  opacity: 0;
+}
+
+/* line 38, ../../scss/sections/tabbedNavigation.scss */
+.tab-radio:checked ~ .tab-content {
+  position: relative;
+  opacity: 1;
+}

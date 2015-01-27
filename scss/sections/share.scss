@@ -1,0 +1,44 @@
+/**
+ * Styles for share module
+ */
+
+@import "base";
+
+share {
+	.options li {
+		display:inline-block;
+		height: 40px;
+		width: 40px;
+		padding: 10px;
+		background: $light_grey;
+		@include border-radius(10px);
+		margin: 0 10px 0 0;
+		@include transition(.3s background);
+	}
+	.link, .email {
+		&:hover, &.selected {
+			background: $blue;
+		}
+	}
+	.facebook:hover, .facebook.selected {
+		background: #3b5998;
+	}
+	.twitter:hover, .twitter.selected {
+		background: #55ACEE;
+	}
+	label {
+		text-align:center;
+		margin: 15px auto;
+		display:block;
+	}
+	input {
+		display:block;
+		width: 90%;
+		margin: 0 auto;
+		text-align:center;
+
+		&[type="submit"] {
+			margin-top: 15px;
+		}
+	}
+}

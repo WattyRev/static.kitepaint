@@ -1,0 +1,27 @@
+/**
+ * Styles for about page
+ */
+/**
+ * Base
+ * Declare variables and mixins for frontend layout
+ */
+/* Colors */
+/* Mixins */
+/* line 8, ../../scss/pages/contact.scss */
+#contact form {
+  max-width: 500px;
+}
+/* line 11, ../../scss/pages/contact.scss */
+#contact form input, #contact form select, #contact form textarea {
+  width: 95.5%;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 16, ../../scss/pages/contact.scss */
+#contact form select {
+  width: 100%;
+}
+/* line 20, ../../scss/pages/contact.scss */
+#contact textarea {
+  resize: vertical;
+}

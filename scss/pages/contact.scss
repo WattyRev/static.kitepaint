@@ -1,0 +1,23 @@
+/**
+ * Styles for about page
+ */
+
+@import "base";
+
+#contact {
+	form {
+		max-width: 500px;
+
+		input, select, textarea {
+			width: 95.5%;
+			margin-left:auto;
+			margin-right: auto;
+		}
+		select {
+			width: 100%;
+		}
+	}
+	textarea {
+		resize: vertical;
+	}
+}
