@@ -7,4 +7,9 @@ session_start();
 require_once ('db_connect.inc.php'); // include the database connection
 require_once ("functions.inc.php"); // include all the functions
 $seed="0dAfghRqSTgx"; // the seed for the passwords
-$domain =  "wattydev.com/projects/kite_paint"; // the domain name without http://www.
+
+if ($_SERVER['SERVER_NAME'] === 'wattydev.com') {
+	$domain =  "wattydev.com/projects/kite_paint"; // the domain name without http://www.
+} else {
+	$domain = "kitepaint.com";
+}
