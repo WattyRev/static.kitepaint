@@ -7,28 +7,35 @@
  */
 /* Colors */
 /* Mixins */
-/* line 8, ../../scss/pages/editor.scss */
-#edit .heading .button {
+/* line 7, ../../scss/pages/editor.scss */
+.heading .button {
   display: inline-block;
   margin: 10px 5px;
 }
-/* line 12, ../../scss/pages/editor.scss */
-#edit .design-name {
+
+/* line 11, ../../scss/pages/editor.scss */
+.design-name {
   display: inline-block;
 }
-/* line 15, ../../scss/pages/editor.scss */
-#edit .design-name .icon {
+/* line 14, ../../scss/pages/editor.scss */
+.design-name .icon {
   display: inline-block;
   height: 16px;
   width: 16px;
   opacity: 0;
 }
-/* line 21, ../../scss/pages/editor.scss */
-#edit .design-name:hover .icon {
+/* line 20, ../../scss/pages/editor.scss */
+.design-name:hover .icon {
   opacity: 1;
 }
-/* line 25, ../../scss/pages/editor.scss */
-#edit .canvas-wrap {
+
+/* line 24, ../../scss/pages/editor.scss */
+#view .canvas-wrap {
+  width: 100%;
+}
+
+/* line 27, ../../scss/pages/editor.scss */
+.canvas-wrap {
   float: right;
   width: 73%;
   -moz-transition: width 0.3s;
@@ -45,30 +52,13 @@
   background-size: cover;
   background-position: center;
 }
-/* line 35, ../../scss/pages/editor.scss */
-#edit .canvas-wrap.wide {
+/* line 37, ../../scss/pages/editor.scss */
+.canvas-wrap.wide {
   width: 85%;
 }
-/* line 39, ../../scss/pages/editor.scss */
-#edit .settings-button {
-  height: 35px;
-  width: 35px;
-  background: none;
-  border: 0;
-  position: relative;
-  top: 11px;
-  margin-left: 20px;
-  display: inline-block;
-}
-/* line 49, ../../scss/pages/editor.scss */
-#edit .settings-dropdown #set-background {
-  margin: 5px auto;
-  padding: 2px;
-  font-size: 14px;
-  display: block;
-}
-/* line 55, ../../scss/pages/editor.scss */
-#edit .variations {
+
+/* line 41, ../../scss/pages/editor.scss */
+.variations {
   height: 50px;
   width: 100%;
   float: right;
@@ -77,8 +67,9 @@
   -webkit-transition: width 0.3s;
   transition: width 0.3s;
 }
-/* line 61, ../../scss/pages/editor.scss */
-#edit .variation {
+
+/* line 47, ../../scss/pages/editor.scss */
+.variation {
   height: 46px;
   width: 46px;
   padding: 2px;
@@ -93,19 +84,40 @@
   -webkit-transition: border 0.3s;
   transition: border 0.3s;
 }
-/* line 71, ../../scss/pages/editor.scss */
-#edit .variation.selected, #edit .variation:hover {
+/* line 57, ../../scss/pages/editor.scss */
+.variation.selected, .variation:hover {
   border: 1px solid #cdcdcd;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }
-/* line 76, ../../scss/pages/editor.scss */
-#edit .actions {
+
+/* line 62, ../../scss/pages/editor.scss */
+.actions {
   text-align: right;
 }
 
-/* line 81, ../../scss/pages/editor.scss */
+/* line 66, ../../scss/pages/editor.scss */
+.settings-button {
+  height: 35px;
+  width: 35px;
+  background: none;
+  border: 0;
+  position: relative;
+  top: 11px;
+  margin-left: 20px;
+  display: inline-block;
+}
+
+/* line 76, ../../scss/pages/editor.scss */
+.settings-dropdown #set-background {
+  margin: 5px auto;
+  padding: 2px;
+  font-size: 14px;
+  display: block;
+}
+
+/* line 83, ../../scss/pages/editor.scss */
 .colors ul {
   list-style: none;
   margin: 15px;
@@ -122,7 +134,7 @@
   -webkit-transition: width 0.3s;
   transition: width 0.3s;
 }
-/* line 92, ../../scss/pages/editor.scss */
+/* line 94, ../../scss/pages/editor.scss */
 .colors li {
   text-align: right;
   white-space: nowrap;
@@ -130,7 +142,7 @@
   padding-right: 2px;
   display: block;
 }
-/* line 99, ../../scss/pages/editor.scss */
+/* line 101, ../../scss/pages/editor.scss */
 .colors .color {
   height: 20px;
   width: 20px;
@@ -144,17 +156,17 @@
   -webkit-box-shadow: 1px 1px 2px 0px #444;
   box-shadow: 1px 1px 2px 0px #444;
 }
-/* line 108, ../../scss/pages/editor.scss */
+/* line 110, ../../scss/pages/editor.scss */
 .colors .current {
   border-bottom: 1px solid #cdcdcd;
   padding-bottom: 5px;
   margin-bottom: 5px;
 }
-/* line 113, ../../scss/pages/editor.scss */
+/* line 115, ../../scss/pages/editor.scss */
 .colors .current .color {
   cursor: auto;
 }
-/* line 117, ../../scss/pages/editor.scss */
+/* line 119, ../../scss/pages/editor.scss */
 .colors .label {
   display: inline-block;
   width: 100px;
@@ -166,7 +178,7 @@
   -webkit-transition: width 0.3s;
   transition: width 0.3s;
 }
-/* line 125, ../../scss/pages/editor.scss */
+/* line 127, ../../scss/pages/editor.scss */
 .colors button {
   position: absolute;
   background: #fff;
@@ -186,36 +198,36 @@
   -webkit-box-shadow: 2px 2px 4px -1px #737373;
   box-shadow: 2px 2px 4px -1px #737373;
 }
-/* line 137, ../../scss/pages/editor.scss */
+/* line 139, ../../scss/pages/editor.scss */
 .colors .collapse {
   width: 27px;
 }
-/* line 140, ../../scss/pages/editor.scss */
+/* line 142, ../../scss/pages/editor.scss */
 .colors .collapse .label {
   width: 0px;
 }
 
-/* line 145, ../../scss/pages/editor.scss */
+/* line 147, ../../scss/pages/editor.scss */
 .template {
   float: right;
   width: 100%;
   height: 500px;
   position: relative;
 }
-/* line 151, ../../scss/pages/editor.scss */
+/* line 153, ../../scss/pages/editor.scss */
 .template svg * {
   stroke: none;
 }
-/* line 154, ../../scss/pages/editor.scss */
+/* line 156, ../../scss/pages/editor.scss */
 .template.outlines svg * {
   stroke: #484848;
 }
-/* line 157, ../../scss/pages/editor.scss */
+/* line 159, ../../scss/pages/editor.scss */
 .template.outlines svg *[stroke="none"] {
   stroke: none;
 }
 
-/* line 162, ../../scss/pages/editor.scss */
+/* line 164, ../../scss/pages/editor.scss */
 svg *[ng-click] {
   -moz-transition: stroke 0.3s, stroke-width 0.3s;
   -o-transition: stroke 0.3s, stroke-width 0.3s;

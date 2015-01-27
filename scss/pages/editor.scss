@@ -4,78 +4,80 @@
 
 @import "base";
 
-#edit {
-	.heading .button {
-		display:inline-block;
-		margin: 10px 5px;
-	}
-	.design-name {
-		display:inline-block;
+.heading .button {
+	display:inline-block;
+	margin: 10px 5px;
+}
+.design-name {
+	display:inline-block;
 
-		.icon {
-			display:inline-block;
-			height:16px;
-			width:16px;
-			opacity:0;
-		}
-		&:hover .icon {
-			opacity:1;
-		}
-	}
-	.canvas-wrap {
-		float: right;
-		width: 73%;
-		@include transition(.3s width);
-		padding: 20px;
-		@include box-sizing(border-box);
-		@include box-shadow(0 0 20px 20px $white inset);
-		background-size: cover;
-		background-position:center;
-
-		&.wide{
-			width: 85%;
-		}
-	}
-	.settings-button {
-		height: 35px;
-		width: 35px;
-		background: none;
-		border: 0;
-		position: relative;
-		top: 11px;
-		margin-left: 20px;
+	.icon {
 		display:inline-block;
+		height:16px;
+		width:16px;
+		opacity:0;
 	}
-	.settings-dropdown #set-background {
-		margin: 5px auto;
-		padding: 2px;
-		font-size: 14px;
-		display: block;
+	&:hover .icon {
+		opacity:1;
 	}
-	.variations {
-		height: 50px;
-		width: 100%;
-		float: right;
-		@include transition(.3s width);
+}
+#view .canvas-wrap {
+	width: 100%;
+}
+.canvas-wrap {
+	float: right;
+	width: 73%;
+	@include transition(.3s width);
+	padding: 20px;
+	@include box-sizing(border-box);
+	@include box-shadow(0 0 20px 20px $white inset);
+	background-size: cover;
+	background-position:center;
+
+	&.wide{
+		width: 85%;
 	}
-	.variation {
-		height: 46px;
-		width: 46px;
-		padding: 2px;
-		display: inline-block;
-		margin: 0 5px;
-		border: 1px solid transparent;
+}
+.variations {
+	height: 50px;
+	width: 100%;
+	float: right;
+	@include transition(.3s width);
+}
+.variation {
+	height: 46px;
+	width: 46px;
+	padding: 2px;
+	display: inline-block;
+	margin: 0 5px;
+	border: 1px solid transparent;
+	@include border-radius(5px);
+	@include transition(.3s border);
+
+	&.selected, &:hover {
+		border:1px solid $light_grey;
 		@include border-radius(5px);
-		@include transition(.3s border);
+	}
+}
+.actions {
+	text-align:right;
+}
 
-		&.selected, &:hover {
-			border:1px solid $light_grey;
-			@include border-radius(5px);
-		}
-	}
-	.actions {
-		text-align:right;
-	}
+.settings-button {
+	height: 35px;
+	width: 35px;
+	background: none;
+	border: 0;
+	position: relative;
+	top: 11px;
+	margin-left: 20px;
+	display:inline-block;
+}
+.settings-dropdown #set-background {
+	margin: 5px auto;
+	padding: 2px;
+	font-size: 14px;
+	display: block;
 }
 .colors {
 	ul {
