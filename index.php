@@ -82,7 +82,14 @@
 			</script>
 		<?php endif;?>
 	</head>
-	<body ng-controller="PrimaryController">
+	<body id="body" ng-controller="PrimaryController">
+
+		<noscript>
+			<div>
+				<h1>JavaScript Disabled</h1>
+				<p>It seems that your browser either does not support JavaScript, or has JavaScript disabled. This site relies on the use of JavaScript to function. <a target="_blank" href="http://www.enable-javascript.com/">Click Here</a> for instructions on how to enable JavaScript.</p>
+			</div>
+		</noscript>
 		<!-- Scripts -->
 			<!-- Facebook -->
 			<div id="fb-root"></div>
