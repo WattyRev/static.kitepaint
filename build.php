@@ -1,2 +1,10 @@
 <?php
-mail('wattyrev@gmail.com', 'test', 'this is a test', 'From: KitePaint <noreply@kitepaint.com>');
+
+process_js();
+
+function process_js() {
+	$destination = fopen("js/app.min.js", "w") or die("Unable to open file!");
+	$content = 'test';
+	fwrite($destination, $content);
+	fclose($myfile);
+}
