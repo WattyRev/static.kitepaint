@@ -27,6 +27,7 @@
 		<?php if ($environment === 'development'):?>
 			<meta name="robots" content="noindex">
 		<?php endif;?>
+		<link rel="shortcut icon" href="img/favicon.ico" />
 		
 		<!-- Scripts -->
 			<?php if ($embed) :?>
