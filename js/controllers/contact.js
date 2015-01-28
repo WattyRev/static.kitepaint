@@ -9,7 +9,7 @@ app.controller('ContactController', ['$scope', '$rootScope', function(scope, roo
 			name: scope.name,
 			subject: scope.subject,
 			comments: scope.comments,
-			to: 'spencer@wattydev.com'
+			to: 'spencer@kitepaint.com'
 		};
 		$.ajax({
 			type: 'POST',
@@ -29,7 +29,7 @@ app.controller('ContactController', ['$scope', '$rootScope', function(scope, roo
 			error: function(data) {
 				var message = data.message || 'Unable to send message. Try again later';
 				root.error(message);
-				console.log('error');
+				console.log('error', data);
 			}
 		});
 	};

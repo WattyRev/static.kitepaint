@@ -9,27 +9,109 @@
 /* Mixins */
 /* line 7, ../../scss/pages/manufacturer.scss */
 #manufacturer {
-  font-size: 24px;
-  color: #444;
+  width: 100%;
+  padding: 0;
+  max-width: 100%;
 }
-/* line 11, ../../scss/pages/manufacturer.scss */
-#manufacturer #landing {
-  padding: 40px 0;
-}
-/* line 14, ../../scss/pages/manufacturer.scss */
-#manufacturer #landing h2 {
-  width: 30%;
-  padding: 40px 5% 40px 15%;
-  float: left;
+/* line 12, ../../scss/pages/manufacturer.scss */
+#manufacturer > .section {
+  width: 100%;
+  border-bottom: 1px solid #cdcdcd;
+  position: relative;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 /* line 19, ../../scss/pages/manufacturer.scss */
-#manufacturer #landing form {
-  width: 30%;
-  padding: 45px 20% 45px 0;
+#manufacturer .content {
+  width: 90%;
+  max-width: 1300px;
+  padding: 15px 5%;
+  margin: 0 auto;
+  position: relative;
+}
+/* line 27, ../../scss/pages/manufacturer.scss */
+#manufacturer #landing > .content > .text {
+  width: 50%;
+  float: left;
   text-align: center;
+}
+/* line 32, ../../scss/pages/manufacturer.scss */
+#manufacturer #landing > .content > .text > * {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+/* line 38, ../../scss/pages/manufacturer.scss */
+#manufacturer #landing > .content > form {
+  width: 50%;
   float: right;
 }
-/* line 25, ../../scss/pages/manufacturer.scss */
-#manufacturer #landing .button {
-  display: inline-block;
+/* line 42, ../../scss/pages/manufacturer.scss */
+#manufacturer #landing > .content > form > div {
+  padding: 10px;
+  background: #fff;
+  border: 5px solid #cdcdcd;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+/* line 50, ../../scss/pages/manufacturer.scss */
+#manufacturer #landing > .content > form input {
+  width: 100%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 5px auto 10px;
+}
+/* line 55, ../../scss/pages/manufacturer.scss */
+#manufacturer #landing > .content > form .button {
+  margin: 0 auto;
+}
+/* line 59, ../../scss/pages/manufacturer.scss */
+#manufacturer #landing > .content > .message {
+  width: 50%;
+  float: right;
+}
+/* line 63, ../../scss/pages/manufacturer.scss */
+#manufacturer #landing > .content > .message > div {
+  padding: 10px;
+  background: #fff;
+  border: 5px solid #2E6C27;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+/* line 73, ../../scss/pages/manufacturer.scss */
+#manufacturer table {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+/* line 78, ../../scss/pages/manufacturer.scss */
+#manufacturer table .button {
+  margin: 0 auto;
+}
+/* line 83, ../../scss/pages/manufacturer.scss */
+#manufacturer .lightbox .content {
+  margin: 20px auto;
+}
+/* line 86, ../../scss/pages/manufacturer.scss */
+#manufacturer .lightbox form {
+  margin-top: 20px;
+}
+/* line 89, ../../scss/pages/manufacturer.scss */
+#manufacturer .lightbox form input {
+  width: 100%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 5px auto 10px;
+}
+/* line 94, ../../scss/pages/manufacturer.scss */
+#manufacturer .lightbox form .button {
+  margin: 0 auto;
 }
