@@ -19,6 +19,7 @@
 	<table ng-show="display_designs.length">
 		<thead>
 			<tr>
+				<th></th>
 				<th 
 					ng-click="sort_by('id')" 
 					ng-class="{sorted: sort.metric === 'id', ascending: sort.metric === 'id' && sort.ascending, descending: sort.metric === 'id' && !sort.ascending}"
@@ -49,12 +50,13 @@
 				>Public</th>
 				<th
 					ng-click="sort_by('active')"
-					ng-class="{sorted: sort.metric === 'active', ascending: sort.metric === 'active' && sort.ascending, descending: sort.metric === 'active' && !sort.ascending}"
+				ng-class="{sorted: sort.metric === 'active', ascending: sort.metric === 'active' && sort.ascending, descending: sort.metric === 'active' && !sort.ascending}"
 				>Active</th>
 			</tr>
 		</thead>
 		<tbody>	
 			<tr ng-repeat="design in display_designs" ng-click="edit_design(design)">
+				<td ng-bind-html="design.primary_variation.svg"></td>
 				<td>{{design.id}}</td>
 				<td>{{design.created}}</td>
 				<td>{{design.updated}}</td>

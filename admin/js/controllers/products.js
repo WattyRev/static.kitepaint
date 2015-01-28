@@ -27,12 +27,30 @@ app.controller('ProductsController', ['$scope', '$rootScope', function(scope, ro
 	//retrieve products data
 	scope.get_products = function() {
 		scope.loading = true;
+		var content = {
+			return: [
+				'id',
+				'name',
+				'manufacturer',
+				'created',
+				'colors',
+				'variations',
+				'url',
+				'activated',
+				'notes',
+				'embed'
+			]
+		};
 		$.ajax({
 			type: 'GET',
-			url: 'php/products.php?get=1',
+			url: 'php/products.php',
+			data: content,
 			dataType: 'json',
 			success: function(data) {
 				scope.products = data;
+				$.each(scope.products, function(i, product) {
+					product.activated = product.activated === '0' ? false : true;
+				});
 				scope.filtered_products = data;
 				scope.loading = false;
 				scope.sort_products();
@@ -124,11 +142,15 @@ app.controller('ProductsController', ['$scope', '$rootScope', function(scope, ro
 			name: '',
 			svg: ''
 		}];
+		scope.notes = [''];
 		if (product.colors) {
 			scope.colors = JSON.parse(product.colors);
 		}
 		if (product.variations) {
 			scope.variations = JSON.parse(product.variations);
+		}
+		if (product.notes) {
+			scope.notes = JSON.parse(product.notes);
 		}
 		scope.show_edit = true;
 	};
@@ -143,13 +165,10 @@ app.controller('ProductsController', ['$scope', '$rootScope', function(scope, ro
 
 	//perform ajax post to save product data
 	scope.save_product = function(product) {
-		//generate colors string
-
+		//stringify stuff
 		product.colors = JSON.stringify(scope.colors);
-
-		//generate variations string
-
 		product.variations = JSON.stringify(scope.variations);
+		product.notes = JSON.stringify(scope.notes);
 
 		$.ajax({
 			type: 'POST',
@@ -218,6 +237,17 @@ app.controller('ProductsController', ['$scope', '$rootScope', function(scope, ro
 	//remove variation
 	scope.remove_variation = function(index) {
 		scope.variations.splice(index,1);
+	};
+
+	//add note
+	scope.add_note = function() {
+		var note = '';
+		scope.notes.push(note);
+	};
+
+	//remove note
+	scope.remove_note = function(index) {
+		scope.notes.splice(index,1);
 	};
 
 }]);

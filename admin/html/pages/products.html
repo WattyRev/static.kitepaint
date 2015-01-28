@@ -94,11 +94,19 @@
 					>
 				</div>
 				<div class="half left">
-					<label for="input-url">url</label>
+					<label for="input-url">URL</label>
 					<input 
 						type="url" 
 						id="input-url"
 						ng-model="editing.url" 
+					>
+				</div>
+				<div class="half right">
+					<label for="input-embed">Embed Domains</label>
+					<input 
+						type="text"
+						id="input-embed"
+						ng-model="editing.embed"
 					>
 				</div>
 				<div class="clearfix"></div>
@@ -148,6 +156,19 @@
 						<div class="clearfix"></div>
 					</div>
 					<button class="button" type="button" ng-click="add_variation();">Add</button>
+				</div>
+				<div class="edit-notes">
+					<label>Notes</label>
+					<div ng-repeat="(i, note) in notes">
+						<button ng-click="remove_note(i)" type="button" class="button remove red left">X</button>
+						<input 
+							type="text"
+							ng-model="note"
+							placeholder="Note"
+						>
+						<div class="clearfix"></div>
+					</div>
+					<button class="button" type="button" ng-click="add_note();">Add</button>
 				</div>
 				<input type="submit" value="Save" class="button"  tabindex="4"/>
 				<div class="clearfix"></div>

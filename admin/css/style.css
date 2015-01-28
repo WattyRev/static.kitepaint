@@ -272,6 +272,17 @@
 		width:43%!important;
 	}
 
+	/* Designs */
+		#designs td>svg {
+			width: 20px;
+			height: 20px;
+		}
+
+	/* Products */
+		#products .edit-notes input {
+			width: 85%;
+		}
+
 /* FONTS */
 	/* cyrillic-ext */
 	@font-face {

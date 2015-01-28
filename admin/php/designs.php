@@ -1,25 +1,39 @@
 <?php
 require_once "header.php"; 
 if ($_GET){
-	$query = sprintf("SELECT * FROM designs");
-		 
+	$filter = "";
+	if (isset($_GET['filter'])){
+		$filter .= "WHERE ";
+		$count = 0;
+		foreach($_GET['filter'] as $metric => $value){
+			$count ++;
+			if ($count > 1) {
+				$filter .= ' AND ';
+			}
+			$filter .= "$metric  =  $value";
+		}
+	}
+	$limit = isset($_GET['limit']) ? "LIMIT " . $_GET['limit'] : "";
+	$order = isset($_GET['order']) ? "ORDER BY " . $_GET['order'][0] . " " . $_GET['order'][1] : "";
+	$query = sprintf("SELECT * FROM designs $filter $order $limit");
+
 	$result = mysql_query($query);
 	$num = mysql_num_rows($result);
 	mysql_close();
 	$response = array();
 	for ($i = 0; $i < $num; $i++) {
 		$designs = (object) array();
-		$designs->id = mysql_result($result,$i,"id");
-		$designs->created = date("m/d/Y", strtotime(mysql_result($result,$i,"created")));
-		$designs->updated = date("m/d/Y", strtotime(mysql_result($result,$i,"updated")));
-		$designs->name = mysql_result($result,$i,"name");
-		$designs->user = mysql_result($result,$i,"user");
-		$designs->product = mysql_result($result,$i,"product");
-		$designs->public = mysql_result($result,$i,"public") === '1' ? true : false;
-		$designs->active = mysql_result($result,$i,"active") === '1' ? true : false;
+		foreach ($_GET['return'] as $key=>$metric){
+			$designs->$metric = mysql_result($result,$i,$metric);
+			if ($metric === 'created' || $metric === 'updated') {
+				$designs->$metric = date("m/d/Y", strtotime($designs->$metric));
+			}
+		}
 		array_push($response, $designs);
 	}
-	echo json_encode($response);
+	echo JSON_encode($response);
+	return;
+
 } elseif ($_POST) {
 	$response = (object) array(
 		'valid' => true,
@@ -49,7 +63,6 @@ if ($_GET){
 		'active' => $_POST['active'] === 'true' ? '1' : '0',
 		'name' => $_POST['name'],
 		'user' => $_POST['user'],
-		'product' => $_POST['product'],
 		'public' => $_POST['public'] === 'true' ? '1' : '0'
 	);
 

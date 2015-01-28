@@ -1,25 +1,36 @@
 <?php
 require_once "header.php"; 
 if ($_GET){
-	$query = sprintf("SELECT * FROM products");
-		 
+	$filter = "";
+	if(isset($_GET['filter'])){
+		$filter .= "WHERE";
+		$count = 0;
+		foreach($_GET['filter'] as $metric => $value){
+			$count ++;
+			if ($count > 1) {
+				$filter .= ' AND ';
+			}
+			$filter .= "$metric  =  $value";
+		}
+	}
+	$query = sprintf("SELECT * FROM products $filter");
+
 	$result = mysql_query($query);
 	$num = mysql_num_rows($result);
 	mysql_close();
 	$response = array();
 	for ($i = 0; $i < $num; $i++) {
 		$products = (object) array();
-		$products->id = mysql_result($result,$i,"id");
-		$products->activated = mysql_result($result,$i,"activated") === '1' ? true : false;
-		$products->created = date("m/d/Y", strtotime(mysql_result($result,$i,"created")));
-		$products->name = mysql_result($result,$i,"name");
-		$products->manufacturer = mysql_result($result,$i,"manufacturer");
-		$products->url = mysql_result($result,$i,"url");
-		$products->colors = mysql_result($result,$i,"colors");
-		$products->variations = mysql_result($result,$i,"variations");
+		foreach ($_GET['return'] as $key=>$metric){
+			$products->$metric = mysql_result($result,$i,$metric);
+			if ($metric === 'created') {
+				$products->$metric = date("m/d/Y", strtotime($products->$metric));
+			}
+		}
 		array_push($response, $products);
 	}
-	echo json_encode($response);
+	echo JSON_encode($response);
+	return;
 } elseif ($_POST) {
 	$response = (object) array(
 		'valid' => true,
@@ -52,6 +63,8 @@ if ($_GET){
 		$url = $_POST['url'];
 		$colors = $_POST['colors'];
 		$variations = $_POST['variations'];
+		$notes = $_POST['notes'];
+		$embed = $_POST['embed'];
 
 
 		$code = generate_code(20);
@@ -82,7 +95,9 @@ if ($_GET){
 		'manufacturer' => $_POST['manufacturer'],
 		'url' => $_POST['url'],
 		'colors' => $_POST['colors'],
-		'variations' => $_POST['variations']
+		'variations' => $_POST['variations'],
+		'notes' => $_POST['notes'],
+		'embed' => $_POST['embed']
 	);
 
 	foreach($vars as $metric => $val){

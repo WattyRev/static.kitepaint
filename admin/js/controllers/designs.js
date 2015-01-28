@@ -1,4 +1,4 @@
-app.controller('DesignsController', ['$scope', '$rootScope', function(scope, root) {
+app.controller('DesignsController', ['$scope', '$rootScope', '$sce', function(scope, root, sce) {
 	//Variables
 	scope.designs = [];//raw designs data
 	scope.display_designs = []; //designs data displayed
@@ -19,12 +19,38 @@ app.controller('DesignsController', ['$scope', '$rootScope', function(scope, roo
 	//retrieve designs data
 	scope.get_designs = function() {
 		scope.loading = true;
+		var content = {
+			return: [
+				'id',
+				'created',
+				'updated',
+				'name',
+				'user',
+				'product',
+				'public',
+				'active',
+				'variations'
+			]
+		};
 		$.ajax({
 			type: 'GET',
-			url: 'php/designs.php?get=1',
+			url: 'php/designs.php',
+			data: content,
 			dataType: 'json',
 			success: function(data) {
 				scope.designs = data;
+				$.each(scope.designs, function(i, design) {
+					design.variations = JSON.parse(design.variations);
+
+					$.each(design.variations, function(i, variation) {
+						if (variation.primary) {
+							design.primary_variation = variation;
+							design.primary_variation.svg = sce.trustAsHtml(design.primary_variation.svg);
+						}
+					});
+					design.public = design.public !== '0';
+					design.active = design.active !== '0';
+				});
 				scope.filtered_designs = data;
 				scope.loading = false;
 				scope.sort_designs();
@@ -119,7 +145,6 @@ app.controller('DesignsController', ['$scope', '$rootScope', function(scope, roo
 			data: design,
 			dataType: 'json',
 			success: function(data) {
-				console.log('success', data);
 				scope.get_designs();
 				scope.show_edit = false;
 				scope.$apply();
@@ -142,7 +167,6 @@ app.controller('DesignsController', ['$scope', '$rootScope', function(scope, roo
 				data: {id: design.id, delete: true},
 				dataType: 'json',
 				success: function(data) {
-					console.log('success', data);
 					scope.get_designs();
 					scope.show_edit = false;
 					scope.$apply();

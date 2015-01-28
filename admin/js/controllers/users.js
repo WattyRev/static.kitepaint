@@ -29,6 +29,7 @@ app.controller('UsersController', ['$scope', '$rootScope', function(scope, root)
 				scope.loading = false;
 				scope.sort_users();
 				scope.$apply();
+				console.log(scope.users);
 			},
 			error: function(data) {
 				console.log('error', data);
