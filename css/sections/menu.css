@@ -83,3 +83,23 @@ menu .overlay {
   border: 0;
   font-family: 'Open Sans', sans-serif;
 }
+/* line 71, ../../scss/sections/menu.scss */
+#menu form {
+  padding: 10px;
+}
+/* line 74, ../../scss/sections/menu.scss */
+#menu form input {
+  margin: 5px 0;
+  width: 100%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* line 79, ../../scss/sections/menu.scss */
+#menu form .button {
+  width: 100%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 10px auto;
+}

@@ -68,4 +68,18 @@ menu {
 		border: 0;
 		font-family: 'Open Sans', sans-serif;
 	}
+	form {
+		padding: 10px;
+
+		input {
+			margin: 5px 0;
+			width: 100%;
+			@include box-sizing(border-box);
+		}
+		.button {
+			width: 100%;
+			@include box-sizing(border-box);
+			margin: 10px auto;
+		}
+	}
 }
