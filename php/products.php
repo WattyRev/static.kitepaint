@@ -52,6 +52,7 @@ if ($_GET){
 		$products->url = mysql_result($result,$i,"url");
 		$products->colors = mysql_result($result,$i,"colors");
 		$products->variations = mysql_result($result,$i,"variations");
+		$products->notes = mysql_result($result,$i,"notes");
 		array_push($response, $products);
 	}
 	echo json_encode($response);

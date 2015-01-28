@@ -91,6 +91,7 @@
 		</div>
 		<div class="template" ng-class="{outlines: show_outlines}" compile="current_variation.svg">
 		</div>
+		<p ng-repeat="note in notes"><strong>Note:</strong> {{note}}</p>
 	</div>
 	<div class="prompt save_as" ng-show="show_save_as">
 		<label for="save_as_name">What do you want to name your design?</label>

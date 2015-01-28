@@ -26,8 +26,12 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			dataType: 'json',
 			success: function(data) {
 				scope.product = data[0];
+				//process colors
 				scope.colors = JSON.parse(scope.product.colors);
+				//process notes
+				scope.notes = JSON.parse(scope.product.notes);
 				if (state.params.type === 'new') {
+					//process variations
 					scope.variations = JSON.parse(scope.product.variations);
 					$.each(scope.variations, function(i, variation) {
 						if (i < 1) {
