@@ -23,6 +23,10 @@
 		<?php else:?>
 			<meta name="viewport" content="width=1080px">
 		<?php endif;?>
+
+		<?php if ($environment === 'development'):?>
+			<meta name="robots" content="noindex">
+		<?php endif;?>
 		
 		<!-- Scripts -->
 			<?php if ($embed) :?>
@@ -40,6 +44,20 @@
 				var dependencies = <?php echo $dependencies ?>;
 				var environment = '<?php echo $environment ?>';
 			</script>
+			
+			<?php if ($environment === 'production'):?>
+				<!-- Google Analytics -->
+				<script>
+				  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+				  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+				  ga('create', 'UA-59061299-1', 'auto');
+				  //ga('send', 'pageview');
+
+				</script>
+			<?php endif;?>
 
 		<!-- JavaScript Files -->
 			<?php foreach($js_files as $file):?>

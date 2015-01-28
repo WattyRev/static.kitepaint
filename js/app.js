@@ -122,6 +122,18 @@ app.config(function($stateProvider, $urlRouterProvider){
 		});
 });
 
+//Google Analytics triggers
+if (environment === 'production'){
+	app.run(['$rootScope', '$location', '$window', function($rootScope, $location, $window) {
+		$rootScope.on('$stateChangeSuccess', function(event) {
+			if (!$window.ga){
+				return;
+			}
+			$window.ga('send', 'pageview', {page: $location.path()});
+		});
+	}]);
+}
+
 function get_dependency(page) {
 	var css = dependencies[environment].css.pages[page],
 		responsive = !read_cookie('desktop'),
