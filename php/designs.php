@@ -55,6 +55,7 @@ if ($_GET){
 		$designs->product = mysql_result($result,$i,"product");
 		$designs->variations = mysql_result($result,$i,"variations");
 		$designs->public = mysql_result($result,$i,"public");
+		$designs->active = mysql_result($result,$i,"active");
 		array_push($response, $designs);
 	}
 	echo json_encode($response);

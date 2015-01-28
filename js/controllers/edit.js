@@ -66,6 +66,11 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			dataType: 'json',
 			success: function(data) {
 				scope.design = data[0];
+				if (scope.design.active === '0') {
+					root.error('Design does not exist');
+					state.go('home');
+					return;
+				}
 				if (scope.design.user !== root.user.user_id) {
 					var params = {type:'new', id:scope.design.product};
  					state.go('edit', params);
@@ -296,6 +301,41 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 		var params = {type:'saved', id:id};
  		state.go('edit', params);
 	};
+
+	scope.delete_design = function() {
+		var design = scope.design;
+		if (!scope.show_delete_design) {
+			scope.show_delete_design = true;
+			scope.deleting_design = design.id;
+			return;
+		}
+		var data = {
+			delete: true,
+			id: scope.deleting_design
+		};
+		$.ajax({
+			type: 'POST',
+			url: 'php/designs.php',
+			data: data,
+			dataType: 'json',
+			success: function(data) {
+				scope.show_delete_design = false;
+				scope.deleting_design = null;
+				state.go('home');
+				root.success('Your design has been deleted');
+				scope.$apply();
+			},
+			error: function(data) {
+				console.log('error', data);
+				alert('Could not delete design');
+				scope.show_delete_design = false;
+				scope.deleting_design = null;
+				root.error('We could not delete your design. Try again later.');
+				scope.$apply();
+			}
+		});
+	};
+
 
 	//Close dropdown when clicking out of it
 	$(document).click(function(e) {
