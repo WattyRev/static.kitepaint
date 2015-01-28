@@ -1,4 +1,4 @@
-app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(scope, root, state) {
+app.controller('PrimaryController', ['$scope', '$rootScope', '$state', '$location', '$window', function(scope, root, state, $location, $window) {
 
 	//VARIABLES
 		scope.current_page = '';
@@ -240,6 +240,16 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', function(
 				$('title').text('Kite Paint');
 			}
 		});
+
+		if (environment === 'production'){
+			//update google analytics on successful page change
+			root.$on('$stateChangeSuccess', function(event) {
+				if (!$window.ga){
+					return;
+				}
+				$window.ga('send', 'pageview', {page: $location.path()});
+			});
+		}
 
 		//update has_account local storage variable
 		root.$watch('has_account', function(has_account) {
