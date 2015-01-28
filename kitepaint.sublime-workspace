@@ -339,73 +339,15 @@
 			"file": "js/app.js",
 			"settings":
 			{
-				"buffer_size": 3130,
+				"buffer_size": 5238,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "css/style.css",
+			"file": "js/controllers/primary.js",
 			"settings":
 			{
-				"buffer_size": 26422,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "css/responsive.css",
-			"settings":
-			{
-				"buffer_size": 2252,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "Package Control Messages\n========================\n\nPackage Control:\n---------------\n\n  Version 3.0 Release Notes\n  \n  \n  **** Windows Sublime Text 3 Users ****\n  \n  Due to a bug in Package Control 2.0, Windows ST3 users will need to open the\n  Sublime Text console (ctrl+`) and execute the following Python to properly\n  upgrade. All other users may ignore this part of the message.\n  \n  Make sure NOT to copy the leading two spaces, or an \"unexpected indent\" error\n  will occur.\n  \n  import urllib.request,os; pr='Preferences.sublime-settings'; ip='ignored_packages'; n='Package Control'; s=sublime.load_settings(pr); ig=s.get(ip); ig.append(n); s.set(ip,ig); sublime.save_settings('Preferences.sublime-settings'); pf=n+'.sublime-package'; urllib.request.install_opener(urllib.request.build_opener(urllib.request.ProxyHandler())); by=urllib.request.urlopen('https://packagecontrol.io/'+pf.replace(' ','%20')).read(); open(os.path.join(sublime.installed_packages_path(),pf),'wb').write(by); ig.remove(n); s.set(ip,ig); sublime.save_settings(pr); print('Package Control: 3.0.0 upgrade successful!')\n  \n  ********\n  \n  \n  Package Control 3.0 adds a bunch of polish, improving the Sublime Text\n  experience for users and package developers:\n  \n   - improved upgrades of themes, color schemes and syntaxes\n   - dependency support\n   - SSL for Linux\n   - new secondary Windows HTTP backend\n   - patches for Python in Sublime Text 2 on Windows\n   - commands to easily remove channels and repositories\n   - an events API for packages\n   - improved documentation\n  \n  \n  As of July 2014, I now work for myself. This has allowed me to spend more time\n  working on open source software, including Package Control. If you appreciate\n  the work I've done, please consider a small donation. If even 5% of regular\n  users donated the price of a coffee or beer, that would cover quite a bit of\n  my development time! See https://packagecontrol.io/about for options.\n  \n  \n  Some recent Package Control stats:\n  \n   - every weekday over 1M JSON requests hit the channel server\n   - in December, the channel server will transmit 4TB+ of compressed JSON\n   - users have installed, upgraded or removed 85M+ packages since late 2011\n  \n  \n  Read more about the release at:\n  \n  https://packagecontrol.io/news#2014-12-23-Package_Control_30_Released\n  \n",
-			"settings":
-			{
-				"buffer_size": 2331,
-				"line_ending": "Unix",
-				"name": "Package Control Messages",
-				"scratch": true
-			}
-		},
-		{
-			"file": "js/unsupported.js",
-			"settings":
-			{
-				"buffer_size": 113,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "html/pages/edit.html",
-			"settings":
-			{
-				"buffer_size": 5947,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "js/controllers/edit.js",
-			"settings":
-			{
-				"buffer_size": 7719,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "js/directives/share.js",
-			"settings":
-			{
-				"buffer_size": 1425,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "index.php",
-			"settings":
-			{
-				"buffer_size": 4466,
+				"buffer_size": 6443,
 				"line_ending": "Windows"
 			}
 		}
@@ -642,30 +584,119 @@
 	"expanded_folders":
 	[
 		"/C/Users/Spencer/Documents/GitHub/kitepaint",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/admin/js/controllers",
 		"/C/Users/Spencer/Documents/GitHub/kitepaint/css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/layout",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/pages",
 		"/C/Users/Spencer/Documents/GitHub/kitepaint/html",
 		"/C/Users/Spencer/Documents/GitHub/kitepaint/html/pages",
 		"/C/Users/Spencer/Documents/GitHub/kitepaint/js",
 		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/controllers",
 		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/directives",
-		"/C/Users/Spencer/Documents/GitHub/kitepaint/unsupported"
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/libraries",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/layout",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/pages"
 	],
 	"file_history":
 	[
-		"/C/Users/Spencer/Documents/GitHub/kitepaint/html/directives/share.html",
-		"/C/Users/Spencer/Documents/GitHub/kitepaint/sftp-config.json",
-		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/unsupported.js",
-		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/modernizr.js",
-		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/style.ie9.css",
-		"/C/Users/Spencer/Documents/GitHub/kitepaint/unsupported/index.html",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/controllers/primary.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/php/activate.php",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/html/pages/home.html",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/pages/editor.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/pages/editor.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/layout/style.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/layout/style.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/admin/css/style.css",
 		"/C/Users/Spencer/Documents/GitHub/kitepaint/unsupported/style.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/directives/share.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/pages/contact.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/controllers/contact.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/config.rb",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/pages/home.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/php/header.php",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/controllers/edit.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/pages/edit.responsive.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/app.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/dependencies.json",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/sections/loading.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/embed.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/responsive.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/sections/menu.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/build.php",
 		"/C/Users/Spencer/Documents/GitHub/kitepaint/index.php",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/_base.scss",
 		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/style.css",
-		"/C/Users/Spencer/Documents/GitHub/kitepaint/unsupported",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/style.ie9.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/sections/loading.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/php/login.php",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/sections/tabbedNavigation.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/sections/tooltip.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/sections/menu.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/admin/js/controllers/manufacturers.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/index.html",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/layout/responsive.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/layout/embed.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/layout/legacy.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/pages/account.responsive.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/pages/home.responsive.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/sections/tooltip.responsive.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/pages/edit.responsive.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/pages/create.responsive.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/pages/create.responsive.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/controllers/designs.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/pages/about.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/sections/tooltip.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/sections/tabbedNavigation.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/sections/share.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/sections/noscript.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/pages/manufacturer.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/pages/manufacturer.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/sections/lightbox.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/sections/lightbox.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/pages/home.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/libraries/ui-router-styles.js",
 		"/C/Users/Spencer/Documents/GitHub/kitepaint/extra/todo_list.txt",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/pages/designs.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/pages/create.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/pages/changePassword.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/pages/change-password.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/sections/alert.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/sections/alert.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/scss/pages/account.scss",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/config.rb",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/css/home.css",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/README.md",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/directives/alert.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/html/directives/alert.html",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/controllers/view.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/html/pages/view.html",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/admin/js/controllers/products.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/controllers/create.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/html/pages/create.html",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/html/pages/contact.html",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/sftp-config.json",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/controllers/changePassword.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/html/pages/changePassword.html",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/php/changepassword.php",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/controllers/activate.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/controllers/account.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/html/pages/account.html",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/admin/js/controllers/users.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/php/users.php",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/unsupported.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/php/products.php",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/php/manufacturers.php",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/modernizr.js",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/php/designs.php",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/JSMin.php",
+		"/C/Users/Spencer/Downloads/minify-2.1.7/minify-2.1.7/min/lib/JSMin.php",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/html/pages/edit.html",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/html/directives/share.html",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/unsupported/index.html",
+		"/C/Users/Spencer/Documents/GitHub/kitepaint/unsupported",
 		"/C/Users/Spencer/Documents/GitHub/kitepaint/.gitattributes",
 		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/controllers/about.js",
-		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/controllers/account.js",
 		"/C/Users/Spencer/Downloads/modernizr.custom.97908.js",
 		"/C/Users/Spencer/Documents/GitHub/kitepaint/php/email.php",
 		"/C/Users/Spencer/Documents/GitHub/kitepaint/js/libraries/jquery.min.js",
@@ -696,90 +727,7 @@
 		"/C/seniorhomes.com/ash/web/sass/pages/editlisting.scss",
 		"/C/seniorhomes.com/ash/web/sass/layouts/frontend.mobile.scss",
 		"/C/seniorhomes.com/ash/application/classes/Views/Html/Frontend/Sections/ListingsFeatured.html.php",
-		"/C/seniorhomes.com/ash/application/classes/Views/Html/Frontend/Sections/ListingsBasic.html.php",
-		"/C/seniorhomes.com/ash/application/classes/Views/Models/Frontend/Sections/ListingsBasic.php",
-		"/C/seniorhomes.com/ash/web/sass/sections/listings.scss",
-		"/C/seniorhomes.com/ash/web/css/sections/listings.css",
-		"/C/seniorhomes.com/ash/application/controllers/l.php",
-		"/C/seniorhomes.com/ash/application/controllers/c_responsive.php",
-		"/C/seniorhomes.com/ash/application/classes/Views/Models/Frontend/Sections/ListingsFeatured.php",
-		"/C/seniorhomes.com/ash/application/classes/Views/Html/Frontend/Pages/C.html.php",
-		"/C/seniorhomes.com/ash/application/cache/.htaccess",
-		"/C/seniorhomes.com/ash/application/controllers/c.php",
-		"/C/seniorhomes.com/ash/application/classes/Views/Html/Frontend/Layouts/FrontendLayout.html.php",
-		"/C/seniorhomes.com/ash/web/css/layouts/frontend.css",
-		"/C/seniorhomes.com/ash/web/node_modules/karma/node_modules/optimist/example/default_singles.js",
-		"/C/seniorhomes.com/ash/web/js/shared.desktop.jquery.js",
-		"/C/seniorhomes.com/ash/application/controllers/frontendcontroller.php",
-		"/C/seniorhomes.com/ash/application/vendor/nesbot/carbon/tests/CreateFromTimestampTest.php",
-		"/C/seniorhomes.com/ash/application/helpers/Helpers/Views/FormatTime.php",
-		"/C/seniorhomes.com/ash/web/js/tiny_mce/plugins/filemanager/pages/fm/css/toolbar.css",
-		"/C/seniorhomes.com/ash/web/node_modules/grunt/node_modules/findup-sync/node_modules/glob/test/new-glob-optional-options.js",
-		"/C/seniorhomes.com/ash/web/node_modules/sinon/node_modules/formatio/test/formatio-test.js",
-		"/C/seniorhomes.com/ash/web/js/editlisting_responsive.jquery.js",
-		"/C/seniorhomes.com/ash/application/controllers/editlisting_responsive.php",
-		"/C/seniorhomes.com/ash/application/controllers/exclude.php",
-		"/C/seniorhomes.com/ash/web/css/pages/home.desktop.css",
-		"/C/seniorhomes.com/ash/ratings/NOTES",
-		"/C/seniorhomes.com/ash/application/config/seniorhomes/ConfigRackspace.php",
-		"/C/seniorhomes.com/ash/config.rb",
-		"/C/seniorhomes.com/ash/web/sass/_frontend_base.scss",
-		"/C/seniorhomes.com/ash/web/sass/pages/a.mobile.scss",
-		"/C/seniorhomes.com/ash/web/sass/pages/aff.mobile.scss",
-		"/C/seniorhomes.com/ash/web/sass/pages/b.mobile.scss",
-		"/C/seniorhomes.com/ash/web/sass/pages/badges.mobile.scss",
-		"/C/seniorhomes.com/ash/web/sass/pages/c.mobile.scss",
-		"/C/seniorhomes.com/ash/web/sass/pages/d.mobile.scss",
-		"/C/seniorhomes.com/ash/web/sass/pages/editlisting.mobile.scss",
-		"/C/seniorhomes.com/ash/web/sass/pages/g.mobile.scss",
-		"/C/seniorhomes.com/ash/web/sass/pages/home.mobile.scss",
-		"/C/seniorhomes.com/ash/web/sass/pages/m.mobile.scss",
-		"/C/seniorhomes.com/ash/web/sass/pages/monthly.mobile.scss",
-		"/C/seniorhomes.com/ash/web/sass/pages/search.mobile.scss",
-		"/C/seniorhomes.com/ash/web/sass/pages/thankyou.mobile.scss",
-		"/C/seniorhomes.com/ash/web/sass/_mobile_base.scss",
-		"/C/Users/Spencer/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
-		"/C/Users/Spencer/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
-		"/C/seniorhomes.com/ash/web/css/s.css",
-		"/C/seniorhomes.com/ash/build/log/last/sync-cdn-start.log",
-		"/C/seniorhomes.com/ash/sftp-config.json",
-		"/C/seniorhomes.com/ash/application/controllers/s_responsive.php",
-		"/C/seniorhomes.com/ash/.sass-cache/add00f496faf1725f62af96596b0f867c64dd37e/_mobile_base.scssc",
-		"/C/seniorhomes.com/ash/application/controllers/monthly_responsive.php",
-		"/C/seniorhomes.com/ash/web/js/m.jquery.js",
-		"/C/seniorhomes.com/ash/.sass-cache/bab32819b3c6ab5176dbdb87f340853898de2799/frontend.mobile.scssc",
-		"/C/seniorhomes.com/ash/web/sass/pages/m.scss",
-		"/C/seniorhomes.com/ash/web/js/m_responsive.jquery.js",
-		"/C/seniorhomes.com/ash/application/classes/Views/Html/Frontend/Sections/SidebarRecentlyViewed.html.php",
-		"/C/seniorhomes.com/ash/.sass-cache/bab32819b3c6ab5176dbdb87f340853898de2799/frontend.desktop.scssc",
-		"/C/seniorhomes.com/ash/application/classes/Views/Models/Frontend/Sections/SidebarRecentlyViewed.php",
-		"/C/seniorhomes.com/ash/application/models/classes/Tracking/Views/RecentlyViewed.php",
-		"/C/seniorhomes.com/ash/application/models/classes/Tracking/Views/RecentViews.php",
-		"/C/seniorhomes.com/ash/web/css/backend/reviewmgr-edit.css",
-		"/C/seniorhomes.com/ash/application/classes/Views/Html/Frontend/Pages/M.html.php",
-		"/C/seniorhomes.com/ash/.sass-cache/871b406ebc94cf1c0561def851ec822ad5cd0c1e/m.scssc",
-		"/C/seniorhomes.com/ash/application/controllers/m_responsive.php",
-		"/C/seniorhomes.com/ash/web/sass/pages/b.scss",
-		"/C/seniorhomes.com/ash/web/sass/pages/badges.desktop.scss",
-		"/C/seniorhomes.com/ash/web/js/editlisting.jquery.js",
-		"/C/seniorhomes.com/ash/application/classes/Views/Models/Frontend/Pages/EditListing.php",
-		"/C/seniorhomes.com/ash/web/sass/pages/search.scss",
-		"/C/seniorhomes.com/ash/application/classes/Views/Html/Frontend/Pages/Search.html.php",
-		"/C/seniorhomes.com/ash/application/classes/Views/Html/Frontend/Sections/Header.html.php",
-		"/C/seniorhomes.com/ash/application/classes/Views/Html/Frontend/Sections/LightboxRfiLong.html.php",
-		"/C/seniorhomes.com/ash/application/controllers/badges_responsive.php",
-		"/C/seniorhomes.com/ash/application/classes/Views/Html/Frontend/Sections/SidebarNewsletter.html.php",
-		"/C/seniorhomes.com/ash/application/classes/Views/Html/Frontend/Sections/LightboxRfi.html.php",
-		"/C/seniorhomes.com/ash/application/classes/Views/Models/Frontend/Sections/LightboxRfiLong.php",
-		"/C/seniorhomes.com/ash/application/classes/Views/Models/Frontend/Sections/LightboxRfi.php",
-		"/C/seniorhomes.com/ash/web/js/lp/thankyou_lightbox.js",
-		"/C/seniorhomes.com/ash/web/node_modules/grunt/lib/grunt.js",
-		"/C/seniorhomes.com/ash/web/js/libraries/bower_components/showdown/compressed/extensions/github.js",
-		"/C/seniorhomes.com/ash/build/k.txt",
-		"/C/seniorhomes.com/ash/application/vendor/guzzle/guzzle/src/Guzzle/Plugin/Cache/CacheKeyProviderInterface.php",
-		"/C/seniorhomes.com/ash/web/node_modules/karma/node_modules/http-proxy/node_modules/utile/node_modules/i/lib/util.js",
-		"/C/seniorhomes.com/ash/application/classes/Views/Models/Frontend/Sections/SidebarNewsletter.php",
-		"/C/seniorhomes.com/ash/application/views/sections/newsletter_div_view.php"
+		"/C/seniorhomes.com/ash/application/classes/Views/Html/Frontend/Sections/ListingsBasic.html.php"
 	],
 	"find":
 	{
@@ -790,6 +738,11 @@
 		"height": 90.0,
 		"where_history":
 		[
+			"scss/",
+			"scss",
+			"js/",
+			"js",
+			"",
 			"ash/application/controllers",
 			"ash/web/sass",
 			"ash/application/controllers",
@@ -902,134 +855,134 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"loading",
-			"style.css",
-			"scope.design",
-			"current_color",
-			"current_color_style",
-			".reviews-page ",
-			".css",
-			"($,",
-			"featuredListings",
-			"FeaturedListings",
-			"featuredListings",
-			"FeaturedListings",
-			"featuredListings",
-			"FeaturedListings",
-			"featuredListings",
-			"FeaturedListings",
-			"featuredListings",
-			".desktop",
-			"overflow:",
-			"overflow:hidden",
-			"'Nothing You Could Do'",
-			"Nothing",
-			"Nothing You Could Do",
-			"box-shadow",
-			"rfi",
-			"lightbox",
-			"sort_table",
-			"top",
-			".css",
-			"var",
-			".css",
-			"reviews.",
-			"reviews/",
-			".css",
-			"reviews",
-			".css",
-			"#search-results ",
-			"#innerContainer ",
-			"border-radius:",
-			"#fe8519",
-			"#fff",
-			".scoreContainer",
-			"#e0e0e0",
-			"response.css",
-			"o.cs",
-			"/listings.css",
-			"s/b",
-			"_responsive.css",
-			"listings.mobile.css",
-			"listings.desktop.css",
-			"listings",
-			"css/a",
-			"a_responsive",
-			"validationEngine.jquery.css",
-			"tour.css",
-			"toolbars.css",
-			"theme.css",
-			"thankyou",
-			".note ",
-			"#fff",
-			"simple.css",
-			"simplle.css",
-			".css",
-			".results ",
-			"#e0e0e0",
-			".quick-search ",
-			".results",
-			".results ",
+			"&",
+			".spinner ",
+			"$directory",
+			"060606",
+			"$black",
+			"ea541",
+			"[page]",
+			"dependencies",
+			"get_dependency",
+			"blackorchid",
+			".design",
+			"design",
+			".design",
+			"js\",",
+			",",
+			"pages",
+			"\"responsive\":[",
+			"main\":[",
+			".colors ",
+			"#edit ",
+			"#create ",
+			".colors ",
+			"#edit ",
+			"#create ",
 			"border-radius: ",
-			".search-page ",
-			".css",
-			"#browseByRegion ul.major>li",
-			"#e0e0e0",
-			".browse-section ul ",
-			"border-radius: ",
+			"#cdcdcd",
 			"#fff",
-			".browse-section ",
-			"#e0e0e0",
-			"#browseByRegion ",
-			".s-page ",
-			"#secondaryNavigation ",
-			"report_responsive.css",
-			".css",
-			"q.mobile.css",
-			"o_responsive.css",
-			"o_responsive",
-			".css",
-			"monthly.mobile.css",
-			"monthly.css",
-			".css",
-			"border-radius: ",
-			".cities ",
+			"tooltip ",
+			"#444",
+			"#485BE7",
 			"transition: ",
-			".states ",
-			"#moreLB ",
-			"ul>li",
-			"#e0e0e0",
-			"#browseByRegion ",
-			".cities ",
-			"#moreLB ",
-			".browse-section ul ",
+			"border-radius: ",
+			"#cdcdcd",
+			"share ",
 			"#fff",
-			".browse-section ",
-			"#browseByRegion ",
-			"#e0e0e0",
-			".m-page ",
-			".cities ",
-			"#moreLB ",
-			"listings",
-			".css",
-			"listings",
-			".css",
-			".cs",
-			"listings",
-			".css",
-			"listings",
-			".css",
-			"listings_responsive",
+			"#menu ",
+			"box-shadow: ",
+			"transition: ",
+			"#000",
+			"#cdcdcd",
+			"#cdcdcd;",
+			"#1D1D1D",
+			"#landing ",
+			"#manufacturer ",
+			"-webkit-animation-delay: ",
+			"#333",
+			"#cdcdcd",
+			"box-shadow: ",
 			"border-radius: ",
 			"#fff",
-			"#82becf",
-			"#e0e0e0",
-			".top ",
-			".listing ",
-			".search-results ",
-			".nearby .search-results ",
-			".search-results ",
-			".css"
+			".designs ",
+			"#ededed",
+			".user ",
+			"#fff",
+			".create ",
+			"border-radius: ",
+			"#444",
+			"#cdcdcd",
+			"#home ",
+			"#home",
+			".variation",
+			"#edit ",
+			".template",
+			"box-sizing: ",
+			"#fff",
+			"border-radius:",
+			"transition: ",
+			"transition: .",
+			"#cdcdcd",
+			"box-shadow: ",
+			"border-right: ",
+			".colors ",
+			"#edit ",
+			"li ",
+			"#fff",
+			"border-radius: ",
+			"#cdcdcd",
+			"#designs ul ",
+			"border-radius:",
+			">li",
+			"#f1f1f1",
+			"transition: ",
+			"#cdcdcd",
+			"ul",
+			"#create ",
+			"form ",
+			"#contact ",
+			"#ededed",
+			"#changePassword ",
+			"#008000",
+			"#ff0000",
+			"alert ",
+			"#ff0000",
+			"transition: ",
+			"#485BE7",
+			".actions ",
+			"#fff",
+			"border-radius: ",
+			"#f1f1f1",
+			"#cdcdcd",
+			"#account ",
+			"footer ",
+			"header ",
+			"#cdcdcd",
+			"form.form ",
+			".prompt ",
+			"rgba(255,255,255,.5)",
+			"#000",
+			".dropdown",
+			"#C2C1C1",
+			"box-shadow: ",
+			"#cdcdcd",
+			".sorted",
+			"webkit-user-select: ",
+			"#ff0000",
+			"#2E6C27",
+			"#B9E0BB",
+			"#D70000",
+			".button",
+			"#D50000",
+			"#ea541e",
+			"transition: ",
+			"#fff",
+			"#485BE7",
+			"border-radius: ",
+			"input",
+			"border-radius:",
+			"#f1f1f1"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1175,7 +1128,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -1184,7 +1137,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3130,
+						"buffer_size": 5238,
 						"regions":
 						{
 						},
@@ -1205,100 +1158,37 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "css/style.css",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 26422,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								22882,
-								22882
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/base16-eighties.dark (SL).tmTheme",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/CSS/CSS.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 3629.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "css/responsive.css",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2252,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1594,
-								1594
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/base16-eighties.dark (SL).tmTheme",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/CSS/CSS.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1540.0,
+						"translation.y": 780.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 1,
+					"file": "js/controllers/primary.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2331,
+						"buffer_size": 6443,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2331,
-								2331
+								6167,
+								6167
 							]
 						],
 						"settings":
 						{
 							"color_scheme": "Packages/User/Color Highlighter/themes/base16-eighties.dark (SL).tmTheme",
 							"incomplete_sync": null,
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"word_wrap": true
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1306,177 +1196,12 @@
 					},
 					"stack_index": 0,
 					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "js/unsupported.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 113,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								113,
-								113
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/base16-eighties.dark (SL).tmTheme",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "html/pages/edit.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5947,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1652,
-								1652
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/base16-eighties.dark (SL).tmTheme",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "js/controllers/edit.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7719,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2169,
-								2169
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/base16-eighties.dark (SL).tmTheme",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 360.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
 				}
 			]
 		},
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 7,
-					"file": "js/directives/share.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1425,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								287,
-								287
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/base16-eighties.dark (SL).tmTheme",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "index.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4466,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2884,
-								2884
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/base16-eighties.dark (SL).tmTheme",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1533.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -1542,12 +1267,140 @@
 		"selected_items":
 		[
 			[
+				"primary",
+				"js\\controllers\\primary.js"
+			],
+			[
+				"app.js",
+				"js\\app.js"
+			],
+			[
+				"stylecss",
+				"css\\layout\\style.css"
+			],
+			[
+				"style.scs",
+				"scss\\layout\\style.scss"
+			],
+			[
+				"contact.scss",
+				"scss\\pages\\contact.scss"
+			],
+			[
+				"home.html",
+				"html\\pages\\home.html"
+			],
+			[
+				"editor.scss",
+				"scss\\pages\\editor.scss"
+			],
+			[
+				"loading.css",
+				"css\\sections\\loading.css"
+			],
+			[
+				"loading.scss",
+				"scss\\sections\\loading.scss"
+			],
+			[
+				"build",
+				"build.php"
+			],
+			[
+				"menu.scss",
+				"scss\\sections\\menu.scss"
+			],
+			[
+				"base",
+				"scss\\_base.scss"
+			],
+			[
+				"style.css",
+				"css\\style.css"
+			],
+			[
+				"style.scss",
+				"scss\\layout\\style.scss"
+			],
+			[
+				"config.rb",
+				"config.rb"
+			],
+			[
+				"index.php",
+				"index.php"
+			],
+			[
+				"depen",
+				"dependencies.json"
+			],
+			[
+				"stylescss",
+				"scss\\layout\\style.scss"
+			],
+			[
+				"responsivecss",
+				"css\\responsive.css"
+			],
+			[
 				"share.js",
 				"js\\directives\\share.js"
 			],
 			[
+				"alert.js",
+				"js\\directives\\alert.js"
+			],
+			[
+				"view.js",
+				"js\\controllers\\view.js"
+			],
+			[
+				"primary.js",
+				"js\\controllers\\primary.js"
+			],
+			[
 				"edit.js",
 				"js\\controllers\\edit.js"
+			],
+			[
+				"designs.js",
+				"js\\controllers\\designs.js"
+			],
+			[
+				"create.js",
+				"js\\controllers\\create.js"
+			],
+			[
+				"contact.js",
+				"js\\controllers\\contact.js"
+			],
+			[
+				"changepassword.js",
+				"js\\controllers\\changePassword.js"
+			],
+			[
+				"activate.js",
+				"js\\controllers\\activate.js"
+			],
+			[
+				"account.js",
+				"js\\controllers\\account.js"
+			],
+			[
+				"users.js",
+				"admin\\js\\controllers\\users.js"
+			],
+			[
+				"products.js",
+				"admin\\js\\controllers\\products.js"
+			],
+			[
+				"manufacturersjs",
+				"admin\\js\\controllers\\manufacturers.js"
+			],
+			[
+				"header.php",
+				"php\\header.php"
 			],
 			[
 				"edit.html",
@@ -1564,10 +1417,6 @@
 			[
 				"home.desktopscss",
 				"web\\sass\\pages\\home.desktop.scss"
-			],
-			[
-				"config.rb",
-				"config.rb"
 			],
 			[
 				"frontenddepen",
@@ -1928,130 +1777,6 @@
 			[
 				"responsivecontroller",
 				"application\\controllers\\responsive_controller.php"
-			],
-			[
-				"responsive_controller",
-				"application\\controllers\\responsive_controller.php"
-			],
-			[
-				"b.html.php",
-				"application\\classes\\Views\\Html\\Frontend\\Pages\\B.html.php"
-			],
-			[
-				"configdev",
-				"application\\config\\seniorhomes\\Config.development.php"
-			],
-			[
-				"config.php",
-				"application\\config\\seniorhomes\\Config.php"
-			],
-			[
-				"b.html.",
-				"application\\classes\\Views\\Html\\Frontend\\Pages\\B.html.php"
-			],
-			[
-				"b.php",
-				"application\\controllers\\b.php"
-			],
-			[
-				"mresppp",
-				"application\\controllers\\m_responsive.php"
-			],
-			[
-				"gallery",
-				"application\\controllers\\q\\gallery.php"
-			],
-			[
-				"peoplereport",
-				"application\\controllers\\aff\\reports\\peoplereport.php"
-			],
-			[
-				"sitemapresp",
-				"application\\controllers\\sitemap_responsive.php"
-			],
-			[
-				"searchresp",
-				"application\\controllers\\search_responsive.php"
-			],
-			[
-				"reviewssubmittedresp",
-				"application\\controllers\\reviews_submitted_responsive.php"
-			],
-			[
-				"reviewssubmitresp",
-				"application\\controllers\\reviews_submit_responsive.php"
-			],
-			[
-				"reviewsearchresp",
-				"application\\controllers\\reviews_search_responsive.php"
-			],
-			[
-				"reviewsresponsresp",
-				"application\\controllers\\reviews_response_responsive.php"
-			],
-			[
-				"reviewspreviewresp",
-				"application\\controllers\\reviews_preview_responsive.php"
-			],
-			[
-				"reviewpostresp",
-				"application\\controllers\\reviews_post_responsive.php"
-			],
-			[
-				"presp",
-				"application\\controllers\\p_responsive.php"
-			],
-			[
-				"monthresp",
-				"application\\controllers\\monthly_responsive.php"
-			],
-			[
-				"mresp",
-				"web\\js\\m_responsive.jquery.js"
-			],
-			[
-				"hresp",
-				"application\\controllers\\h_responsive.php"
-			],
-			[
-				"fresp",
-				"application\\controllers\\f_responsive.php"
-			],
-			[
-				"exclude",
-				"application\\controllers\\exclude.php"
-			],
-			[
-				"editlirep",
-				"application\\controllers\\editlisting_responsive.php"
-			],
-			[
-				"conresp",
-				"application\\controllers\\contact_responsive.php"
-			],
-			[
-				"badgeresp",
-				"application\\controllers\\badges_responsive.php"
-			],
-			[
-				"sectionfooterphp",
-				"application\\classes\\Views\\Models\\Frontend\\Sections\\Footer.php"
-			],
-			[
-				"footer.html.php",
-				"application\\classes\\Views\\Html\\Frontend\\Sections\\Footer.html.php"
-			],
-			[
-				"test.scss",
-				"web\\sass\\test.scss"
-			],
-			[
-				"sftpconfig",
-				"sftp-config.json"
-			],
-			[
-				"helperurl",
-				"application\\helpers\\Helpers\\Url.php"
 			]
 		],
 		"width": 0.0
