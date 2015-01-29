@@ -240,9 +240,10 @@ select {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
 }
 
-/* line 170, ../../scss/layout/style.scss */
+/* line 171, ../../scss/layout/style.scss */
 .ng-hide {
   display: block !important;
   position: absolute !important;
@@ -253,7 +254,7 @@ select {
   pointer-events: none;
 }
 
-/* line 179, ../../scss/layout/style.scss */
+/* line 180, ../../scss/layout/style.scss */
 .error {
   padding: 10px;
   margin: 10px auto;
@@ -265,7 +266,7 @@ select {
   border-radius: 10px;
 }
 
-/* line 187, ../../scss/layout/style.scss */
+/* line 188, ../../scss/layout/style.scss */
 .success {
   padding: 10px;
   margin: 10px auto;
@@ -278,23 +279,23 @@ select {
   border: 1px solid #2E6C27;
 }
 
-/* line 196, ../../scss/layout/style.scss */
+/* line 197, ../../scss/layout/style.scss */
 input.ng-invalid.ng-dirty {
   -moz-box-shadow: 0px 0px 7px 0px #D50000;
   -webkit-box-shadow: 0px 0px 7px 0px #D50000;
   box-shadow: 0px 0px 7px 0px #D50000;
 }
 
-/* line 199, ../../scss/layout/style.scss */
+/* line 200, ../../scss/layout/style.scss */
 .small {
   font-size: 70%;
 }
-/* line 202, ../../scss/layout/style.scss */
+/* line 203, ../../scss/layout/style.scss */
 .small.small {
   font-size: 50%;
 }
 
-/* line 206, ../../scss/layout/style.scss */
+/* line 207, ../../scss/layout/style.scss */
 .sorted {
   position: relative;
   -moz-user-select: -moz-none;
@@ -302,7 +303,7 @@ input.ng-invalid.ng-dirty {
   -webkit-user-select: none;
   user-select: none;
 }
-/* line 210, ../../scss/layout/style.scss */
+/* line 211, ../../scss/layout/style.scss */
 .sorted:after {
   content: ">";
   display: inline-block;
@@ -314,14 +315,14 @@ input.ng-invalid.ng-dirty {
   -webkit-transition: -ms-transform 0.3s, -webkit-transform 0.3s, -webkit-transform 0.3s;
   transition: -ms-transform 0.3s, -webkit-transform 0.3s, transform 0.3s;
 }
-/* line 218, ../../scss/layout/style.scss */
+/* line 219, ../../scss/layout/style.scss */
 .sorted.ascending:after {
   -moz-transform: rotate(-90deg);
   -ms-transform: rotate(-90deg);
   -webkit-transform: rotate(-90deg);
   transform: rotate(-90deg);
 }
-/* line 221, ../../scss/layout/style.scss */
+/* line 222, ../../scss/layout/style.scss */
 .sorted.descending:after {
   -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
@@ -329,7 +330,7 @@ input.ng-invalid.ng-dirty {
   transform: rotate(90deg);
 }
 
-/* line 225, ../../scss/layout/style.scss */
+/* line 226, ../../scss/layout/style.scss */
 .dropdown {
   position: absolute !important;
   text-align: left;
@@ -348,21 +349,21 @@ input.ng-invalid.ng-dirty {
   z-index: 100;
   max-width: 9999px;
 }
-/* line 239, ../../scss/layout/style.scss */
+/* line 240, ../../scss/layout/style.scss */
 .dropdown label {
   display: inline-block;
   width: 80%;
 }
-/* line 243, ../../scss/layout/style.scss */
+/* line 244, ../../scss/layout/style.scss */
 .dropdown > div {
   padding: 5px 0;
   border-bottom: 1px solid #cdcdcd;
 }
-/* line 247, ../../scss/layout/style.scss */
+/* line 248, ../../scss/layout/style.scss */
 .dropdown.ng-hide {
   height: auto !important;
 }
-/* line 250, ../../scss/layout/style.scss */
+/* line 251, ../../scss/layout/style.scss */
 .dropdown:before {
   content: "";
   background: #fff;
@@ -382,17 +383,17 @@ input.ng-invalid.ng-dirty {
   width: 10px;
 }
 
-/* line 264, ../../scss/layout/style.scss */
+/* line 265, ../../scss/layout/style.scss */
 .half {
   width: 50%;
 }
 
-/* line 267, ../../scss/layout/style.scss */
+/* line 268, ../../scss/layout/style.scss */
 .mobile {
   display: none;
 }
 
-/* line 270, ../../scss/layout/style.scss */
+/* line 271, ../../scss/layout/style.scss */
 .prompt {
   position: fixed;
   width: 260px;
@@ -411,17 +412,17 @@ input.ng-invalid.ng-dirty {
   margin-left: -130px;
   text-align: center;
 }
-/* line 284, ../../scss/layout/style.scss */
+/* line 285, ../../scss/layout/style.scss */
 .prompt input {
   width: 91%;
   margin: 10px auto;
 }
-/* line 288, ../../scss/layout/style.scss */
+/* line 289, ../../scss/layout/style.scss */
 .prompt button {
   display: inline-block;
   width: 100px;
 }
-/* line 292, ../../scss/layout/style.scss */
+/* line 293, ../../scss/layout/style.scss */
 .prompt:before {
   content: "";
   display: block;
@@ -433,12 +434,12 @@ input.ng-invalid.ng-dirty {
   background: rgba(255, 255, 255, 0.5);
   z-index: -1;
 }
-/* line 303, ../../scss/layout/style.scss */
+/* line 304, ../../scss/layout/style.scss */
 .prompt .button {
   margin-top: 10px;
 }
 
-/* line 308, ../../scss/layout/style.scss */
+/* line 309, ../../scss/layout/style.scss */
 form.form {
   border: 5px solid #cdcdcd;
   -moz-border-radius: 15px;
@@ -448,23 +449,23 @@ form.form {
   margin-top: 15px;
   margin-bottom: 15px;
 }
-/* line 315, ../../scss/layout/style.scss */
+/* line 316, ../../scss/layout/style.scss */
 form.form label, form.form input, form.form select, form.form textarea {
   display: block;
   margin: 5px 0 10px;
 }
-/* line 319, ../../scss/layout/style.scss */
+/* line 320, ../../scss/layout/style.scss */
 form.form label {
   margin: 0;
 }
 
-/* line 323, ../../scss/layout/style.scss */
+/* line 324, ../../scss/layout/style.scss */
 .mesh {
   fill: rgba(50, 50, 50, 0.5);
 }
 
 /* HEADER */
-/* line 328, ../../scss/layout/style.scss */
+/* line 329, ../../scss/layout/style.scss */
 header {
   text-align: left;
   position: absolute;
@@ -479,37 +480,37 @@ header {
   z-index: 1;
   min-width: 1080px;
 }
-/* line 340, ../../scss/layout/style.scss */
+/* line 341, ../../scss/layout/style.scss */
 header h1 {
   display: block;
   float: left;
 }
-/* line 344, ../../scss/layout/style.scss */
+/* line 345, ../../scss/layout/style.scss */
 header .container {
   max-width: 1300px;
   width: 90%;
   margin: 0 auto;
   padding: 0 5%;
 }
-/* line 350, ../../scss/layout/style.scss */
+/* line 351, ../../scss/layout/style.scss */
 header .container > .right {
   width: 50%;
   position: relative;
 }
-/* line 355, ../../scss/layout/style.scss */
+/* line 356, ../../scss/layout/style.scss */
 header .logged-in {
   display: block;
   padding: 6px 13px;
   position: absolute;
   right: 41px;
 }
-/* line 361, ../../scss/layout/style.scss */
+/* line 362, ../../scss/layout/style.scss */
 header .button {
   margin: 0 20px;
 }
 
 /* MAIN */
-/* line 367, ../../scss/layout/style.scss */
+/* line 368, ../../scss/layout/style.scss */
 main {
   max-width: 1300px;
   width: 90%;
@@ -521,7 +522,7 @@ main {
   transition: opacity 0.3s;
   display: block;
 }
-/* line 375, ../../scss/layout/style.scss */
+/* line 376, ../../scss/layout/style.scss */
 main.loading {
   opacity: 0;
   -moz-transition: opacity 0s;
@@ -531,18 +532,18 @@ main.loading {
 }
 
 /* FOOTER */
-/* line 382, ../../scss/layout/style.scss */
+/* line 383, ../../scss/layout/style.scss */
 footer {
   text-align: center;
   padding: 10px;
   display: block;
   clear: both;
 }
-/* line 388, ../../scss/layout/style.scss */
+/* line 389, ../../scss/layout/style.scss */
 footer p {
   padding: 10px 0;
 }
-/* line 391, ../../scss/layout/style.scss */
+/* line 392, ../../scss/layout/style.scss */
 footer button {
   width: 100%;
   border: 0;

@@ -52,3 +52,11 @@ share input {
 share input[type="submit"] {
   margin-top: 15px;
 }
+/* line 44, ../../scss/sections/share.scss */
+share .lightbox .content {
+  width: 100% !important;
+}
+/* line 47, ../../scss/sections/share.scss */
+share button.button.center {
+  margin-top: 20px;
+}

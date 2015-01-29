@@ -225,4 +225,9 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 		root.show_share = true;
 	};
 
+	//LISTENERS
+	root.$on('share_set_public', function() {
+		scope.get_designs();
+	});
+
 }]);

@@ -1,7 +1,7 @@
 <div class="lightbox" ng-show="$root.show_share">
 	<a ng-click="$root.show_share = false" class="close right">Close</a>
 	{{root.share_design}}
-	<ul class="options">
+	<ul class="options" ng-hide="make_public">
 		<li class="link" ng-class="{selected: selected === 'link'}" title="Share a link" ng-click="selected = 'link'">
 			<svg viewBox="0 0 1000 1000">
 				<path fill="none" stroke="#FFFFFF" stroke-width="93.1711" stroke-miterlimit="10" d="M745.9,765.3c0,85.6-69.4,155-155,155H227.1
@@ -43,7 +43,7 @@
 			</svg>
 		</li></a>
 	</ul>
-	<div class="content">
+	<div class="content" ng-hide="make_public">
 		<div class="link-content" ng-show="selected === 'link'">
 			<label for="share-url">Copy and share this url:</label>
 			<input id="share-url" type="text" disabled ng-model="url" />
@@ -65,5 +65,9 @@
 		<div class="twitter-content" ng-show="selected === 'twitter'">
 			
 		</div>
+	</div>
+	<div class="content" ng-show="make_public">
+		<p class="center">This design is set to private. Please set to public before sharing.</p>
+		<button class="button action center" ng-click="set_public($root.share_design)">Set Public</button>
 	</div>
 </div>

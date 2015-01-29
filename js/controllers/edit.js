@@ -250,7 +250,7 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			success: function(data) {
 				if (root.no_account) {
 					root.no_account = false;
-					root.share_design = {id:data.id};
+					root.share_design = {id:data.id, public:"1"};
 					root.show_share = true;
 				} else {
 					scope.edit_design(data.id);
@@ -398,6 +398,11 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			};
 			scope.update_design(design, function(){});
 		}
+	}, true);
+
+	root.$on('share_set_public', function() {
+		scope.public = true;
+		scope.design.public = 1;
 	});
 
 }]);
