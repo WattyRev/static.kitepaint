@@ -48,7 +48,7 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			},
 			error: function(data) {
 				console.log('error', data);
-				alert('Could not get product');
+				root.error('Could not get product');
 				root.done(1);
 				scope.$apply();
 			}
@@ -87,7 +87,7 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			},
 			error: function(data) {
 				console.log('error', data);
-				alert('Could not get design');
+				root.error('Could not get design');
 				root.done(1);
 				scope.$apply();
 			}
@@ -303,7 +303,7 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			},
 			error: function(data) {
 				console.log('error', data);
-				alert('Could not save');
+				root.error('Could not save');
 				scope.saving = false;
 				callback();
 				scope.$apply();
@@ -351,7 +351,6 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			},
 			error: function(data) {
 				console.log('error', data);
-				alert('Could not delete design');
 				scope.show_delete_design = false;
 				scope.deleting_design = null;
 				root.error('We could not delete your design. Try again later.');

@@ -23,7 +23,7 @@ app.controller('ViewController', ['$scope', '$rootScope', '$location', '$state',
 			},
 			error: function(data) {
 				console.log('error', data);
-				alert('Could not get product');
+				root.error('Could not get product');
 				root.done(3);
 				scope.$apply();
 			}

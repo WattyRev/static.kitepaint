@@ -71,7 +71,6 @@ app.directive('share', function() {
 
 		//LISTENERS
 			root.$watch('share_design', function(design) {
-				console.log(design);
 				if (!design) {
 					return;
 				}

@@ -210,7 +210,6 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 			},
 			error: function(data) {
 				console.log('error', data);
-				alert('Could not delete design');
 				scope.show_delete_design = false;
 				scope.deleting_design = null;
 				scope.get_designs();
