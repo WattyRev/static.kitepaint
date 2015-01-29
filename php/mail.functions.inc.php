@@ -6,7 +6,7 @@ function sendLostPasswordEmail($username, $email, $newpassword) {
 	$message = "
 Hello, $username
 
-You have requested a password reset on http://www.$domain/,
+You have requested a password reset on http://$domain/,
  
 Your new new temporary password is:
 
@@ -39,11 +39,11 @@ function sendMail($to, $subject, $message, $from) {
  
 function sendActivationEmail($username, $password, $uid, $email, $actcode) {
 	global $domain;
-	$link = "http://www.$domain/#/activate?uid=$uid&actcode=$actcode";
+	$link = "http://$domain/#/activate?uid=$uid&actcode=$actcode";
 	$message = "
 Hello $username,
 
-Thank you for registering on http://www.$domain/,
+Thank you for registering on http://$domain/,
  
 Please click the link below to activate your account.
  
@@ -62,7 +62,7 @@ Watty at $domain
 
 function sendAccountInfo($username, $password, $email) {
 	global $domain;
-	$link = 'http://www.' . $domain;
+	$link = 'http://' . $domain;
 	$message = "
 Hello $username,
 
