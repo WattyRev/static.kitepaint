@@ -167,3 +167,18 @@
 svg *[ng-click] {
 	@include transition(.3s stroke, .3s stroke-width);
 }
+.lightbox.show-login {
+	form {
+		width: 90%;
+		margin: 20px auto;
+
+		input {
+			width: 100%;
+			@include box-sizing(border-box);
+			margin: 5px auto 10px;
+		}
+		.button {
+			margin-top: 10px;
+		}
+	}
+}

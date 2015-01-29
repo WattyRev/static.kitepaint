@@ -34,7 +34,7 @@ app.directive('share', function() {
 			//close lightbox
 			$(document).click(function(e) {
 				var clicked = $(e.target);
-				if (!clicked.parents('.lightbox').length && !clicked.hasClass('lightbox') && !clicked.hasClass('icon')) {
+				if (!clicked.parents('.lightbox').length && !clicked.hasClass('lightbox') && (!clicked.hasClass('icon') && !clicked.hasClass('share'))) {
 					root.show_share = false;
 					root.$apply();
 				}

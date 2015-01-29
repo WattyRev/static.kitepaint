@@ -9,7 +9,9 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 	//FUNCTIONS
 	scope.get_designs = function() {
 		var content = {
-			filter: {},
+			filter: {
+				'active': '1'	
+			},
 			return: [
 				'id',
 				'created',

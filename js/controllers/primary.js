@@ -42,7 +42,7 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', '$locatio
 		root.load_count = 0;
 
 	//FUNCTIONS
-		root.login = function() {
+		root.login = function(callback) {
 			root.login_loading = true;
 			$.ajax({
 				type: 'POST',
@@ -60,6 +60,9 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', '$locatio
 						root.login_message = data.message;
 					}
 					root.login_loading = undefined;
+					if (callback) {
+						callback();
+					}
 					root.$apply();
 				},
 				error: function(data) {
@@ -102,6 +105,7 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', '$locatio
 					if (data.registered) {
 						root.register_status = 'registered';
 						root.success('You have created an account');
+						root.has_account = true;
 					} else {
 						root.register_status = 'invalid';
 						root.register_message = data.message;

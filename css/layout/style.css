@@ -493,21 +493,23 @@ header .container {
 }
 /* line 350, ../../scss/layout/style.scss */
 header .container > .right {
-  width: 200px;
+  width: 50%;
+  position: relative;
 }
-/* line 354, ../../scss/layout/style.scss */
+/* line 355, ../../scss/layout/style.scss */
 header .logged-in {
-  display: inline-block;
+  display: block;
   padding: 6px 13px;
-  float: left;
+  position: absolute;
+  right: 41px;
 }
-/* line 359, ../../scss/layout/style.scss */
+/* line 361, ../../scss/layout/style.scss */
 header .button {
   margin: 0 20px;
 }
 
 /* MAIN */
-/* line 365, ../../scss/layout/style.scss */
+/* line 367, ../../scss/layout/style.scss */
 main {
   max-width: 1300px;
   width: 90%;
@@ -519,7 +521,7 @@ main {
   transition: opacity 0.3s;
   display: block;
 }
-/* line 373, ../../scss/layout/style.scss */
+/* line 375, ../../scss/layout/style.scss */
 main.loading {
   opacity: 0;
   -moz-transition: opacity 0s;
@@ -529,18 +531,18 @@ main.loading {
 }
 
 /* FOOTER */
-/* line 380, ../../scss/layout/style.scss */
+/* line 382, ../../scss/layout/style.scss */
 footer {
   text-align: center;
   padding: 10px;
   display: block;
   clear: both;
 }
-/* line 386, ../../scss/layout/style.scss */
+/* line 388, ../../scss/layout/style.scss */
 footer p {
   padding: 10px 0;
 }
-/* line 389, ../../scss/layout/style.scss */
+/* line 391, ../../scss/layout/style.scss */
 footer button {
   width: 100%;
   border: 0;

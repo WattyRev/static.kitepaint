@@ -348,13 +348,15 @@
 			padding: 0 5%;
 
 			>.right {
-				width: 200px;
+				width: 50%;
+				position:relative;
 			}
 		}
 		.logged-in {
-			display: inline-block;
+			display: block;
 			padding: 6px 13px;
-			float: left;
+			position:absolute;
+			right: 41px;
 		}
 		.button {
 			margin: 0 20px;

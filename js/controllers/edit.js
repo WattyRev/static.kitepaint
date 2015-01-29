@@ -78,6 +78,9 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 				scope.variations = JSON.parse(scope.design.variations);
 				scope.current_variation = scope.variations[0];
 				scope.public = scope.design.public === '1' ? true : false;
+				if (root.editing_share) {
+					scope.show_share();
+				}
 				scope.$apply();
 				scope.get_product();
 				root.done(2);
@@ -213,14 +216,29 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 		});
 	};
 
+	scope.fn_show_save_as = function() {
+		scope.show_save_as = true;
+		scope.show_login = false;
+	};
+
 	scope.save_as = function() {
 		scope.saving = true;
+		var user_ud,
+			public;
+		if (root.no_account) {
+			user_id = 0;
+			public = true;
+		} else {
+			user_id = root.user.user_id;
+			public = scope.public;
+		}
+
 		var design = {
 			name: scope.save_as_name,
-			user: root.user.user_id,
+			user: user_id,
 			product: scope.product.id,
 			variations: JSON.stringify(scope.variations),
-			public: scope.public ? 1 : 0,
+			public: public ? 1 : 0,
 			new: 1
 		};
 
@@ -230,14 +248,20 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			data: design,
 			dataType: 'json',
 			success: function(data) {
-				scope.edit_design(data.id);
+				if (root.no_account) {
+					root.no_account = false;
+					root.share_design = {id:data.id};
+					root.show_share = true;
+				} else {
+					scope.edit_design(data.id);
+				}
 				scope.saving = false;
 				scope.show_save_as = false;
 				scope.$apply();
 			},
 			error: function(data) {
 				console.log('error', data);
-				alert('Could not save design');
+				root.error('Could not save design');
 				scope.saving = false;
 				scope.show_save_as = false;
 				scope.$apply();
@@ -334,6 +358,23 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 				scope.$apply();
 			}
 		});
+	};
+
+	scope.show_share = function() {
+		root.editing_share = true;
+		//if already saved, show share window
+		if (state.params.type === 'saved') {
+			root.editing_share = false;
+			root.share_design = scope.design;
+			root.show_share = true;
+		} else if (root.user.logged_in){
+			// else if user is logged in, save then, share window.
+			scope.show_save_as = true;
+			return;
+		} else {
+			// else if user is not logged in, offer login screen + save window
+			scope.show_login = true;
+		}
 	};
 
 

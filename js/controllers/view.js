@@ -67,6 +67,12 @@ app.controller('ViewController', ['$scope', '$rootScope', '$location', '$state',
 			url: 'php/designs.php?id=' + location.$$search.id,
 			dataType: 'json',
 			success: function(data) {
+				if (!data.length) {
+					console.log('error: Design does not exist');
+					root.error('Unable to find design');
+					state.go('home');
+					root.$apply();
+				}
 				scope.design = data[0];
 				scope.variations = JSON.parse(scope.design.variations);
 				scope.current_variation = scope.variations[0];
@@ -81,7 +87,7 @@ app.controller('ViewController', ['$scope', '$rootScope', '$location', '$state',
 			},
 			error: function(data) {
 				console.log('error', data);
-				alert('Could not get design');
+				root.error('Could not get design');
 				root.done(1);
 			}
 		});

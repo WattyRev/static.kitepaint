@@ -239,3 +239,21 @@ svg *[ng-click] {
   -webkit-transition: stroke 0.3s, stroke-width 0.3s;
   transition: stroke 0.3s, stroke-width 0.3s;
 }
+
+/* line 171, ../../scss/pages/editor.scss */
+.lightbox.show-login form {
+  width: 90%;
+  margin: 20px auto;
+}
+/* line 175, ../../scss/pages/editor.scss */
+.lightbox.show-login form input {
+  width: 100%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 5px auto 10px;
+}
+/* line 180, ../../scss/pages/editor.scss */
+.lightbox.show-login form .button {
+  margin-top: 10px;
+}
