@@ -6,7 +6,8 @@
 				{{design.name}} <span class="small">by {{design.user.username}}</span>
 			</h2>
 		</div>
-		<div class="right half actions">	
+		<div class="right half actions">
+			<button class="button share" ng-click="$root.share_design = design; $root.show_share = true;">Share</button>
 			<div title="Settings" class="settings-button">
 				<svg viewBox="0 0 1000 1000" ng-click="show_settings = !show_settings;">
 				<defs>
@@ -63,3 +64,5 @@
 	</div>
 	<div class="clearfix"></div>
 </div>
+
+<share></share>
