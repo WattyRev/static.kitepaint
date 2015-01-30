@@ -54,6 +54,9 @@
 					<div>
 						<a ng-click="autofill();">AutoFill</a>
 					</div>
+					<div>
+						<a ng-click="show_reset = true;">Reset</a>
+					</div>
 					<div ng-show="$root.user.logged_in">
 						<a ng-click="public = true;" ng-hide="public">Make Design Public</a>
 						<a ng-click="public = false;" ng-show="public">Make Design Private</a>
@@ -117,6 +120,15 @@
 			<div class="clearfix"></div>
 			<button class="button red">Delete</button>
 			<button type="button" class="button" ng-click="show_delete_design = false">Cancel</button>
+		</form>
+	</div>
+
+	<div class="prompt" ng-show="show_reset">
+		<form ng-submit="reset()">
+			<label>Are you sure you want to reset your design?</label><br/>
+			<div class="clearfix"></div>
+			<button class="button red">Reset</button>
+			<button type="button" class="button" ng-click="show_reset = false">Cancel</button>
 		</form>
 	</div>
 	<div class="clearfix"></div>

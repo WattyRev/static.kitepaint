@@ -1,6 +1,6 @@
-app.controller('EditController', ['$scope', '$rootScope', '$location', '$state', function(scope, root, location, state) {
+app.controller('EditController', ['$scope', '$rootScope', '$location', '$state', '$sce', function(scope, root, location, state, sce) {
 	scope.current_color = '#ffffff';
-	scope.current_color_style = {'backgorund-color' : '#ffffff'};
+	scope.current_color_style = {'background-color' : '#ffffff'};
 	scope.product = {};
 	scope.design = {};
 	scope.colors = [];
@@ -8,6 +8,7 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 	scope.loading = true;
 	scope.show_settings = false;
 	scope.show_outlines = true;
+	scope.show_reset = false;
 	scope.public = false;
 	scope.background = '';
 
@@ -374,6 +375,13 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			// else if user is not logged in, offer login screen + save window
 			scope.show_login = true;
 		}
+	};
+	scope.reset = function() {
+		var reset_designs = JSON.parse(scope.product.variations);
+		$.each(scope.variations, function(i, variation) {
+			variation.svg = reset_designs[i].svg;
+		});
+		scope.show_reset = false;
 	};
 
 
