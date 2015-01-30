@@ -104,7 +104,7 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', '$locatio
 				success: function(data) {
 					if (data.registered) {
 						root.register_status = 'registered';
-						root.success('You have created an account');
+						root.success('You have created an account. An activation email has been sent to your email address.');
 						root.has_account = true;
 					} else {
 						root.register_status = 'invalid';
