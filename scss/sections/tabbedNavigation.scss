@@ -3,39 +3,53 @@
  */
 
 @import "base";
-
-.tab-wrapper{
-	position:relative;
+%active-content {
+	height:auto;
+	opacity: 1;
 }
-.tab-radio{
-	display:none;
-}
-.tab-label {
-	cursor: pointer;
-	font-size: 24px;
-	color: $dark_grey;
-	opacity:.5;
-	position:absolute;
-	top:-50px;
-	left:0;
-}
-.tab-section:nth-child(2) .tab-label {
-	left: 110px;
-}
-.tab-radio:checked + .tab-label {
+%active-label {
 	opacity:1;
-}
-.tab-label:hover{
-	opacity:1;
-}
-.tab-section {
-	margin-top:50px;
 }
 .tab-content {
-	position: absolute;
-	opacity:0;
-}
-.tab-radio:checked ~ .tab-content {
 	position:relative;
-	opacity: 1;
+
+	>div {
+		@include transition(.3s opacity);
+		height: 0px;
+		overflow:hidden;
+		opacity: 0;
+	}
+}
+.tab {
+	cursor: pointer;
+	font-size: 24px;
+	color:$dark_grey;
+	opacity: .5;
+	@include transition(.3s opacity);
+
+	&:hover {
+		@extend %active-label;
+	}
+}
+.tab-wrapper {
+	>input {
+		display:none;
+	}
+	@for $i from 1 through 2 {
+		input[type="radio"]:nth-child(#{$i}):checked{
+			 ~ .tab-content>div:nth-child(#{$i}) {
+				@extend %active-content;
+			}
+			~ .tab-navigation>li:nth-child(#{$i})>label {
+				@extend %active-label;
+			}
+		}
+	}
+}
+.tab-navigation {
+	list-style:none;
+}
+.tab-item {
+	display:inline-block;
+	margin-right: 20px;
 }

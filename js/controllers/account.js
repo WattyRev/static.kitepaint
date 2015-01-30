@@ -156,6 +156,63 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 		});
 	};
 
+	scope.change_first_name = function(new_first_name) {
+		console.log(new_first_name);
+		console.log(root.user.user_id);
+		var content = {
+			id: root.user.user_id,
+			first_name: new_first_name
+		};
+		$.ajax({
+			type: 'POST',
+			url: 'php/users.php',
+			data: content,
+			dataType: 'json',
+			success: function(data) {
+				if (data.valid) {
+					root.user.first_name = new_first_name;
+					scope.show_change_first_name = false;
+					root.success('Your first name has been changed');
+				} else {
+					root.error(data.message);
+				}
+				scope.$apply();
+			},
+			error: function(data) {
+				console.log('error', data);
+				root.error('We could not change your first name. Try again later.');
+				root.$apply();
+			}
+		});
+	};
+
+	scope.change_last_name = function(new_last_name) {
+		var content = {
+			id: root.user.user_id,
+			last_name: new_last_name
+		};
+		$.ajax({
+			type: 'POST',
+			url: 'php/users.php',
+			data: content,
+			dataType: 'json',
+			success: function(data) {
+				if (data.valid) {
+					root.user.last_name = new_last_name;
+					scope.show_change_last_name = false;
+					root.success('Your last name has been changed');
+				} else {
+					root.error(data.message);
+				}
+				scope.$apply();
+			},
+			error: function(data) {
+				root.error('We could not change your last name. Try again later.');
+				root.$apply();
+			}
+		});
+	};
+
 	scope.delete_account = function() {
 		var content = {
 			id: root.user.user_id,

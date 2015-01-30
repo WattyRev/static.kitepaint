@@ -14,6 +14,10 @@
   margin: 0 15px;
 }
 /* line 12, ../../scss/pages/account.scss */
+#account .designs {
+  width: 98%;
+}
+/* line 15, ../../scss/pages/account.scss */
 #account .design {
   background: #ededed;
   -moz-border-radius: 15px;
@@ -23,7 +27,7 @@
   padding: 10px;
   position: relative;
 }
-/* line 19, ../../scss/pages/account.scss */
+/* line 22, ../../scss/pages/account.scss */
 #account .variations {
   width: 200px;
   height: 200px;
@@ -34,7 +38,7 @@
   border-radius: 15px;
   margin-right: 10px;
 }
-/* line 27, ../../scss/pages/account.scss */
+/* line 30, ../../scss/pages/account.scss */
 #account .variation {
   width: 181px;
   height: 181px;
@@ -42,12 +46,12 @@
   float: left;
   pointer-events: none;
 }
-/* line 34, ../../scss/pages/account.scss */
+/* line 37, ../../scss/pages/account.scss */
 #account .content {
   float: left;
   width: 67%;
 }
-/* line 38, ../../scss/pages/account.scss */
+/* line 41, ../../scss/pages/account.scss */
 #account .public {
   position: absolute;
   top: -5px;
@@ -59,12 +63,12 @@
   -webkit-border-radius: 15px;
   border-radius: 15px;
 }
-/* line 47, ../../scss/pages/account.scss */
+/* line 50, ../../scss/pages/account.scss */
 #account .actions {
   width: 100%;
   margin-top: 10px;
 }
-/* line 51, ../../scss/pages/account.scss */
+/* line 54, ../../scss/pages/account.scss */
 #account .actions .icon {
   width: 40px;
   height: 40px;
@@ -77,7 +81,7 @@
   padding: 10px;
   position: relative;
 }
-/* line 61, ../../scss/pages/account.scss */
+/* line 64, ../../scss/pages/account.scss */
 #account .actions .icon:before {
   color: #485BE7;
   text-align: center;
@@ -92,27 +96,27 @@
   transition: opacity 0.3s;
   opacity: 0;
 }
-/* line 72, ../../scss/pages/account.scss */
+/* line 75, ../../scss/pages/account.scss */
 #account .actions .icon:hover:before {
   opacity: 1;
 }
-/* line 76, ../../scss/pages/account.scss */
+/* line 79, ../../scss/pages/account.scss */
 #account .actions svg {
   pointer-events: none;
 }
-/* line 79, ../../scss/pages/account.scss */
+/* line 82, ../../scss/pages/account.scss */
 #account .actions .view:before {
   content: "View";
 }
-/* line 82, ../../scss/pages/account.scss */
+/* line 85, ../../scss/pages/account.scss */
 #account .actions .edit:before {
   content: "Edit";
 }
-/* line 85, ../../scss/pages/account.scss */
+/* line 88, ../../scss/pages/account.scss */
 #account .actions .share:before {
   content: "Share";
 }
-/* line 88, ../../scss/pages/account.scss */
+/* line 91, ../../scss/pages/account.scss */
 #account .actions .delete:before {
   content: "Delete";
   color: #D50000;

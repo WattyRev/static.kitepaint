@@ -19,9 +19,26 @@ app.controller('UsersController', ['$scope', '$rootScope', function(scope, root)
 	//retrieve users data
 	scope.get_users = function() {
 		scope.loading = true;
+		var content = {
+			return: [
+				'loginid',
+				'username',
+				'create_time',
+				'last_login',
+				'email',
+				'first_name',
+				'last_name',
+				'disabled',
+				'activated',
+				'admin',
+				'deleted',
+				'deleted_time'
+			]
+		};
 		$.ajax({
 			type: 'GET',
-			url: 'php/users.php?get=1',
+			data: content,
+			url: 'php/users.php',
 			dataType: 'json',
 			success: function(data) {
 				scope.users = data;

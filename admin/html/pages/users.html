@@ -34,6 +34,14 @@
 					ng-class="{sorted: sort.metric === 'email', ascending: sort.metric === 'email' && sort.ascending, descending: sort.metric === 'email' && !sort.ascending}"
 				>Email</th>
 				<th 
+					ng-click="sort_by('first_name')"
+					ng-class="{sorted: sort.metric === 'first_name', ascending: sort.metric === 'first_name' && sort.ascending, descending: sort.metric === 'first_name' && !sort.ascending}"
+				>First Name</th>
+				<th 
+					ng-click="sort_by('last_name')"
+					ng-class="{sorted: sort.metric === 'last_name', ascending: sort.metric === 'last_name' && sort.ascending, descending: sort.metric === 'last_name' && !sort.ascending}"
+				>Last Name</th>
+				<th 
 					ng-click="sort_by('create_time')"
 					ng-class="{sorted: sort.metric === 'create_time', ascending: sort.metric === 'create_time' && sort.ascending, descending: sort.metric === 'create_time' && !sort.ascending}"
 				>Created</th>
@@ -54,6 +62,8 @@
 				<td>{{user.loginid}}</td>
 				<td>{{user.username}}</td>
 				<td><a href="mailto:{{user.email}}" target="_blank">{{user.email}}</a></td>
+				<td>{{user.first_name}}</td>
+				<td>{{user.last_name}}</td>
 				<td>{{user.create_time}}</td>
 				<td>{{user.last_login}}</td>
 				<td>{{user.designs}}</td>

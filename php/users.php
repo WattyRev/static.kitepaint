@@ -33,3 +33,31 @@ if ($_GET){
 		return;
 	}
 }
+
+if (isset($_POST['id'])){
+	$response = (object) array(
+		'valid' => true,
+		'message' => ''
+	);
+
+	foreach($_POST as $key => $value) {
+		if ($key === 'id') {
+			continue;
+		}
+		
+		$query = sprintf("update login set $key = '%s' where loginid = '%s'",
+			mysql_real_escape_string($value), mysql_real_escape_string($_POST['id']));
+
+		if (!mysql_query($query)) {
+			$responsive->valid = false;
+			$response->message = 'Unable to change ' . $key;
+		}
+	}
+	echo json_encode($response);
+	return;
+}
+
+if(isset($_POST)) {
+	echo json_encode($_POST);
+	return;
+}

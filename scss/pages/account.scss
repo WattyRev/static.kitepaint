@@ -9,6 +9,9 @@
 		padding: 15px 0;
 		margin: 0 15px;
 	}
+	.designs {
+		width: 98%;
+	}
 	.design {
 		background: $lighter_grey;
 		@include border-radius(15px);

@@ -1,24 +1,38 @@
 <?php 
 require_once "header.php"; 
 if ($_GET){
-	$query = sprintf("SELECT * FROM login");
-	 
+	$filter = "";
+	if (isset($_GET['filter'])){
+		$filter .= "WHERE ";
+		$count = 0;
+		foreach($_GET['filter'] as $metric => $value){
+			$count ++;
+			if ($count > 1) {
+				$filter .= ' AND ';
+			}
+			$filter .= "$metric  =  $value";
+		}
+	}
+	$limit = isset($_GET['limit']) ? "LIMIT " . $_GET['limit'] : "";
+	$order = isset($_GET['order']) ? "ORDER BY " . $_GET['order'][0] . " " . $_GET['order'][1] : "";
+	$query = sprintf("SELECT * FROM login $filter $order $limit");
+
 	$result = mysql_query($query);
 	$num = mysql_num_rows($result);
 	mysql_close();
 	$response = array();
 	for ($i = 0; $i < $num; $i++) {
-		$user = (object) array();
-		$user->loginid = mysql_result($result,$i,"loginid");
-		$user->username = mysql_result($result,$i,"username");
-		$user->email = mysql_result($result,$i,"email");
-		$user->create_time = date("m/d/Y", strtotime(mysql_result($result,$i,"create_time")));
-		$user->last_login = date("m/d/Y", strtotime(mysql_result($result,$i,"last_login")));
-		$user->favorites = mysql_result($result,$i,"favorites");
-		$user->activated = mysql_result($result,$i,"activated") === '1' ? true : false; 
-		array_push($response, $user);
+		$designs = (object) array();
+		foreach ($_GET['return'] as $key=>$metric){
+			$designs->$metric = mysql_result($result,$i,$metric);
+			if ($metric === 'create_time' || $metric === 'last_login' || $metric === 'deleted_time') {
+				$designs->$metric = date("m/d/Y", strtotime($designs->$metric));
+			}
+		}
+		array_push($response, $designs);
 	}
-	echo json_encode($response);
+	echo JSON_encode($response);
+	return;
 } elseif ($_POST) {
 	$response = (object) array(
 		'valid' => true,

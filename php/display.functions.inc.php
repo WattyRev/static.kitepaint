@@ -119,6 +119,8 @@ function return_user() {
     'actcode' => $_SESSION['actcode'],
     'email' => $_SESSION['email'],
     'favorites' => $_SESSION['favorites'],
+    'first_name' => $_SESSION['first_name'],
+    'last_name' => $_SESSION['last_name'],
     'logged_in' => true
   );
   echo json_encode($content);
