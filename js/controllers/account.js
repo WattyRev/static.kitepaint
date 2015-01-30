@@ -157,8 +157,6 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 	};
 
 	scope.change_first_name = function(new_first_name) {
-		console.log(new_first_name);
-		console.log(root.user.user_id);
 		var content = {
 			id: root.user.user_id,
 			first_name: new_first_name
