@@ -10,7 +10,8 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 	scope.get_designs = function() {
 		var content = {
 			filter: {
-				'active': '1'	
+				'active': '1',
+				'user' : root.user.user_id
 			},
 			return: [
 				'id',
