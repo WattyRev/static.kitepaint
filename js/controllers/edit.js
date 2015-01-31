@@ -188,6 +188,9 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			var item = elem.attr('data-autofill'),
 				color;
 
+			if (item === undefined) {
+				return false;
+			}
 			if (item[0] === 'g') {
 				color = $(elem.children()[0]).attr('fill') || '#FFFFFF';
 			} else {
