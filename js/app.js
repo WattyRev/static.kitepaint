@@ -6,7 +6,9 @@ app.config(function($sceProvider) {
   $sceProvider.enabled(false);
 });
 
-app.config(function($stateProvider, $urlRouterProvider){
+app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
+
+	$locationProvider.hashPrefix('!');
 
 	// For any unmatched url, send to /route1
 	$urlRouterProvider.otherwise("/");
