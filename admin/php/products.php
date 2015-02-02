@@ -56,8 +56,6 @@ if ($_GET){
 
 	//Create
 	if (isset($_POST['new'])) {
-
-		
 		$name = $_POST['name'];
 		$manufacturer = $_POST['manufacturer'];
 		$url = $_POST['url'];

@@ -146,6 +146,25 @@ function user_exists($username) {
  
     return false;
 }
+function retailer_exists($username) {
+    if (!valid_username($username)) {
+        return false;
+    }
+ 
+    $query = sprintf("SELECT id FROM retailers WHERE username = '%s' LIMIT 1",
+        mysql_real_escape_string($username));
+ 
+    $result = mysql_query($query);
+ 
+    if (mysql_num_rows($result) > 0) {
+        return true;
+    } else {
+        return false;
+    }
+ 
+    return false;
+}
+
  
 function activateUser($uid, $actcode) {
  

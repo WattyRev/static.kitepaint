@@ -1,1 +1,132 @@
 <h1>Retailers</h1>
+<div class="section">
+	<label>Search</label>
+	<select ng-model="search" ng-change="filter();">
+		<option value="id">ID</option>
+		<option selected value="name">Name</option>
+		<option value="username">Username</option>
+		<option value="created">Created</option>
+		<option value="updated">Updated</option>
+		<option value="city">City</option>
+		<option value="state">State</option>
+		<option value="email">Email</option>
+	</select>
+	<input type="text" ng-model="query" ng-change="filter();"/>
+</div>
+
+<div class="section">
+	<div class="block">
+		<button class="button" ng-click="add_retailer();">Add Retailer</button>
+	</div>
+
+	<p ng-show="loading">Loading...</p>
+
+	<table ng-show="display_retailers.length">
+		<thead>
+			<tr>
+				<th
+					ng-click="sort_by('id')"
+					ng-class="{sorted: sort.metic === 'id', ascending: sort.metric === 'id' && sort.ascending, descending: sort.metric === 'id' && !sort.ascending}"
+				>ID</th>
+				<th
+					ng-click="sort_by('created')"
+					ng-class="{sorted: sort.metic === 'created', ascending: sort.metric === 'created' && sort.ascending, descending: sort.metric === 'created' && !sort.ascending}"
+				>Created</th>
+				<th
+					ng-click="sort_by('updated')"
+					ng-class="{sorted: sort.metic === 'updated', ascending: sort.metric === 'updated' && sort.ascending, descending: sort.metric === 'updated' && !sort.ascending}"
+				>Updated</th>
+				<th
+					ng-click="sort_by('name')"
+					ng-class="{sorted: sort.metic === 'name', ascending: sort.metric === 'name' && sort.ascending, descending: sort.metric === 'name' && !sort.ascending}"
+				>Name</th>
+				<th
+					ng-click="sort_by('username')"
+					ng-class="{sorted: sort.metic === 'username', ascending: sort.metric === 'username' && sort.ascending, descending: sort.metric === 'username' && !sort.ascending}"
+				>Username</th>
+				<th
+					ng-click="sort_by('city')"
+					ng-class="{sorted: sort.metic === 'city', ascending: sort.metric === 'city' && sort.ascending, descending: sort.metric === 'city' && !sort.ascending}"
+				>City</th>
+				<th
+					ng-click="sort_by('state')"
+					ng-class="{sorted: sort.metic === 'state', ascending: sort.metric === 'state' && sort.ascending, descending: sort.metric === 'state' && !sort.ascending}"
+				>State</th>
+				<th
+					ng-click="sort_by('email')"
+					ng-class="{sorted: sort.metic === 'email', ascending: sort.metric === 'email' && sort.ascending, descending: sort.metric === 'email' && !sort.ascending}"
+				>Email</th>
+				<th
+					ng-click="sort_by('activated')"
+					ng-class="{sorted: sort.metic === 'activated', ascending: sort.metric === 'activated' && sort.ascending, descending: sort.metric === 'activated' && !sort.ascending}"
+				>Activated</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="retailer in display_retailers" ng-click="edit_retailer(retailer)">
+				<td>{{retailer.id}}</td>
+				<td>{{retailer.created}}</td>
+				<td>{{retailer.updated}}</td>
+				<td>{{retailer.name}}</td>
+				<td>{{retailer.username}}</td>
+				<td>{{retailer.city}}</td>
+				<td>{{retailer.state}}</td>
+				<td><a href="mailt:{{retailer.email}}" target="_blank">{{retailer.email}}</a></td>
+				<td>{{retailer.activated ? 'Yes' : 'No'}}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="block">
+		<button class="button" ng-show="!loading && display_retailers.length < retailers.length" ng-click="show_more();">Show More</button>
+	</div>
+
+	<!-- create/edit -->
+	<div class="lightbox" ng-show="show_edit">
+		<div class="content">
+			<a ng-click="show_edit = false" class="close right">Close</a>
+			<h2 ng-show="editing.new">Creating New Retailer</h2>
+			<h2 ng-hide="editing.new">Editing {{editing.name}}</h2>
+			<form ng-submit="save_retailer(editing)">
+				<div class="left half">
+					<label>Name</label>
+					<input type="text" required ng-model="editing.name" ng-minlength="3" ng-maxlength="30"/>
+				</div>
+				<div class="right half">	
+					<label>Username</label>
+					<input type="text" required ng-model="editing.username" ng-pattern="/^[A-Za-z0-9_\-]+$/" ng-minlength="3" ng-maxlength="30"/>
+
+				</div>
+				<div class="clearfix"></div>
+				<div class="left half">
+					<label>url</label>
+					<input type="text" ng-model="editing.url"/>
+				</div>
+				<div class="right half">	
+					<label>city</label>
+					<input type="text" ng-model="editing.city"/>
+				</div>
+				<div class="clearfix"></div>
+				<div class="clearfix"></div>
+				<div class="left half">
+					<label>state</label>
+					<input type="text" ng-model="editing.state" ng-minlength="2" ng-maxlength="2"/>
+				</div>
+				<div class="right half">	
+					<label>email</label>
+					<input type="email" required ng-model="editing.email"/>
+				</div>
+				<div class="clearfix"></div>
+				<div class="left half">
+					<label ng-hide="editing.new">Activated</label>
+					<input ng-hide="editing.new" type="checkbox" ng-model="editing.activated"  tabindex="3"/>
+				</div>
+				<div class="clearfix"></div>
+				<input type="submit" value="Save" class="button"  tabindex="4"/>
+				<div class="clearfix"></div>
+			</form>
+			<button class="button red right" ng-click="delete_retailer(editing)" ng-hide="editing.new">Delete</button>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
