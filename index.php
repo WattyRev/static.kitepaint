@@ -4,10 +4,10 @@
 	$embed = isset($_GET['embed']) && isset($_GET['id']);
 
 	//Get dependencies
-	if ($_SERVER['SERVER_NAME'] === 'wattydev.com') {
-		$environment = 'development';
-	} else {
+	if ($_SERVER['SERVER_NAME'] === 'kitepaint.com') {
 		$environment = 'production';
+	} else {
+		$environment = 'development';
 	}
 	$js_files = json_decode(file_get_contents("dependencies.json"), true)[$environment]["js"];
 	$css_files = json_decode(file_get_contents("dependencies.json"), true)[$environment]["css"]["layout"];
@@ -83,8 +83,12 @@
 			<?php 
 				$ua = $_SERVER['HTTP_USER_AGENT'];
 				$safariorchrome = strpos($ua, 'Safari') ? true : false;   
-				$chrome = strpos($ua, 'Chrome') ? true : false;    
-				if($safariorchrome == true AND $chrome == false){ $safari = true; }
+				$chrome = strpos($ua, 'Chrome') ? true : false;
+				if($safariorchrome == true AND $chrome == false){ 
+					$safari = true; 
+				} else {
+					$safari = false;
+				}
 
 				// Check for version numbers 
 				$v5 = strpos($ua, 'Version/5.') ? true : false;

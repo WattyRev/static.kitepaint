@@ -1,6 +1,6 @@
 <?php
 //error_reporting(0); // we don't want to see errors on screen
-error_reporting(E_ALL);
+error_reporting(0);
 ini_set('display_errors', 'on');
 // Start a session
 session_start();
