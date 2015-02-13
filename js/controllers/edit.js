@@ -5,10 +5,12 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 	scope.design = {};
 	scope.colors = [];
 	scope.variations = [];
+	scope.retailers = [];
 	scope.loading = true;
 	scope.show_settings = false;
 	scope.show_outlines = true;
 	scope.show_reset = false;
+	scope.show_retailers = false;
 	scope.public = false;
 	scope.background = '';
 
@@ -45,6 +47,7 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 				}
 				scope.loading = false;
 				root.done(1);
+				scope.get_retailers();
 				scope.$apply();
 			},
 			error: function(data) {
@@ -97,6 +100,45 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 	if (state.params.type === 'saved') {
 		scope.get_design();
 	}
+	scope.get_retailers = function() {
+		var content = {
+			filter: {
+				activated: 1
+			},
+			return: [
+				'id',
+				'name',
+				'city',
+				'state',
+				'email',
+				'image',
+				'url',
+				'product_opt_out',
+				'product_urls'
+			]
+		};
+		$.ajax({
+			type: 'GET',
+			data: content,
+			url: 'php/retailers.php',
+			dataType: 'json',
+			success: function(data) {
+				$.each(data, function(i, retailer) {
+					retailer.product_opt_out = JSON.parse(retailer.product_opt_out);
+					retailer.product_urls = JSON.parse(retailer.product_urls);
+
+					if (retailer.product_opt_out.indexOf(scope.product.id) === -1) {
+						scope.retailers.push(retailer);
+					} 
+				});
+				scope.$apply();
+				console.log(scope.retailers);
+			},
+			error: function(data) {
+				console.log('error', data);
+			}
+		});
+	};
 
 	scope.color_panel = function(colors, $event) {
 		var panel = $($event.target),

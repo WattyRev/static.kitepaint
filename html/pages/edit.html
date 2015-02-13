@@ -20,6 +20,7 @@
 		<div class="right half actions">
 			<button class="button" ng-click="save();" ng-show="design.id && $root.user.logged_in">{{saving ? 'Saving' : 'Save'}}</button>
 			<button class="button" ng-click="show_save_as = true" ng-show="$root.user.logged_in">Save As</button>
+			<button class="button" ng-click="show_retailers = true">Retailers</button>
 			<button class="button share" ng-click="show_share()">Share</button>
 			<div title="Settings" class="settings-button">
 				<svg viewBox="0 0 1000 1000" ng-click="show_settings = !show_settings;">
@@ -248,5 +249,21 @@
 			</div>
 		</form>
 		<p><a ng-click="$root.no_account = true; show_login = false; show_save_as = true;">Continue without an account</a></p>
+	</div>
+</div>
+
+<div class="lightbox show-retailers" ng-show="show_retailers">
+	<a ng-click="show_retailers = false" class="close right">Close</a>
+	<div class="content">
+		<h3>Order this design from one of these retailers:</h3>
+		<ul class="retailers">
+			<li ng-repeat="retailer in retailers">
+				<img ng-show="retailer.image" class="left" src="img/retailers/{{retailer.image}}" alt="{{retailer.name}}" />
+				<p><strong>{{retailer.name}} <a ng-show="retailer.url" target="_blank" href="{{retailer.url}}">(website)</a></strong></p>
+				<p>{{retailer.city}}, {{retailer.state}}
+				<p ng-show="retailer.product_urls[product.id]"><a target="_blank" href="{{retailer.product_urls[product.id]}}">View Store Page</a></p>
+				<button class="button" ng-click="send_to_retailer(retailer.id)">Send Design</button>
+			</li>
+		</ul>
 	</div>
 </div>
