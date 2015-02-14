@@ -421,12 +421,19 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			scope.show_login = true;
 		}
 	};
+
 	scope.reset = function() {
 		var reset_designs = JSON.parse(scope.product.variations);
 		$.each(scope.variations, function(i, variation) {
 			variation.svg = reset_designs[i].svg;
 		});
 		scope.show_reset = false;
+	};
+
+	scope.send_to_retailer = function() {
+		var svg = 'data:image/svg+xml;base64,' + btoa(scope.variations[0].svg);
+		canvg('canvas', svg);
+		console.log(document.getElementsByTagName("canvas")[0].toDataURL("image/png"));
 	};
 
 

@@ -182,3 +182,30 @@ svg *[ng-click] {
 		}
 	}
 }
+ul.retailers {
+	list-style:none;
+	width: 100%;
+	margin: 0;
+
+	li {
+		padding: 10px 0;
+		border-bottom: 1px solid $light_grey;
+		max-width: 420px;
+		margin: 0 auto;
+
+		>* {
+			margin: 0 10px;
+		}
+	}
+	.image {
+		height: 50px;
+		width: 50px;
+		background-size: contain;
+		background-position:center;
+		background-repeat: no-repeat;
+		margin-right: 20px
+	}
+	.info {
+		width: 44%;
+	}
+}

@@ -6,6 +6,9 @@
 			"libraries/angular.min.js",
 			"libraries/angular-ui-router.js",
 			"libraries/ui-router-styles.js",
+			"libraries/rgbcolor.js",
+			"libraries/StackBlur.js",
+			"libraries/canvg.js",
 			"app.js",
 			"controllers/about.js",
 			"controllers/activate.js",
@@ -128,11 +131,6 @@
 	},
 	"production":{
 		"js":[
-			"libraries/jquery.min.js",
-			"modernizr.js",
-			"libraries/angular.min.js",
-			"libraries/angular-ui-router.js",
-			"libraries/ui-router-styles.js",
 			"app.min.js"
 		],
 		"css": {
@@ -226,6 +224,14 @@
 	},
 	"process":{
 		"js":[
+			"libraries/jquery.min.js",
+			"modernizr.js",
+			"libraries/angular.min.js",
+			"libraries/angular-ui-router.js",
+			"libraries/ui-router-styles.js",
+			"libraries/rgbcolor.js",
+			"libraries/StackBlur.js",
+			"libraries/canvg.js",
 			"app.js",
 			"controllers/about.js",
 			"controllers/activate.js",

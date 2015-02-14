@@ -257,3 +257,34 @@ svg *[ng-click] {
 .lightbox.show-login form .button {
   margin-top: 10px;
 }
+
+/* line 185, ../../scss/pages/editor.scss */
+ul.retailers {
+  list-style: none;
+  width: 100%;
+  margin: 0;
+}
+/* line 190, ../../scss/pages/editor.scss */
+ul.retailers li {
+  padding: 10px 0;
+  border-bottom: 1px solid #cdcdcd;
+  max-width: 420px;
+  margin: 0 auto;
+}
+/* line 196, ../../scss/pages/editor.scss */
+ul.retailers li > * {
+  margin: 0 10px;
+}
+/* line 200, ../../scss/pages/editor.scss */
+ul.retailers .image {
+  height: 50px;
+  width: 50px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-right: 20px;
+}
+/* line 208, ../../scss/pages/editor.scss */
+ul.retailers .info {
+  width: 44%;
+}
