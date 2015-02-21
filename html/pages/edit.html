@@ -254,7 +254,7 @@
 
 <div class="lightbox show-retailers" ng-show="show_retailers">
 	<a ng-click="show_retailers = false" class="close right">Close</a>
-	<div class="content">
+	<div class="content" ng-show="!send_retailer.retailer">
 		<h3>Order this design from one of these retailers:</h3>
 		<ul class="retailers">
 			<li ng-repeat="retailer in retailers">
@@ -264,10 +264,24 @@
 					<p>{{retailer.city}}, {{retailer.state}}
 					<p ng-show="retailer.product_urls[product.id]"><a target="_blank" href="{{retailer.product_urls[product.id]}}">View Store Page</a></p>
 				</div>
-				<button class="button left" ng-click="send_to_retailer(retailer.id)">Send Design</button>
+				<button class="button left" ng-click="send_retailer.retailer=retailer">Send Design</button>
 				<div class="clearfix"></div>
 			</li>
 		</ul>
 	</div>
+	<form class="content" ng-show="send_retailer.retailer" ng-submit="send_to_retailer(send_retailer)" >
+		<h3>Craft your message to {{send_retailer.retailer.name}}</h3>
+		<p>Which variations do you want to send?</p>
+		<span ng-repeat="variation in variations" class="select-variation">
+			<label for="send-retailer-{{variation.name}}">{{variation.name}}</label>
+			<input type="checkbox" id="send-retailer-{{variation.name}}" ng-model="send_retailer[variation.name]"/>
+		</span>
+		<label for="send-retailer-message">Add a message:</label>
+		<textarea id="send-retailer-message" ng-model="send_retailer.message"></textarea>
+		<p>Who is it from?</p>
+		<input type="text" ng-model="send_retailer.first_name" placeholder="First Name" required/>
+		<input type="text" ng-model="send_retailer.last_name" placeholder="Last Name" required/>
+		<button class="button">Send your design</button>
+	</form>
 </div>
 <canvas id="canvas" class='hidden' width="1000px" height="600px"></canvas> 

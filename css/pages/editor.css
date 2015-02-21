@@ -288,3 +288,27 @@ ul.retailers .image {
 ul.retailers .info {
   width: 44%;
 }
+
+/* line 213, ../../scss/pages/editor.scss */
+.show-retailers form p {
+  padding: 10px 0;
+}
+/* line 216, ../../scss/pages/editor.scss */
+.show-retailers form label {
+  display: block;
+}
+/* line 219, ../../scss/pages/editor.scss */
+.show-retailers form .select-variation {
+  display: inline-block;
+  width: 25%;
+  text-align: center;
+}
+/* line 224, ../../scss/pages/editor.scss */
+.show-retailers form textarea {
+  width: 96%;
+  height: 150px;
+}
+/* line 228, ../../scss/pages/editor.scss */
+.show-retailers form .button {
+  margin: 20px auto 10px;
+}

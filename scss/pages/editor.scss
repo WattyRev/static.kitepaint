@@ -209,3 +209,23 @@ ul.retailers {
 		width: 44%;
 	}
 }
+.show-retailers form {
+	p {
+		padding: 10px 0;
+	}
+	label {
+		display:block;
+	}
+	.select-variation {
+		display:inline-block;
+		width: 25%;
+		text-align:center;
+	}
+	textarea {
+		width: 96%;
+		height: 150px;
+	}
+	.button {
+		margin: 20px auto 10px;
+	}
+}

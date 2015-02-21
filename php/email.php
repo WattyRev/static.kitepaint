@@ -55,7 +55,7 @@ if (!valid_email($_POST['to'])) {
 $message = $_POST['comments'] . "\n - " . $_POST['name'];
 $subject = '[KitePaint] ' . $_POST['subject'];
 
-if (sendMail($_POST['to'], $subject, $message, $_POST['email'])) {
+if (sendMail($_POST['to'], $subject, $message, $_POST['email'], $_POST['format'])) {
 	echo json_encode($response);
 	return;
 } else {

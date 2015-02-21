@@ -56,6 +56,7 @@ if ($_GET){
 		$designs->variations = mysql_result($result,$i,"variations");
 		$designs->public = mysql_result($result,$i,"public");
 		$designs->active = mysql_result($result,$i,"active");
+		$designs->images = mysql_result($result,$i,"images");
 		array_push($response, $designs);
 	}
 	echo json_encode($response);
@@ -64,7 +65,8 @@ if ($_GET){
 } elseif ($_POST) {
 	$response = (object) array(
 		'valid' => true,
-		'message' => ''
+		'message' => '',
+		'images' => ''
 	);
 
 	//Delete
@@ -131,6 +133,24 @@ if ($_GET){
 		}
 		if (isset($_POST['public'])) {
 			$vars['public'] = $_POST['public'];
+		}
+		if (isset($_POST['images'])) {
+			$p_images = json_decode($_POST['images']);
+			define('UPLOAD_DIR', '../img/designs/');
+			$images = array();
+			foreach($p_images as $type=>$image) {
+				$image = str_replace('data:image/png;base64,', '', $image);
+   				$image = str_replace(' ', '+', $image);
+   				$data = base64_decode($image);
+   				$file = UPLOAD_DIR . $_POST['id'] . str_replace(' ', '', $type) . '.png';
+   				$success = file_put_contents($file, $data);
+   				$images[$type] = str_replace('..', '', $file);
+   				if(!$success) {
+   					$response->message = 'Unable to save the image';
+   				}
+			}
+			$vars['images'] = JSON_encode($images);
+			$response->images = JSON_encode($images);
 		}
 
 		foreach($vars as $metric => $val){

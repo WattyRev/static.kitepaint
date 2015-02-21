@@ -1,20 +1,32 @@
 app.controller('EditController', ['$scope', '$rootScope', '$location', '$state', '$sce', function(scope, root, location, state, sce) {
+	scope.background = '';
 	scope.current_color = '#ffffff';
 	scope.current_color_style = {'background-color' : '#ffffff'};
-	scope.product = {};
-	scope.design = {};
 	scope.colors = [];
-	scope.variations = [];
-	scope.retailers = [];
+	scope.design = {};
 	scope.loading = true;
-	scope.show_settings = false;
+	scope.product = {};
+	scope.public = false;
+	scope.retailers = [];
+	scope.send_retailer = {
+		retailer: false,
+		first_name: root.user.first_name,
+		last_name: root.user.last_name,
+		email: root.user.email
+	};
 	scope.show_outlines = true;
 	scope.show_reset = false;
 	scope.show_retailers = false;
-	scope.public = false;
-	scope.background = '';
+	scope.show_settings = false;
+	scope.variations = [];
+
+	window.scope = scope;
 
 	//FUNCTIONS
+
+	/**
+	 * Retrieve the data for the product
+	 */
 	scope.get_product = function() {
 		scope.loading = true;
 		var id;
@@ -37,6 +49,7 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 					//process variations
 					scope.variations = JSON.parse(scope.product.variations);
 					$.each(scope.variations, function(i, variation) {
+						scope.send_retailer[variation.name] = true;
 						if (i < 1) {
 							variation.primary = true;
 						} else {
@@ -62,6 +75,9 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 		scope.get_product();
 	}
 
+	/**
+	 * Retrieve the data for the design
+	 */
 	scope.get_design = function() {
 		scope.loading = true;
 		$.ajax({
@@ -79,8 +95,16 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 					var params = {type:'new', id:scope.design.product};
  					state.go('edit', params);
 				}
+				if(scope.design.images) {
+					scope.design.images = JSON.parse(scope.design.images);
+				} else {
+					scope.design.images = {};
+				}
 				scope.variations = JSON.parse(scope.design.variations);
 				scope.current_variation = scope.variations[0];
+				$.each(scope.variations, function(i, variation) {
+					scope.send_retailer[variation.name] = true;
+				});
 				scope.public = scope.design.public === '1' ? true : false;
 				if (root.editing_share) {
 					scope.show_share();
@@ -100,6 +124,10 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 	if (state.params.type === 'saved') {
 		scope.get_design();
 	}
+
+	/**
+	 * Retrieve the data for the retailers
+	 */
 	scope.get_retailers = function() {
 		var content = {
 			filter: {
@@ -132,7 +160,6 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 					} 
 				});
 				scope.$apply();
-				console.log(scope.retailers);
 			},
 			error: function(data) {
 				console.log('error', data);
@@ -315,13 +342,19 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 		});
 	};
 
-	scope.save = function() {
+	/**
+	 * save button event handler
+	 */
+	scope.save = function(callback) {
 		scope.saving = true;
 		var design = {
 			id: scope.design.id,
-			variations: JSON.stringify(scope.variations)
+			variations: JSON.stringify(scope.variations),
 		};
 		scope.update_design(design, function() {
+			if(callback) {
+				callback();
+			}
 		});
 	};
 
@@ -337,12 +370,21 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 	};
 
 	scope.update_design = function(design, callback) {
+		//update images on save
+		var images = [];
+		$.each(scope.variations, function(i, variation) {
+			images.push(scope.convert_to_png(variation.svg));
+		});
+		console.log(images);
+		design.images = JSON.stringify(images);
+		console.log(design);
 		$.ajax({
 			type: 'POST',
 			url: 'php/designs.php',
 			data: design,
 			dataType: 'json',
 			success: function(data) {
+				scope.design.images = JSON.parse(data.images);
 				scope.saving = false;
 				callback();
 				scope.$apply();
@@ -431,9 +473,66 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 	};
 
 	scope.send_to_retailer = function() {
-		var svg = 'data:image/svg+xml;base64,' + btoa(scope.variations[0].svg);
-		canvg('canvas', svg);
-		console.log(document.getElementsByTagName("canvas")[0].toDataURL("image/png"));
+		var designs = [];
+		$.each(scope.variations, function(i, variation) {
+			if (scope.send_retailer[variation.name]) {
+				designs.push(scope.convert_to_png(variation.svg));
+			}
+		});
+		if (!designs.length) {
+			root.error('You must select at least one variation');
+			return;
+		}
+		var name = scope.send_retailer.first_name + ' ' + scope.send_retailer.last_name;
+		var comments = name + ' has sent you a design for the ' + scope.product.name + ' called ' + scope.design.name  + '. Reply to this email to follow up with ' + name + ' about ordering this product. <br/><br/>';
+		if (scope.send_retailer.message) {
+			comments += name + ' has added a message:<br/>' + scope.send_retailer.message + '<br/><br/>';
+		}
+		$.each(designs, function(design) {
+			comments += '<img src="' + design + '" /><br/>';
+		});
+		comments += '<br/>If you think you got this email in error, or if you want to stop receiving these emails, let us know by emailing KitePaint administration at <a href="mailto:spencer@kitepaint.com">spencer@kitepaint.com</a>';
+		var content = {
+			email: scope.send_retailer.email,
+			name: name,
+			subject: name + ' has sent you a design from KitePaint.com',
+			comments: comments,
+			to: scope.send_retailer.retailer.email,
+			format: 'html'
+		};
+		$.ajax({
+			type: 'POST',
+			url: 'php/email.php',
+			data: content,
+			dataType: 'json',
+			success: function(data) {
+				if (data.sent) {
+					root.success('Your design has been sent');
+					scope.send_retailer.retailer = false;
+					scope.send_retailer.message = '';
+					scope.show_retailers = false;
+					root.$apply();
+				} else {
+					root.error(data.message);
+					root.$apply();
+				}
+			},
+			error: function(data) {
+				var message = data.message || 'Unable to send design. Try again later.';
+				root.error(message);
+				console.log('error', data);
+			}
+		});
+		console.log(content);
+	};
+
+	scope.convert_to_png = function(svg) {
+		var find = 'mesh"',
+			regex = new RegExp(find, 'g'),
+			processed_svg = svg.replace(regex, 'mesh" fill="rgba(50,50,50,.5)"'),
+			svg_data = 'data:image/svg+xml;base64,' + btoa(processed_svg);
+		canvg('canvas', svg_data);
+		return document.getElementsByTagName("canvas")[0].toDataURL("image/png");
 	};
 
 

@@ -25,12 +25,20 @@ Watty at $domain
  
 }
  
-function sendMail($to, $subject, $message, $from) {
+function sendMail($to, $subject, $message, $from, $format) {
  
  
-	$from_header = "From: $from";
+	$header = "From: $from";
+
+	foreach($attachments as $attachment) {
+		$message .= '\r\n<img src="' . $attachment . '" />'; 
+	}
+	if(isset($format) && $format === 'html') {
+		$header .= "\r\nMIME-Version: 1.0\r\n";
+		$header .= "Content-Type: text/html; charset=ISO-8859-1\r\n"; 
+	}
  
-	if (mail($to, $subject, $message, $from_header)) {
+	if (mail($to, $subject, $message, $header)) {
 		return true;
 	} else {
 		return false;
