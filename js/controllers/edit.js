@@ -375,9 +375,7 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 		$.each(scope.variations, function(i, variation) {
 			images.push(scope.convert_to_png(variation.svg));
 		});
-		console.log(images);
 		design.images = JSON.stringify(images);
-		console.log(design);
 		$.ajax({
 			type: 'POST',
 			url: 'php/designs.php',
@@ -476,7 +474,7 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 		var designs = [];
 		$.each(scope.variations, function(i, variation) {
 			if (scope.send_retailer[variation.name]) {
-				designs.push(scope.convert_to_png(variation.svg));
+				designs.push(scope.design.images[i]);
 			}
 		});
 		if (!designs.length) {
@@ -488,8 +486,9 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 		if (scope.send_retailer.message) {
 			comments += name + ' has added a message:<br/>' + scope.send_retailer.message + '<br/><br/>';
 		}
-		$.each(designs, function(design) {
-			comments += '<img src="' + design + '" /><br/>';
+		console.log(designs);
+		$.each(designs, function(i, design) {
+			comments += '<img src="' + root.base_url + design + '" /><br/>';
 		});
 		comments += '<br/>If you think you got this email in error, or if you want to stop receiving these emails, let us know by emailing KitePaint administration at <a href="mailto:spencer@kitepaint.com">spencer@kitepaint.com</a>';
 		var content = {
@@ -523,7 +522,6 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 				console.log('error', data);
 			}
 		});
-		console.log(content);
 	};
 
 	scope.convert_to_png = function(svg) {
