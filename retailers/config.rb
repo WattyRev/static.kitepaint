@@ -7,7 +7,7 @@ require 'compass/import-once/activate'
 http_path = "/"
 css_dir = "/css"
 sass_dir = "/scss"
-images_dir = "/img"
+images_dir = "../img"
 javascripts_dir = "/js"
 #http_images_path = "//wattydev.com/projects/kite_paint/img"
 http_images_path = "//kitepaint.com/img"
