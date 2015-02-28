@@ -16,7 +16,7 @@ Regards,
 Watty at $domain
 ";
  
-	if (sendMail($email, "Your $domain password has been reset.", $message, "no-reply@$domain")) {
+	if (sendMail($email, "Your $domain password has been reset.", $message, "no-reply@$domain", false)) {
 		return true;
 	} else {
 		return false;
@@ -26,13 +26,9 @@ Watty at $domain
 }
  
 function sendMail($to, $subject, $message, $from, $format) {
- 
- 
+
 	$header = "From: $from";
 
-	foreach($attachments as $attachment) {
-		$message .= '\r\n<img src="' . $attachment . '" />'; 
-	}
 	if(isset($format) && $format === 'html') {
 		$header .= "\r\nMIME-Version: 1.0\r\n";
 		$header .= "Content-Type: text/html; charset=ISO-8859-1\r\n"; 
@@ -61,7 +57,30 @@ Regards,
 Watty at $domain
 ";
  
-	if (sendMail($email, "Please activate your $domain account.", $message, "spencer@wattydev.com")) {
+	if (sendMail($email, "Please activate your $domain account.", $message, "spencer@kitepaint.com", false)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function sendRetailerActivation($id, $name, $email, $actcode) {
+	global $domain;
+	$link = "http://$domain/retailers/#/activate?id=$id&actcode=$actcode";
+	$message = "
+Hello,
+
+Thank you for signing up as a retailer on KitePaint!
+ 
+Your account has been created and is ready for you to set up. Click on the link below to begin receiving designs directly from KitePaint.
+ 
+$link
+ 
+Regards,
+Watty at $domain
+";
+ 
+	if (sendMail($email, "Please set up your KitePaint retailer account", $message, "spencer@kitepaint.com", false)) {
 		return true;
 	} else {
 		return false;
@@ -86,7 +105,7 @@ $link
 Regards,
 Watty at $domain";
 
-	if (sendMail($email, "Your $domain account has been created", $message, "no-reply@$domain")) {
+	if (sendMail($email, "Your $domain account has been created", $message, "no-reply@$domain", false)) {
 		return true;
 	} else {
 		return false;

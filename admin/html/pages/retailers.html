@@ -92,37 +92,56 @@
 					<label>Name</label>
 					<input type="text" required ng-model="editing.name" ng-minlength="3" ng-maxlength="30"/>
 				</div>
-				<div class="right half">	
+				<div class="right half" ng-hide="editing.new">	
 					<label>Username</label>
-					<input type="text" required ng-model="editing.username" ng-pattern="/^[A-Za-z0-9_\-]+$/" ng-minlength="3" ng-maxlength="30"/>
+					<input type="text" ng-model="editing.username" ng-pattern="/^[A-Za-z0-9_\-]+$/" ng-minlength="3" ng-maxlength="30"/>
 
 				</div>
 				<div class="clearfix"></div>
 				<div class="left half">
-					<label>url</label>
-					<input type="text" ng-model="editing.url"/>
-				</div>
-				<div class="right half">	
-					<label>city</label>
-					<input type="text" ng-model="editing.city"/>
-				</div>
-				<div class="clearfix"></div>
-				<div class="clearfix"></div>
-				<div class="left half">
-					<label>state</label>
-					<input type="text" ng-model="editing.state" ng-minlength="2" ng-maxlength="2"/>
-				</div>
-				<div class="right half">	
-					<label>email</label>
+					<label>Email</label>
 					<input type="email" required ng-model="editing.email"/>
 				</div>
-				<div class="clearfix"></div>
-				<div class="left half">
-					<label ng-hide="editing.new">Activated</label>
-					<input ng-hide="editing.new" type="checkbox" ng-model="editing.activated"  tabindex="3"/>
+				<div class="right half">
+					<label>Url</label>
+					<input type="text" ng-model="editing.url"/>
 				</div>
 				<div class="clearfix"></div>
-				<input type="submit" value="Save" class="button"  tabindex="4"/>
+				<div class="clearfix"></div>
+				<div class="left half">
+					<label>City</label>
+					<input type="text" ng-model="editing.city"/>
+				</div>
+				<div class="right half">
+					<label>State</label>
+					<input type="text" ng-model="editing.state" ng-minlength="2" ng-maxlength="2"/>
+				</div>
+				<div class="clearfix"></div>
+				<div class="left half">
+					<label>Image</label>
+					<input type="text" ng-model="editing.image" />
+				</div>
+				<div class="right half" ng-hide="editing.new">
+					<label>Activated</label>
+					<input type="checkbox" ng-model="editing.activated" />
+				</div>
+				<div class="clearfix"></div>
+				<div ng-hide="editing.new">
+					<label>Product Opt Out</label>
+					<div ng-repeat="product in products">
+						<label for="opt-out-{{product.id}}">{{product.id}} - {{product.name}}</label>
+						<input type="checkbox" ng-model="editing.product_opt_out[product.id]" id="opt-out-{{product.id}}">
+					</div>
+				</div>
+				<div ng-hide="editing.new">
+					<label>Product Urls</label>
+					<div ng-repeat="product in products">
+						<label for="url-{{product.id}}">{{product.id}} - {{product.name}}</label>
+						<input type="text" ng-model="editing.product_urls[product.id]" id="url-{{product.id}}">
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<input type="submit" value="Save" class="button" />
 				<div class="clearfix"></div>
 			</form>
 			<button class="button red right" ng-click="delete_retailer(editing)" ng-hide="editing.new">Delete</button>

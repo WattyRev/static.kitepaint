@@ -2,6 +2,7 @@ app.controller('RetailersController', ['$scope', '$rootScope', '$state', functio
 
 	//Variables
 	scope.retailers = [];//raw retailers data
+	scope.products = [];//products
 	scope.display_retailers = []; //retailers data displayed
 	scope.filtered_retailers = []; //filtered retailers
 	scope.loading = false; //display loading text
@@ -28,7 +29,11 @@ app.controller('RetailersController', ['$scope', '$rootScope', '$state', functio
 				'city',
 				'state',
 				'email',
-				'activated'
+				'activated',
+				'product_opt_out',
+				'product_urls',
+				'url',
+				'image'
 			]
 		};
 		$.ajax({
@@ -37,6 +42,14 @@ app.controller('RetailersController', ['$scope', '$rootScope', '$state', functio
 			url: 'php/retailers.php',
 			dataType: 'json',
 			success: function(data) {
+				$.each(data, function(i, retailer) {
+					retailer.activated = retailer.activated === '1' ? true : false;
+					retailer.product_opt_out = JSON.parse(retailer.product_opt_out);
+					$.each(retailer.product_opt_out, function(id, value) {
+						retailer.product_opt_out[id] = value === 'true' ? true : false;
+					});
+					retailer.product_urls = JSON.parse(retailer.product_urls);
+				});
 				scope.retailers = data;
 				scope.filtered_retailers = data;
 				scope.loading = false;
@@ -51,6 +64,32 @@ app.controller('RetailersController', ['$scope', '$rootScope', '$state', functio
 		});
 	};
 	scope.get_retailers();
+
+	scope.get_products = function() {
+		var content = {
+			return: [
+				'id',
+				'name',
+				'manufacturer'
+			]
+		};
+		$.ajax({
+			type: 'GET',
+			url: 'php/products.php',
+			data: content,
+			dataType: 'json',
+			success: function(data) {
+				scope.products = data;
+				scope.$apply();
+				console.log(scope.products);
+			},
+			error: function(data) {
+				console.log('error', data);
+				alert('Could not get products');
+			}
+		});
+	};
+	scope.get_products();
 
 	//Filter retailers based on search using query
 	scope.filter = function() {
@@ -129,13 +168,25 @@ app.controller('RetailersController', ['$scope', '$rootScope', '$state', functio
 	scope.add_retailer = function() {
 		scope.editing = {
 			new: true,
-			password: 'temppassword'
+			activated: false
 		};
+		scope.editing.product_opt_out = {};
+		$.each(scope.products, function(i, product) {
+			scope.editing.product_opt_out[product.id] = false;
+		});
+		scope.editing.product_urls = {};
+		$.each(scope.products, function(i, product) {
+			scope.editing.product_urls[product.id] = '';
+		});
 		scope.show_edit = true;
 	};
 
 	//perform ajax post to save retailer data
 	scope.save_retailer = function(retailer) {
+		var submit = JSON.parse(JSON.stringify(retailer));
+		submit.product_opt_out = JSON.stringify(submit.product_opt_out);
+		submit.product_urls = JSON.stringify(submit.product_urls);
+		console.log(submit);
 		$.ajax({
 			type: 'POST',
 			url: 'php/retailers.php',
@@ -162,12 +213,12 @@ app.controller('RetailersController', ['$scope', '$rootScope', '$state', functio
 
 	//delete a retailer
 	scope.delete_retailer = function(retailer) {
-		var confirmed = confirm('Are you sure you want to delete ' + retailer.retailername + '?');
+		var confirmed = confirm('Are you sure you want to delete ' + retailer.name + '?');
 		if (confirmed) {
 			$.ajax({
 				type: 'POST',
 				url: 'php/retailers.php',
-				data: {loginid: retailer.loginid, delete: true},
+				data: {id: retailer.id, delete: true},
 				dataType: 'json',
 				success: function(data) {
 					scope.get_retailers();

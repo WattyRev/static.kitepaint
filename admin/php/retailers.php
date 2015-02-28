@@ -43,27 +43,32 @@ if ($_GET) {
 	//create
 	if (isset($_POST['new'])) {
 
-		//echo json_encode($_POST);
-		//return;
-		global $seed;
+		// echo json_encode($_POST);
+		// return;
 
 		$name = $_POST['name'];
-		$username = $_POST['username'];
-		$password = $_POST['password'];
+		$email = $_POST['email'];
 		$url = $_POST['url'];
 		$city = $_POST['city'];
 		$state = $_POST['state'];
-		$email = $_POST['email'];
-		//$product_opt_out = $_POST['product_opt_out'];
-
-		$sql = sprintf("insert into retailers (activated,name,username,password,url,city,state,email,created,updated) value (1,'%s','%s','%s','%s','%s','%s','%s',now(),now())",
-			mysql_real_escape_string($name), mysql_real_escape_string($username), mysql_real_escape_string(sha1($password, $seed)), mysql_real_escape_string($url), mysql_real_escape_string($city), mysql_real_escape_string($state), mysql_real_escape_string($email));
+		$image = $_POST['image'];
+		$product_opt_out = json_encode($_POST['product_opt_out']);
+		$product_urls = json_encode($_POST['product_urls']);
+		$code = generate_code(20);
+		$sql = sprintf("insert into retailers (activated,name,email,url,city,state,image,product_opt_out,product_urls,actcode,created,updated) value (0,'%s','%s','%s','%s','%s','%s','%s','%s','%s',now(),now())",
+			mysql_real_escape_string($name), mysql_real_escape_string($email), mysql_real_escape_string($url), mysql_real_escape_string($city), mysql_real_escape_string($state), mysql_real_escape_string($image), mysql_real_escape_string($product_opt_out), mysql_real_escape_string($product_urls), mysql_real_escape_string($code));
 
 		if (mysql_query($sql)) {
 			$id = mysql_insert_id();
-
-			echo json_encode($response);
-			return;
+			if (sendRetailerActivation($id, $name, $email, $code)) {
+				echo json_encode($response);
+				return;
+			} else {
+				$response->valid = false;
+				$response->message = 'Unable to send activation email';
+				echo json_encode($response);
+				return;
+			}
 		} else {
 			$response->valid = false;
 			$response->message = 'Unable to create retailer';
@@ -71,4 +76,57 @@ if ($_GET) {
 			return;
 		}
 	}
+
+	//Delete
+	if (isset($_POST['delete'])) {
+		$query = sprintf("delete from retailers where id = '%s'", 
+			mysql_real_escape_string($_POST['id']));
+
+		if (mysql_query($query)) {
+
+		} else {
+			$response->valid = false;
+			$response->message = 'Unable to delete retailer';
+		}
+
+		echo json_encode($response);
+
+		return;
+	}
+
+	//Update
+	$id = $_POST['id'];
+	$vars = array(
+		'activated' => $_POST['activated'] === 'true' ? '1' : '0',
+		'name' => $_POST['name'],
+		'username' => $_POST['username'],
+		'url' => $_POST['url'],
+		'city' => $_POST['city'],
+		'state' => $_POST['state'],
+		'email' => $_POST['email'],
+		'image' => $_POST['image'],
+		'product_opt_out' => json_encode($_POST['product_opt_out']),
+		'product_urls' => json_encode($_POST['product_urls'])
+	);
+
+	foreach($vars as $metric => $val){
+		$query = sprintf("update retailers set $metric = '%s' where id = '%s'",
+			mysql_real_escape_string($val), mysql_real_escape_string($id));
+
+		if (mysql_query($query)) {
+		} else {
+			$response->valid = false;
+			$response->message = 'Unable to change ' . $metric;
+		}
+	}
+	$query = sprintf("update retailers set updated = now() where id = '%s'",
+		mysql_real_escape_string($id));
+
+	if (mysql_query($query)) {
+	} else {
+		$response->valid = false;
+		$response->message = 'Unable to change updated';
+	}
+
+	echo json_encode($response);
 }
