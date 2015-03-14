@@ -43,7 +43,7 @@ function sendMail($to, $subject, $message, $from, $format) {
  
 function sendActivationEmail($username, $password, $uid, $email, $actcode) {
 	global $domain;
-	$link = "http://$domain/#/activate?uid=$uid&actcode=$actcode";
+	$link = "http://$domain/#!/activate?uid=$uid&actcode=$actcode";
 	$message = "
 Hello $username,
 
@@ -66,7 +66,7 @@ Watty at $domain
 
 function sendRetailerActivation($id, $name, $email, $actcode) {
 	global $domain;
-	$link = "http://$domain/retailers/#/activate?id=$id&actcode=$actcode";
+	$link = "http://$domain/retailers/#!/activate?id=$id&actcode=$actcode";
 	$message = "
 Hello,
 

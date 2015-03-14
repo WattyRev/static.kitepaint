@@ -1,0 +1,84 @@
+<logo></logo>
+<div id="info" class="container" ng-show="page===1">
+	<p>Welcome to KitePaint! Begin by setting up your account.</p>
+	<form action="" ng-submit="save_info()">
+		<div class="half left">
+			<label for="input-first-name">First Name</label>
+			<input id="input-first-name" type="text" placeholder="e.g. John" required ng-model="retailer.first_name" />
+		</div>
+		<div class="half left">
+			<label for="input-last-name">Last Name</label>
+			<input id="input-last-name" type="text" placeholder="e.g. Smith" required ng-model="retailer.last_name" />
+		</div>
+		<div class="half left">
+			<label for="input-retailer-name">Retailer Name</label>
+			<input id="input-retailer-name" type="text" placeholder="e.g. Kite Store" required ng-model="retailer.name" />
+		</div>
+		<div class="half left">
+			<label for="input-username">Username <tooltip content="username"></tooltip></label>
+			<input id="input-username" type="text" placeholder="e.g. jsmith99" required ng-model="retailer.username" 
+			ng-pattern="/^[A-Za-z0-9_\-]+$/"
+			ng-minlength="3"
+			ng-maxlength="30"/>
+		</div>
+		<div class="half left">
+			<label for="input-password">Password <tooltip content="password"></tooltip></label>
+			<input id="input-password" type="password" required ng-model="retailer.password" 
+			ng-minlength="6"
+			ng-maxlength="15"
+			ng-pattern="/[A-Za-z0-9@*#.]/"/>
+		</div>
+		<div class="half left">
+			<label for="input-confirm-password">Confirm Password <tooltip content="password"></tooltip></label>
+			<input id="input-confirm-password" type="password" required ng-model="retailer.confirm_password"
+			ng-minlength="6"
+			ng-maxlength="15"
+			ng-pattern="/[A-Za-z0-9@*#.]/" />
+		</div>
+		<div class="half left">
+			<label for="input-email">Email</label>
+			<input id="input-email" type="email" placeholder="e.g. john@example.com" required ng-model="retailer.email" />
+		</div>
+		<div class="half left">
+			<label for="input-phone">Phone <i>optional</i></label>
+			<input id="input-phone" type="tel" placeholder="e.g. 123-456-7890" ng-model="retailer.phone">
+		</div>
+		<div class="half left">
+			<label for="input-city">City <i>optional</i></label>
+			<input id="input-city" type="text" placeholder="e.g. Seattle" ng-model="retailer.city" >
+		</div>
+		<div class="half left">
+			<label for="input-state">State <i>optional</i></label>
+			<select id="input-state" ng-model="retailer.state" state-options ></select>
+		</div>
+		<div class="half left">
+			<label for="input-website">Website <i>optional</i></label>
+			<input id="input-website" type="url" placeholder="e.g. example.com" ng-model="retailer.url">
+		</div>
+		<div class="clearfix"></div>
+		<button class="button action">Continue</button>
+	</form>
+</div>
+<div id="image" class="container" ng-show="page===2">
+	<p>Add an image to your account.</p>
+	<form action="">
+		<label for="input-image">Image</label>
+		<input type="file" accept=".gif, .jpg, .png, .jpeg" />
+		<button class="button action">Continue</button>
+		<button class="button" type="button">Skip</button>
+	</form>
+</div>
+<div id="opt-out" class="container" ng-show="page===3">
+	<p>Opt out for products that you do not sell.</p>
+	<form action="">
+		<button class="button action">Continue</button>
+		<button class="button" type="button">Skip</button>
+	</form>
+</div>
+<div id="links" class="container" ng-show="page===4">
+	<p>Add links to your retail page for products that you sell.</p>
+	<form action="">
+		<button class="button action">Continue</button>
+		<button class="button" type="button">Skip</button>
+	</form>
+</div>

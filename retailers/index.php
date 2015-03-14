@@ -48,12 +48,20 @@
 			<script type="text/javascript" src="js/controllers/primary.js"></script>
 			<script type="text/javascript" src="js/controllers/nav.js"></script>
 			<script type="text/javascript" src="js/controllers/login.js"></script>
+			<script type="text/javascript" src="js/controllers/activate.js"></script>
+			<script type="text/javascript" src="js/directives/logo.js"></script>
+			<script type="text/javascript" src="js/directives/state_options.js"></script>
+			<script type="text/javascript" src="js/directives/alert.js"></script>
+			<script type="text/javascript" src="js/directives/tooltip.js"></script>
 
 		<!-- StyleSheets -->
-			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/layout/style.css" />
+			<link rel="stylesheet" href="css/sections/tooltip.css" />
+			<link rel="stylesheet" href="css/sections/alert.css" />
 
 			<?php if(!isset($_COOKIE['desktop'])): ?>
-					<link rel="stylesheet" href="css/responsive.css" />
+				<link rel="stylesheet" href="css/layout/responsive.css" />
+				<link rel="stylesheet" href="css/sections/tooltip.responsive.css" />
 			<?php 	endif; ?>
 
 			<!--[if IE 9]>
@@ -93,7 +101,6 @@
 			
 		</main>
 		<loading ng-show="$root.loading"></loading>
-		<alert></alert>
 		<footer>
 			<?php if(!isset($_COOKIE['desktop'])): ?>
 				<button class="mobile" ng-click="$root.request_desktop_version();">Request Desktop Version</button>
@@ -102,5 +109,6 @@
 			<?php endif;?>
 			<p>&copy; 2014 <a href="http://www.wattydev.com">Spencer Watson</a></p>
 		</footer>
+		<alert></alert>
 	</body>
 </html>

@@ -13,12 +13,12 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
 
 	$stateProvider
 		.state('activate', {
-			url: '/activate',
+			url: '/activate?id&actcode',
 			templateUrl: 'html/pages/activate.html',
 			controller: 'ActivateController',
 			data: {
 				title: 'Activate',
-				css: 'css/activate.css'
+				css: 'css/pages/activate.css'
 			}
 		})
 		.state('account', {
@@ -27,7 +27,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
 			controller: 'AccountController',
 			data: {
 				title: 'Account',
-				css: 'css/account.css'
+				css: 'css/pages/account.css'
 			}
 		})
 		.state('embeds', {
@@ -36,7 +36,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
 			controller: 'EmbedsController',
 			data: {
 				title: 'Embeds',
-				css: 'css/embeds.css'
+				css: 'css/pages/embeds.css'
 			}
 		})
 		.state('orders', {
@@ -45,7 +45,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
 			controller: 'OrdersController',
 			data: {
 				title: 'Orders',
-				css: 'css/orders.css'
+				css: 'css/pages/orders.css'
 			}
 		})
 		.state('login', {
@@ -54,7 +54,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
 			controller: 'LoginController',
 			data: {
 				title: 'Login',
-				css: 'css/login.css'
+				css: 'css/pages/login.css'
 			}
 		});
 });

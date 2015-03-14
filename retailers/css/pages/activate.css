@@ -1,0 +1,55 @@
+/**
+ * Base
+ * Declare variables and mixins for frontend layout
+ */
+/* Colors */
+/* Mixins */
+/* line 3, ../../scss/pages/activate.scss */
+.container {
+  max-width: 700px;
+  width: 100%;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+  padding: 20px;
+  background: #ededed;
+  margin: 10px auto;
+}
+/* line 11, ../../scss/pages/activate.scss */
+.container > p {
+  margin-bottom: 10px;
+}
+
+/* line 15, ../../scss/pages/activate.scss */
+form {
+  background: #fff;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+/* line 20, ../../scss/pages/activate.scss */
+.half {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+/* line 24, ../../scss/pages/activate.scss */
+label {
+  display: block;
+}
+
+/* line 27, ../../scss/pages/activate.scss */
+input, select {
+  width: 100%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 9px;
+}
+
+/* line 32, ../../scss/pages/activate.scss */
+.button {
+  margin: 10px auto;
+}

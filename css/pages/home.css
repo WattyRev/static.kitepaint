@@ -29,7 +29,7 @@
 }
 /* line 25, ../../scss/pages/home.scss */
 #home .landing {
-  background: #444 url('//wattydev.com/projects/kite_paint/img/bg-rev.jpg?1417813794') no-repeat center;
+  background: #444 url('//kitepaint.com/img/bg-rev.jpg?1417813794') no-repeat center;
   background-size: cover;
 }
 /* line 29, ../../scss/pages/home.scss */
@@ -97,7 +97,7 @@
 }
 /* line 83, ../../scss/pages/home.scss */
 #home > div:nth-child(even) {
-  background: #ededed url('//wattydev.com/projects/kite_paint/img/paper.png?1417813794');
+  background: #ededed url('//kitepaint.com/img/paper.png?1417813794');
 }
 /* line 87, ../../scss/pages/home.scss */
 #home .designs ul {
