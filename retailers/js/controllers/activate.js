@@ -13,6 +13,7 @@ app.controller('ActivateController', ['$scope', '$rootScope', '$location', '$sta
 				id: scope.id
 			},
 			return: [
+				'id',
 				'name',
 				'username',
 				'first_name',
@@ -65,13 +66,20 @@ app.controller('ActivateController', ['$scope', '$rootScope', '$location', '$sta
 			root.error('Passwords do not match');
 			return;
 		}
+		var data = JSON.parse(JSON.stringify(scope.retailer));
+		data.action = 'info';
 		$.ajax({
 			type: 'POST',
-			data: scope.retailer,
+			data: data,
 			dataType: 'json',
 			url: '../php/retailers.php',
 			success: function(data) {
-				scope.page = 2;
+				if(data.valid) {
+					$scope.page = 2;
+				} else {
+					console.log('error', data);
+					root.error(data.message || 'Unable to save. Try again later.');
+				}
 				scope.$apply();
 			},
 			error: function(data) {
