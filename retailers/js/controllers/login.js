@@ -79,6 +79,59 @@ app.controller('LoginController', ['$scope', '$rootScope', '$state', function(sc
 	};
 
 	scope.reset = function() {
+		var data = {
+			reset_password: true,
+			username: scope.rp_username,
+			email: scope.rp_email
+		};
+		$.ajax({
+			type: 'POST',
+			dataType: 'json',
+			data: data,
+			url: '../php/retailers.php',
+			success: function(data) {
+				if(data.valid) {
+					root.success('An email has been sent to ' . scope.rp_email);
+					root.$apply();
+				} else {
+					root.error(data.message || 'Could not reset password. Try again later.');
+					console.log('error', data);
+					root.$apply();
+				}
+			},
+			error: function(data) {
+				root.error('Could not reset password. Try again later.');
+				console.log('error', data);
+				root.$apply();
+			}
+		});
+	};
 
+	scope.get_username = function() {
+		var data = {
+			get_username: true,
+			email: scope.gu_email
+		};
+		$.ajax({
+			type: 'POST',
+			dataType: 'json',
+			data: data,
+			url: '../php/retailers.php',
+			success: function(data) {
+				if(data.valid) {
+					root.success('An email has been sent to ' . scope.rp_email);
+					root.$apply();
+				} else {
+					root.error(data.message || 'Could not get username password. Try again later.');
+					console.log('error', data);
+					root.$apply();
+				}
+			},
+			error: function(data) {
+				root.error('Could not get username password. Try again later.');
+				console.log('error', data);
+				root.$apply();
+			}
+		});
 	};
 }]);
