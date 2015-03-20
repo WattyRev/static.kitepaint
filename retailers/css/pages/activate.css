@@ -26,8 +26,17 @@ form {
   border-radius: 15px;
   padding: 10px;
 }
-
 /* line 20, ../../scss/pages/activate.scss */
+form p {
+  margin-bottom: 10px;
+}
+/* line 23, ../../scss/pages/activate.scss */
+form .error {
+  display: block;
+  text-align: center;
+}
+
+/* line 28, ../../scss/pages/activate.scss */
 .half {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -35,12 +44,12 @@ form {
   padding: 10px;
 }
 
-/* line 24, ../../scss/pages/activate.scss */
+/* line 32, ../../scss/pages/activate.scss */
 label {
   display: block;
 }
 
-/* line 27, ../../scss/pages/activate.scss */
+/* line 35, ../../scss/pages/activate.scss */
 input, select {
   width: 100%;
   -moz-box-sizing: border-box;
@@ -49,7 +58,7 @@ input, select {
   padding: 9px;
 }
 
-/* line 32, ../../scss/pages/activate.scss */
+/* line 40, ../../scss/pages/activate.scss */
 .button {
   margin: 10px auto;
 }

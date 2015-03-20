@@ -49,6 +49,7 @@
 			<script type="text/javascript" src="js/controllers/nav.js"></script>
 			<script type="text/javascript" src="js/controllers/login.js"></script>
 			<script type="text/javascript" src="js/controllers/activate.js"></script>
+			<script type="text/javascript" src="js/controllers/orders.js"></script>
 			<script type="text/javascript" src="js/directives/logo.js"></script>
 			<script type="text/javascript" src="js/directives/state_options.js"></script>
 			<script type="text/javascript" src="js/directives/alert.js"></script>

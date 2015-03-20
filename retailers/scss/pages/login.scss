@@ -1,0 +1,28 @@
+@import "base";
+
+form {
+	max-width: 300px;
+	width: 100%;
+	@include border-radius(15px);
+	padding: 20px;
+	background: $lighter_grey;
+	margin: 10px auto;
+
+	a {
+		display:block;
+		margin: 10px 0;
+	}
+}
+label, input {
+	display:block;
+}
+label {
+	margin: 15px 0 5px;
+}
+input {
+	width: 100%;
+	@include box-sizing(border-box);
+}
+button {
+	margin: 15px auto 0;
+}

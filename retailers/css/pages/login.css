@@ -1,0 +1,45 @@
+/**
+ * Base
+ * Declare variables and mixins for frontend layout
+ */
+/* Colors */
+/* Mixins */
+/* line 3, ../../scss/pages/login.scss */
+form {
+  max-width: 300px;
+  width: 100%;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+  padding: 20px;
+  background: #ededed;
+  margin: 10px auto;
+}
+/* line 11, ../../scss/pages/login.scss */
+form a {
+  display: block;
+  margin: 10px 0;
+}
+
+/* line 16, ../../scss/pages/login.scss */
+label, input {
+  display: block;
+}
+
+/* line 19, ../../scss/pages/login.scss */
+label {
+  margin: 15px 0 5px;
+}
+
+/* line 22, ../../scss/pages/login.scss */
+input {
+  width: 100%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 26, ../../scss/pages/login.scss */
+button {
+  margin: 15px auto 0;
+}

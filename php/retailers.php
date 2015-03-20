@@ -36,9 +36,99 @@ if ($_GET) {
 	return;
 }
 if ($_POST) {
+
 	global $seed;
 	$response = (object) array();
 	$response->valid = true;
+
+	if(isset($_POST['login'])) {
+
+		$username = $_POST['username'];
+		$password = $_POST['password'];
+		if(!valid_username($username) || !valid_password($password) || !retailer_exists($username)) {
+			$response->valid = false;
+			$response->message = 'Invalid username or password';
+			echo json_encode($response);
+			return;
+		}
+		$query = sprintf("
+			SELECT id
+			FROM retailers
+			WHERE
+			username = '%s' AND password = '%s'
+			AND disabled = 0 AND activated = 1
+			LIMIT 1;", mysql_real_escape_string($username), mysql_real_escape_string(sha1($password . $seed)));
+		$result = mysql_query($query);
+
+		if (mysql_num_rows($result) != 1) {
+			$response->valid = false;
+			$response->message = 'Invalid username or password';
+			echo json_encode($response);
+			return;
+		} else {
+
+			//get some data
+			$row = mysql_fetch_array($result);
+			$retailer = array();
+			$retailer['id'] = $row['id'];
+
+			$get = array(
+				'actcode',
+				'name',
+				'first_name',
+				'last_name',
+				'username',
+				'url',
+				'city',
+				'state',
+				'email',
+				'phone',
+				'image',
+				'product_opt_out',
+				'product_urls'
+			);
+
+			foreach($get as $metric) {
+				$query = sprintf("
+					SELECT  $metric
+					FROM retailers
+					WHERE
+					id = '%s'
+					LIMIT 1;", mysql_real_escape_string($retailer['id']));
+				$result = mysql_query($query);
+				$row = mysql_fetch_array($result);
+				$retailer[$metric] = $row[$metric];
+			}
+			
+			$response->message = $retailer;
+			echo json_encode($response);
+			return;
+		}
+
+		return;
+	}
+
+	if(isset($_POST['check_user'])) {
+		$id = $_POST['id'];
+		$actcode = $_POST['actcode'];
+
+		$query = sprintf("
+			SELECT actcode
+			FROM retailers
+			WHERE
+			id = '%s'
+			LIMIT 1;", mysql_real_escape_string($id));
+		$result = mysql_fetch_array(mysql_query($query))['actcode'];
+		if($result === $actcode) {
+			$response->valid = true;
+		} else {
+			$response->valid = false;
+			$response->message = 'Not a valid user';
+		}
+		echo json_encode($response);
+		return;
+	}
+
 	if(isset($_POST['action'])) {
 		if($_POST['action'] === 'info') {
 			$id = $_POST['id'];
