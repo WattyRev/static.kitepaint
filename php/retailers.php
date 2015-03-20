@@ -35,7 +35,6 @@ if ($_GET) {
 	echo JSON_encode($response);
 	return;
 }
-
 if ($_POST) {
 	global $seed;
 	$response = (object) array();
@@ -75,7 +74,7 @@ if ($_POST) {
 				$response->message = 'Passwords do not match';
 				echo json_encode($response);
 				return;
-			} else if(!retailer_exists($vars['username'])) {
+			} else if(retailer_exists($vars['username'])) {
 				$response->valid = false;
 				$response->message = $vars['username'] . ' has already been taken';
 				echo json_encode($response);
@@ -98,6 +97,8 @@ if ($_POST) {
 				}
 			}
 			$query = sprintf("update retailers set updated = now() where id = '%s'",
+			mysql_real_escape_string($id));
+			$query = sprintf("update retailers set activated = 1 where id = '%s'",
 			mysql_real_escape_string($id));
 
 			if (mysql_query($query)) {

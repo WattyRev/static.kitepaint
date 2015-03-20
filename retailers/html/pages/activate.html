@@ -1,5 +1,5 @@
 <logo></logo>
-<div id="info" class="container" ng-show="page===1">
+<div id="info" class="container">
 	<p>Welcome to KitePaint! Begin by setting up your account.</p>
 	<form action="" ng-submit="save_info()">
 		<div class="half left">
@@ -57,31 +57,5 @@
 		</div>
 		<div class="clearfix"></div>
 		<button class="button action">Continue</button>
-	</form>
-</div>
-<div id="image" class="container" ng-show="page===2">
-	<p>Add an image to your account.</p>
-	<form action="">
-		<label for="input-image">Image</label>
-		<input type="file" accept=".gif, .jpg, .png, .jpeg" />
-		<button class="button" type="button">Back</button>
-		<button class="button action">Continue</button>
-		<button class="button" type="button">Skip</button>
-	</form>
-</div>
-<div id="opt-out" class="container" ng-show="page===3">
-	<p>Opt out for products that you do not sell.</p>
-	<form action="">
-		<button class="button" type="button">Back</button>
-		<button class="button action">Continue</button>
-		<button class="button" type="button">Skip</button>
-	</form>
-</div>
-<div id="links" class="container" ng-show="page===4">
-	<p>Add links to your retail page for products that you sell.</p>
-	<form action="">
-		<button class="button" type="button">Back</button>
-		<button class="button action">Continue</button>
-		<button class="button" type="button">Skip</button>
 	</form>
 </div>

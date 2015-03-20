@@ -1,10 +1,10 @@
 app.controller('ActivateController', ['$scope', '$rootScope', '$location', '$state', function(scope, root, location, state) {
 
 	//variables
-	scope.page = 1;
 	scope.id = location.$$search.id;
 	scope.actcode = location.$$search.actcode;
 	scope.retailer = {};
+
 
 	//functions
 	scope.get_retailer = function() {
@@ -75,7 +75,7 @@ app.controller('ActivateController', ['$scope', '$rootScope', '$location', '$sta
 			url: '../php/retailers.php',
 			success: function(data) {
 				if(data.valid) {
-					$scope.page = 2;
+					state.go('login');
 				} else {
 					console.log('error', data);
 					root.error(data.message || 'Unable to save. Try again later.');
