@@ -11,6 +11,8 @@ function sendLostPasswordEmail($username, $email, $newpassword) {
 	Your new new temporary password is:
 
 	$newpassword 
+
+	Please change your password in your account settings.
 	 
 	Regards,
 	Watty at $domain
@@ -33,6 +35,8 @@ function sendLostPasswordEmailRetailer($username, $email, $newpassword) {
 	Your new new temporary password is:
 
 	$newpassword 
+
+	Please change your password in your account settings.
 	 
 	Regards,
 	Watty at $domain
