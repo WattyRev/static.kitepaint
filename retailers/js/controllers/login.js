@@ -4,7 +4,6 @@ app.controller('LoginController', ['$scope', '$rootScope', '$state', function(sc
 
 	//functions
 	scope.check_user = function() {
-		console.log(localStorage.retailer);
 		if(!localStorage.retailer) {
 			return;
 		}
@@ -91,7 +90,8 @@ app.controller('LoginController', ['$scope', '$rootScope', '$state', function(sc
 			url: '../php/retailers.php',
 			success: function(data) {
 				if(data.valid) {
-					root.success('An email has been sent to ' . scope.rp_email);
+					root.success('A new password has been sent to your email');
+					scope.screen = 'login';
 					root.$apply();
 				} else {
 					root.error(data.message || 'Could not reset password. Try again later.');
@@ -119,7 +119,8 @@ app.controller('LoginController', ['$scope', '$rootScope', '$state', function(sc
 			url: '../php/retailers.php',
 			success: function(data) {
 				if(data.valid) {
-					root.success('An email has been sent to ' . scope.rp_email);
+					root.success('Your username has been sent to your inbox');
+					scope.screen = 'login';
 					root.$apply();
 				} else {
 					root.error(data.message || 'Could not get username password. Try again later.');

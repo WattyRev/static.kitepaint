@@ -108,6 +108,70 @@ if ($_POST) {
 		return;
 	}
 
+	if(isset($_POST['reset_password'])) {
+		$username = $_POST['username'];
+		$email = $_POST['email'];
+
+		$query = sprintf("
+			SELECT email
+			FROM retailers
+			WHERE username = '%s'
+			LIMIT 1;", mysql_real_escape_string($username));
+		$result = mysql_fetch_array(mysql_query($query))['email'];
+		if($result === $email) {
+			$response->valid = true;
+		} else {
+			$response->valid = false;
+			$response->message = 'Could not find a user with that username and email.';
+			echo json_encode($response);
+			return;
+		}
+
+		$password = generate_code(10);
+		$query = sprintf("
+			UPDATE retailers
+			SET password = '%s'
+			WHERE username = '%s'",
+			mysql_real_escape_string(sha1($password)),
+			mysql_real_escape_string($username));
+		if(!mysql_query($query)) {
+			$response->valid = false;
+			$response->message = 'Unable to reset password';
+			echo json_encode($response);
+			return;
+		}
+		if(!sendLostPasswordEmailRetailer($username, $email, $password, true)) {
+			$response->valid = false;
+			$response->message = 'Unable to send email';
+		}
+		echo json_encode($response);
+		return;
+	}
+
+	if(isset($_POST['get_username'])){
+		$email = $_POST['email'];
+
+		$query = sprintf("
+			SELECT username
+			FROM retailers
+			WHERE email = '%s'
+			LIMIT 1;", mysql_real_escape_string($email));
+		$result = mysql_fetch_array(mysql_query($query))['username'];
+
+		if(!$result) {
+			$response->valid = false;
+			$response->message = 'Unable to find username';
+			echo json_encode($response);
+			return;
+		}
+		if(!sendLostRetailerUsername($result, $email)) {
+			$response->valid = false;
+			$response->message = 'Unable to send username';
+		}
+		echo json_encode($response);
+		return;
+	}
+
 	if(isset($_POST['check_user'])) {
 		$id = $_POST['id'];
 		$actcode = $_POST['actcode'];
