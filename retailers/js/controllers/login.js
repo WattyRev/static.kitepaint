@@ -60,6 +60,7 @@ app.controller('LoginController', ['$scope', '$rootScope', '$state', function(sc
 				if(!data.valid) {
 					root.error(data.message || 'Could not log in. Try again later.');
 					console.log('error', data);
+					root.$apply();
 					return;
 				}
 				data.message.product_opt_out = JSON.parse(data.message.product_opt_out);

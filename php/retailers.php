@@ -132,7 +132,7 @@ if ($_POST) {
 			UPDATE retailers
 			SET password = '%s'
 			WHERE username = '%s'",
-			mysql_real_escape_string(sha1($password)),
+			mysql_real_escape_string(sha1($password . $seed)),
 			mysql_real_escape_string($username));
 		if(!mysql_query($query)) {
 			$response->valid = false;
