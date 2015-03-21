@@ -227,6 +227,44 @@
 		}
 	}
 
+/* Sidebar */
+aside {
+	float: left;
+	width: 220px;
+	background: $lighter_grey;
+	height: 100%;
+	@include box-sizing(border-box);
+	position:fixed;
+	border-right: 1px solid $light_grey;
+
+	ul {
+		list-style:none;
+	}
+	li {
+		border-top: 1px solid $light_grey;
+
+		&:last-child {
+			border-bottom: 1px solid $light_grey;
+		}
+	}
+	a {
+		display:block;
+		padding: 15px 10px;
+		color: $dark_grey;
+		@include transition(.3s background);
+
+		&:hover, &.active {
+			background: $light_grey;
+		}
+	}
+}
+
+/* Main */
+main {
+	float: left;
+	margin-left: 220px;
+}
+
 /* Footer */
 	footer {
 		text-align:center;

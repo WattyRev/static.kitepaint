@@ -309,8 +309,55 @@ logo span:last-child {
   margin-top: -10px;
 }
 
-/* Footer */
+/* Sidebar */
 /* line 231, ../../scss/layout/style.scss */
+aside {
+  float: left;
+  width: 220px;
+  background: #ededed;
+  height: 100%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: fixed;
+  border-right: 1px solid #cdcdcd;
+}
+/* line 240, ../../scss/layout/style.scss */
+aside ul {
+  list-style: none;
+}
+/* line 243, ../../scss/layout/style.scss */
+aside li {
+  border-top: 1px solid #cdcdcd;
+}
+/* line 246, ../../scss/layout/style.scss */
+aside li:last-child {
+  border-bottom: 1px solid #cdcdcd;
+}
+/* line 250, ../../scss/layout/style.scss */
+aside a {
+  display: block;
+  padding: 15px 10px;
+  color: #444;
+  -moz-transition: background 0.3s;
+  -o-transition: background 0.3s;
+  -webkit-transition: background 0.3s;
+  transition: background 0.3s;
+}
+/* line 256, ../../scss/layout/style.scss */
+aside a:hover, aside a.active {
+  background: #cdcdcd;
+}
+
+/* Main */
+/* line 263, ../../scss/layout/style.scss */
+main {
+  float: left;
+  margin-left: 220px;
+}
+
+/* Footer */
+/* line 269, ../../scss/layout/style.scss */
 footer {
   text-align: center;
 }

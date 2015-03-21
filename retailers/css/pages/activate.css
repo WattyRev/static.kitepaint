@@ -4,7 +4,12 @@
  */
 /* Colors */
 /* Mixins */
-/* line 3, ../../scss/pages/activate.scss */
+/* line 2, ../../scss/pages/activate.scss */
+aside {
+  display: none !important;
+}
+
+/* line 5, ../../scss/pages/activate.scss */
 .container {
   max-width: 700px;
   width: 100%;
@@ -15,28 +20,28 @@
   background: #ededed;
   margin: 10px auto;
 }
-/* line 11, ../../scss/pages/activate.scss */
+/* line 13, ../../scss/pages/activate.scss */
 .container > p {
   margin-bottom: 10px;
 }
 
-/* line 15, ../../scss/pages/activate.scss */
+/* line 17, ../../scss/pages/activate.scss */
 form {
   background: #fff;
   border-radius: 15px;
   padding: 10px;
 }
-/* line 20, ../../scss/pages/activate.scss */
+/* line 22, ../../scss/pages/activate.scss */
 form p {
   margin-bottom: 10px;
 }
-/* line 23, ../../scss/pages/activate.scss */
+/* line 25, ../../scss/pages/activate.scss */
 form .error {
   display: block;
   text-align: center;
 }
 
-/* line 28, ../../scss/pages/activate.scss */
+/* line 30, ../../scss/pages/activate.scss */
 .half {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -44,12 +49,12 @@ form .error {
   padding: 10px;
 }
 
-/* line 32, ../../scss/pages/activate.scss */
+/* line 34, ../../scss/pages/activate.scss */
 label {
   display: block;
 }
 
-/* line 35, ../../scss/pages/activate.scss */
+/* line 37, ../../scss/pages/activate.scss */
 input, select {
   width: 100%;
   -moz-box-sizing: border-box;
@@ -58,7 +63,7 @@ input, select {
   padding: 9px;
 }
 
-/* line 40, ../../scss/pages/activate.scss */
+/* line 42, ../../scss/pages/activate.scss */
 .button {
   margin: 10px auto;
 }

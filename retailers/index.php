@@ -96,11 +96,20 @@
 				<p>It seems that your browser either does not support JavaScript, or has JavaScript disabled. This site relies on the use of JavaScript to function. <a target="_blank" href="http://www.enable-javascript.com/">Click Here</a> for instructions on how to enable JavaScript.</p>
 			</div>
 		</noscript>
-		<aside ng-controller="NavController">
+		<aside>
+			<logo></logo>
+			<ul>
+				<li><a ui-sref="orders" ng-class="{active: 'orders' === current_page.name}">Orders</a></li>
+				<li><a ui-sref="embeds" ng-class="{active: 'embeds' === current_page.name}">Embeds</a></li>
+				<li><a ui-sref="account" ng-class="{active: 'account' === current_page.name}">Account</a></li>
+				<li><a ui-sref="support" ng-class="{active: 'support' === current_page.name}">Support</a></li>
+				<li><a>Sign Out</a></li>
+			</ul>
 		</aside>
 		<main ui-view id="{{current_page.name}}" ng-class="{loading: $root.loading}">
 			
 		</main>
+		<div class="clearfix"></div>
 		<loading ng-show="$root.loading"></loading>
 		<footer>
 			<?php if(!isset($_COOKIE['desktop'])): ?>
