@@ -50,6 +50,9 @@
 			<script type="text/javascript" src="js/controllers/login.js"></script>
 			<script type="text/javascript" src="js/controllers/activate.js"></script>
 			<script type="text/javascript" src="js/controllers/orders.js"></script>
+			<script type="text/javascript" src="js/controllers/embeds.js"></script>
+			<script type="text/javascript" src="js/controllers/account.js"></script>
+			<script type="text/javascript" src="js/controllers/support.js"></script>
 			<script type="text/javascript" src="js/directives/logo.js"></script>
 			<script type="text/javascript" src="js/directives/state_options.js"></script>
 			<script type="text/javascript" src="js/directives/alert.js"></script>

@@ -48,6 +48,15 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
 				css: 'css/pages/orders.css'
 			}
 		})
+		.state('support', {
+			url: '/support',
+			templateUrl: 'html/pages/support.html',
+			controller: 'OrdersController',
+			data: {
+				title: 'Support',
+				css: 'css/pages/support.css'
+			}
+		})
 		.state('login', {
 			url: '/login',
 			templateUrl: 'html/pages/login.html',

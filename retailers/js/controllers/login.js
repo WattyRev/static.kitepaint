@@ -8,7 +8,6 @@ app.controller('LoginController', ['$scope', '$rootScope', '$state', function(sc
 			return;
 		}
 		var retailer = JSON.parse(localStorage.retailer);
-		console.log(retailer);
 		if (!retailer || !retailer.id || !retailer.actcode) {
 			console.log('clear1');
 			localStorage.retailer = '';
@@ -26,9 +25,9 @@ app.controller('LoginController', ['$scope', '$rootScope', '$state', function(sc
 			url: '../php/retailers.php',
 			success: function(data) {
 				if(data.valid) {
-					state.go('orders');
+					root.retailer = retailer;
 					root.success('Welcome back!');
-					console.log(data);
+					state.go('orders');
 					root.$apply();
 				} else {
 					localStorage.retailer = '';

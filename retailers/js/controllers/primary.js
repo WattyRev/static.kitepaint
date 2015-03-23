@@ -6,12 +6,44 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', '$locatio
 		root.user = localStorage.user ? JSON.parse(localStorage.user) : false;
 
 	//FUNCTIONS
-		root.check_login = function() {
-			if (!localStorage.user || localStorage.user === 'false' || localStorage.user === 'null') {
+		scope.check_user = function() {
+			if(!localStorage.retailer) {
+				state.go('login');
 				return;
 			}
+			var retailer = JSON.parse(localStorage.retailer);
+			if (!retailer || !retailer.id || !retailer.actcode) {
+				localStorage.retailer = '';
+				state.go('login');
+				return;
+			}
+			var data = {
+				id: retailer.id,
+				actcode: retailer.actcode,
+				check_user: true
+			};
+			$.ajax({
+				type: 'POST',
+				data: data,
+				dataType: 'json',
+				url: '../php/retailers.php',
+				success: function(data) {
+					if(data.valid) {
+						root.retailer = retailer;
+						root.$apply();
+					} else {
+						localStorage.retailer = '';
+						state.go('login');
+						return;
+					}
+				},
+				error: function(data) {
+					localStorage.retailer = '';
+					state.go('login');
+					return;
+				}
+			});
 		};
-		root.check_login();
 
 		root.request_desktop_version = function() {
 			create_cookie('desktop', true, 30);
@@ -52,6 +84,9 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', '$locatio
 		//Update current page data
 		root.$on('$stateChangeStart', function(event, toState) {
 			scope.current_page = toState;
+			if(scope.current_page !== 'login') {
+				scope.check_user();
+			}
 			root.loading = true;
 		});
 
