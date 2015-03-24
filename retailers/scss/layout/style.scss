@@ -99,6 +99,10 @@
 	i {
 		color: $grey;
 	}
+	ul.unstyled {
+		margin: 0;
+		list-style:none;
+	}
 
 /* CLASSES */
 	.clearfix {
@@ -179,22 +183,28 @@
 			padding: 15px;
 			max-height:90%;
 			overflow:auto;
+			position:relative;
 		}
 		h2 {
 			margin: 0 0 10px;
 		}
-		input {
+		input, select {
 			display:block;
 			margin: 5px auto 10px;
 			width: 90%;
+			@include box-sizing(border-box);
 		}
 		.button {
-			margin-top: 5px;
-			margin-bottom: 10px;
+			margin: 5px auto 10px;
 		}
 		.content .half{
 			width: 46%;
 			padding: 2%;
+		}
+		.close {
+			position:absolute;
+			top:5px;
+			right:5px;
 		}
 	}
 	.nowrap {

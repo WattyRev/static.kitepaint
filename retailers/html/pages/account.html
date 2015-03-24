@@ -1,19 +1,29 @@
 <h1>Account Settings</h1>
 <div>
 	<h2>Personal</h2>
-	<ul>
+	<ul class="unstyled">
 		<li><strong>Username:</strong> {{$root.retailer.username}}</li>
-		<li><strong>Password:</strong> <a class="edit">change password</a></li>
-		<li><strong>Name:</strong> {{$root.retailer.first_name}} {{$root.retailer.last_name}} <a class="edit">edit</a></li>
-		<li><strong>Email:</strong> {{$root.retailer.email}} <a class="edit">edit</a></li>
-		<li><strong>Phone:</strong> {{$root.retailer.phone}} <i ng-hide="$root.retailer.phone">none </i><a class="edit">edit</a></li>
+		<li><strong>Password:</strong> <a class="edit" ng-click="edit = 'password'">change password</a></li>
+		<li><strong>Name:</strong> {{$root.retailer.first_name}} {{$root.retailer.last_name}} <a class="edit" ng-click="edit = 'name'">edit</a></li>
+		<li><strong>Email:</strong> {{$root.retailer.email}} <a class="edit" ng-click="edit = 'email'">edit</a></li>
+		<li><strong>Phone:</strong> {{$root.retailer.phone}} <i ng-hide="$root.retailer.phone">none </i><a class="edit" ng-click="edit = 'phone'">edit</a></li>
 	</ul>
 	<h2>Business</h2>
-	<ul>
-		<li><img src="../img/retailers/{{$root.retailer.image}}" alt="" /></li>
-		<li><strong>Business Name:</strong> {{$root.retailer.name}} <a class="edit">edit</a></li>
-		<li><strong>Location:</strong> {{$root.retailer.city}}, {{$root.retailer.state}} <a class="edit">edit</a></li>
-		<li><strong>Website: </strong> <a target="_blank" href="{{$root.retailer.url}}">{{$root.retailer.url}}</a> <a class="edit">edit</a><br/>
+	<ul class="unstyled">
+		<li class="image">
+			<form method="POST" action="../php/retailers.php">
+				<strong>Profile Picture</strong>
+				<img src="../img/retailers/{{$root.retailer.image}}" alt="" />
+				<p>Image must not include any nudity or foul language. Image must be relevant to your business. Images may be removed at the discretion of KitePaint administration.</p>
+				<p>Images may be .png, .jpg, .jpeg, or .gif format. Image must be no more that 500px tall or wide. Square images work best. Images must be smaller than 500KB.</p>
+				<input type="file" name="image" accept="image/*" />
+				<button class="button action">Upload</button>
+				<div class="clearfix"></div>
+			</form>
+		</li>
+		<li><strong>Business Name:</strong> {{$root.retailer.name}} <a class="edit" ng-click="edit = 'business'">edit</a></li>
+		<li><strong>Location:</strong> {{$root.retailer.city}}, {{$root.retailer.state}} <a class="edit" ng-click="edit = 'location'">edit</a></li>
+		<li><strong>Website: </strong> <a target="_blank" href="{{$root.retailer.url}}">{{$root.retailer.url}}</a> <a class="edit" ng-click="edit = 'website'">edit</a><br/>
 		<i>Website is required in order to use embedded editors</i></li>
 		<li><strong></strong></li>
 	</ul>
@@ -21,3 +31,79 @@
 	<h3>Product URLs</h3>
 	<h3>Product Opt-Out</h3>
 </div>
+<form class="lightbox password" ng-show="edit === 'password'">
+	<div class="content">
+		<a ng-click="edit = ''" class="close">Cancel</a>
+		<label for="input-old-password">Old Password</label>
+		<input type="password" id="input-old-password" required/>
+		<label for="input-password">New Password</label>
+		<input type="password" id="input-password" required/>
+		<label for="input-confirm-password">Confirm New Password</label>
+		<input type="password" id="input-confirm-password" required/>
+		<button class="button action">Save</button>
+	</div>
+</form>
+<form class="lightbox name" ng-show="edit === 'name'">
+	<div class="content">
+		<a ng-click="edit = ''" class="close">Cancel</a>
+		<div class="half left">
+			<label for="input-first-name">First Name</label>
+			<input type="text" id="input-first-name" required/>
+		</div>
+		<div class="half left">
+			<label for="input-last-name">Last Name</label>
+			<input type="text" id="input-last-name" required/>
+		</div>
+		<div class="clearfix"></div>
+		<button class="button action">Save</button>
+	</div>
+</form>
+<form class="lightbox email" ng-show="edit === 'email'">
+	<div class="content">
+		<a ng-click="edit = ''" class="close">Cancel</a>
+		<label for="input-email-password">Password</label>
+		<input type="password" id="input-email-password" required />
+		<label for="input-email">Email</label>
+		<input type="email" id="input-email" required />
+		<button class="button action">Save</button>
+	</div>
+</form>
+<form class="lightbox phone" ng-show="edit === 'phone'">
+	<div class="content">
+		<a ng-click="edit = ''" class="close">Cancel</a>
+		<label for="input-phone">Phone</label>
+		<input type="tel" id="input-phone" />
+		<button class="button action">Save</button>
+	</div>
+</form>
+<form class="lightbox business" ng-show="edit === 'business'">
+	<div class="content">
+		<a ng-click="edit = ''" class="close">Cancel</a>
+		<label for="input-name">Business Name</label>
+		<input type="text" id="input-name" required />
+		<button class="button action">Save</button>
+	</div>
+</form>
+<form class="lightbox location" ng-show="edit === 'location'">
+	<div class="content">
+		<a ng-click="edit = ''" class="close">Cancel</a>
+		<div class="half left">
+		<label for="input-city">City</label>
+		<input type="text" id="input-city" required />
+		</div>
+		<div class="half left">
+		<label for="input-state">State</label>
+		<select id="input-state" state-options required></select>
+		</div>
+		<div class="clearfix"></div>
+		<button class="button action">Save</button>
+	</div>
+</form>
+<form class="lightbox website" ng-show="edit === 'website'">
+	<div class="content">
+		<a ng-click="edit = ''" class="close">Cancel</a>
+		<label for="input-url">Url</label>
+		<input type="url" id="input-url" required />
+		<button class="button action">Save</button>
+	</div>
+</form>

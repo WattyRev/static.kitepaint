@@ -1,0 +1,28 @@
+@import "base";
+
+li.image {
+	img {
+		max-width: 200px;
+		max-height: 200px;
+		padding: 10px;
+		float: left;
+	}
+	p {
+		margin: 0 0 10px;
+	}
+	input, button {
+		display:inline-block;
+		margin: 5px;
+	}
+}
+li {
+	padding: 5px;
+	border-bottom: 1px solid $light_grey;
+
+	&:last-child {
+		border-bottom: 0;
+	}
+}
+ul.unstyled {
+	margin: 20px 0;
+}
