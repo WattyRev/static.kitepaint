@@ -354,10 +354,11 @@ aside a:hover, aside a.active {
 main {
   float: left;
   margin-left: 220px;
+  padding: 20px;
 }
 
 /* Footer */
-/* line 269, ../../scss/layout/style.scss */
+/* line 270, ../../scss/layout/style.scss */
 footer {
   text-align: center;
 }

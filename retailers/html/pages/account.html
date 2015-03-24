@@ -1,2 +1,23 @@
 <h1>Account Settings</h1>
-{{$root.retailer.name}}
+<div>
+	<h2>Personal</h2>
+	<ul>
+		<li><strong>Username:</strong> {{$root.retailer.username}}</li>
+		<li><strong>Password:</strong> <a class="edit">change password</a></li>
+		<li><strong>Name:</strong> {{$root.retailer.first_name}} {{$root.retailer.last_name}} <a class="edit">edit</a></li>
+		<li><strong>Email:</strong> {{$root.retailer.email}} <a class="edit">edit</a></li>
+		<li><strong>Phone:</strong> {{$root.retailer.phone}} <i ng-hide="$root.retailer.phone">none </i><a class="edit">edit</a></li>
+	</ul>
+	<h2>Business</h2>
+	<ul>
+		<li><img src="../img/retailers/{{$root.retailer.image}}" alt="" /></li>
+		<li><strong>Business Name:</strong> {{$root.retailer.name}} <a class="edit">edit</a></li>
+		<li><strong>Location:</strong> {{$root.retailer.city}}, {{$root.retailer.state}} <a class="edit">edit</a></li>
+		<li><strong>Website: </strong> <a target="_blank" href="{{$root.retailer.url}}">{{$root.retailer.url}}</a> <a class="edit">edit</a><br/>
+		<i>Website is required in order to use embedded editors</i></li>
+		<li><strong></strong></li>
+	</ul>
+	<h2>Products</h2>
+	<h3>Product URLs</h3>
+	<h3>Product Opt-Out</h3>
+</div>
