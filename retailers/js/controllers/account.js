@@ -1,34 +1,63 @@
-app.controller('AccountController', ['$scope', '$rootScope', '$state', function(scope, root, state) {
+app.controller('AccountController', ['$scope', '$rootScope', '$state', '$location', function(scope, root, state, location) {
 	//variables
 	scope.edit_variables = {};
 	scope.saving = false;
 
 	//functions
-	function save(data, success, error) {
-		scope.saving = true;
+	scope.update_retailer = function() {
+		var data = {
+			filter: {
+				id: scope.id
+			},
+			return: [
+				'id',
+				'name',
+				'username',
+				'first_name',
+				'last_name',
+				'url', 
+				'city',
+				'state',
+				'email',
+				'phone',
+				'image',
+				'product_opt_out',
+				'product_urls',
+				'activated',
+				'actcode'
+			]
+		};
 		$.ajax({
+			type: 'GET',
 			url: '../php/retailers.php',
-			type: 'post',
 			dataType: 'json',
 			data: data,
 			success: function(data) {
-				scope.saving = false;
-				success(data);
-			},
-			error: function(data) {
-				scope.saving = false;
-				error(data);
+				data[0].product_opt_out = JSON.parse(data[0].product_opt_out);
+				data[0].product_urls = JSON.parse(data[0].product_urls);
+				root.retailer =  data[0];
+				scope.$apply();
 			}
 		});
-	}
-	function fail_save(item) {
-		console.log('error', data);
-		root.error('Unable to change ' + item + '. Try again later.');
-		root.$apply();
-	}
-	scope.test = function() {
-		console.log('test');
 	};
+	scope.update_retailer();
+
+	scope.check_upload_response = function() {
+		var search = location.$$search;
+		if(search.success) {
+			root.success('Image successfully changed.');
+			location.url(location.path());
+			return;
+		}
+		if(search.error) {
+			var error = search.error.replace(/_/g, ' ');
+			root.error(error);
+			location.url(location.path());
+			return;
+		}
+	};
+	scope.check_upload_response();
+
 	scope.change = {
 		password: function() {
 			var data = {
@@ -179,7 +208,29 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', function(
 			});
 		}
 	};
-	console.log(scope);
+	
+	function save(data, success, error) {
+		scope.saving = true;
+		$.ajax({
+			url: '../php/retailers.php',
+			type: 'post',
+			dataType: 'json',
+			data: data,
+			success: function(data) {
+				scope.saving = false;
+				success(data);
+			},
+			error: function(data) {
+				scope.saving = false;
+				error(data);
+			}
+		});
+	}
+	function fail_save(item) {
+		console.log('error', data);
+		root.error('Unable to change ' + item + '. Try again later.');
+		root.$apply();
+	}
 	
 	//listeners
 	root.$watch('retailer', function(retailer) {

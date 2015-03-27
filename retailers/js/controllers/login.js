@@ -31,13 +31,11 @@ app.controller('LoginController', ['$scope', '$rootScope', '$state', function(sc
 					root.$apply();
 				} else {
 					localStorage.retailer = '';
-					console.log('clear2', data);
 					return;
 				}
 			},
 			error: function(data) {
 				localStorage.retailer = '';
-				console.log('clear3', data);
 				return;
 			}
 		});
@@ -58,7 +56,6 @@ app.controller('LoginController', ['$scope', '$rootScope', '$state', function(sc
 			success: function(data) {
 				if(!data.valid) {
 					root.error(data.message || 'Could not log in. Try again later.');
-					console.log('error', data);
 					root.$apply();
 					return;
 				}
@@ -72,7 +69,7 @@ app.controller('LoginController', ['$scope', '$rootScope', '$state', function(sc
 			},
 			error: function(data) {
 				root.error('Could not log in. Try again later.');
-				console.log('error', data);
+				root.$apply();
 			}
 		});
 	};

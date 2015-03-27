@@ -2,6 +2,7 @@
 require_once "header.php"; 
 
 if ($_GET) {
+
 	$filter = "";
 	if (isset($_GET['filter'])){
 		$filter .= "WHERE ";
@@ -25,7 +26,7 @@ if ($_GET) {
 	for ($i = 0; $i < $num; $i++) {
 		$designs = (object) array();
 		foreach ($_GET['return'] as $key=>$metric){
-			$designs->$metric = mysql_result($result,$i,$metric);
+			$designs[$metric] = mysql_result($result,$i,$metric);
 			if ($metric === 'created' || $metric === 'updated') {
 				$designs->$metric = date("m/d/Y", strtotime($designs->$metric));
 			}
@@ -34,8 +35,7 @@ if ($_GET) {
 	}
 	echo JSON_encode($response);
 	return;
-}
-if ($_POST) {
+} elseif ($_POST) {
 
 	global $seed;
 	$response = (object) array();
@@ -426,7 +426,58 @@ if ($_POST) {
 		return;
 	}
 
-	if(isset($_POST['action'])) {
+	if(isset($_POST['upload'])) {
+		$id = $_POST['id'];
+		$target_dir = "../img/retailers/";
+		$temp = explode(".",$_FILES["image"]["name"]);
+		$newfilename = $id . '.' .end($temp);
+		$target_file = $target_dir . $newfilename;
+		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+		// Check if image file is a actual image or fake image
+		// var_dump($temp);
+		// return;
+		$check = getimagesize($_FILES["image"]["tmp_name"]);
+		if($check === false) {
+			$response->message = "File is not an image.";
+			$response->valid = false;
+			header("Location: ../retailers/#!/account?error=File_is_not_an_image");
+			exit;
+		}
+		if ($_FILES["image"]["size"] > 500000) {
+			header("Location: ../retailers/#!/account?error=File_is_too_large");
+			exit;
+		}
+		// var_dump($imageFileType);
+		// return;
+		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+			header("Location: ../retailers/#!/account?error=Invalid_file_format");
+			exit;
+		}
+		if (!move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+			header("Location: ../retailers/#!/account?error=Unable_to_upload_file");
+			exit;
+	    }
+
+	    //save name
+		$query = sprintf("
+			UPDATE retailers
+			SET image = '%s'
+			WHERE id = '%s'",
+			mysql_real_escape_string($newfilename),
+			mysql_real_escape_string($id));
+		if(!mysql_query($query)) {
+			header("Location: ../retailers/#!/account?error=Unable_to_upload_file");
+			exit;
+		}
+
+		header("Location: ../retailers/#!/account?success=Image_changed");
+			exit;
+
+		return;
+	}
+
+	if(isset($_POST['action']) && $_POST['action'] === 'info') {
 		$id = $_POST['id'];
 		$vars = array();
 		$vars['first_name'] = $_POST['first_name'];

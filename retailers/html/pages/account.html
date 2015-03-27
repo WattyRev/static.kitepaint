@@ -11,12 +11,14 @@
 	<h2>Business</h2>
 	<ul class="unstyled">
 		<li class="image">
-			<form method="POST" action="../php/retailers.php">
+			<form method="POST" action="../php/retailers.php" enctype="multipart/form-data">
 				<strong>Profile Picture</strong>
 				<img src="../img/retailers/{{$root.retailer.image}}" alt="" />
 				<p>Image must not include any nudity or foul language. Image must be relevant to your business. Images may be removed at the discretion of KitePaint administration.</p>
-				<p>Images may be .png, .jpg, .jpeg, or .gif format. Image must be no more that 500px tall or wide. Square images work best. Images must be smaller than 500KB.</p>
+				<p>Images may be .png, .jpg, .jpeg, or .gif format. Images must be smaller than 500KB. Square images work best.</p>
 				<input type="file" name="image" accept="image/*" />
+				<input type="hidden" name="id" value="{{$root.retailer.id}}">
+				<input type="hidden" name="upload" value="true">
 				<button class="button action">Upload</button>
 				<div class="clearfix"></div>
 			</form>
