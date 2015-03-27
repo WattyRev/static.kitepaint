@@ -58,6 +58,72 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 	};
 	scope.check_upload_response();
 
+	scope.get_products = function() {
+		var data = {
+			filter:{activated: 1},
+			return: [
+				'id',
+				'name',
+				'manufacturer'
+			]
+		};
+		$.ajax({
+			type: 'GET',
+			url: '../php/products.php',
+			dataType: 'json',
+			data: data,
+			success: function(data) {
+				$.each(data, function(i, product) {
+					product.id = parseInt(product.id);
+					product.manufacturer = parseInt(product.manufacturer);
+				});
+				data.sort(function(a,b) {
+					if(a.manufacturer > b.manufacturer) {
+						return 1;
+					} else if(a.manufacturer < b.manufacturer) {
+						return -1;
+					} else {
+						if(a.name > b.name) {
+							return 1;
+						} else if (a.name < b.name) {
+							return -1;
+						} else {
+							return 0;
+						}
+					}
+				});
+				scope.products = data;
+				scope.$apply();
+			}
+		});
+	};
+	scope.get_products();
+
+	scope.get_manufacturers = function() {
+		var data = {
+			filter:{activated: 1},
+			return: [
+				'id',
+				'name'
+			]
+		};
+		$.ajax({
+			type: 'GET',
+			url: '../php/manufacturers.php',
+			dataType: 'json',
+			data: data,
+			success: function(data) {
+				var manufacturers = {};
+				$.each(data, function(i, manufacturer) {
+					manufacturers[manufacturer.id] = manufacturer.name;
+				});
+				scope.manufacturers = manufacturers;
+				scope.$apply();
+			}
+		});
+	};
+	scope.get_manufacturers();
+
 	scope.change = {
 		password: function() {
 			var data = {
@@ -207,6 +273,12 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 				fail_save('website');
 			});
 		}
+	};
+
+	scope.edit_product_url = function(id) {
+		console.log('test');
+		scope.edit = 'product_url';
+		scope.edit_product_url = id;
 	};
 	
 	function save(data, success, error) {
