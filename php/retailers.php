@@ -254,6 +254,178 @@ if ($_POST) {
 		return;
 	}
 
+	if(isset($_POST['change_contact_name'])) {
+		//variables
+		$id = $_POST['id'];
+		$first_name = $_POST['first_name'];
+		$last_name = $_POST['last_name'];
+
+		//save
+		$query = sprintf("
+			UPDATE retailers
+			SET first_name = '%s' AND last_name = '%s' 
+			WHERE id = '%s'",
+			mysql_real_escape_string($first_name),
+			mysql_real_escape_string($last_name),
+			mysql_real_escape_string($id));
+		if(!mysql_query($query)) {
+			$response->valid = false;
+			$response->message = 'Unable to change name. Try again later.';
+			echo json_encode($response);
+			return;
+		}
+		echo json_encode($response);
+		return;
+	}
+
+	if(isset($_POST['change_email'])) {
+		//variables
+		$id = $_POST['id'];
+		$password = $_POST['password'];
+		$email = $_POST['email'];
+
+		//validate
+		if(!valid_password($password)) {
+			$response->valid = false;
+			$response->message = 'Invalid password';
+			echo json_encode($response);
+			return;
+		}
+		if(!valid_email($email)) {
+			$response->valid = false;
+			$response->message = 'Invalid email address';
+			echo json_encode($response);
+			return;
+		}
+		
+		//check password
+		$query = sprintf("
+			SELECT username
+			FROM retailers
+			WHERE
+			id = '%s' AND password = '%s'
+			AND disabled = 0 AND activated = 1
+			LIMIT 1;", mysql_real_escape_string($id), mysql_real_escape_string(sha1($password . $seed)));
+		$result = mysql_query($query);
+		if (mysql_num_rows($result) != 1) {
+			$response->valid = false;
+			$response->message = 'Incorrect password';
+			echo json_encode($response);
+			return;
+		}
+
+		//save email
+		$query = sprintf("
+			UPDATE retailers
+			SET email = '%s'
+			WHERE id = '%s'",
+			mysql_real_escape_string($email),
+			mysql_real_escape_string($id));
+		if(!mysql_query($query)) {
+			$response->valid = false;
+			$response->message = 'Unable to change email address. Try again later.';
+			echo json_encode($response);
+			return;
+		}
+
+		echo json_encode($response);
+		return;
+	}
+
+	if(isset($_POST['change_phone'])) {
+		//variables
+		$id = $_POST['id'];
+		$phone = $_POST['phone'];
+
+		//save phone
+		$query = sprintf("
+			UPDATE retailers
+			SET phone = '%s'
+			WHERE id = '%s'",
+			mysql_real_escape_string($phone),
+			mysql_real_escape_string($id));
+		if(!mysql_query($query)) {
+			$response->valid = false;
+			$response->message = 'Unable to change phone number. Try again later.';
+			echo json_encode($response);
+			return;
+		}
+
+		echo json_encode($response);
+		return;
+	}
+
+	if(isset($_POST['change_name'])) {
+		//variables
+		$id = $_POST['id'];
+		$name = $_POST['name'];
+
+		//save name
+		$query = sprintf("
+			UPDATE retailers
+			SET name = '%s'
+			WHERE id = '%s'",
+			mysql_real_escape_string($name),
+			mysql_real_escape_string($id));
+		if(!mysql_query($query)) {
+			$response->valid = false;
+			$response->message = 'Unable to change business name. Try again later.';
+			echo json_encode($response);
+			return;
+		}
+
+		echo json_encode($response);
+		return;
+	}
+
+	if(isset($_POST['change_location'])) {
+		//variables
+		$id = $_POST['id'];
+		$city = $_POST['city'];
+		$state = $_POST['state'];
+
+		//save name
+		$query = sprintf("
+			UPDATE retailers
+			SET city = '%s' AND state = '%s'
+			WHERE id = '%s'",
+			mysql_real_escape_string($city),
+			mysql_real_escape_string($state),
+			mysql_real_escape_string($id));
+		if(!mysql_query($query)) {
+			$response->valid = false;
+			$response->message = 'Unable to change location. Try again later.';
+			echo json_encode($response);
+			return;
+		}
+
+		echo json_encode($response);
+		return;
+	}
+
+	if(isset($_POST['change_url'])) {
+		//variables
+		$id = $_POST['id'];
+		$url = $_POST['url'];
+
+		//save name
+		$query = sprintf("
+			UPDATE retailers
+			SET url = '%s'
+			WHERE id = '%s'",
+			mysql_real_escape_string($url),
+			mysql_real_escape_string($id));
+		if(!mysql_query($query)) {
+			$response->valid = false;
+			$response->message = 'Unable to change website. Try again later.';
+			echo json_encode($response);
+			return;
+		}
+
+		echo json_encode($response);
+		return;
+	}
+
 	if(isset($_POST['action'])) {
 		$id = $_POST['id'];
 		$vars = array();

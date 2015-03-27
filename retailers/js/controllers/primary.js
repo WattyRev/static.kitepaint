@@ -3,7 +3,7 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', '$locatio
 	//VARIABLES
 		scope.current_page = '';
 		root.base_url = environment === 'development' ? 'http://wattydev.com/projects/kite_paint' : 'http://kitepaint.com';
-		root.user = localStorage.user ? JSON.parse(localStorage.user) : false;
+		root.retailer = localStorage.retailer ? JSON.parse(localStorage.retailer) : false;
 
 	//FUNCTIONS
 		scope.check_user = function() {
@@ -104,8 +104,8 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', '$locatio
 		}
 
 		//update has_account local storage variable
-		root.$watch('user', function(user) {
-			localStorage.user = JSON.stringify(user);
+		root.$watch('retailer', function(retailer) {
+			localStorage.retailer = JSON.stringify(retailer);
 		}, true);
 
 		window.root = root;

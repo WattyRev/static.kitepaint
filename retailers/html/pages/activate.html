@@ -12,7 +12,7 @@
 		</div>
 		<div class="half left">
 			<label for="input-retailer-name">Retailer Name</label>
-			<input id="input-retailer-name" type="text" placeholder="e.g. Kite Store" required ng-model="retailer.name" />
+			<input id="input-retailer-name" type="text" placeholder="e.g. Kite Store" required ng-model="retailer.name" ng-maxlength="30" />
 		</div>
 		<div class="half left">
 			<label for="input-username">Username <tooltip content="username"></tooltip></label>
@@ -41,7 +41,8 @@
 		</div>
 		<div class="half left">
 			<label for="input-phone">Phone <i>optional</i></label>
-			<input id="input-phone" type="tel" placeholder="e.g. 123-456-7890" ng-model="retailer.phone">
+			<input id="input-phone" type="tel" placeholder="e.g. 123-456-7890" ng-model="retailer.phone"
+			ng-pattern="/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/">
 		</div>
 		<div class="half left">
 			<label for="input-city">City <i>optional</i></label>
