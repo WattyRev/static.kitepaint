@@ -5,11 +5,17 @@
 /* Colors */
 /* Mixins */
 /* line 2, ../../scss/pages/login.scss */
+main#login {
+  margin: 0;
+  width: 100%;
+}
+
+/* line 6, ../../scss/pages/login.scss */
 aside {
   display: none !important;
 }
 
-/* line 5, ../../scss/pages/login.scss */
+/* line 9, ../../scss/pages/login.scss */
 form {
   max-width: 300px;
   width: 100%;
@@ -20,23 +26,23 @@ form {
   background: #ededed;
   margin: 10px auto;
 }
-/* line 13, ../../scss/pages/login.scss */
+/* line 17, ../../scss/pages/login.scss */
 form a {
   display: block;
   margin: 10px 0;
 }
 
-/* line 18, ../../scss/pages/login.scss */
+/* line 22, ../../scss/pages/login.scss */
 label, input {
   display: block;
 }
 
-/* line 21, ../../scss/pages/login.scss */
+/* line 25, ../../scss/pages/login.scss */
 label {
   margin: 15px 0 5px;
 }
 
-/* line 24, ../../scss/pages/login.scss */
+/* line 28, ../../scss/pages/login.scss */
 input {
   width: 100%;
   -moz-box-sizing: border-box;
@@ -44,7 +50,7 @@ input {
   box-sizing: border-box;
 }
 
-/* line 28, ../../scss/pages/login.scss */
+/* line 32, ../../scss/pages/login.scss */
 button {
   margin: 15px auto 0;
 }

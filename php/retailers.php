@@ -193,75 +193,134 @@ if ($_POST) {
 		return;
 	}
 
+	if(isset($_POST['change_password'])) {
+		//variables
+		$id = $_POST['id'];
+		$old = $_POST['old_password'];
+		$new = $_POST['password'];
+		$confirm = $_POST['confirm_password'];
+
+		//validate passwords
+		if(!valid_password($old)) {
+			$response->valid = false;
+			$response->message = 'Incorrect old password';
+			echo json_encode($response);
+			return;
+		}
+		if($new !== $confirm) {
+			$response->valid = false;
+			$response->message = 'Passwords don\'t match';
+			echo json_encode($response);
+			return;
+		}
+		if(!valid_password($new)) {
+			$response->valid = false;
+			$response->message = 'Invalid new password';
+			echo json_encode($response);
+			return;
+		}
+		
+		//check old password
+		$query = sprintf("
+			SELECT username
+			FROM retailers
+			WHERE
+			id = '%s' AND password = '%s'
+			AND disabled = 0 AND activated = 1
+			LIMIT 1;", mysql_real_escape_string($id), mysql_real_escape_string(sha1($old . $seed)));
+		$result = mysql_query($query);
+		if (mysql_num_rows($result) != 1) {
+			$response->valid = false;
+			$response->message = 'Incorrect old password';
+			echo json_encode($response);
+			return;
+		}
+
+		//save password
+		$query = sprintf("
+			UPDATE retailers
+			SET password = '%s'
+			WHERE id = '%s'",
+			mysql_real_escape_string(sha1($new . $seed)),
+			mysql_real_escape_string($id));
+		if(!mysql_query($query)) {
+			$response->valid = false;
+			$response->message = 'Unable to change password. Try again later.';
+			echo json_encode($response);
+			return;
+		}
+
+		echo json_encode($response);
+		return;
+	}
+
 	if(isset($_POST['action'])) {
-		if($_POST['action'] === 'info') {
-			$id = $_POST['id'];
-			$vars = array();
-			$vars['first_name'] = $_POST['first_name'];
-			$vars['last_name'] = $_POST['last_name'];
-			$vars['name'] = $_POST['name'];
-			$vars['username'] = $_POST['username'];
-			$vars['password'] = $_POST['password'];
-			$vars['email'] = $_POST['email'];
-			$vars['phone'] = $_POST['phone'];
-			$vars['city'] = $_POST['city'];
-			$vars['state'] = $_POST['state'];
-			$vars['url'] = $_POST['url'];
-			//validation
-			if(!valid_username($vars['username'])) {
-				$response->valid = false;
-				$response->message = 'Invalid username';
-				echo json_encode($response);
-				return;
-			} else if(!valid_password($vars['password'])) {
-				$response->valid = false;
-				$response->message = 'Invalid password';
-				echo json_encode($response);
-				return;
-			} else if(!valid_email($vars['email'])) {
-				$response->valid = false;
-				$response->message = 'Invalid email';
-				echo json_encode($response);
-				return;
-			} else if($vars['password'] != $_POST['confirm_password']) {
-				$response->valid = false;
-				$response->message = 'Passwords do not match';
-				echo json_encode($response);
-				return;
-			} else if(retailer_exists($vars['username'])) {
-				$response->valid = false;
-				$response->message = $vars['username'] . ' has already been taken';
-				echo json_encode($response);
-				return;
-			}
+		$id = $_POST['id'];
+		$vars = array();
+		$vars['first_name'] = $_POST['first_name'];
+		$vars['last_name'] = $_POST['last_name'];
+		$vars['name'] = $_POST['name'];
+		$vars['username'] = $_POST['username'];
+		$vars['password'] = $_POST['password'];
+		$vars['email'] = $_POST['email'];
+		$vars['phone'] = $_POST['phone'];
+		$vars['city'] = $_POST['city'];
+		$vars['state'] = $_POST['state'];
+		$vars['url'] = $_POST['url'];
+		//validation
+		if(!valid_username($vars['username'])) {
+			$response->valid = false;
+			$response->message = 'Invalid username';
+			echo json_encode($response);
+			return;
+		} else if(!valid_password($vars['password'])) {
+			$response->valid = false;
+			$response->message = 'Invalid password';
+			echo json_encode($response);
+			return;
+		} else if(!valid_email($vars['email'])) {
+			$response->valid = false;
+			$response->message = 'Invalid email';
+			echo json_encode($response);
+			return;
+		} else if($vars['password'] != $_POST['confirm_password']) {
+			$response->valid = false;
+			$response->message = 'Passwords do not match';
+			echo json_encode($response);
+			return;
+		} else if(retailer_exists($vars['username'])) {
+			$response->valid = false;
+			$response->message = $vars['username'] . ' has already been taken';
+			echo json_encode($response);
+			return;
+		}
 
-			foreach($vars as $metric => $val){
-				if ($metric === 'password') {
-					$query = sprintf("update retailers set $metric = '%s' where id = '%s'",
-						mysql_real_escape_string(sha1($val . $seed)), mysql_real_escape_string($id));
-				} else {
-					$query = sprintf("update retailers set $metric = '%s' where id = '%s'",
-						mysql_real_escape_string($val), mysql_real_escape_string($id));
-				}
-
-				if (mysql_query($query)) {
-				} else {
-					$response->valid = false;
-					$response->message = 'Unable to change ' . $metric;
-				}
+		foreach($vars as $metric => $val){
+			if ($metric === 'password') {
+				$query = sprintf("update retailers set $metric = '%s' where id = '%s'",
+					mysql_real_escape_string(sha1($val . $seed)), mysql_real_escape_string($id));
+			} else {
+				$query = sprintf("update retailers set $metric = '%s' where id = '%s'",
+					mysql_real_escape_string($val), mysql_real_escape_string($id));
 			}
-			$query = sprintf("update retailers set updated = now() where id = '%s'",
-			mysql_real_escape_string($id));
-			$query = sprintf("update retailers set activated = 1 where id = '%s'",
-			mysql_real_escape_string($id));
 
 			if (mysql_query($query)) {
 			} else {
 				$response->valid = false;
-				$response->message = 'Unable to change updated';
+				$response->message = 'Unable to change ' . $metric;
 			}
-			echo json_encode($response);
-			return;
 		}
+		$query = sprintf("update retailers set updated = now() where id = '%s'",
+		mysql_real_escape_string($id));
+		$query = sprintf("update retailers set activated = 1 where id = '%s'",
+		mysql_real_escape_string($id));
+
+		if (mysql_query($query)) {
+		} else {
+			$response->valid = false;
+			$response->message = 'Unable to change updated';
+		}
+		echo json_encode($response);
+		return;
 	}
 }

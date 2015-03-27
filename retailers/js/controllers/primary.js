@@ -7,6 +7,9 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', '$locatio
 
 	//FUNCTIONS
 		scope.check_user = function() {
+			if(scope.current_page.name === 'login') {
+				return;
+			}
 			if(!localStorage.retailer) {
 				state.go('login');
 				return;
@@ -84,7 +87,7 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', '$locatio
 		//Update current page data
 		root.$on('$stateChangeStart', function(event, toState) {
 			scope.current_page = toState;
-			if(scope.current_page !== 'login') {
+			if(scope.current_page.name !== 'login') {
 				scope.check_user();
 			}
 			root.loading = true;

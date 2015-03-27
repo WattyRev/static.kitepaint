@@ -31,79 +31,97 @@
 	<h3>Product URLs</h3>
 	<h3>Product Opt-Out</h3>
 </div>
-<form class="lightbox password" ng-show="edit === 'password'">
+<form class="lightbox password" ng-show="edit === 'password'" ng-submit="change.password()">
 	<div class="content">
 		<a ng-click="edit = ''" class="close">Cancel</a>
-		<label for="input-old-password">Old Password</label>
-		<input type="password" id="input-old-password" required/>
-		<label for="input-password">New Password</label>
-		<input type="password" id="input-password" required/>
+		<label for="input-old-password" >Old Password</label>
+		<input type="password"
+			id="input-old-password" 
+			ng-model="edit_variables.old_password" 
+			required
+			ng-minlength="6"
+			ng-maxlength="15"
+			ng-pattern="/[A-Za-z0-9@*#.]/"/>
+		<label for="input-password" >New Password <tooltip content="password"></tooltip></label>
+		<input type="password" 
+			id="input-password" 
+			ng-model="edit_variables.password" 
+			required
+			ng-minlength="6"
+			ng-maxlength="15"
+			ng-pattern="/[A-Za-z0-9@*#.]/"/>
 		<label for="input-confirm-password">Confirm New Password</label>
-		<input type="password" id="input-confirm-password" required/>
-		<button class="button action">Save</button>
+		<input type="password" 
+			id="input-confirm-password" 
+			ng-model="edit_variables.confirm_password" 
+			required 
+			ng-minlength="6"
+			ng-maxlength="15"
+			ng-pattern="/[A-Za-z0-9@*#.]/"/>
+		<button type="submit"class="button action">Save</button>
 	</div>
 </form>
-<form class="lightbox name" ng-show="edit === 'name'">
+<form class="lightbox name" ng-show="edit === 'name'" ng-submit="change.contact_name()">
 	<div class="content">
 		<a ng-click="edit = ''" class="close">Cancel</a>
 		<div class="half left">
 			<label for="input-first-name">First Name</label>
-			<input type="text" id="input-first-name" required/>
+			<input type="text" id="input-first-name" ng-model="edit_variables.first_name" required/>
 		</div>
 		<div class="half left">
 			<label for="input-last-name">Last Name</label>
-			<input type="text" id="input-last-name" required/>
+			<input type="text" id="input-last-name" ng-model="edit_variables.last_name" required/>
 		</div>
 		<div class="clearfix"></div>
-		<button class="button action">Save</button>
+		<button type="submit"class="button action">Save</button>
 	</div>
 </form>
-<form class="lightbox email" ng-show="edit === 'email'">
+<form class="lightbox email" ng-show="edit === 'email'" ng-submit="change.email()">
 	<div class="content">
 		<a ng-click="edit = ''" class="close">Cancel</a>
-		<label for="input-email-password">Password</label>
-		<input type="password" id="input-email-password" required />
+		<label for="input-email-password" >Password</label>
+		<input type="password" id="input-email-password" ng-model="edit_variables.email_password" required />
 		<label for="input-email">Email</label>
-		<input type="email" id="input-email" required />
-		<button class="button action">Save</button>
+		<input type="email" id="input-email" ng-model="edit_variables.email" required />
+		<button type="submit"class="button action">Save</button>
 	</div>
 </form>
-<form class="lightbox phone" ng-show="edit === 'phone'">
+<form class="lightbox phone" ng-show="edit === 'phone'" ng-submit="change.phone()">
 	<div class="content">
 		<a ng-click="edit = ''" class="close">Cancel</a>
 		<label for="input-phone">Phone</label>
-		<input type="tel" id="input-phone" />
-		<button class="button action">Save</button>
+		<input type="tel" id="input-phone" ng-model="edit_variables.phone" />
+		<button type="submit"class="button action">Save</button>
 	</div>
 </form>
-<form class="lightbox business" ng-show="edit === 'business'">
+<form class="lightbox business" ng-show="edit === 'business'" ng-submit="change.name()">
 	<div class="content">
 		<a ng-click="edit = ''" class="close">Cancel</a>
 		<label for="input-name">Business Name</label>
-		<input type="text" id="input-name" required />
-		<button class="button action">Save</button>
+		<input type="text" id="input-name" ng-model="edit_variables.name" required />
+		<button type="submit"class="button action">Save</button>
 	</div>
 </form>
-<form class="lightbox location" ng-show="edit === 'location'">
+<form class="lightbox location" ng-show="edit === 'location'" ng-submit="change.location()">
 	<div class="content">
 		<a ng-click="edit = ''" class="close">Cancel</a>
 		<div class="half left">
 		<label for="input-city">City</label>
-		<input type="text" id="input-city" required />
+		<input type="text" id="input-city" ng-model="edit_variables.city" required />
 		</div>
 		<div class="half left">
 		<label for="input-state">State</label>
-		<select id="input-state" state-options required></select>
+		<select id="input-state" state-options ng-model="edit_variables.state" required></select>
 		</div>
 		<div class="clearfix"></div>
-		<button class="button action">Save</button>
+		<button type="submit"class="button action">Save</button>
 	</div>
 </form>
-<form class="lightbox website" ng-show="edit === 'website'">
+<form class="lightbox website" ng-show="edit === 'website'" ng-submit="change.url()">
 	<div class="content">
 		<a ng-click="edit = ''" class="close">Cancel</a>
 		<label for="input-url">Url</label>
-		<input type="url" id="input-url" required />
-		<button class="button action">Save</button>
+		<input type="url" id="input-url" ng-model="edit_variables.url" required />
+		<button type="submit"class="button action">Save</button>
 	</div>
 </form>
