@@ -27,12 +27,14 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 				'actcode'
 			]
 		};
+		console.log('ajax');
 		$.ajax({
 			type: 'GET',
 			url: '../php/retailers.php',
 			dataType: 'json',
 			data: data,
 			success: function(data) {
+				console.log(data);
 				data[0].product_opt_out = JSON.parse(data[0].product_opt_out);
 				data[0].product_urls = JSON.parse(data[0].product_urls);
 				root.retailer =  data[0];
