@@ -35,3 +35,12 @@ li.image input, li.image button {
 ul.unstyled {
   margin: 20px 0;
 }
+
+/* line 30, ../../scss/pages/account.scss */
+table {
+  margin: 15px 0;
+}
+/* line 33, ../../scss/pages/account.scss */
+table td {
+  text-align: center;
+}

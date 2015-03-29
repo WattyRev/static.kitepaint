@@ -27,18 +27,19 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 				'actcode'
 			]
 		};
-		console.log('ajax');
 		$.ajax({
 			type: 'GET',
 			url: '../php/retailers.php',
 			dataType: 'json',
 			data: data,
 			success: function(data) {
-				console.log(data);
 				data[0].product_opt_out = JSON.parse(data[0].product_opt_out);
 				data[0].product_urls = JSON.parse(data[0].product_urls);
 				root.retailer =  data[0];
 				scope.$apply();
+			},
+			error: function(data) {
+				console.log('error', data);
 			}
 		});
 	};
@@ -141,7 +142,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 			}
 			save(data, function(data) {
 				if(!data.valid) {
-					fail_save('password');
+					fail_save('password', data);
 					return;
 				}
 				scope.edit_variables = JSON.parse(JSON.stringify(root.retailer));
@@ -149,7 +150,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 				root.success('Your password has been changed');
 				root.$apply();
 			}, function(data) {
-				fail_save('password');
+				fail_save('password', data);
 			});
 		},
 		contact_name: function() {
@@ -161,9 +162,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 			};
 			save(data, function(data) {
 				if(!data.valid) {
-					console.log('error', data);
-					root.error(data.message || 'Unable to change name. Try again later.');
-					root.$apply();
+					fail_save('your name', data);
 					return;
 				}
 				root.retailer.first_name = scope.edit_variables.first_name;
@@ -172,9 +171,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 				root.success('Your name has been changed');
 				root.$apply();
 			},function(data) {
-				console.log('error', data);
-				root.error('Unable to change name. Try again later.');
-				root.$apply();
+				fail_save('your name', data);
 			});
 		},
 		email: function() {
@@ -186,7 +183,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 			};
 			save(data, function(data) {
 				if(!data.valid) {
-					fail_save('email_address');
+					fail_save('email_address', data);
 					return;
 				}
 				root.retailer.email = scope.edit_variables.email;
@@ -194,7 +191,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 				root.success('Your email address has been changed');
 				root.$apply();
 			}, function(data) {
-				fail_save('email address');
+				fail_save('email address', data);
 			});
 		},
 		phone: function() {
@@ -205,7 +202,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 			};
 			save(data, function(data) {
 				if(!data.valid) {
-					fail_save('phone number');
+					fail_save('phone number', data);
 					return;
 				}
 				root.retailer.phone = scope.edit_variables.phone;
@@ -213,7 +210,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 				root.success('Your phone number has been changed');
 				root.$apply();
 			}, function(data) {
-				fail_save('phone number');
+				fail_save('phone number', data);
 			});
 		},
 		name: function() {
@@ -224,7 +221,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 			};
 			save(data, function(data) {
 				if(!data.valid) {
-					fail_save('business name');
+					fail_save('business name', data);
 					return;
 				}
 				root.retailer.name = scope.edit_variables.name;
@@ -232,7 +229,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 				root.success('Your business name has been changed');
 				root.$apply();
 			}, function(data) {
-				fail_save('business name');
+				fail_save('business name', data);
 			});
 		},
 		location: function() {
@@ -244,7 +241,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 			};
 			save(data, function(data) {
 				if(!data.valid) {
-					fail_save('location');
+					fail_save('location', data);
 					return;
 				}
 				root.retailer.city = scope.edit_variables.city;
@@ -253,7 +250,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 				root.success('Your location has been changed');
 				root.$apply();
 			}, function(data) {
-				fail_save('location');
+				fail_save('location', data);
 			});
 		},
 		url: function() {
@@ -264,7 +261,7 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 			};
 			save(data, function(data) {
 				if(!data.valid) {
-					fail_save('website');
+					fail_save('website', data);
 					return;
 				}
 				root.retailer.url = scope.edit_variables.url;
@@ -272,15 +269,55 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 				root.success('Your website has been changed');
 				root.$apply();
 			}, function(data) {
-				fail_save('website');
+				fail_save('website', data);
+			});
+		},
+		product_url: function() {
+			var product_url = scope.edit_variables.product_url;
+			var urls = JSON.parse(JSON.stringify(root.retailer.product_urls));
+			urls[product_url.id] = product_url.url;
+			var data = {
+				change_product_url: true,
+				id: root.retailer.id,
+				product_urls: JSON.stringify(urls)
+			};
+			save(data, function(data) {
+				if(!data.valid) {
+					fail_save('product url', data);
+					return;
+				}
+				root.retailer.product_urls[product_url.id] = product_url.url;
+				scope.edit = '';
+				root.success('Your product url has been changed');
+				root.$apply();
+			}, function(data) {
+				fail_save('product url', data);
+			});
+		},
+		opt_out: function(id, value) {
+			var data = {
+				change_opt_out: true,
+				id: root.retailer.id,
+				product_opt_out: JSON.stringify(root.retailer.product_opt_out)
+			};
+			save(data, function(data) {
+				if(!data.valid) {
+					root.retailer.product_opt_out[id] = !value;
+					fail_save('opt out', data);
+					return;
+				}
+				root.success('You have successfully opted out from this product');
+				root.$apply();
+			}, function(data) {
+				root.retailer.product_opt_out[id] = !value;
+				fail_save('opt out', data);
 			});
 		}
 	};
 
 	scope.edit_product_url = function(id) {
-		console.log('test');
 		scope.edit = 'product_url';
-		scope.edit_product_url = id;
+		scope.edit_variables.product_url = {id: id, url: root.retailer.product_urls[id]};
 	};
 	
 	function save(data, success, error) {
@@ -300,9 +337,9 @@ app.controller('AccountController', ['$scope', '$rootScope', '$state', '$locatio
 			}
 		});
 	}
-	function fail_save(item) {
+	function fail_save(item, data) {
 		console.log('error', data);
-		root.error('Unable to change ' + item + '. Try again later.');
+		root.error(data.message || 'Unable to change ' + item + '. Try again later.');
 		root.$apply();
 	}
 	

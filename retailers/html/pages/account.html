@@ -31,6 +31,7 @@
 	</ul>
 	<h2>Products</h2>
 	<h3>Product URLs</h3>
+	<p>Add product urls to specific product pages on your website. These links will appear in the retailers dropdown in the editor.</p>
 	<table>
 		<thead>
 			<tr>
@@ -40,14 +41,29 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="product in products">
+			<tr ng-repeat="product in products" class="product-{{product.id}}">
 				<td>{{manufacturers[product.id]}} {{product.name}}</td>
-				<td><span ng-show="root.retailer.product_urls[product.id]">{{root.retailer.product_urls[product.id]}}</span><span ng-hide="root.retailer.product_urls[product.id]"><i>none</i></span></td>
+				<td><span ng-show="$root.retailer.product_urls[product.id]">{{$root.retailer.product_urls[product.id]}}</span><span ng-hide="$root.retailer.product_urls[product.id]"><i>none</i></span></td>
 				<td><a class="edit" ng-click="edit_product_url(product.id)">edit</a></td>
 			</tr>
 		</tbody>
 	</table>
 	<h3>Product Opt-Out</h3>
+	<p>Opt out of products that you do not sell. This will remove your business from the list of retailers for products that you opt out on.</p>
+	<table>
+		<thead>
+			<tr>
+				<th>Product</th>
+				<th>Opt-out</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="product in products" class="product-{{product.id}}">
+				<td>{{manufacturers[product.id]}} {{product.name}}</td>
+				<td><input type="checkbox" ng-model="$root.retailer.product_opt_out[product.id]" ng-change="change.opt_out(product.id, $root.retailer.product_opt_out[product.id])" /></td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 <form class="lightbox password" ng-show="edit === 'password'" ng-submit="change.password()">
 	<div class="content">
@@ -147,7 +163,7 @@
 	<div class="content">
 		<a ng-click="edit = ''; edit_product_url = '';" class="close">Cancel</a>
 		<label for="input-product-url">Url</label>
-		<input type="url" id="input-product-url" ng-model="edit_variables.product_url" required placeholder="e.g. http://example.com" />
+		<input type="url" id="input-product-url" ng-model="edit_variables.product_url.url" required placeholder="e.g. http://example.com/product" />
 		<button type="submit"class="button action">Save</button>
 	</div>
 </form>

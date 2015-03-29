@@ -263,9 +263,20 @@ if ($_GET) {
 		//save
 		$query = sprintf("
 			UPDATE retailers
-			SET first_name = '%s' AND last_name = '%s' 
+			SET first_name = '%s' 
 			WHERE id = '%s'",
 			mysql_real_escape_string($first_name),
+			mysql_real_escape_string($id));
+		if(!mysql_query($query)) {
+			$response->valid = false;
+			$response->message = 'Unable to change name. Try again later.';
+			echo json_encode($response);
+			return;
+		}
+		$query = sprintf("
+			UPDATE retailers
+			SET last_name = '%s' 
+			WHERE id = '%s'",
 			mysql_real_escape_string($last_name),
 			mysql_real_escape_string($id));
 		if(!mysql_query($query)) {
@@ -384,12 +395,24 @@ if ($_GET) {
 		$city = $_POST['city'];
 		$state = $_POST['state'];
 
-		//save name
+		//save city
 		$query = sprintf("
 			UPDATE retailers
-			SET city = '%s' AND state = '%s'
+			SET city = '%s'
 			WHERE id = '%s'",
 			mysql_real_escape_string($city),
+			mysql_real_escape_string($id));
+		if(!mysql_query($query)) {
+			$response->valid = false;
+			$response->message = 'Unable to change location. Try again later.';
+			echo json_encode($response);
+			return;
+		}
+		//save state
+		$query = sprintf("
+			UPDATE retailers
+			SET state = '%s'
+			WHERE id = '%s'",
 			mysql_real_escape_string($state),
 			mysql_real_escape_string($id));
 		if(!mysql_query($query)) {
@@ -408,7 +431,7 @@ if ($_GET) {
 		$id = $_POST['id'];
 		$url = $_POST['url'];
 
-		//save name
+		//save url
 		$query = sprintf("
 			UPDATE retailers
 			SET url = '%s'
@@ -418,6 +441,50 @@ if ($_GET) {
 		if(!mysql_query($query)) {
 			$response->valid = false;
 			$response->message = 'Unable to change website. Try again later.';
+			echo json_encode($response);
+			return;
+		}
+
+		echo json_encode($response);
+		return;
+	}
+
+	if(isset($_POST['change_product_url'])) {
+		$id = $_POST['id'];
+		$product_urls = $_POST['product_urls'];
+
+		//save product urls
+		$query = sprintf("
+			UPDATE retailers
+			SET product_urls = '%s'
+			WHERE id = '%s'",
+			mysql_real_escape_string($product_urls),
+			mysql_real_escape_string($id));
+		if(!mysql_query($query)) {
+			$response->valid = false;
+			$response->message = 'Unable to change product url. Try again later.';
+			echo json_encode($response);
+			return;
+		}
+
+		echo json_encode($response);
+		return;
+	}
+
+	if(isset($_POST['change_opt_out'])) {
+		$id = $_POST['id'];
+		$product_opt_out = $_POST['product_opt_out'];
+
+		//save product opt out
+		$query = sprintf("
+			UPDATE retailers
+			SET product_opt_out = '%s'
+			WHERE id = '%s'",
+			mysql_real_escape_string($product_opt_out),
+			mysql_real_escape_string($id));
+		if(!mysql_query($query)) {
+			$response->valid = false;
+			$response->message = 'Unable to opt out. Try again later.';
 			echo json_encode($response);
 			return;
 		}
