@@ -51,7 +51,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
 		.state('support', {
 			url: '/support',
 			templateUrl: 'html/pages/support.html',
-			controller: 'OrdersController',
+			controller: 'SupportController',
 			data: {
 				title: 'Support',
 				css: 'css/pages/support.css'

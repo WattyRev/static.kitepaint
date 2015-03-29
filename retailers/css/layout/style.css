@@ -42,37 +42,38 @@ h1 {
 /* line 28, ../../scss/layout/style.scss */
 h2 {
   font-size: 24px;
+  margin: 10px 0 5px;
   color: #444;
   font-weight: normal;
 }
 
-/* line 33, ../../scss/layout/style.scss */
+/* line 34, ../../scss/layout/style.scss */
 h3 {
   font-size: 20px;
   color: #444;
   font-weight: normal;
 }
 
-/* line 38, ../../scss/layout/style.scss */
+/* line 39, ../../scss/layout/style.scss */
 h4 {
   font-weight: bold;
   font-size: 16px;
   color: #444;
 }
 
-/* line 43, ../../scss/layout/style.scss */
+/* line 44, ../../scss/layout/style.scss */
 a {
   color: #485BE7;
   text-decoration: none;
   cursor: pointer;
 }
 
-/* line 48, ../../scss/layout/style.scss */
+/* line 49, ../../scss/layout/style.scss */
 button {
   cursor: pointer;
 }
 
-/* line 51, ../../scss/layout/style.scss */
+/* line 52, ../../scss/layout/style.scss */
 input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="number"], input[type="url"], textarea {
   background: #fff;
   border: 1px solid #cdcdcd;
@@ -84,12 +85,12 @@ input[type="text"], input[type="password"], input[type="email"], input[type="tel
   font-size: 16px;
 }
 
-/* line 61, ../../scss/layout/style.scss */
+/* line 62, ../../scss/layout/style.scss */
 input[type="submit"] {
   cursor: pointer;
 }
 
-/* line 64, ../../scss/layout/style.scss */
+/* line 65, ../../scss/layout/style.scss */
 input[type="checkbox"] {
   -webkit-appearance: none;
   width: 20px !important;
@@ -106,22 +107,22 @@ input[type="checkbox"] {
   transition: background 0.3s;
 }
 
-/* line 76, ../../scss/layout/style.scss */
+/* line 77, ../../scss/layout/style.scss */
 input[type="checkbox"]:checked {
   background: #485BE7;
 }
 
-/* line 79, ../../scss/layout/style.scss */
+/* line 80, ../../scss/layout/style.scss */
 table {
   border-collapse: collapse;
 }
 
-/* line 82, ../../scss/layout/style.scss */
+/* line 83, ../../scss/layout/style.scss */
 th, td {
   padding: 10px;
 }
 
-/* line 85, ../../scss/layout/style.scss */
+/* line 86, ../../scss/layout/style.scss */
 tr {
   border-bottom: 1px solid #cdcdcd;
   -moz-transition: background 0.3s;
@@ -130,12 +131,12 @@ tr {
   transition: background 0.3s;
 }
 
-/* line 89, ../../scss/layout/style.scss */
+/* line 90, ../../scss/layout/style.scss */
 tbody tr:hover {
   background: #f1f1f1;
 }
 
-/* line 92, ../../scss/layout/style.scss */
+/* line 93, ../../scss/layout/style.scss */
 select {
   padding: 7px;
   border-radius: 5px;
@@ -144,25 +145,25 @@ select {
   font-size: 16px;
 }
 
-/* line 99, ../../scss/layout/style.scss */
+/* line 100, ../../scss/layout/style.scss */
 i {
   color: #484848;
 }
 
-/* line 102, ../../scss/layout/style.scss */
+/* line 103, ../../scss/layout/style.scss */
 ul.unstyled {
   margin: 0;
   list-style: none;
 }
 
 /* CLASSES */
-/* line 108, ../../scss/layout/style.scss */
+/* line 109, ../../scss/layout/style.scss */
 .clearfix {
   display: block;
   clear: both;
 }
 
-/* line 113, ../../scss/layout/style.scss */
+/* line 114, ../../scss/layout/style.scss */
 .button {
   padding: 10px;
   border: 0;
@@ -176,44 +177,44 @@ ul.unstyled {
   -webkit-transition: border-radius 0.3s;
   transition: border-radius 0.3s;
 }
-/* line 123, ../../scss/layout/style.scss */
+/* line 124, ../../scss/layout/style.scss */
 .button.action {
   background: #ea541e;
   font-size: 18px;
 }
-/* line 127, ../../scss/layout/style.scss */
+/* line 128, ../../scss/layout/style.scss */
 .button:hover {
   border-radius: 0;
 }
-/* line 130, ../../scss/layout/style.scss */
+/* line 131, ../../scss/layout/style.scss */
 .button.red {
   background: #C60005;
 }
 
-/* line 134, ../../scss/layout/style.scss */
+/* line 135, ../../scss/layout/style.scss */
 .left {
   display: block;
   float: left;
 }
 
-/* line 138, ../../scss/layout/style.scss */
+/* line 139, ../../scss/layout/style.scss */
 .right {
   display: block;
   float: right;
 }
 
-/* line 142, ../../scss/layout/style.scss */
+/* line 143, ../../scss/layout/style.scss */
 .half {
   width: 50%;
 }
 
-/* line 145, ../../scss/layout/style.scss */
+/* line 146, ../../scss/layout/style.scss */
 .center {
   margin: 0 auto;
   text-align: center;
 }
 
-/* line 149, ../../scss/layout/style.scss */
+/* line 150, ../../scss/layout/style.scss */
 .error {
   padding: 10px;
   margin: 10px auto;
@@ -223,7 +224,7 @@ ul.unstyled {
   border-radius: 10px;
 }
 
-/* line 157, ../../scss/layout/style.scss */
+/* line 158, ../../scss/layout/style.scss */
 .success {
   padding: 10px;
   margin: 10px auto;
@@ -233,12 +234,12 @@ ul.unstyled {
   border-radius: 10px;
 }
 
-/* line 165, ../../scss/layout/style.scss */
+/* line 166, ../../scss/layout/style.scss */
 input.ng-invalid.ng-dirty {
   box-shadow: 0px 0px 7px 0px #ff0000;
 }
 
-/* line 168, ../../scss/layout/style.scss */
+/* line 169, ../../scss/layout/style.scss */
 .lightbox {
   position: fixed;
   width: 100%;
@@ -247,7 +248,7 @@ input.ng-invalid.ng-dirty {
   top: 0;
   left: 0;
 }
-/* line 176, ../../scss/layout/style.scss */
+/* line 177, ../../scss/layout/style.scss */
 .lightbox .content {
   width: 100%;
   max-width: 500px;
@@ -260,11 +261,11 @@ input.ng-invalid.ng-dirty {
   overflow: auto;
   position: relative;
 }
-/* line 188, ../../scss/layout/style.scss */
+/* line 189, ../../scss/layout/style.scss */
 .lightbox h2 {
   margin: 0 0 10px;
 }
-/* line 191, ../../scss/layout/style.scss */
+/* line 192, ../../scss/layout/style.scss */
 .lightbox input, .lightbox select {
   display: block;
   margin: 5px auto 10px;
@@ -273,50 +274,50 @@ input.ng-invalid.ng-dirty {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 197, ../../scss/layout/style.scss */
+/* line 198, ../../scss/layout/style.scss */
 .lightbox .button {
   margin: 5px auto 10px;
 }
-/* line 200, ../../scss/layout/style.scss */
+/* line 201, ../../scss/layout/style.scss */
 .lightbox .content .half {
   width: 46%;
   padding: 2%;
 }
-/* line 204, ../../scss/layout/style.scss */
+/* line 205, ../../scss/layout/style.scss */
 .lightbox .close {
   position: absolute;
   top: 5px;
   right: 5px;
 }
 
-/* line 210, ../../scss/layout/style.scss */
+/* line 211, ../../scss/layout/style.scss */
 .nowrap {
   white-space: nowrap;
 }
 
-/* line 213, ../../scss/layout/style.scss */
+/* line 214, ../../scss/layout/style.scss */
 .mobile {
   display: none;
 }
 
 /* Logo */
-/* line 218, ../../scss/layout/style.scss */
+/* line 219, ../../scss/layout/style.scss */
 logo {
   display: block;
   width: 190px;
   margin: 20px auto;
   text-align: center;
 }
-/* line 224, ../../scss/layout/style.scss */
+/* line 225, ../../scss/layout/style.scss */
 logo span {
   display: block;
 }
-/* line 227, ../../scss/layout/style.scss */
+/* line 228, ../../scss/layout/style.scss */
 logo span:first-child {
   font-size: 30px;
   color: #485BE7;
 }
-/* line 231, ../../scss/layout/style.scss */
+/* line 232, ../../scss/layout/style.scss */
 logo span:last-child {
   font-weight: bold;
   color: #ea541e;
@@ -325,7 +326,7 @@ logo span:last-child {
 }
 
 /* Sidebar */
-/* line 241, ../../scss/layout/style.scss */
+/* line 242, ../../scss/layout/style.scss */
 aside {
   float: left;
   width: 220px;
@@ -337,19 +338,19 @@ aside {
   position: fixed;
   border-right: 1px solid #cdcdcd;
 }
-/* line 250, ../../scss/layout/style.scss */
+/* line 251, ../../scss/layout/style.scss */
 aside ul {
   list-style: none;
 }
-/* line 253, ../../scss/layout/style.scss */
+/* line 254, ../../scss/layout/style.scss */
 aside li {
   border-top: 1px solid #cdcdcd;
 }
-/* line 256, ../../scss/layout/style.scss */
+/* line 257, ../../scss/layout/style.scss */
 aside li:last-child {
   border-bottom: 1px solid #cdcdcd;
 }
-/* line 260, ../../scss/layout/style.scss */
+/* line 261, ../../scss/layout/style.scss */
 aside a {
   display: block;
   padding: 15px 10px;
@@ -359,13 +360,13 @@ aside a {
   -webkit-transition: background 0.3s;
   transition: background 0.3s;
 }
-/* line 266, ../../scss/layout/style.scss */
+/* line 267, ../../scss/layout/style.scss */
 aside a:hover, aside a.active {
   background: #cdcdcd;
 }
 
 /* Main */
-/* line 273, ../../scss/layout/style.scss */
+/* line 274, ../../scss/layout/style.scss */
 main {
   float: left;
   margin-left: 220px;
@@ -373,7 +374,7 @@ main {
 }
 
 /* Footer */
-/* line 280, ../../scss/layout/style.scss */
+/* line 281, ../../scss/layout/style.scss */
 footer {
   text-align: center;
 }
