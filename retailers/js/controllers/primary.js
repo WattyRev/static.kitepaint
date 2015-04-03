@@ -11,7 +11,6 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', '$locatio
 				return;
 			}
 			if(!localStorage.retailer || localStorage.retailer === '') {
-				console.log('test');
 				state.go('login');
 				return;
 			}

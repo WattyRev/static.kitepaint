@@ -230,7 +230,6 @@ function verify_embed() {
 	function check_domain() {
 		checks++;
 		if(checks > 1) {
-			console.log(domains);
 			if(domains.indexOf(parent_domain) < 0) {
 				window.location.replace('error.php?m=bad_embed_domain');
 			}
