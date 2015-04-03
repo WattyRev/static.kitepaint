@@ -154,7 +154,7 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 				$.each(data, function(i, retailer) {
 					retailer.product_opt_out = JSON.parse(retailer.product_opt_out);
 					retailer.product_urls = JSON.parse(retailer.product_urls);
-					if (retailer.product_opt_out[scope.product.id] === true) {
+					if (retailer.product_opt_out[scope.product.id] === false) {
 						scope.retailers.push(retailer);
 					} 
 				});
@@ -485,7 +485,6 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 		if (scope.send_retailer.message) {
 			comments += name + ' has added a message:<br/>' + scope.send_retailer.message + '<br/><br/>';
 		}
-		console.log(designs);
 		$.each(designs, function(i, design) {
 			comments += '<img src="' + root.base_url + design + '" /><br/>';
 		});
@@ -498,29 +497,64 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			to: scope.send_retailer.retailer.email,
 			format: 'html'
 		};
-		$.ajax({
-			type: 'POST',
-			url: 'php/email.php',
-			data: content,
-			dataType: 'json',
-			success: function(data) {
-				if (data.sent) {
-					root.success('Your design has been sent');
-					scope.send_retailer.retailer = false;
-					scope.send_retailer.message = '';
-					scope.show_retailers = false;
-					root.$apply();
-				} else {
-					root.error(data.message);
-					root.$apply();
-				}
-			},
-			error: function(data) {
-				var message = data.message || 'Unable to send design. Try again later.';
-				root.error(message);
-				console.log('error', data);
+		//post to orders
+		var order = {
+			new_order: true,
+			retailer: scope.send_retailer.retailer.id,
+			user: root.user.user_id,
+			product: scope.product.id,
+			name: scope.design.name,
+			variations: []
+		};
+		$.each(scope.variations, function(i, variation) {
+			if (scope.send_retailer[variation.name]) {
+				order.variations.push(variation);
 			}
 		});
+		order.variations = JSON.stringify(order.variations);
+		$.ajax({
+			type: 'POST',
+			url: 'php/orders.php',
+			data: order,
+			dataType: 'json',
+			success: function(data) {
+				if(data.valid){
+					send_email();
+				} else {
+					root.error(data.message || 'Unable to send order. Try again later.');
+					root.$apply();
+				}
+			}, error: function(data) {
+				root.error('Unable to send order. Try again later.');
+				root.$apply();
+			}
+		});
+		
+		function send_email(){
+			$.ajax({
+				type: 'POST',
+				url: 'php/email.php',
+				data: content,
+				dataType: 'json',
+				success: function(data) {
+					if (data.sent) {
+						root.success('Your design has been sent');
+						scope.send_retailer.retailer = false;
+						scope.send_retailer.message = '';
+						scope.show_retailers = false;
+						root.$apply();
+					} else {
+						root.error(data.message);
+						root.$apply();
+					}
+				},
+				error: function(data) {
+					var message = data.message || 'Unable to send design. Try again later.';
+					root.error(message);
+					console.log('error', data);
+				}
+			});
+		}
 	};
 
 	scope.convert_to_png = function(svg) {
