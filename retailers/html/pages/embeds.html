@@ -32,5 +32,7 @@
 </div>
 <h2>Embed Code:</h2>
 <textarea disabled ng-model="embed_code"></textarea>
-<h2>Preview:</h2>
-<iframe width="{{iframe_width}}" height="{{iframe_height}}" src="{{embed_url}}" frameborder="0"></iframe>
+<div ng-show="embed_code">
+	<h2>Preview:</h2>
+	<iframe width="{{iframe_width}}" height="{{iframe_height}}" src="{{embed_url}}" frameborder="0"></iframe>
+</div>
