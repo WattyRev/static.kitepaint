@@ -77,7 +77,9 @@
 			endif; ?>
 
 			<!--[if IE 9]>
-				<link rel="stylesheet" href="css/<?php echo $css_files['legacy'] ?>" />
+				<?php foreach($css_files['legacy'] as $css):?>
+				<link rel="stylesheet" href="css/<?php echo $css ?>" />
+				<?php endforeach;?>
 			<![endif]-->
 
 			<?php 
@@ -95,12 +97,16 @@
 
 				// Test versions of Safari
 				if($safari AND $v5){ 
-					echo '<link rel="stylesheet" href="css/' , $css_files['legacy'] , '" />'; 
+					foreach($css_files['legacy'] as $css):
+						echo '<link rel="stylesheet" href="css/' , $css , '" />'; 
+					endforeach;
 				}
 			?>
 
-			<?php if ($embed) :?>
-				<link rel="stylesheet" href="css/<?php echo $css_files['embed'] ?>" />
+			<?php if ($embed) :
+				foreach($css_files['embed'] as $css):?>
+					<link rel="stylesheet" href="css/<?php echo $css ?>" />
+				<?php endforeach;?>
 				<script type="text/javascript">
 					var embed = true;
 				</script>
