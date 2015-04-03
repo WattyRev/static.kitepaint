@@ -1,0 +1,22 @@
+/* line 1, ../../scss/pages/embeds.scss */
+label {
+  display: block;
+  margin: 15px 0 5px;
+}
+
+/* line 5, ../../scss/pages/embeds.scss */
+.item {
+  display: inline-block;
+  width: 300px;
+}
+
+/* line 9, ../../scss/pages/embeds.scss */
+#controls {
+  margin: 20px 0;
+}
+
+/* line 12, ../../scss/pages/embeds.scss */
+textarea {
+  width: 90%;
+  height: 200px;
+}

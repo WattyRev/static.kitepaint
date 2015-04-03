@@ -141,7 +141,6 @@ function get_dependency(page) {
 	}
 	return dependency;
 }
-
 if (embed) {
 	verify_embed();
 } else {
@@ -162,9 +161,9 @@ function verify_embed() {
 	if (parent_domain.split('.').length === 3) {
 		parent_domain = parent_domain.split('.')[1] + '.' + parent_domain.split('.')[2]; //take of subdomain if exists
 	}
-	var path = window.location.href.split('#')[1];
+	var path = window.location.href.split('#!')[1];
 	if ( path !== '/edit/new?id=' + product) {
-		window.location.replace('error.php?m=bed_embed_url');
+		window.location.replace('error.php?m=bad_embed_url');
 	}
 
 	//Check domain

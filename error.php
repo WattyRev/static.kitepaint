@@ -7,12 +7,12 @@ if (isset($_GET['m'])) {
 
 if ($error_code === 'embedding_prohibited') {
 	$message = 'Embedding of KitePaint.com is prohibited.';
-} else if ($error_code === 'bad_embed_domain') {
+} elseif ($error_code === 'bad_embed_domain') {
 	$message = 'This site does not have permission to embed this page.';
-} else if ($error_code === 'cannot_verify_embed_domain') {
+} elseif ($error_code === 'cannot_verify_embed_domain') {
 	$message = 'Unable to verify embed permission. Please notify KitePaint.com administration if this issue continues to happen.';
-} else if ($error_code === 'bed_embed_url') {
-	$message = 'Invalid src url for iFrame embed.'
+} elseif ($error_code === 'bad_embed_url') {
+	$message = 'Invalid src url for iFrame embed.';
 } else {
 	$message = 'Unknown error ocurred';
 }
@@ -21,7 +21,7 @@ if ($error_code === 'embedding_prohibited') {
 <html>
 	<head>
 		<title>Error</title>
-		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/layout/style.css" />
 	</head>
 	<body>
 		<h1><?php echo $message ?></h1>

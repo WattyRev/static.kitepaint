@@ -157,9 +157,9 @@
 		<alert></alert>
 		<footer>
 
-			<?php if(!isset($_COOKIE['desktop'])): ?>
+			<?php if(!isset($_COOKIE['desktop']) && !$embed): ?>
 				<button class="mobile" ng-click="$root.request_desktop_version();">Request Desktop Version</button>
-			<?php else:?>
+			<?php elseif(!$embed):?>
 				<button ng-click="$root.return_mobile_version();">Return to Mobile Version</button>
 			<?php endif;?>
 			<?php if ($embed) :?>

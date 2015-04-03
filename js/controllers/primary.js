@@ -1,5 +1,5 @@
 app.controller('PrimaryController', ['$scope', '$rootScope', '$state', '$location', '$window', function(scope, root, state, $location, $window) {
-
+	console.log(embed);
 	//VARIABLES
 		scope.current_page = '';
 		root.base_url = environment === 'development' ? 'http://wattydev.com/projects/kite_paint' : 'http://kitepaint.com';

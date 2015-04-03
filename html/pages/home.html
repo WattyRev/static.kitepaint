@@ -136,7 +136,7 @@
 	</div>
 </div>
 <div class="designs">
-	<div class="content">
+	<div class="content" ng-show="designs">
 		<h2>Recent Designs</h2>
 		<ul>
 			<a ng-repeat="design in designs" ui-sref="view({id:{{design.id}}})">

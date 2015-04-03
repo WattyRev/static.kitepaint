@@ -154,8 +154,7 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 				$.each(data, function(i, retailer) {
 					retailer.product_opt_out = JSON.parse(retailer.product_opt_out);
 					retailer.product_urls = JSON.parse(retailer.product_urls);
-
-					if (retailer.product_opt_out.indexOf(scope.product.id) === -1) {
+					if (retailer.product_opt_out[scope.product.id] === true) {
 						scope.retailers.push(retailer);
 					} 
 				});
