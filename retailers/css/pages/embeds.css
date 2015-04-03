@@ -1,22 +1,36 @@
-/* line 1, ../../scss/pages/embeds.scss */
+/**
+ * Base
+ * Declare variables and mixins for frontend layout
+ */
+/* Colors */
+/* Mixins */
+/* line 3, ../../scss/pages/embeds.scss */
 label {
   display: block;
   margin: 15px 0 5px;
 }
 
-/* line 5, ../../scss/pages/embeds.scss */
+/* line 7, ../../scss/pages/embeds.scss */
 .item {
   display: inline-block;
   width: 300px;
 }
 
-/* line 9, ../../scss/pages/embeds.scss */
+/* line 11, ../../scss/pages/embeds.scss */
 #controls {
   margin: 20px 0;
 }
 
-/* line 12, ../../scss/pages/embeds.scss */
+/* line 14, ../../scss/pages/embeds.scss */
 textarea {
   width: 90%;
   height: 200px;
+}
+
+/* line 18, ../../scss/pages/embeds.scss */
+iframe {
+  border: 2px solid #cdcdcd;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
 }

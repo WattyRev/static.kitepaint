@@ -1,3 +1,5 @@
+@import "base";
+
 label {
 	display:block;
 	margin: 15px 0 5px;
@@ -12,4 +14,8 @@ label {
 textarea {
 	width: 90%;
 	height: 200px;
+}
+iframe {
+	border: 2px solid $light_grey;
+	@include border-radius(10px);
 }

@@ -44,7 +44,6 @@ app.controller('EmbedsController', ['$scope', '$rootScope', '$state', function(s
 					}
 				});
 				scope.products = data;
-				console.log(scope);
 				scope.$apply();
 			}
 		});
@@ -86,7 +85,6 @@ app.controller('EmbedsController', ['$scope', '$rootScope', '$state', function(s
 
 	//listeners 
 	scope.$watch('product', function(id) {
-		console.log(id);
 		if(id){
 			scope.embed_url = root.base_url + '/?embed=1&id=' + id + '#!/edit/new?id=' + id;
 			scope.generate_embed_code();

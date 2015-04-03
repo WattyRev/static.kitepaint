@@ -159,38 +159,83 @@ function verify_embed() {
 	var parent_domain = parent_url.split('://')[1]; //take of protocol
 	parent_domain = parent_domain.split('/')[0]; //take off path
 	if (parent_domain.split('.').length === 3) {
-		parent_domain = parent_domain.split('.')[1] + '.' + parent_domain.split('.')[2]; //take of subdomain if exists
+		parent_domain = parent_domain.split('.')[1] + '.' + parent_domain.split('.')[2]; //take off subdomain if exists
 	}
 	var path = window.location.href.split('#!')[1];
 	if ( path !== '/edit/new?id=' + product) {
 		window.location.replace('error.php?m=bad_embed_url');
 	}
 
-	//Check domain
+
+	//Get list of domains
+	var domains  = ['kitepaint.com', 'wattydev.com'];
 	var content = {
 		filter: {
-			id: product
+			activated: 1
 		},
 		return: [
-			'embed'
+			'website'
+		]
+	};
+	var checks = 0;
+	$.ajax({
+		type: 'GET',
+		url: 'php/manufacturers.php',
+		data: content,
+		dataType: 'json',
+		success:function(data) {
+			$.each(data, function(i, item) {
+				var domain = item.website.split('://')[1];
+				domain = domain.split('/')[0];
+				if (domain.split('.').length === 3) {
+					domain = domain.split('.')[1] + '.' + domain.split('.')[2]; //take off subdomain if exists
+				}
+				domains.push(domain);
+				check_domain();
+			});
+		},
+		error: function(data) {
+			check_domain();
+		}
+	});
+	content = {
+		filter: {
+			activated: 1
+		},
+		return: [
+			'url'
 		]
 	};
 	$.ajax({
 		type: 'GET',
-		url: 'php/products.php',
+		url: 'php/retailers.php',
 		data: content,
 		dataType: 'json',
-		success: function(data) {
-			var urls = data[0].embed.split(',');
-
-			if(urls.indexOf(parent_domain) < 0) {
-				window.location.replace('error.php?m=bad_embed_domain');
-			}
+		success:function(data) {
+			$.each(data, function(i, item) {
+				var domain = item.url.split('://')[1];
+				domain = domain.split('/')[0];
+				if (domain.split('.').length === 3) {
+					domain = domain.split('.')[1] + '.' + domain.split('.')[2]; //take off subdomain if exists
+				}
+				domains.push(domain);
+				check_domain();
+			});
 		},
 		error: function(data) {
-			window.location.replace('error.php?m=cannot_verify_embed_domain');
+			check_domain();
 		}
 	});
+
+	function check_domain() {
+		checks++;
+		if(checks > 1) {
+			console.log(domains);
+			if(domains.indexOf(parent_domain) < 0) {
+				window.location.replace('error.php?m=bad_embed_domain');
+			}
+		}
+	}
 }
 
 function create_cookie(name, value, days) {
