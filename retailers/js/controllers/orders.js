@@ -9,10 +9,63 @@ app.controller('OrdersController', ['$scope', '$rootScope', function(scope, root
 	//functions
 	scope.get = {
 		orders: function() {
-			console.log('orders');
+			var data = {
+				filter: {
+					retailer: root.retailer.id,
+				},
+				return: [
+					'id',
+					'user',
+					'product',
+					'name',
+					'designs',
+					'created'
+				]
+			};
+			$.ajax({
+				type: 'GET',
+				url: '../php/orders.php',
+				dataType: 'json',
+				data: data,
+				success: function(data) {
+					console.log(data);
+				},
+				error: function(data) {
+					console.log('error', data);
+				}
+			});
 		},
 		users: function() {
-			console.log('users');
+			var data = {
+				filter: {
+					activated: 1
+				},
+				return: [
+					'first_name',
+					'last_name',
+					'email',
+					'username',
+					'loginid'
+				]
+			};
+			$.ajax({
+				type: 'GET',
+				url: '../php/users.php',
+				dataType: 'json',
+				data: data,
+				success: function(data) {
+					scope.users = {};
+					$.each(data, function(i, user){
+						user.loginid = parseInt(user.loginid);
+						scope.users[user.loginid] = user;
+					});
+					scope.$apply();
+					console.log(scope.users);
+				},
+				error: function(data) {
+					console.log('error', data);
+				}
+			});
 		},
 		products: function() {
 			var data = {
@@ -62,6 +115,7 @@ app.controller('OrdersController', ['$scope', '$rootScope', function(scope, root
 						manufacturers[manufacturer.id] = manufacturer.name;
 					});
 					scope.manufacturers = manufacturers;
+					console.log(scope.manufacturers);
 					scope.$apply();
 				}
 			});
