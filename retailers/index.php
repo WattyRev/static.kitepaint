@@ -107,7 +107,7 @@
 				<li><a ui-sref="embeds" ng-class="{active: 'embeds' === current_page.name}">Embeds</a></li>
 				<li><a ui-sref="account" ng-class="{active: 'account' === current_page.name}">Account</a></li>
 				<li><a ui-sref="support" ng-class="{active: 'support' === current_page.name}">Support</a></li>
-				<li><a ng-click="sign_out()">Sign Out</a></li>
+				<li><a ng-click="$root.sign_out()">Sign Out</a></li>
 			</ul>
 		</aside>
 		<main ui-view id="{{current_page.name}}" ng-class="{loading: $root.loading}">

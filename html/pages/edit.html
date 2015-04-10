@@ -20,7 +20,7 @@
 		<div class="right half actions">
 			<button class="button" ng-click="save();" ng-show="design.id && $root.user.logged_in">{{saving ? 'Saving' : 'Save'}}</button>
 			<button class="button" ng-click="show_save_as = true" ng-show="$root.user.logged_in">Save As</button>
-			<button class="button" ng-click="show_retailers = true" ng-show="retailers.length">Retailers</button>
+			<button class="button" ng-click="show_send_retailer()" ng-show="retailers.length">Retailers</button>
 			<button class="button share" ng-click="show_share()">Share</button>
 			<div title="Settings" class="settings-button">
 				<svg viewBox="0 0 1000 1000" ng-click="show_settings = !show_settings;">
@@ -254,7 +254,11 @@
 
 <div class="lightbox show-retailers" ng-show="show_retailers">
 	<a ng-click="show_retailers = false" class="close right">Close</a>
-	<div class="content" ng-show="!send_retailer.retailer">
+	<div class="content" ng-show="!design.id">
+		<p>Save your design before sending it to a retailer.</p>
+		<button class="button action" ng-click="show_save_as = true">Save</button>
+	</div>
+	<div class="content" ng-show="!send_retailer.retailer && design.id">
 		<h3>Order this design from one of these retailers:</h3>
 		<ul class="retailers">
 			<li ng-repeat="retailer in retailers">

@@ -59,3 +59,8 @@ th {
   -webkit-transform: rotate(90deg);
   transform: rotate(90deg);
 }
+
+/* line 36, ../../scss/pages/orders.scss */
+.mesh {
+  fill: rgba(50, 50, 50, 0.5);
+}

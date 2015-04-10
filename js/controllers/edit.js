@@ -109,6 +109,9 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 				if (root.editing_share) {
 					scope.show_share();
 				}
+				if (root.editing_send_retailer) {
+					scope.show_send_retailer();
+				}
 				scope.$apply();
 				scope.get_product();
 				root.done(2);
@@ -467,6 +470,20 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			variation.svg = reset_designs[i].svg;
 		});
 		scope.show_reset = false;
+	};
+
+	scope.show_send_retailer = function() {
+		root.editing_send_retailer = true;
+		//if already saved, show send to retailer secreen
+		if(state.params.type === 'saved') {
+			root.editing_send_retailer = false;
+			scope.show_retailers = true;
+		} else if (root.user.logged_in) {
+			scope.show_save_as = true;
+			return;
+		} else {
+			scope.show_login = true;
+		}
 	};
 
 	scope.send_to_retailer = function() {

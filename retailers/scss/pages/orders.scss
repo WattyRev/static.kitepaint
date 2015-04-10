@@ -33,3 +33,6 @@ th {
 .descend:after {
 	@include rotate(90deg);
 }
+.mesh {
+	fill: rgba(50,50,50,.5);
+}
