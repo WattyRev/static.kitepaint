@@ -44,6 +44,7 @@
 			<script type="text/javascript" src="../js/libraries/angular.min.js"></script>
 			<script type="text/javascript" src="../js/libraries/angular-ui-router.js"></script>
 			<script type="text/javascript" src="../js/libraries/ui-router-styles.js"></script>
+			<script type="text/javascript" src="../js/libraries/canvg.js"></script>
 			<script type="text/javascript" src="js/app.js"></script>
 			<script type="text/javascript" src="js/controllers/primary.js"></script>
 			<script type="text/javascript" src="js/controllers/nav.js"></script>

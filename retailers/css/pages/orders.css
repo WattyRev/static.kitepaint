@@ -1,0 +1,61 @@
+/**
+ * Base
+ * Declare variables and mixins for frontend layout
+ */
+/* Colors */
+/* Mixins */
+/* line 2, ../../scss/pages/orders.scss */
+.design {
+  max-width: 50px;
+  max-height: 50px;
+  padding: 5px;
+  display: inline-block;
+}
+
+/* line 8, ../../scss/pages/orders.scss */
+.design-image img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* line 12, ../../scss/pages/orders.scss */
+.show-more {
+  margin: 20px auto;
+}
+
+/* line 15, ../../scss/pages/orders.scss */
+#search {
+  margin: 20px 0;
+}
+
+/* line 19, ../../scss/pages/orders.scss */
+th {
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* line 23, ../../scss/pages/orders.scss */
+.ascend:after, .descend:after {
+  content: ">";
+  left: 5px;
+  display: inline-block;
+  position: relative;
+}
+
+/* line 30, ../../scss/pages/orders.scss */
+.ascend:after {
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}
+
+/* line 33, ../../scss/pages/orders.scss */
+.descend:after {
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}

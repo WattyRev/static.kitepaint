@@ -163,7 +163,12 @@ ul.unstyled {
   clear: both;
 }
 
-/* line 114, ../../scss/layout/style.scss */
+/* line 113, ../../scss/layout/style.scss */
+.hidden {
+  display: none;
+}
+
+/* line 117, ../../scss/layout/style.scss */
 .button {
   padding: 10px;
   border: 0;
@@ -177,44 +182,44 @@ ul.unstyled {
   -webkit-transition: border-radius 0.3s;
   transition: border-radius 0.3s;
 }
-/* line 124, ../../scss/layout/style.scss */
+/* line 127, ../../scss/layout/style.scss */
 .button.action {
   background: #ea541e;
   font-size: 18px;
 }
-/* line 128, ../../scss/layout/style.scss */
+/* line 131, ../../scss/layout/style.scss */
 .button:hover {
   border-radius: 0;
 }
-/* line 131, ../../scss/layout/style.scss */
+/* line 134, ../../scss/layout/style.scss */
 .button.red {
   background: #C60005;
 }
 
-/* line 135, ../../scss/layout/style.scss */
+/* line 138, ../../scss/layout/style.scss */
 .left {
   display: block;
   float: left;
 }
 
-/* line 139, ../../scss/layout/style.scss */
+/* line 142, ../../scss/layout/style.scss */
 .right {
   display: block;
   float: right;
 }
 
-/* line 143, ../../scss/layout/style.scss */
+/* line 146, ../../scss/layout/style.scss */
 .half {
   width: 50%;
 }
 
-/* line 146, ../../scss/layout/style.scss */
+/* line 149, ../../scss/layout/style.scss */
 .center {
   margin: 0 auto;
   text-align: center;
 }
 
-/* line 150, ../../scss/layout/style.scss */
+/* line 153, ../../scss/layout/style.scss */
 .error {
   padding: 10px;
   margin: 10px auto;
@@ -224,7 +229,7 @@ ul.unstyled {
   border-radius: 10px;
 }
 
-/* line 158, ../../scss/layout/style.scss */
+/* line 161, ../../scss/layout/style.scss */
 .success {
   padding: 10px;
   margin: 10px auto;
@@ -234,12 +239,12 @@ ul.unstyled {
   border-radius: 10px;
 }
 
-/* line 166, ../../scss/layout/style.scss */
+/* line 169, ../../scss/layout/style.scss */
 input.ng-invalid.ng-dirty {
   box-shadow: 0px 0px 7px 0px #ff0000;
 }
 
-/* line 169, ../../scss/layout/style.scss */
+/* line 172, ../../scss/layout/style.scss */
 .lightbox {
   position: fixed;
   width: 100%;
@@ -248,7 +253,7 @@ input.ng-invalid.ng-dirty {
   top: 0;
   left: 0;
 }
-/* line 177, ../../scss/layout/style.scss */
+/* line 180, ../../scss/layout/style.scss */
 .lightbox .content {
   width: 100%;
   max-width: 500px;
@@ -261,11 +266,11 @@ input.ng-invalid.ng-dirty {
   overflow: auto;
   position: relative;
 }
-/* line 189, ../../scss/layout/style.scss */
+/* line 192, ../../scss/layout/style.scss */
 .lightbox h2 {
   margin: 0 0 10px;
 }
-/* line 192, ../../scss/layout/style.scss */
+/* line 195, ../../scss/layout/style.scss */
 .lightbox input, .lightbox select {
   display: block;
   margin: 5px auto 10px;
@@ -274,50 +279,50 @@ input.ng-invalid.ng-dirty {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 198, ../../scss/layout/style.scss */
+/* line 201, ../../scss/layout/style.scss */
 .lightbox .button {
   margin: 5px auto 10px;
 }
-/* line 201, ../../scss/layout/style.scss */
+/* line 204, ../../scss/layout/style.scss */
 .lightbox .content .half {
   width: 46%;
   padding: 2%;
 }
-/* line 205, ../../scss/layout/style.scss */
+/* line 208, ../../scss/layout/style.scss */
 .lightbox .close {
   position: absolute;
   top: 5px;
   right: 5px;
 }
 
-/* line 211, ../../scss/layout/style.scss */
+/* line 214, ../../scss/layout/style.scss */
 .nowrap {
   white-space: nowrap;
 }
 
-/* line 214, ../../scss/layout/style.scss */
+/* line 217, ../../scss/layout/style.scss */
 .mobile {
   display: none;
 }
 
 /* Logo */
-/* line 219, ../../scss/layout/style.scss */
+/* line 222, ../../scss/layout/style.scss */
 logo {
   display: block;
   width: 190px;
   margin: 20px auto;
   text-align: center;
 }
-/* line 225, ../../scss/layout/style.scss */
+/* line 228, ../../scss/layout/style.scss */
 logo span {
   display: block;
 }
-/* line 228, ../../scss/layout/style.scss */
+/* line 231, ../../scss/layout/style.scss */
 logo span:first-child {
   font-size: 30px;
   color: #485BE7;
 }
-/* line 232, ../../scss/layout/style.scss */
+/* line 235, ../../scss/layout/style.scss */
 logo span:last-child {
   font-weight: bold;
   color: #ea541e;
@@ -326,7 +331,7 @@ logo span:last-child {
 }
 
 /* Sidebar */
-/* line 242, ../../scss/layout/style.scss */
+/* line 245, ../../scss/layout/style.scss */
 aside {
   float: left;
   width: 220px;
@@ -338,19 +343,19 @@ aside {
   position: fixed;
   border-right: 1px solid #cdcdcd;
 }
-/* line 251, ../../scss/layout/style.scss */
+/* line 254, ../../scss/layout/style.scss */
 aside ul {
   list-style: none;
 }
-/* line 254, ../../scss/layout/style.scss */
+/* line 257, ../../scss/layout/style.scss */
 aside li {
   border-top: 1px solid #cdcdcd;
 }
-/* line 257, ../../scss/layout/style.scss */
+/* line 260, ../../scss/layout/style.scss */
 aside li:last-child {
   border-bottom: 1px solid #cdcdcd;
 }
-/* line 261, ../../scss/layout/style.scss */
+/* line 264, ../../scss/layout/style.scss */
 aside a {
   display: block;
   padding: 15px 10px;
@@ -360,13 +365,13 @@ aside a {
   -webkit-transition: background 0.3s;
   transition: background 0.3s;
 }
-/* line 267, ../../scss/layout/style.scss */
+/* line 270, ../../scss/layout/style.scss */
 aside a:hover, aside a.active {
   background: #cdcdcd;
 }
 
 /* Main */
-/* line 274, ../../scss/layout/style.scss */
+/* line 277, ../../scss/layout/style.scss */
 main {
   float: left;
   margin-left: 220px;
@@ -374,7 +379,7 @@ main {
 }
 
 /* Footer */
-/* line 281, ../../scss/layout/style.scss */
+/* line 284, ../../scss/layout/style.scss */
 footer {
   text-align: center;
 }
