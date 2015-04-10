@@ -83,12 +83,19 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', '$locatio
 			}
 		};
 
+		root.sign_out = function() {
+			root.retailer = '';
+			localStorage.retailer = '';
+			scope.check_user();
+		};
+
 	//LISTENERS
 		//Update current page data
 		root.$on('$stateChangeStart', function(event, toState) {
 			scope.current_page = toState;
 			scope.check_user();
 			root.loading = true;
+			//root.$apply();
 		});
 
 		if (environment === 'production'){

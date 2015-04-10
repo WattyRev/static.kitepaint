@@ -9,7 +9,6 @@ app.controller('LoginController', ['$scope', '$rootScope', '$state', function(sc
 		}
 		var retailer = JSON.parse(localStorage.retailer);
 		if (!retailer || !retailer.id || !retailer.actcode) {
-			console.log('clear1');
 			localStorage.retailer = '';
 			return;
 		}
