@@ -298,7 +298,7 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 
 	scope.save_as = function() {
 		scope.saving = true;
-		var user_ud,
+		var user_id,
 			public;
 		if (root.no_account) {
 			user_id = 0;
@@ -316,6 +316,11 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			public: public ? 1 : 0,
 			new: 1
 		};
+		var images = [];
+		$.each(scope.variations, function(i, variation) {
+			images.push(scope.convert_to_png(variation.svg));
+		});
+		design.images = JSON.stringify(images);
 
 		$.ajax({
 			type: 'POST',
@@ -323,6 +328,7 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			data: design,
 			dataType: 'json',
 			success: function(data) {
+				scope.design.images = JSON.parse(data.images);
 				if (root.no_account) {
 					root.no_account = false;
 					root.share_design = {id:data.id, public:"1"};

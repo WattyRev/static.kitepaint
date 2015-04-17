@@ -99,11 +99,28 @@ if ($_GET){
 		$product = $_POST['product'];
 		$variations = $_POST['variations'];
 		$public = $_POST['public'];
+		if (isset($_POST['images'])) {
+			$p_images = json_decode($_POST['images']);
+			define('UPLOAD_DIR', '../img/designs/');
+			$images = array();
+			foreach($p_images as $type=>$image) {
+				$image = str_replace('data:image/png;base64,', '', $image);
+   				$image = str_replace(' ', '+', $image);
+   				$data = base64_decode($image);
+   				$file = UPLOAD_DIR . $_POST['id'] . str_replace(' ', '', $type) . '.png';
+   				$success = file_put_contents($file, $data);
+   				$images[$type] = str_replace('..', '', $file);
+   				if(!$success) {
+   					$response->message = 'Unable to save the image';
+   				}
+			}
+			$response->images = JSON_encode($images);
+		}
 
 		$code = generate_code(20);
-		$sql = sprintf("insert into designs (created, updated, name, user, product, variations, public) value (now(), now(), '%s', '%s', '%s', '%s', '%s')",
+		$sql = sprintf("insert into designs (created, updated, name, user, product, variations, public, images) value (now(), now(), '%s', '%s', '%s', '%s', '%s', '%s')",
 		mysql_real_escape_string($name), mysql_real_escape_string($user)
-		, mysql_real_escape_string($product), mysql_real_escape_string($variations), mysql_real_escape_string($public));
+		, mysql_real_escape_string($product), mysql_real_escape_string($variations), mysql_real_escape_string($public), mysql_real_escape_string($response->images));
 		
 		
 		if (mysql_query($sql)) {
