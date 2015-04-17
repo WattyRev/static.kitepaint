@@ -57,6 +57,7 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', '$locatio
 						root.user = data;
 						root.invalid_login = false;
 						root.login_message = data.message;
+						root.no_account = false;
 					}
 					root.login_loading = undefined;
 					if (callback) {
