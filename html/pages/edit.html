@@ -105,7 +105,7 @@
 		<label for="save_as_name">What do you want to name your design?</label>
 		<input type="text" id="save_as_name" ng-model="save_as_name" />
 		<button class="button" ng-click="save_as();">Save</button>
-		<button class="button" ng-click="show_save_as = false">Cancel</button>
+		<button class="button" ng-click="show_save_as = false; $root.editing_send_retailer = false; root.editing_share = false;">Cancel</button>
 	</div>
 
 	<div class="prompt rename" ng-show="show_rename">
@@ -285,6 +285,7 @@
 		<p>Who is it from?</p>
 		<input type="text" ng-model="send_retailer.first_name" placeholder="First Name" required/>
 		<input type="text" ng-model="send_retailer.last_name" placeholder="Last Name" required/>
+		<input type="email" ng-model="send_retailer.email" placeholder="Email Address" required/>
 		<button class="button">Send your design</button>
 	</form>
 </div>

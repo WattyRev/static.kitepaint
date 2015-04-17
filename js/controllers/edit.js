@@ -524,9 +524,15 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 		var order = {
 			new_order: true,
 			retailer: scope.send_retailer.retailer.id,
-			user: root.user.user_id,
+			user: {
+				id: root.user.user_id ? root.user.user_id : 0,
+				first_name: scope.send_retailer.first_name,
+				last_name: scope.send_retailer.last_name,
+				email: scope.send_retailer.email
+			},
 			product: scope.product.id,
 			name: scope.design.name,
+			message: scope.send_retailer.message,
 			variations: []
 		};
 		$.each(scope.variations, function(i, variation) {

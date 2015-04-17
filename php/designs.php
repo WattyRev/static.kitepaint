@@ -99,6 +99,25 @@ if ($_GET){
 		$product = $_POST['product'];
 		$variations = $_POST['variations'];
 		$public = $_POST['public'];
+
+		$code = generate_code(20);
+		$sql = sprintf("insert into designs (created, updated, name, user, product, variations, public) value (now(), now(), '%s', '%s', '%s', '%s', '%s')",
+		mysql_real_escape_string($name), mysql_real_escape_string($user)
+		, mysql_real_escape_string($product), mysql_real_escape_string($variations), mysql_real_escape_string($public));
+		
+		
+		if (mysql_query($sql)) {
+			$id = mysql_insert_id();
+
+			$response->id = $id;
+		
+		} else {
+			$response->valid = false;
+			$response->message = 'Unable to save';
+			echo json_encode($response);
+			return;
+		}
+
 		if (isset($_POST['images'])) {
 			$p_images = json_decode($_POST['images']);
 			define('UPLOAD_DIR', '../img/designs/');
@@ -107,7 +126,7 @@ if ($_GET){
 				$image = str_replace('data:image/png;base64,', '', $image);
    				$image = str_replace(' ', '+', $image);
    				$data = base64_decode($image);
-   				$file = UPLOAD_DIR . $_POST['id'] . str_replace(' ', '', $type) . '.png';
+   				$file = UPLOAD_DIR . $response->id . str_replace(' ', '', $type) . '.png';
    				$success = file_put_contents($file, $data);
    				$images[$type] = str_replace('..', '', $file);
    				if(!$success) {
@@ -115,25 +134,15 @@ if ($_GET){
    				}
 			}
 			$response->images = JSON_encode($images);
-		}
 
-		$code = generate_code(20);
-		$sql = sprintf("insert into designs (created, updated, name, user, product, variations, public, images) value (now(), now(), '%s', '%s', '%s', '%s', '%s', '%s')",
-		mysql_real_escape_string($name), mysql_real_escape_string($user)
-		, mysql_real_escape_string($product), mysql_real_escape_string($variations), mysql_real_escape_string($public), mysql_real_escape_string($response->images));
-		
-		
-		if (mysql_query($sql)) {
-			$id = mysql_insert_id();
+			$query = sprintf("update designs set images = '%s' where id = '%s'",
+				mysql_real_escape_string($response->images), mysql_real_escape_string($response->id));
 
-			$response->id = $id;
-			echo json_encode($response);
-		
-		} else {
-			$response->valid = false;
-			$response->message = 'Unable to save';
-			echo json_encode($response);
-			return;
+			if (mysql_query($query)) {
+			} else {
+				$response->valid = false;
+				$response->message = 'Unable to change ' . $metric;
+			}
 		}
 	}
 
