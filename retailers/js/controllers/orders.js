@@ -14,6 +14,7 @@ app.controller('OrdersController', ['$scope', '$rootScope',
 		scope.design_image = '';
 		scope.search_by = 'user';
 		scope.search = '';
+		scope.view = {message:''};
 
 		//functions
 		scope.get = {
@@ -25,6 +26,10 @@ app.controller('OrdersController', ['$scope', '$rootScope',
 					return :[
 						'id',
 						'user',
+						'first_name',
+						'last_name',
+						'email',
+						'message',
 						'product',
 						'name',
 						'designs',
@@ -148,7 +153,6 @@ app.controller('OrdersController', ['$scope', '$rootScope',
 		$.each(scope.get, function(i, go) {
 			go();
 		});
-
 		scope.parse_data = function() {
 			scope.finished_calls++;
 			if(scope.finished_calls < 4) {
@@ -163,7 +167,11 @@ app.controller('OrdersController', ['$scope', '$rootScope',
 					id: order.id,
 					name: order.name,
 					product: scope.manufacturers[scope.products[order.product].manufacturer] + ' ' + scope.products[order.product].name,
-					user: scope.users[order.user]
+					first_name: order.first_name,
+					last_name: order.last_name,
+					email: order.email,
+					user: scope.users[order.user],
+					message: order.message
 				});
 			});
 			scope.search_orders();

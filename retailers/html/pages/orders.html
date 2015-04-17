@@ -20,16 +20,18 @@
 			<th ng-class="{descend: sort_by === 'email' && sort_direction === 'descending', ascend: sort_by === 'email' && sort_direction === 'ascending'}" ng-click="sort('email')">Email</th>
 			<th ng-class="{descend: sort_by === 'name' && sort_direction === 'descending', ascend: sort_by === 'name' && sort_direction === 'ascending'}" ng-click="sort('name')">Design Name</th>
 			<th>Designs</th>
+			<th>Message</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="order in orders">
 			<td>{{order.created}}</td>
 			<td>{{order.product}}</td>
-			<td>{{order.user.first_name}} {{order.user.last_name}} ({{order.user.username}})</td>
-			<td><a href="mailto:{{order.user.email}}">{{order.user.email}}</a></td>
+			<td>{{order.first_name}} {{order.last_name}} ({{order.user.username}})</td>
+			<td><a href="mailto:{{order.email}}">{{order.email}}</a></td>
 			<td>{{order.name}}</td>
 			<td class="designs"><div class="design" ng-repeat="design in order.designs" ng-bind-html="design.svg" title="{{design.name}} | Click to see full size image" ng-click="show_image(design)"></div></td>
+			<td><a ng-click="view.message = order.message" ng-show="order.message">View</a></td>
 		</tr>
 	</tbody>
 </table>
@@ -43,5 +45,14 @@
 		<a ng-click="design_image = ''" class="close">Cancel</a>
 		<p>Right click on image to save</p>
 		<img src="{{design_image}}" />
+	</div>
+</div>
+
+
+<div class="lightbox design-image" ng-show="view.message">
+	<div class="content">
+		<a ng-click="view.message = ''" class="close">Cancel</a>
+		<p>This message was sent from the user:</p>
+		<p>{{view.message}}</p>
 	</div>
 </div>
