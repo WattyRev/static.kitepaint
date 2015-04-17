@@ -36,7 +36,7 @@
 	</tbody>
 </table>
 <p ng-show="!orders.length">No orders match your search.</p>
-<button ng-show="all_orders.length < orders.length" class="button action show-more" ng-click="show = show + 25; display();">Show More</button>
+<button ng-show="all_orders.length > orders.length" class="button action show-more" ng-click="show = show + 25; display();">Show More</button>
 
 <canvas id="canvas" class='hidden' width="1000px" height="600px"></canvas> 
 

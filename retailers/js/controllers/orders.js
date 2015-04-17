@@ -175,6 +175,7 @@ app.controller('OrdersController', ['$scope', '$rootScope',
 				});
 			});
 			scope.search_orders();
+			scope.sort();
 			scope.$apply();
 		};
 
@@ -227,16 +228,16 @@ app.controller('OrdersController', ['$scope', '$rootScope',
 				if(scope.sort_by === 'created' || scope.sort_by === 'product' || scope.sort_by === 'name'){
 					if(scope.sort_direction === 'ascending') {
 						if(a[scope.sort_by] < b[scope.sort_by]) {
-							return 1;
-						} else if(a[scope.sort_by] > b[scope.sort_by]) {
 							return -1;
+						} else if(a[scope.sort_by] > b[scope.sort_by]) {
+							return 1;
 						}
 						return 0;
 					} else {
 						if(a[scope.sort_by] < b[scope.sort_by]) {
-							return -1;
-						} else if(a[scope.sort_by] > b[scope.sort_by]) {
 							return 1;
+						} else if(a[scope.sort_by] > b[scope.sort_by]) {
+							return -1;
 						}
 						return 0;
 					}
