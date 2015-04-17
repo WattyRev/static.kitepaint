@@ -329,7 +329,11 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 			dataType: 'json',
 			success: function(data) {
 				scope.design.images = JSON.parse(data.images);
-				if (root.no_account) {
+				scope.design.name = data.name;
+				if (root.no_account && root.editing_send_retailer) {
+					root.editing_send_retailer = false;
+					scope.show_retailers = true;
+				} else if (root.no_account && root.editing_share) {
 					root.no_account = false;
 					root.share_design = {id:data.id, public:"1"};
 					root.show_share = true;

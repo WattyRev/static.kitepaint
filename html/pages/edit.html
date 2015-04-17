@@ -254,11 +254,11 @@
 
 <div class="lightbox show-retailers" ng-show="show_retailers">
 	<a ng-click="show_retailers = false" class="close right">Close</a>
-	<div class="content" ng-show="!design.id">
+	<div class="content" ng-show="!design.id && !$root.no_account">
 		<p>Save your design before sending it to a retailer.</p>
 		<button class="button action" ng-click="show_save_as = true">Save</button>
 	</div>
-	<div class="content" ng-show="!send_retailer.retailer && design.id">
+	<div class="content" ng-show="!send_retailer.retailer && (design.id || $root.no_account)">
 		<h3>Order this design from one of these retailers:</h3>
 		<ul class="retailers">
 			<li ng-repeat="retailer in retailers">

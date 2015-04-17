@@ -45,12 +45,12 @@ if($_POST){
 		$message = $_POST['message'];
 		$designs = $_POST['variations'];
 
-		$sql = sprintf("insert into orders (retailer,user,first_name,last_name,email,product,name,designs,message,created) value ('%s','%s','%s','%s','%s','%s',now())",
+		$sql = sprintf("insert into orders (retailer,user,first_name,last_name,email,product,name,designs,message,created) value ('%s','%s','%s','%s','%s','%s','%s','%s','%s',now())",
 		mysql_real_escape_string($retailer), 
-		mysql_real_escape_string($user->id),  
-		mysql_real_escape_string($user->first_name),  
-		mysql_real_escape_string($user->last_name),  
-		mysql_real_escape_string($user->email),  
+		mysql_real_escape_string($user['id']),  
+		mysql_real_escape_string($user['first_name']),  
+		mysql_real_escape_string($user['last_name']),  
+		mysql_real_escape_string($user['email']),  
 		mysql_real_escape_string($product), 
 		mysql_real_escape_string($name), 
 		mysql_real_escape_string($designs),

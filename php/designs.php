@@ -144,6 +144,8 @@ if ($_GET){
 				$response->message = 'Unable to change ' . $metric;
 			}
 		}
+		$response->name = $name;
+		echo json_encode($response);
 	}
 
 	//Update
