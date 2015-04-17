@@ -42,14 +42,16 @@ if($_POST){
 		$user = $_POST['user'];
 		$product = $_POST['product'];
 		$name = $_POST['name'];
+		$message = $_POST['message'];
 		$designs = $_POST['variations'];
 
-		$sql = sprintf("insert into orders (retailer,user,product,name,designs,created) value ('%s','%s','%s','%s','%s',now())",
+		$sql = sprintf("insert into orders (retailer,user,product,name,designs,message,created) value ('%s','%s','%s','%s','%s','%s',now())",
 		mysql_real_escape_string($retailer), 
 		mysql_real_escape_string($user), 
 		mysql_real_escape_string($product), 
-		mysql_real_escape_string($name), 
-		mysql_real_escape_string($designs));
+		mysql_real_escape_string($name),  
+		mysql_real_escape_string($designs),
+		mysql_real_escape_string($message));
 		
 		if (mysql_query($sql)) {
 			$id = mysql_insert_id();
