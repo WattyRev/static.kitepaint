@@ -80,13 +80,12 @@ app.controller('EmbedsController', ['$scope', '$rootScope', '$state', function(s
 			scope.embed_code = '';
 		}
 		scope.embed_code = '<iframe width="' + scope.iframe_width + '" height="' + scope.iframe_height + '" src="' + scope.embed_url + '" frameborder="0"></iframe>';
-
 	};
 
 	//listeners 
 	scope.$watch('product', function(id) {
 		if(id){
-			scope.embed_url = root.base_url + '/?embed=1&id=' + id + '#!/edit/new?id=' + id;
+			scope.embed_url = root.base_url + '/?embed=1&id=' + id + '&retailer=' + root.retailer.id + '#!/edit/new?id=' + id;
 			scope.generate_embed_code();
 		}
 	});

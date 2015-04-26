@@ -19,6 +19,7 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 	scope.show_retailers = false;
 	scope.show_settings = false;
 	scope.variations = [];
+	scope.embedded_retailer = retailer || false;
 
 	window.scope = scope;
 
@@ -158,7 +159,9 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 					retailer.product_opt_out = JSON.parse(retailer.product_opt_out);
 					retailer.product_urls = JSON.parse(retailer.product_urls);
 					if (retailer.product_opt_out[scope.product.id] === false) {
-						scope.retailers.push(retailer);
+						if(!scope.embedded_retailer || retailer.id === scope.embedded_retailer){
+							scope.retailers.push(retailer);
+						}
 					} 
 				});
 				scope.$apply();

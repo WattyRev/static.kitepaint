@@ -34,6 +34,7 @@
 				<script type="text/javascript">
 					var embed = true;
 					var product = <?php echo $_GET['id']; ?>;
+					var retailer = <?php echo $_GET['retailer'];?>;
 				</script>
 			<?php else:?>
 				<script type="text/javascript">
