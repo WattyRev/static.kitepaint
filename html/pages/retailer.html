@@ -1,2 +1,62 @@
-<h1>Retailer</h1>
-<p>Coming soon...</p>
+<div id="landing" class="section">
+	<div class="content">
+		<div class="text">
+			<h1>Get started now</h1>
+			<p>We will work directly with you so you can start receiving custom orders from KitePaint.com.</p>
+		</div>
+		<form ng-hide="inquired" ng-submit="send()">
+			<div>
+				<label for="input-name">Name</label>
+				<input type="text" id="input-name" placeholder="e.g. Joe Bob" ng-model="input_name" required />
+				<label for="input-email">Email</label>
+				<input type="email" id="input-email" placeholder="e.g. joe@bob.com" ng-model="input_email" required />
+				<label for="input-company">Company</label>
+				<input type="text" id="input-company" ng-model="input_company" />
+				<button class="button action">Get Started</button>
+			</div>
+		</form>
+		<div class="message" ng-show="inquired">
+			<div>
+				<h2>We got your request!</h2>
+				<p>We will email you soon to follow up on your request to get custom kite design tools for your products.</p>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>
+<div id="about" class="section">
+	<div class="content">
+		<h1>What can KitePaint do for you?</h1>
+		<p>KitePaint.com offers a library of custom kite ordering tools for use by retailers and manufacturers. We send custom kite orders directly to your inbox.</p>
+		<ul>
+			<li>Listing on KitePaint.com. Your retailer will appear in the drop-down list on every KitePaint editor</li>
+			<li>Embeddable kite designers to include on your website's product pages</li>
+			<li>Access to the Retailers Portal to easily manage your account</li>
+			<li>Constant support and automatic updates</li>
+		</ul>
+	</div>
+</div>
+<div id="Pricing" class="section">
+	<div class="content">
+		<h1>Pricing</h1>
+		<p>Please <a ng-click="show_lightbox = true;">contact us</a> for more information</p>
+	</div>
+</div>
+
+<div class="lightbox" ng-show="show_lightbox">
+	<a ng-click="show_lightbox = false" class="close right">Close</a>
+	<div class="content">
+		<h2>Inquire about working with KitePaint.com</h2>
+		<form ng-submit="send(); show_lightbox = false">
+			<div>
+				<label for="input-name">Name</label>
+				<input type="text" id="input-name" placeholder="e.g. Joe Bob" ng-model="input_name" required />
+				<label for="input-email">Email</label>
+				<input type="email" id="input-email" placeholder="e.g. joe@bob.com" ng-model="input_email" required />
+				<label for="input-company">Company</label>
+				<input type="text" id="input-company" ng-model="input_company" />
+				<button class="button action">Get Started</button>
+			</div>
+		</form>
+	</div>
+</div>

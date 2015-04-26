@@ -180,3 +180,7 @@
   font-size: 18px;
   width: 100px;
 }
+/* line 159, ../../scss/pages/home.scss */
+#home .marketing .half {
+  width: 47%;
+}

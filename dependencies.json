@@ -118,6 +118,12 @@
 					],
 					"responsive":[]
 				},
+				"retailer":{
+					"main":[
+						"pages/retailer.css"
+					],
+					"responsive":[]
+				},
 				"view":{
 					"main":[
 						"pages/editor.css"
