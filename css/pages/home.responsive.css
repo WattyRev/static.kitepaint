@@ -9,21 +9,28 @@
 /* Mixins */
 /* ~Tablet Portrait */
 @media only screen and (max-width: 800px) {
-  /* line 11, ../../scss/pages/home.responsive.scss */
-  #home .user .content > div {
+  /* line 12, ../../scss/pages/home.responsive.scss */
+  #home .user div.content > div {
     float: none;
     width: 90%;
+    text-align: center;
   }
-  /* line 15, ../../scss/pages/home.responsive.scss */
-  #home .user form {
+  /* line 17, ../../scss/pages/home.responsive.scss */
+  #home .user .content > form {
     width: 73%;
     float: none;
     margin: 0 auto;
   }
+  /* line 23, ../../scss/pages/home.responsive.scss */
+  #home .marketing .content .half {
+    float: none;
+    width: 90%;
+    margin: 10px auto;
+  }
 }
 /* ~Phone */
 @media only screen and (max-width: 450px) {
-  /* line 25, ../../scss/pages/home.responsive.scss */
+  /* line 33, ../../scss/pages/home.responsive.scss */
   #home .news .content {
     padding: 15px;
   }

@@ -19,7 +19,12 @@ app.controller('EditController', ['$scope', '$rootScope', '$location', '$state',
 	scope.show_retailers = false;
 	scope.show_settings = false;
 	scope.variations = [];
-	scope.embedded_retailer = retailer || false;
+
+	scope.embedded_retailer = false;
+
+	if(window.retailer !== undefined) {
+		scope.embedded_retailer = window.retailer;
+	}
 
 	window.scope = scope;
 

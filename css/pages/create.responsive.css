@@ -21,8 +21,8 @@
     width: 77%;
   }
   /* line 20, ../../scss/pages/create.responsive.scss */
-  #create .name {
-    padding: 10px 0;
+  #create div.name {
+    padding: 10px 0 0;
     top: 0;
     width: 100%;
   }

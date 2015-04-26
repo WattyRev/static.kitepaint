@@ -7,15 +7,23 @@
 
 /* ~Tablet Portrait */
 @media only screen and (max-width : 800px) {
-	#home .user {
-		.content>div {
-			float:none;
-			width:90%
+	#home {
+		.user {
+			div.content>div {
+				float:none;
+				width:90%;
+				text-align:center;
+			}
+			.content > form {
+				width:73%;
+				float:none;
+				margin:0 auto;
+			}
 		}
-		form {
-			width:73%;
+		.marketing .content .half {
 			float:none;
-			margin:0 auto;
+			width: 90%;
+			margin: 10px auto;
 		}
 	}
 }
