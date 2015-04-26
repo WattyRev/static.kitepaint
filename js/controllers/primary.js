@@ -160,7 +160,6 @@ app.controller('PrimaryController', ['$scope', '$rootScope', '$state', '$locatio
 			}
 			var user_data = JSON.parse(localStorage.user);
 			user_data.update_login = true;
-			root.login_loading = true;
 			$.ajax({
 				type: 'POST',
 				url: 'php/index.php',

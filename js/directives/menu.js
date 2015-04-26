@@ -4,8 +4,8 @@ app.directive('menu', function() {
 
 		scope.change_password = function() {
 			scope.$broadcast('change password');
-		}
-	};
+		};
+	}
 	return {
 		restrict: 'E',
 		templateUrl: 'html/directives/menu.html',
