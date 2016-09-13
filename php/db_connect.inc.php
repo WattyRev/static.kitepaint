@@ -1,13 +1,15 @@
 <?php
-if ($_SERVER['SERVER_NAME'] === 'kitepaint.com' || $_SERVER['SERVER_NAME'] === 'wattydev.com') {
+if ($_SERVER['SERVER_NAME'] === 'beta.kitepaint.com' || $_SERVER['SERVER_NAME'] === 'kitepaint.com' || $_SERVER['SERVER_NAME'] === 'wattydev.com') {
 	$environment = 'remote';
 } else {
 	$environment = 'local';
 }
+
 // Database settings
 // database hostname or IP. default:localhost
 // localhost will be correct for 99% of times
 define("HOST", "localhost");
+
 // Database user
 // Database password
 if ($environment === 'remote'){

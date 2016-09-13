@@ -46,3 +46,4 @@ sftp-config.json
 *.scssc
 *.sublime-workspace
 kitepaint.sublime-workspace
+.vscode/ftp-sync.json
