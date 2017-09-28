@@ -5,9 +5,10 @@ app.directive('share', function() {
 			scope.encoded_url = root.base_url;
 			scope.selected = 'link';
 			scope.make_public = false;
+			scope.variationImages = [];
 
 		//FUNCTIONS
-			
+
 			scope.share_facebook = function() {
 				FB.ui(
 					{
@@ -59,7 +60,25 @@ app.directive('share', function() {
 					}
 				});
 			};
-		
+
+			scope.generate_images = function() {
+				scope.variationImages = scope.variations.map(function (variation) {
+				   return {
+					   name: variation.name,
+					   imageData: scope.convert_to_png(variation.svg)
+				   };
+			   });
+			}
+
+			scope.convert_to_png = function(svg) {
+				var find = 'mesh"',
+					regex = new RegExp(find, 'g'),
+					processed_svg = svg.replace(regex, 'mesh" fill="rgba(50,50,50,.5)"'),
+					svg_data = 'data:image/svg+xml;base64,' + btoa(processed_svg);
+				canvg('canvas', svg_data);
+				return document.getElementsByTagName("canvas")[0].toDataURL("image/png");
+			};
+
 			//close lightbox
 			$(document).click(function(e) {
 				var clicked = $(e.target);

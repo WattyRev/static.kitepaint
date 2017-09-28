@@ -49,12 +49,12 @@
 	</div>
 	<div class="canvas-wrap" ng-class="{wide: collapse_colors}" style="background-image:url(img/backgrounds/{{background}})">
 		<div class="variations"ng-class="{wide: collapse_colors}">
-			<div 
-				class="variation" 
-				ng-repeat="variation in variations" 
-				title="{{variation.name}}" 
-				ng-bind-html="variation.svg" 
-				ng-click="select_variation(variation);" 
+			<div
+				class="variation"
+				ng-repeat="variation in variations"
+				title="{{variation.name}}"
+				ng-bind-html="variation.svg"
+				ng-click="select_variation(variation);"
 				ng-class="{selected: current_variation.name === variation.name}"
 			>
 			</div>
@@ -66,3 +66,4 @@
 </div>
 
 <share></share>
+<canvas id="canvas" class='hidden' width="1000px" height="600px"></canvas>

@@ -21,10 +21,10 @@ if ($environment === 'remote'){
 }
 // Database name
 define("DB", "r3vfan_kite_paint");
- 
+
 ############## Make the mysql connection ###########
 $conn = mysql_connect(HOST, DBUSER, PASS) or  die('Could not connect !<br />Please contact the site\'s administrator.');
- 
+
 $db = mysql_select_db(DB) or  die('Could not connect to database !<br />Please contact the site\'s administrator.');
- 
+
 ?>

@@ -12,7 +12,7 @@
 					C464.6,79.6,460.9,88.4,466,93.5z"/>
 			</svg>
 		</li>
-		<li class="email" ng-class="{selected: selected === 'email'}" title="Share through email" ng-click="selected = 'email'">
+		<!-- <li class="images" ng-class="{selected: selected === 'images'}" title="Download Images" ng-click="selected = 'images'">
 			<svg viewBox="0 0 1000 676">
 				<path fill="#FFFFFF" stroke="#FFFFFF" stroke-width="7.3753" stroke-miterlimit="10" d="M500,354.1L937.4,38.6
 					c0,0-24.1-12.2-44.9-12.2c-20.8,0-785,0-785,0s-16.4-3.2-45.4,12.5L500,354.1z"/>
@@ -23,15 +23,15 @@
 				<path fill="#FFFFFF" stroke="#FFFFFF" stroke-width="7.3753" stroke-miterlimit="10" d="M629,300L961.5,59.4c0,0,19.5,27,19.5,55.5
 					s0,448.3,0,448.3s1.8,20.8-16.8,51.8L629,300z"/>
 			</svg>
-		</li>
-		<li class="facebook" ng-class="{selected: selected === 'facebook'}" title="Share on Facebook" ng-click="share_facebook()">
+		</li> -->
+		<!-- <li class="facebook" ng-class="{selected: selected === 'facebook'}" title="Share on Facebook" ng-click="share_facebook()">
 			<svg viewBox="0 0 478.5 1000">
 				<path fill="#FFFFFF" d="M112.2,991.8V494.5H9.1V330.9h103.1V199.9c0,0,6.2-191.7,183.9-191.7s171.5,0,171.5,0l0,158.8l-116.9,0.2
 					c0,0-37.4-1.1-37.4,37.8s0.6,125.8,0.6,125.8h153.8l-17.6,161.8l-136.7-0.1v499.2H112.2z"/>
 				<path fill="#231F20" d="M348.5,67"/>
 				<path fill="none" stroke="#231F20" stroke-miterlimit="10" d="M348.5,825.6"/>
 			</svg>
-		</li>
+		</li> -->
 		<a href="https://twitter.com/intent/tweet?url={{encoded_url}}&amp;hashtags=kitepaint"><li class="twitter" ng-class="{selected: selected === 'twitter'}" title="Share on Twitter">
 			<svg viewBox="0 0 1000 820">
 				<path fill="#FFFFFF" d="M982.7,113.6c-35.5,15.8-73.7,26.4-113.8,31.2c40.9-24.5,72.3-63.3,87.1-109.6
@@ -47,23 +47,25 @@
 		<div class="link-content" ng-show="selected === 'link'">
 			<label for="share-url">Copy and share this url:</label>
 			<input id="share-url" type="text" disabled ng-model="url" />
+
+			<label>Or generate PNG to download:</label>
+			<button class="button center" ng-click="generate_images()">Generate PNGs</button>
+			<br/>
+			<p ng-if="variationImages.length">Click one of the links below to download your image:</p>
+			<ul>
+				<li ng-repeat="variation in variationImages">
+					<a ng-href="{{variation.imageData}}" download="{{variation.name}}.png">{{variation.name}}</a>
+				</li>
+			</ul>
 		</div>
-		<div class="email-content" ng-show="selected === 'email'">
-			<form ng-submit="share_email();">
-				<label for="share-email-to">Send an email to</label>
-				<input id="share-email-to" type="email" required placeholder="e.g. coolguy@website.com" ng-model="share_email_to" />
-				<label for="share-email-name">Your Name</label>
-				<input id="share-email-name" type="text" required ng-model="share_email_name" placeholder="e.g. Billy Joel" />
-				<label for="share-email-from">Your email address</label>
-				<input id="share-email-from" type="email" required placeholder="e.g. isharestuff@website.com" ng-model="share_email_from" />
-				<input type="submit" class="button" value="Send" />
-			</form>
+		<div class="iamges-content" ng-show="selected === 'images'">
+
 		</div>
 		<div class="facebook-content" ng-show="selected === 'facebook'">
-			
+
 		</div>
 		<div class="twitter-content" ng-show="selected === 'twitter'">
-			
+
 		</div>
 	</div>
 	<div class="content" ng-show="make_public">

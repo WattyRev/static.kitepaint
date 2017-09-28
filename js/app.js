@@ -6,7 +6,8 @@ app.config(function($sceProvider) {
   $sceProvider.enabled(false);
 });
 
-app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
+app.config(function($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider){
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|data):/);
 
 	$locationProvider.hashPrefix('!');
 
