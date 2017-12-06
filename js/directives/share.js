@@ -93,7 +93,7 @@ app.directive('share', function() {
 				if (!design) {
 					return;
 				}
-				scope.url = root.base_url + '/#/view?id=' + design.id;
+				scope.url = root.base_url + '/#!/view?id=' + design.id;
 				scope.encoded_url = root.base_url + encodeURIComponent('/#/view?id=' + design.id);
 
 				if (design.public === "0" || !design.public) {
