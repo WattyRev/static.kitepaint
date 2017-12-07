@@ -312,3 +312,17 @@ ul.retailers .info {
 .show-retailers form .button {
   margin: 20px auto 10px;
 }
+
+.display-color {
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    margin: 0;
+    cursor: pointer;
+    -moz-box-shadow: 1px 1px 2px 0px #444;
+    -webkit-box-shadow: 1px 1px 2px 0px #444;
+    box-shadow: 1px 1px 2px 0px #444;
+}

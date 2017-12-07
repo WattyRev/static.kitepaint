@@ -10,7 +10,7 @@ app.controller('ViewController', ['$scope', '$rootScope', '$location', '$state',
 	//FUNCTIONS
 	scope.get_product = function() {
 		var id = scope.design.product;
-		
+
 		$.ajax({
 			type: 'GET',
 			url: 'php/products.php?id=' + id,
@@ -18,6 +18,7 @@ app.controller('ViewController', ['$scope', '$rootScope', '$location', '$state',
 			success: function(data) {
 				scope.product = data[0];
 				scope.colors = JSON.parse(scope.product.colors);
+				scope.determine_color_pallets();
 				root.done(3);
 				scope.$apply();
 			},
@@ -58,6 +59,39 @@ app.controller('ViewController', ['$scope', '$rootScope', '$location', '$state',
 				root.done(3);
 				scope.$apply();
 			}
+		});
+	};
+
+	scope.determine_color_pallets = function() {
+		var variations = scope.variations;
+		var colorOptions = scope.colors;
+		variations.forEach(function (variation) {
+			// Get all the colors used in the variation
+			var fillMatches = variation.svg.match(/\sfill="[a-zA-Z0-9#\(\)\s]*"/g);
+			fillMatches = fillMatches.map(function (match) {
+				return match.split('"')[1];
+			});
+			fillMatches = fillMatches.reduce(function (dedup, match) {
+				if (dedup.indexOf(match) > -1) {
+					return dedup;
+				}
+				dedup.push(match);
+				return dedup;
+			}, []);
+
+			var colorsUsed = fillMatches.map(function (match) {
+				var colorDetails = colorOptions.find(function (colorOption) {
+					return colorOption.color === match;
+				});
+				if (colorDetails) {
+					return colorDetails;
+				}
+				return {
+					name: match,
+					color: match
+				}
+			});
+			variation.colorsUsed = colorsUsed;
 		});
 	};
 
@@ -105,6 +139,8 @@ app.controller('ViewController', ['$scope', '$rootScope', '$location', '$state',
 		scope.current_variation = {};
 		scope.current_variation = variation;
 	};
+
+	console.log(scope);
 
 	//Close dropdown when clicking out of it
 	$(document).click(function(e) {

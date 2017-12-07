@@ -62,6 +62,14 @@
 		<div class="template" ng-class="{wide: collapse_colors, outlines: show_outlines}" compile="current_variation.svg">
 		</div>
 	</div>
+	<div>
+		<p>Colors Used:</p>
+		<ul>
+			<li ng-repeat="colorDetails in current_variation.colorsUsed">
+				{{colorDetails.name}} <span class="display-color" ng-style="{'background-color':'{{colorDetails.color}}'}">
+			</li>
+		</ul>
+	</div>
 	<div class="clearfix"></div>
 </div>
 
