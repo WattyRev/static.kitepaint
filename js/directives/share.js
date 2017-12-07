@@ -71,10 +71,17 @@ app.directive('share', function() {
 			}
 
 			scope.convert_to_png = function(svg) {
-				var find = 'mesh"',
-					regex = new RegExp(find, 'g'),
-					processed_svg = svg.replace(regex, 'mesh" fill="rgba(50,50,50,.5)"'),
-					svg_data = 'data:image/svg+xml;base64,' + btoa(processed_svg);
+				// Add a translucent fill to mesh elements
+				var regex = new RegExp('mesh"', 'g');
+				var processed_svg = svg.replace(regex, 'mesh" fill="rgba(50,50,50,.5)"');
+				var fillVentRegex = new RegExp('fill="venting"', 'g');
+				processed_svg = processed_svg.replace(fillVentRegex, 'fill="rgba(50,50,50,.5)"');
+
+				// Remove any styling added to the svg
+				var stylingRegex = new RegExp('<style(.|\n)*<\/style>', 'g');
+				processed_svg = processed_svg.replace(stylingRegex, '');
+
+				var svg_data = 'data:image/svg+xml;base64,' + btoa(processed_svg);
 				canvg('canvas', svg_data);
 				return document.getElementsByTagName("canvas")[0].toDataURL("image/png");
 			};
