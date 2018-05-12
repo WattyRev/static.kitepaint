@@ -58,15 +58,22 @@
     top: -20px;
     width: 50%;
 }
+#create .variations {
+    overflow: hidden;
+    height: 50px;
+    width: 45%;
+}
 /* line 50, ../../scss/pages/create.scss */
 #create .variation {
-    height: 50px;
-    width: 50px;
+    height: 100px;
+    width: 100px;
     -moz-transform: rotate(-45deg);
     -ms-transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg);
     display: inline-block;
+    top: -40%;
+    position: relative;
 }
 /* line 56, ../../scss/pages/create.scss */
 #create .search {
