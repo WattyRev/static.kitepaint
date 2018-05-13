@@ -1,6 +1,6 @@
-<?php 
+<?php
 	//Determine if using an embed url//
-	
+
 	$embed = isset($_GET['embed']) && isset($_GET['id']);
 
 	//Get dependencies
@@ -28,13 +28,13 @@
 			<meta name="robots" content="noindex">
 		<?php endif;?>
 		<link rel="shortcut icon" href="img/favicon.ico" />
-		
+
 		<!-- Scripts -->
 			<?php if ($embed) :?>
 				<script type="text/javascript">
 					var embed = true;
 					var product = <?php echo $_GET['id']; ?>;
-					var retailer = <?php echo $_GET['retailer'];?>;
+					var retailer = <?php echo empty($_GET['retailer']) ? '""' : $_GET['retailer'];?>;
 				</script>
 			<?php else:?>
 				<script type="text/javascript">
@@ -46,7 +46,7 @@
 				var dependencies = <?php echo $dependencies ?>;
 				var environment = '<?php echo $environment ?>';
 			</script>
-			
+
 			<?php if ($environment === 'production'):?>
 				<!-- Google Analytics -->
 				<script>
@@ -71,7 +71,7 @@
 				<link rel="stylesheet" href="css/<?php echo $file ?>" />
 			<?php endforeach;?>
 
-			<?php if(!isset($_COOKIE['desktop'])): 
+			<?php if(!isset($_COOKIE['desktop'])):
 				foreach($css_files['responsive'] as $file): ?>
 					<link rel="stylesheet" href="css/<?php echo $file ?>" />
 				<?php endforeach;
@@ -83,23 +83,23 @@
 				<?php endforeach;?>
 			<![endif]-->
 
-			<?php 
+			<?php
 				$ua = $_SERVER['HTTP_USER_AGENT'];
-				$safariorchrome = strpos($ua, 'Safari') ? true : false;   
+				$safariorchrome = strpos($ua, 'Safari') ? true : false;
 				$chrome = strpos($ua, 'Chrome') ? true : false;
-				if($safariorchrome == true AND $chrome == false){ 
-					$safari = true; 
+				if($safariorchrome == true AND $chrome == false){
+					$safari = true;
 				} else {
 					$safari = false;
 				}
 
-				// Check for version numbers 
+				// Check for version numbers
 				$v5 = strpos($ua, 'Version/5.') ? true : false;
 
 				// Test versions of Safari
-				if($safari AND $v5){ 
+				if($safari AND $v5){
 					foreach($css_files['legacy'] as $css):
-						echo '<link rel="stylesheet" href="css/' , $css , '" />'; 
+						echo '<link rel="stylesheet" href="css/' , $css , '" />';
 					endforeach;
 				}
 			?>
@@ -158,7 +158,7 @@
 			</header>
 		<?php endif;?>
 		<main ui-view id="{{current_page.name}}" ng-class="{loading: $root.loading}">
-			
+
 		</main>
 		<loading ng-show="$root.loading"></loading>
 		<alert></alert>
