@@ -14,23 +14,23 @@
 		</div>
 		<form class="right login" ng-hide="$root.lost_password" ng-submit="$root.login()">
 			<p class="success" ng-show="$root.reset_status === 'reset'">Your password has been reset. An email has been sent to {{$root.reset.email}}.</p>
-			<label for="input-username">Username</label>
-			<input 
-				type="text" 
-				id="input-username" 
-				name="username" 
+			<label for="home-input-username">Username</label>
+			<input
+				type="text"
+				id="home-input-username"
+				name="username"
 				ng-model="$root.sign_in.username"
 				required
 				ng-pattern="/^[A-Za-z0-9_\-]+$/"
 				ng-minlength="3"
 				ng-maxlength="30"
 			/>
-			<label for="input-password">Password <tooltip content="password"></tooltip></label>
-			<input 
-				type="password" 
-				id="input-password" 
-				name="password" 
-				ng-model="$root.sign_in.password" 
+			<label for="home-input-password">Password <tooltip content="password"></tooltip></label>
+			<input
+				type="password"
+				id="home-input-password"
+				name="password"
+				ng-model="$root.sign_in.password"
 				required
 				ng-minlength="6"
 				ng-maxlength="15"
@@ -46,20 +46,20 @@
 			<div>
 				<p>Enter your username and email to reset your password.</p>
 				<br/>
-				<label for="reset-username">Username</label>
-				<input 
-					type="text" 
-					id="reset-username" 
-					ng-model="$root.reset.username" 
+				<label for="home-reset-username">Username</label>
+				<input
+					type="text"
+					id="home-reset-username"
+					ng-model="$root.reset.username"
 					required
 					ng-pattern="/^[A-Za-z0-9_\-]+$/"
 					ng-minlength="3"
 					ng-maxlength="30"
 				/>
-				<label for="reset-email">Email</label>
-				<input 
-					type="text" 
-					id="reset-email" 
+				<label for="home-reset-email">Email</label>
+				<input
+					type="text"
+					id="home-reset-email"
 					ng-model="$root.reset.email"
 					required
 				/>
@@ -82,44 +82,44 @@
 		</div>
 		<form class="right" ng-submit="$root.register()">
 			<div ng-show="$root.register_status !== 'registered'">
-				<label for="register-username">Username <tooltip content="username"></tooltip></label>
-				<input 
-					type="text" 
-					id="register-username" 
+				<label for="home-register-username">Username <tooltip content="username"></tooltip></label>
+				<input
+					type="text"
+					id="home-register-username"
 					name="username"
-					ng-model="$root.register.username" 
-					placeholder="e.g. JoeBob86" 
+					ng-model="$root.register.username"
+					placeholder="e.g. JoeBob86"
 					required
 					ng-pattern="/^[A-Za-z0-9_\-]+$/"
 					ng-minlength="3"
 					ng-maxlength="30"
 				/>
-				<label for="register-email">Email Address</label>
-				<input 
-					type="email" 
-					id="register-email" 
-					name="email" 
-					ng-model="$root.register.email" 
-					placeholder="e.g. joe@bob.com" 
+				<label for="home-register-email">Email Address</label>
+				<input
+					type="email"
+					id="home-register-email"
+					name="email"
+					ng-model="$root.register.email"
+					placeholder="e.g. joe@bob.com"
 					required
 				/>
-				<label for="register-password">Password <tooltip content="password"></tooltip></label>
-				<input 
-					type="password" 
-					id="register-password" 
-					name="password" 
-					ng-model="$root.register.password" 
+				<label for="home-register-password">Password <tooltip content="password"></tooltip></label>
+				<input
+					type="password"
+					id="home-register-password"
+					name="password"
+					ng-model="$root.register.password"
 					required
 					ng-minlength="6"
 					ng-maxlength="15"
 					ng-pattern="/[A-Za-z0-9@*#.]/"
 				/>
-				<label for="register-password-2">Confirm Password <tooltip content="password"></tooltip></label>
-				<input 
-					type="password" 
-					id="register-password-2" 
-					name="password2" 
-					ng-model="$root.register.password2" 
+				<label for="home-register-password-2">Confirm Password <tooltip content="password"></tooltip></label>
+				<input
+					type="password"
+					id="home-register-password-2"
+					name="password2"
+					ng-model="$root.register.password2"
 					required
 					ng-minlength="6"
 					ng-maxlength="15"

@@ -72,25 +72,25 @@
 		<a ng-click="edit = ''" class="close">Cancel</a>
 		<label for="input-old-password" >Old Password</label>
 		<input type="password"
-			id="input-old-password" 
-			ng-model="edit_variables.old_password" 
+			id="input-old-password"
+			ng-model="edit_variables.old_password"
 			required
 			ng-minlength="6"
 			ng-maxlength="15"
 			ng-pattern="/[A-Za-z0-9@*#.]/"/>
-		<label for="input-password" >New Password <tooltip content="password"></tooltip></label>
-		<input type="password" 
-			id="input-password" 
-			ng-model="edit_variables.password" 
+		<label for="account-input-password" >New Password <tooltip content="password"></tooltip></label>
+		<input type="password"
+			id="account-input-password" 
+			ng-model="edit_variables.password"
 			required
 			ng-minlength="6"
 			ng-maxlength="15"
 			ng-pattern="/[A-Za-z0-9@*#.]/"/>
 		<label for="input-confirm-password">Confirm New Password</label>
-		<input type="password" 
-			id="input-confirm-password" 
-			ng-model="edit_variables.confirm_password" 
-			required 
+		<input type="password"
+			id="input-confirm-password"
+			ng-model="edit_variables.confirm_password"
+			required
 			ng-minlength="6"
 			ng-maxlength="15"
 			ng-pattern="/[A-Za-z0-9@*#.]/"/>

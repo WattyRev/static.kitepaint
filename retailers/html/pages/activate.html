@@ -15,15 +15,15 @@
 			<input id="input-retailer-name" type="text" placeholder="e.g. Kite Store" required ng-model="retailer.name" ng-maxlength="30" />
 		</div>
 		<div class="half left">
-			<label for="input-username">Username <tooltip content="username"></tooltip></label>
-			<input id="input-username" type="text" placeholder="e.g. jsmith99" required ng-model="retailer.username" 
+			<label for="activate-input-username">Username <tooltip content="username"></tooltip></label>
+			<input id="activate-input-username" type="text" placeholder="e.g. jsmith99" required ng-model="retailer.username"
 			ng-pattern="/^[A-Za-z0-9_\-]+$/"
 			ng-minlength="3"
 			ng-maxlength="30"/>
 		</div>
 		<div class="half left">
-			<label for="input-password">Password <tooltip content="password"></tooltip></label>
-			<input id="input-password" type="password" required ng-model="retailer.password" 
+			<label for="activate-input-password">Password <tooltip content="password"></tooltip></label>
+			<input id="activate-input-password" type="password" required ng-model="retailer.password"
 			ng-minlength="6"
 			ng-maxlength="15"
 			ng-pattern="/[A-Za-z0-9@*#.]/"/>

@@ -3,15 +3,15 @@
 		<div class="left half">
 			<h1>{{product.name}} - {{current_variation.name}} <span class="small small" ng-show="current_variation.primary">Primary</span><a ng-click="set_primary(current_variation)" class="small" ng-hide="current_variation.primary">Set as primary</a></h1>
 			<h2 class="design-name" ng-click="show_rename = true">
-				{{design ? design.name : 'Unsaved'}} 
+				{{design ? design.name : 'Unsaved'}}
 				<span class="icon" ng-show="design">
 					<svg viewBox="0 0 637.468 628.469" enable-background="new 0 0 637.468 628.469" xml:space="preserve">
 						<path fill="none" stroke="#CDCDCD" stroke-width="45" stroke-miterlimit="10" d="M200.363,560.679
 							c-4.72,4.652-12.318,4.597-16.97-0.122L74.586,450.167c-4.652-4.72-4.598-12.318,0.122-16.97L478.521,35.171
 							c4.72-4.652,12.318-4.598,16.97,0.122l108.808,110.39c4.652,4.72,4.598,12.318-0.122,16.97L200.363,560.679z"/>
-						
+
 							<line fill="none" stroke="#CDCDCD" stroke-width="45" stroke-miterlimit="10" x1="404.814" y1="107.12" x2="530.469" y2="234.602"/>
-						<polygon fill="none" stroke="#CDCDCD" stroke-width="45" stroke-linejoin="round" stroke-miterlimit="10" points="33.427,599.204 
+						<polygon fill="none" stroke="#CDCDCD" stroke-width="45" stroke-linejoin="round" stroke-miterlimit="10" points="33.427,599.204
 							188.307,565.542 70.023,445.537 	"/>
 					</svg>
 				</span>
@@ -87,19 +87,19 @@
 	</div>
 	<div class="canvas-wrap" ng-class="{wide: collapse_colors}" style="background-image:url(img/backgrounds/{{background}})">
 		<div class="variations">
-			<div 
-				class="variation" 
-				ng-repeat="variation in variations" 
-				title="{{variation.name}}" 
-				ng-bind-html="variation.svg" 
-				ng-click="select_variation(variation);" 
+			<div
+				class="variation"
+				ng-repeat="variation in variations"
+				title="{{variation.name}}"
+				ng-bind-html="variation.svg"
+				ng-click="select_variation(variation);"
 				ng-class="{selected: current_variation.name === variation.name}"
 			>
 			</div>
 		</div>
 		<div class="template" ng-class="{outlines: show_outlines}" compile="current_variation.svg">
 		</div>
-		<p ng-repeat="note in notes"><strong>Note:</strong> {{note}}</p>
+		<p ng-repeat="note in notes">Note:</strong> {{note}}</p>
 	</div>
 	<div class="prompt save_as" ng-show="show_save_as">
 		<label for="save_as_name">What do you want to name your design?</label>
@@ -143,23 +143,23 @@
 		<form class="login" ng-hide="$root.lost_password || !$root.has_account" ng-submit="$root.login(fn_show_save_as);">
 			<p class="success" ng-show="$root.register_status === 'registered'">You have successfully registered! An activation email has been sent to your inbox. You may log in once your account has been activated.</p>
 			<p class="success" ng-show="$root.reset_status === 'reset'">Your password has been reset. An email has been sent to {{$root.reset.email}}.</p>
-			<label for="input-username">Username</label>
-			<input 
-				type="text" 
-				id="input-username" 
-				name="username" 
+			<label for="edit-input-username">Username</label>
+			<input
+				type="text"
+				id="edit-input-username"
+				name="username"
 				ng-model="$root.sign_in.username"
 				required
 				ng-pattern="/^[A-Za-z0-9_\-]+$/"
 				ng-minlength="3"
 				ng-maxlength="30"
 			/>
-			<label for="input-password">Password <tooltip content="password"></tooltip></label>
-			<input 
-				type="password" 
-				id="input-password" 
-				name="password" 
-				ng-model="$root.sign_in.password" 
+			<label for="edit-input-password">Password <tooltip content="password"></tooltip></label>
+			<input
+				type="password"
+				id="edit-input-password"
+				name="password"
+				ng-model="$root.sign_in.password"
 				required
 				ng-minlength="6"
 				ng-maxlength="15"
@@ -175,20 +175,20 @@
 			<div>
 				<p>Enter your username and email to reset your password.</p>
 				<br/>
-				<label for="reset-username">Username</label>
-				<input 
-					type="text" 
-					id="reset-username" 
-					ng-model="$root.reset.username" 
+				<label for="edit-reset-username">Username</label>
+				<input
+					type="text"
+					id="edit-reset-username"
+					ng-model="$root.reset.username"
 					required
 					ng-pattern="/^[A-Za-z0-9_\-]+$/"
 					ng-minlength="3"
 					ng-maxlength="30"
 				/>
-				<label for="reset-email">Email</label>
-				<input 
-					type="text" 
-					id="reset-email" 
+				<label for="edit-reset-email">Email</label>
+				<input
+					type="text"
+					id="edit-reset-email"
 					ng-model="$root.reset.email"
 					required
 				/>
@@ -199,44 +199,44 @@
 		</form>
 		<form ng-submit="$root.register()" ng-hide="$root.has_account">
 			<div ng-show="$root.register_status !== 'registered'">
-				<label for="register-username">Username <tooltip content="username"></tooltip></label>
-				<input 
-					type="text" 
-					id="register-username" 
+				<label for="edit-register-username">Username <tooltip content="username"></tooltip></label>
+				<input
+					type="text"
+					id="edit-register-username"
 					name="username"
-					ng-model="$root.register.username" 
-					placeholder="e.g. JoeBob86" 
+					ng-model="$root.register.username"
+					placeholder="e.g. JoeBob86"
 					required
 					ng-pattern="/^[A-Za-z0-9_\-]+$/"
 					ng-minlength="3"
 					ng-maxlength="30"
 				/>
-				<label for="register-email">Email Address</label>
-				<input 
-					type="email" 
-					id="register-email" 
-					name="email" 
-					ng-model="$root.register.email" 
-					placeholder="e.g. joe@bob.com" 
+				<label for="edit-register-email">Email Address</label>
+				<input
+					type="email"
+					id="edit-register-email"
+					name="email"
+					ng-model="$root.register.email"
+					placeholder="e.g. joe@bob.com"
 					required
 				/>
-				<label for="register-password">Password <tooltip content="password"></tooltip></label>
-				<input 
-					type="password" 
-					id="register-password" 
-					name="password" 
-					ng-model="$root.register.password" 
+				<label for="edit-register-password">Password <tooltip content="password"></tooltip></label>
+				<input
+					type="password"
+					id="edit-register-password"
+					name="password"
+					ng-model="$root.register.password"
 					required
 					ng-minlength="6"
 					ng-maxlength="15"
 					ng-pattern="/[A-Za-z0-9@*#.]/"
 				/>
-				<label for="register-password-2">Confirm Password <tooltip content="password"></tooltip></label>
-				<input 
-					type="password" 
-					id="register-password-2" 
-					name="password2" 
-					ng-model="$root.register.password2" 
+				<label for="edit-register-password-2">Confirm Password <tooltip content="password"></tooltip></label>
+				<input
+					type="password"
+					id="edit-register-password-2"
+					name="password2"
+					ng-model="$root.register.password2"
 					required
 					ng-minlength="6"
 					ng-maxlength="15"
@@ -289,4 +289,4 @@
 		<button class="button">Send your design</button>
 	</form>
 </div>
-<canvas id="canvas" class='hidden' width="1000px" height="600px"></canvas> 
+<canvas id="canvas" class='hidden' width="1000px" height="600px"></canvas>

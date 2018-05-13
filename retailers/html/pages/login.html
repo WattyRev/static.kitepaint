@@ -1,9 +1,9 @@
 <logo></logo>
 <form id="login-panel" ng-show="screen === 'login'" ng-submit="login()">
-	<label for="input-username">Username</label>
-	<input type="text" id="input-username" ng-model="username" required />
-	<label for="input-password">Password</label>
-	<input type="password" id="input-password" ng-model="password" required />
+	<label for="login-input-username">Username</label>
+	<input type="text" id="login-input-username" ng-model="username" required />
+	<label for="login-input-password">Password</label>
+	<input type="password" id="login-input-password" ng-model="password" required />
 	<a ng-click="screen = 'password'">Forgot password</a>
 	<button class="button action">Login</button>
 </form>
