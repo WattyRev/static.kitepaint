@@ -1,5 +1,5 @@
 <?php
-require_once "header.php"; 
+require_once "header.php";
 if ($_GET){
 
 	if (isset($_GET['filter'])) {
@@ -39,7 +39,7 @@ if ($_GET){
 	} else {
 		$query = sprintf("SELECT * FROM manufacturers");
 	}
-		 
+
 	$result = mysql_query($query);
 	$num = mysql_num_rows($result);
 	mysql_close();
@@ -49,6 +49,7 @@ if ($_GET){
 		$manufacturers->id = mysql_result($result,$i,"id");
 		$manufacturers->name = mysql_result($result,$i,"name");
 		$manufacturers->logo = mysql_result($result,$i,"logo");
+		$manufacturers->website = mysql_result($result,$i,"website");
 		array_push($response, $manufacturers);
 	}
 	echo json_encode($response);
