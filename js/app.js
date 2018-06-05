@@ -103,24 +103,6 @@ app.config(function(
                 css: get_dependency("home")
             }
         })
-        .state("manufacturer", {
-            url: "/manufacturer",
-            templateUrl: "html/pages/manufacturer.html",
-            controller: "ManufacturerController",
-            data: {
-                title: "Manufacturer",
-                css: get_dependency("manufacturer")
-            }
-        })
-        .state("retailer", {
-            url: "/retailer",
-            templateUrl: "html/pages/retailer.html",
-            controller: "RetailerController",
-            data: {
-                title: "Retailer",
-                css: get_dependency("retailer")
-            }
-        })
         .state("view", {
             url: "/view?id",
             templateUrl: "html/pages/view.html",
