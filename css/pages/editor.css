@@ -9,308 +9,318 @@
 /* Mixins */
 /* line 7, ../../scss/pages/editor.scss */
 .heading .button {
-  display: inline-block;
-  margin: 10px 5px;
+    display: inline-block;
+    margin: 10px 5px;
 }
 
 /* line 11, ../../scss/pages/editor.scss */
 .design-name {
-  display: inline-block;
+    display: inline-block;
 }
 /* line 14, ../../scss/pages/editor.scss */
 .design-name .icon {
-  display: inline-block;
-  height: 16px;
-  width: 16px;
-  opacity: 0;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    opacity: 0;
 }
 /* line 20, ../../scss/pages/editor.scss */
 .design-name:hover .icon {
-  opacity: 1;
+    opacity: 1;
+}
+
+.manufacturer-reference {
+    display: block;
+    width: 70px;
+    height: 70px;
+    background-size: contain !important;
+    float: left;
+    margin-right: 10px;
 }
 
 /* line 24, ../../scss/pages/editor.scss */
 #view .canvas-wrap {
-  width: 100%;
+    width: 100%;
 }
 
 /* line 27, ../../scss/pages/editor.scss */
 .canvas-wrap {
-  float: right;
-  width: 73%;
-  -moz-transition: width 0.3s;
-  -o-transition: width 0.3s;
-  -webkit-transition: width 0.3s;
-  transition: width 0.3s;
-  padding: 20px;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  -moz-box-shadow: 0 0 20px 20px #fff inset;
-  -webkit-box-shadow: 0 0 20px 20px #fff inset;
-  box-shadow: 0 0 20px 20px #fff inset;
-  background-size: cover;
-  background-position: center;
+    float: right;
+    width: 73%;
+    -moz-transition: width 0.3s;
+    -o-transition: width 0.3s;
+    -webkit-transition: width 0.3s;
+    transition: width 0.3s;
+    padding: 20px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -moz-box-shadow: 0 0 20px 20px #fff inset;
+    -webkit-box-shadow: 0 0 20px 20px #fff inset;
+    box-shadow: 0 0 20px 20px #fff inset;
+    background-size: cover;
+    background-position: center;
 }
 /* line 37, ../../scss/pages/editor.scss */
 .canvas-wrap.wide {
-  width: 85%;
+    width: 85%;
 }
 
 /* line 41, ../../scss/pages/editor.scss */
 .variations {
-  height: 50px;
-  width: 100%;
-  float: right;
-  -moz-transition: width 0.3s;
-  -o-transition: width 0.3s;
-  -webkit-transition: width 0.3s;
-  transition: width 0.3s;
+    height: 50px;
+    width: 100%;
+    float: right;
+    -moz-transition: width 0.3s;
+    -o-transition: width 0.3s;
+    -webkit-transition: width 0.3s;
+    transition: width 0.3s;
 }
 
 /* line 47, ../../scss/pages/editor.scss */
 .variation {
-  height: 46px;
-  width: 46px;
-  padding: 2px;
-  display: inline-block;
-  margin: 0 5px;
-  border: 1px solid transparent;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  -moz-transition: border 0.3s;
-  -o-transition: border 0.3s;
-  -webkit-transition: border 0.3s;
-  transition: border 0.3s;
+    height: 46px;
+    width: 46px;
+    padding: 2px;
+    display: inline-block;
+    margin: 0 5px;
+    border: 1px solid transparent;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-transition: border 0.3s;
+    -o-transition: border 0.3s;
+    -webkit-transition: border 0.3s;
+    transition: border 0.3s;
 }
 /* line 57, ../../scss/pages/editor.scss */
-.variation.selected, .variation:hover {
-  border: 1px solid #cdcdcd;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
+.variation.selected,
+.variation:hover {
+    border: 1px solid #cdcdcd;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
 }
 
 /* line 62, ../../scss/pages/editor.scss */
 .actions {
-  text-align: right;
+    text-align: right;
 }
 
 /* line 66, ../../scss/pages/editor.scss */
 .settings-button {
-  height: 35px;
-  width: 35px;
-  background: none;
-  border: 0;
-  position: relative;
-  top: 11px;
-  margin-left: 20px;
-  display: inline-block;
+    height: 35px;
+    width: 35px;
+    background: none;
+    border: 0;
+    position: relative;
+    top: 11px;
+    margin-left: 20px;
+    display: inline-block;
 }
 
 /* line 76, ../../scss/pages/editor.scss */
 .settings-dropdown #set-background {
-  margin: 5px auto;
-  padding: 2px;
-  font-size: 14px;
-  display: block;
+    margin: 5px auto;
+    padding: 2px;
+    font-size: 14px;
+    display: block;
 }
 
 /* line 82, ../../scss/pages/editor.scss */
 .delete {
-  color: #D50000;
+    color: #d50000;
 }
 
 /* line 86, ../../scss/pages/editor.scss */
 .colors ul {
-  list-style: none;
-  margin: 15px;
-  width: 127px;
-  float: left;
-  padding: 15px;
-  border-right: 1px solid #cdcdcd;
-  -moz-box-shadow: 6px 0px 4px -5px #737373;
-  -webkit-box-shadow: 6px 0px 4px -5px #737373;
-  box-shadow: 6px 0px 4px -5px #737373;
-  position: relative;
-  -moz-transition: width 0.3s;
-  -o-transition: width 0.3s;
-  -webkit-transition: width 0.3s;
-  transition: width 0.3s;
+    list-style: none;
+    margin: 15px;
+    width: 127px;
+    float: left;
+    padding: 15px;
+    border-right: 1px solid #cdcdcd;
+    -moz-box-shadow: 6px 0px 4px -5px #737373;
+    -webkit-box-shadow: 6px 0px 4px -5px #737373;
+    box-shadow: 6px 0px 4px -5px #737373;
+    position: relative;
+    -moz-transition: width 0.3s;
+    -o-transition: width 0.3s;
+    -webkit-transition: width 0.3s;
+    transition: width 0.3s;
 }
 /* line 97, ../../scss/pages/editor.scss */
 .colors li {
-  text-align: right;
-  white-space: nowrap;
-  overflow: hidden;
-  padding-right: 2px;
-  display: block;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    padding-right: 2px;
+    display: block;
 }
 /* line 104, ../../scss/pages/editor.scss */
 .colors .color {
-  height: 20px;
-  width: 20px;
-  display: inline-block;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  margin: 0;
-  cursor: pointer;
-  -moz-box-shadow: 1px 1px 2px 0px #444;
-  -webkit-box-shadow: 1px 1px 2px 0px #444;
-  box-shadow: 1px 1px 2px 0px #444;
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    margin: 0;
+    cursor: pointer;
+    -moz-box-shadow: 1px 1px 2px 0px #444;
+    -webkit-box-shadow: 1px 1px 2px 0px #444;
+    box-shadow: 1px 1px 2px 0px #444;
 }
 /* line 113, ../../scss/pages/editor.scss */
 .colors .current {
-  border-bottom: 1px solid #cdcdcd;
-  padding-bottom: 5px;
-  margin-bottom: 5px;
+    border-bottom: 1px solid #cdcdcd;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
 }
 /* line 118, ../../scss/pages/editor.scss */
 .colors .current .color {
-  cursor: auto;
+    cursor: auto;
 }
 /* line 122, ../../scss/pages/editor.scss */
 .colors .label {
-  display: inline-block;
-  width: 100px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-align: right;
-  -moz-transition: width 0.3s;
-  -o-transition: width 0.3s;
-  -webkit-transition: width 0.3s;
-  transition: width 0.3s;
+    display: inline-block;
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: right;
+    -moz-transition: width 0.3s;
+    -o-transition: width 0.3s;
+    -webkit-transition: width 0.3s;
+    transition: width 0.3s;
 }
 /* line 130, ../../scss/pages/editor.scss */
 .colors button {
-  position: absolute;
-  background: #fff;
-  border: 1px solid #cdcdcd;
-  -moz-border-radius-topright: 5px;
-  -webkit-border-top-right-radius: 5px;
-  border-top-right-radius: 5px;
-  -moz-border-radius-bottomright: 5px;
-  -webkit-border-bottom-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-left: 0px;
-  padding: 5px;
-  right: -18px;
-  top: 0;
-  font-family: monospace;
-  -moz-box-shadow: 2px 2px 4px -1px #737373;
-  -webkit-box-shadow: 2px 2px 4px -1px #737373;
-  box-shadow: 2px 2px 4px -1px #737373;
+    position: absolute;
+    background: #fff;
+    border: 1px solid #cdcdcd;
+    -moz-border-radius-topright: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-top-right-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-left: 0px;
+    padding: 5px;
+    right: -18px;
+    top: 0;
+    font-family: monospace;
+    -moz-box-shadow: 2px 2px 4px -1px #737373;
+    -webkit-box-shadow: 2px 2px 4px -1px #737373;
+    box-shadow: 2px 2px 4px -1px #737373;
 }
 /* line 142, ../../scss/pages/editor.scss */
 .colors .collapse {
-  width: 27px;
+    width: 27px;
 }
 /* line 145, ../../scss/pages/editor.scss */
 .colors .collapse .label {
-  width: 0px;
+    width: 0px;
 }
 
 /* line 150, ../../scss/pages/editor.scss */
 .template {
-  float: right;
-  width: 100%;
-  height: 500px;
-  position: relative;
+    float: right;
+    width: 100%;
+    height: 500px;
+    position: relative;
 }
 /* line 156, ../../scss/pages/editor.scss */
 .template svg * {
-  stroke: none;
+    stroke: none;
 }
 /* line 159, ../../scss/pages/editor.scss */
 .template.outlines svg * {
-  stroke: #484848;
+    stroke: #484848;
 }
 /* line 162, ../../scss/pages/editor.scss */
 .template.outlines svg *[stroke="none"] {
-  stroke: none;
+    stroke: none;
 }
 
 /* line 167, ../../scss/pages/editor.scss */
 svg *[ng-click] {
-  -moz-transition: stroke 0.3s, stroke-width 0.3s;
-  -o-transition: stroke 0.3s, stroke-width 0.3s;
-  -webkit-transition: stroke 0.3s, stroke-width 0.3s;
-  transition: stroke 0.3s, stroke-width 0.3s;
+    -moz-transition: stroke 0.3s, stroke-width 0.3s;
+    -o-transition: stroke 0.3s, stroke-width 0.3s;
+    -webkit-transition: stroke 0.3s, stroke-width 0.3s;
+    transition: stroke 0.3s, stroke-width 0.3s;
 }
 
 /* line 171, ../../scss/pages/editor.scss */
 .lightbox.show-login form {
-  width: 90%;
-  margin: 20px auto;
+    width: 90%;
+    margin: 20px auto;
 }
 /* line 175, ../../scss/pages/editor.scss */
 .lightbox.show-login form input {
-  width: 100%;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  margin: 5px auto 10px;
+    width: 100%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 5px auto 10px;
 }
 /* line 180, ../../scss/pages/editor.scss */
 .lightbox.show-login form .button {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 /* line 185, ../../scss/pages/editor.scss */
 ul.retailers {
-  list-style: none;
-  width: 100%;
-  margin: 0;
+    list-style: none;
+    width: 100%;
+    margin: 0;
 }
 /* line 190, ../../scss/pages/editor.scss */
 ul.retailers li {
-  padding: 10px 0;
-  border-bottom: 1px solid #cdcdcd;
-  max-width: 420px;
-  margin: 0 auto;
+    padding: 10px 0;
+    border-bottom: 1px solid #cdcdcd;
+    max-width: 420px;
+    margin: 0 auto;
 }
 /* line 196, ../../scss/pages/editor.scss */
 ul.retailers li > * {
-  margin: 0 10px;
+    margin: 0 10px;
 }
 /* line 200, ../../scss/pages/editor.scss */
 ul.retailers .image {
-  height: 50px;
-  width: 50px;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  margin-right: 20px;
+    height: 50px;
+    width: 50px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: 20px;
 }
 /* line 208, ../../scss/pages/editor.scss */
 ul.retailers .info {
-  width: 44%;
+    width: 44%;
 }
 
 /* line 213, ../../scss/pages/editor.scss */
 .show-retailers form p {
-  padding: 10px 0;
+    padding: 10px 0;
 }
 /* line 216, ../../scss/pages/editor.scss */
 .show-retailers form label {
-  display: block;
+    display: block;
 }
 /* line 219, ../../scss/pages/editor.scss */
 .show-retailers form .select-variation {
-  display: inline-block;
-  width: 25%;
-  text-align: center;
+    display: inline-block;
+    width: 25%;
+    text-align: center;
 }
 /* line 224, ../../scss/pages/editor.scss */
 .show-retailers form textarea {
-  width: 96%;
-  height: 150px;
+    width: 96%;
+    height: 150px;
 }
 /* line 228, ../../scss/pages/editor.scss */
 .show-retailers form .button {
-  margin: 20px auto 10px;
+    margin: 20px auto 10px;
 }
 
 .display-color {

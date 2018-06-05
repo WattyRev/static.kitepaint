@@ -76,6 +76,7 @@ app.controller("EditController", [
                     }
                     scope.loading = false;
                     root.done(1);
+                    scope.get_manufacturer();
                     scope.get_retailers();
                     scope.$apply();
                 },
@@ -143,6 +144,25 @@ app.controller("EditController", [
         if (state.params.type === "saved") {
             scope.get_design();
         }
+
+        scope.get_manufacturer = function() {
+            $.ajax({
+                type: "GET",
+                url: "php/manufacturers.php?id=" + scope.product.manufacturer,
+                dataType: "json",
+                success: function(data) {
+                    scope.manufacturer = data[0];
+                    root.done(2);
+                    scope.$apply();
+                },
+                error: function(data) {
+                    console.log("error", data);
+                    alert("Could not get manufacturer");
+                    root.done(2);
+                    scope.$apply();
+                }
+            });
+        };
 
         /**
          * Retrieve the data for the retailers
