@@ -1,264 +1,172 @@
 {
-	"development":{
-		"js":[
-			"libraries/jquery.min.js",
-			"modernizr.js",
-			"libraries/angular.min.js",
-			"libraries/angular-ui-router.js",
-			"libraries/ui-router-styles.js",
-			"libraries/rgbcolor.js",
-			"libraries/StackBlur.js",
-			"libraries/canvg.js",
-			"app.js",
-			"controllers/about.js",
-			"controllers/activate.js",
-			"controllers/account.js",
-			"controllers/changePassword.js",
-			"controllers/contact.js",
-			"controllers/create.js",
-			"controllers/designs.js",
-			"controllers/edit.js",
-			"controllers/header.js",
-			"controllers/home.js",
-			"controllers/manufacturer.js",
-			"controllers/primary.js",
-			"controllers/retailer.js",
-			"controllers/view.js",
-			"directives/compile.js",
-			"directives/alert.js",
-			"directives/menu.js",
-			"directives/share.js",
-			"directives/tooltip.js",
-			"directives/loading.js"
-		],
-		"css": {
-			"layout":{
-				"main": [
-					"layout/style.css",
-					"sections/alert.css",
-					"sections/lightbox.css",
-					"sections/loading.css",
-					"sections/menu.css",
-					"sections/noscript.css",
-					"sections/share.css",
-					"sections/tabbedNavigation.css",
-					"sections/tooltip.css"
-				],
-				"responsive":[
-					"layout/responsive.css",
-					"sections/tooltip.responsive.css"
-				],
-				"legacy": [
-					"layout/legacy.css"
-				],
-				"embed": [
-					"layout/embed.css"
-				]
-			},
-			"pages":{
-				"about":{
-					"main":[
-						"pages/about.css"
-					],
-					"responsive":[]
-				},
-				"account":{
-					"main":[
-						"pages/account.css"
-					],
-					"responsive":[
-						"pages/account.responsive.css"
-					]
-				},
-				"changePassword":{
-					"main":[
-						"pages/changePassword.css"
-					],
-					"responsive":[]
-				},
-				"contact":{
-					"main":[
-						"pages/contact.css"
-					],
-					"responsive":[]
-				},
-				"create":{
-					"main":[
-						"pages/create.css"
-					],
-					"responsive":[
-						"pages/create.responsive.css"
-					]
-				},
-				"designs":{
-					"main":[
-						"pages/designs.css"
-					],
-					"responsive":[]
-				},
-				"edit":{
-					"main":[
-						"pages/editor.css"
-					],
-					"responsive":[
-						"pages/edit.responsive.css"
-					]
-				},
-				"home":{
-					"main":[
-						"pages/home.css"
-					],
-					"responsive":[
-						"pages/home.responsive.css"
-					]
-				},
-				"manufacturer":{
-					"main":[
-						"pages/manufacturer.css"
-					],
-					"responsive":[]
-				},
-				"retailer":{
-					"main":[
-						"pages/retailer.css"
-					],
-					"responsive":[]
-				},
-				"view":{
-					"main":[
-						"pages/editor.css"
-					],
-					"responsive":[
-						"pages/edit.responsive.css"
-					]
-				}
-			}
-		}
-	},
-	"production":{
-		"js":[
-			"app.min.js"
-		],
-		"css": {
-			"layout":{
-				"main":[
-					"min/layout/main.css"
-				],
-				"responsive":[
-					"min/layout/responsive.css"
-				],
-				"legacy":[
-					"min/layout/legacy.css"
-				],
-				"embed":[
-					"min/layout/embed.css"
-				]
-			},
-			"pages":{
-				"about":{
-					"main":[
-						"min/about/main.css"
-					],
-					"responsive":[]
-				},
-				"account":{
-					"main":[
-						"min/account/main.css"
-					],
-					"responsive":[
-						"min/account/responsive.css"
-					]
-				},
-				"changePassword":{
-					"main":[
-						"min/changePassword/main.css"
-					],
-					"responsive":[]
-				},
-				"contact":{
-					"main":[
-						"min/contact/main.css"
-					],
-					"responsive":[]
-				},
-				"create":{
-					"main":[
-						"min/create/main.css"
-					],
-					"responsive":[
-						"min/create/responsive.css"
-					]
-				},
-				"designs":{
-					"main":[
-						"min/designs/main.css"
-					],
-					"responsive":[]
-				},
-				"edit":{
-					"main":[
-						"min/edit/main.css"
-					],
-					"responsive":[
-						"min/edit/responsive.css"
-					]
-				},
-				"home":{
-					"main":[
-						"min/home/main.css"
-					],
-					"responsive":[
-						"min/home/responsive.css"
-					]
-				},
-				"manufacturer":{
-					"main":[
-						"min/manufacturer/main.css"
-					],
-					"responsive":[]
-				},
-				"view":{
-					"main":[
-						"min/edit/main.css"
-					],
-					"responsive":[
-						"min/edit/responsive.css"
-					]
-				}
-			}
-		}
-	},
-	"process":{
-		"js":[
-			"libraries/jquery.min.js",
-			"modernizr.js",
-			"libraries/angular.min.js",
-			"libraries/angular-ui-router.js",
-			"libraries/ui-router-styles.js",
-			"libraries/rgbcolor.js",
-			"libraries/StackBlur.js",
-			"libraries/canvg.js",
-			"app.js",
-			"controllers/about.js",
-			"controllers/activate.js",
-			"controllers/account.js",
-			"controllers/changePassword.js",
-			"controllers/contact.js",
-			"controllers/create.js",
-			"controllers/designs.js",
-			"controllers/edit.js",
-			"controllers/header.js",
-			"controllers/home.js",
-			"controllers/manufacturer.js",
-			"controllers/primary.js",
-			"controllers/retailer.js",
-			"controllers/view.js",
-			"directives/compile.js",
-			"directives/alert.js",
-			"directives/menu.js",
-			"directives/share.js",
-			"directives/tooltip.js",
-			"directives/loading.js"
-		]
-	}
+    "development": {
+        "js": [
+            "libraries/jquery.min.js",
+            "modernizr.js",
+            "libraries/angular.min.js",
+            "libraries/angular-ui-router.js",
+            "libraries/ui-router-styles.js",
+            "libraries/rgbcolor.js",
+            "libraries/StackBlur.js",
+            "libraries/canvg.js",
+            "app.js",
+            "controllers/about.js",
+            "controllers/activate.js",
+            "controllers/account.js",
+            "controllers/changePassword.js",
+            "controllers/contact.js",
+            "controllers/create.js",
+            "controllers/designs.js",
+            "controllers/edit.js",
+            "controllers/header.js",
+            "controllers/home.js",
+            "controllers/primary.js",
+            "controllers/view.js",
+            "directives/compile.js",
+            "directives/alert.js",
+            "directives/menu.js",
+            "directives/share.js",
+            "directives/tooltip.js",
+            "directives/loading.js"
+        ],
+        "css": {
+            "layout": {
+                "main": [
+                    "layout/style.css",
+                    "sections/alert.css",
+                    "sections/lightbox.css",
+                    "sections/loading.css",
+                    "sections/menu.css",
+                    "sections/noscript.css",
+                    "sections/share.css",
+                    "sections/tabbedNavigation.css",
+                    "sections/tooltip.css"
+                ],
+                "responsive": [
+                    "layout/responsive.css",
+                    "sections/tooltip.responsive.css"
+                ],
+                "legacy": ["layout/legacy.css"],
+                "embed": ["layout/embed.css"]
+            },
+            "pages": {
+                "about": {
+                    "main": ["pages/about.css"],
+                    "responsive": []
+                },
+                "account": {
+                    "main": ["pages/account.css"],
+                    "responsive": ["pages/account.responsive.css"]
+                },
+                "changePassword": {
+                    "main": ["pages/changePassword.css"],
+                    "responsive": []
+                },
+                "contact": {
+                    "main": ["pages/contact.css"],
+                    "responsive": []
+                },
+                "create": {
+                    "main": ["pages/create.css"],
+                    "responsive": ["pages/create.responsive.css"]
+                },
+                "designs": {
+                    "main": ["pages/designs.css"],
+                    "responsive": []
+                },
+                "edit": {
+                    "main": ["pages/editor.css"],
+                    "responsive": ["pages/edit.responsive.css"]
+                },
+                "home": {
+                    "main": ["pages/home.css"],
+                    "responsive": ["pages/home.responsive.css"]
+                },
+                "view": {
+                    "main": ["pages/editor.css"],
+                    "responsive": ["pages/edit.responsive.css"]
+                }
+            }
+        }
+    },
+    "production": {
+        "js": ["app.min.js"],
+        "css": {
+            "layout": {
+                "main": ["min/layout/main.css"],
+                "responsive": ["min/layout/responsive.css"],
+                "legacy": ["min/layout/legacy.css"],
+                "embed": ["min/layout/embed.css"]
+            },
+            "pages": {
+                "about": {
+                    "main": ["min/about/main.css"],
+                    "responsive": []
+                },
+                "account": {
+                    "main": ["min/account/main.css"],
+                    "responsive": ["min/account/responsive.css"]
+                },
+                "changePassword": {
+                    "main": ["min/changePassword/main.css"],
+                    "responsive": []
+                },
+                "contact": {
+                    "main": ["min/contact/main.css"],
+                    "responsive": []
+                },
+                "create": {
+                    "main": ["min/create/main.css"],
+                    "responsive": ["min/create/responsive.css"]
+                },
+                "designs": {
+                    "main": ["min/designs/main.css"],
+                    "responsive": []
+                },
+                "edit": {
+                    "main": ["min/edit/main.css"],
+                    "responsive": ["min/edit/responsive.css"]
+                },
+                "home": {
+                    "main": ["min/home/main.css"],
+                    "responsive": ["min/home/responsive.css"]
+                },
+                "view": {
+                    "main": ["min/edit/main.css"],
+                    "responsive": ["min/edit/responsive.css"]
+                }
+            }
+        }
+    },
+    "process": {
+        "js": [
+            "libraries/jquery.min.js",
+            "modernizr.js",
+            "libraries/angular.min.js",
+            "libraries/angular-ui-router.js",
+            "libraries/ui-router-styles.js",
+            "libraries/rgbcolor.js",
+            "libraries/StackBlur.js",
+            "libraries/canvg.js",
+            "app.js",
+            "controllers/about.js",
+            "controllers/activate.js",
+            "controllers/account.js",
+            "controllers/changePassword.js",
+            "controllers/contact.js",
+            "controllers/create.js",
+            "controllers/designs.js",
+            "controllers/edit.js",
+            "controllers/header.js",
+            "controllers/home.js",
+            "controllers/primary.js",
+            "controllers/view.js",
+            "directives/compile.js",
+            "directives/alert.js",
+            "directives/menu.js",
+            "directives/share.js",
+            "directives/tooltip.js",
+            "directives/loading.js"
+        ]
+    }
 }
