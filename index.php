@@ -33,6 +33,7 @@
 			<?php if ($embed) :?>
 				<script type="text/javascript">
 					var embed = true;
+					var thirdPartyCssUrl = '<?php echo $_GET['css-url']; ?>';
 					var product = <?php echo $_GET['id']; ?>;
 					var retailer = <?php echo empty($_GET['retailer']) ? '""' : $_GET['retailer'];?>;
 				</script>

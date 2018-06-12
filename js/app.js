@@ -174,7 +174,7 @@ function verify_embed() {
         success: function(data) {
             $.each(data, function(i, item) {
                 if (!item.website) {
-                    return;
+                    return check_domain();
                 }
                 var domain = item.website.split("://")[1];
                 domain = domain.split("/")[0];
@@ -182,7 +182,7 @@ function verify_embed() {
                     domain = domain.split(".")[1] + "." + domain.split(".")[2]; //take off subdomain if exists
                 }
                 domains.push(domain);
-                check_domain();
+                return check_domain();
             });
         },
         error: function(data) {
@@ -219,10 +219,26 @@ function verify_embed() {
     function check_domain() {
         checks++;
         if (checks > 1) {
+            // If the current domain is not on the whitelist, redirect to an error page.
             if (domains.indexOf(parent_domain) < 0) {
-                window.location.replace("error.php?m=bad_embed_domain");
+                return window.location.replace("error.php?m=bad_embed_domain");
             }
+
+            // If the embed is valid, look for a providd css file to include
+            applyThirdPartyCss();
         }
+    }
+
+    function applyThirdPartyCss() {
+        // thirdPartyCSSUrl is provided by PHP at page load and is placed in a global variable
+        if (!thirdPartyCssUrl) {
+            return;
+        }
+
+        // Apply the third party css to the page
+        $("head").append(
+            '<link rel="stylesheet" href="' + thirdPartyCssUrl + '" />'
+        );
     }
 }
 
