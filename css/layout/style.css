@@ -557,6 +557,7 @@ footer {
 }
 /* line 389, ../../scss/layout/style.scss */
 footer p {
+    background: rgba(255, 255, 255, 0.5);
     padding: 10px 0;
 }
 /* line 392, ../../scss/layout/style.scss */
