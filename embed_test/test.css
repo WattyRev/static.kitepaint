@@ -1,0 +1,3 @@
+body:after {
+    content: "Third party css applied";
+}
