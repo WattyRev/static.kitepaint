@@ -5,7 +5,10 @@ app.controller("EditController", [
     "$state",
     "$sce",
     function(scope, root, location, state, sce) {
-        scope.background = "";
+        var defaultBackgroundId = defaultBackground || 0;
+        scope.background = root.backgrounds[defaultBackgroundId]
+            ? root.backgrounds[defaultBackgroundId].img
+            : "";
         scope.current_color = "#ffffff";
         scope.current_color_style = { "background-color": "#ffffff" };
         scope.colors = [];

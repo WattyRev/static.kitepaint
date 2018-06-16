@@ -18,14 +18,17 @@
 			<li>
 				CSS URL - OPTIONAL A url pointing toward a CSS file to be loaded into the page.
 			</li>
+			<li>
+				DEFAULT BACKGROUND ID - OPTIONAL an ID referencing a background to use as the default in the editor. The value relates to the index order in the backgrounds dropdown. i.e. 0 = None, 1 = Beach, etc.
+			</li>
 		</ul>
 		<p>The url is structured in 3 parts:</p>
 		<ol>
 			<li>The base domain - http://kitepaint.com/</li>
-			<li>The root-level query parameters - ?embed=1&css-url=[CSS URL]&id=[PRODUCT ID]</li>
+			<li>The root-level query parameters - ?embed=1&css-url=[CSS URL]&id=[PRODUCT ID]&default-background-id=[DEFAULT BACKGROUND ID]</li>
 			<li>The application path - #!/edit/new?id=[PRODUCT ID]</li>
 		</ol>
-		<p>A complete URL will look like: http://kitepaint.com/?embed=1&css-url=http://example.com/pretty.css&id=5#!/edit/new/?id=5</p>
-		<iframe width="900px" height="900px" src="http://beta.kitepaint.com/?embed=1&css-url=http://beta.kitepaint.com/embed_test/test.css&id=5#!/edit/new?id=5" frameborder="0"></iframe>
+		<p>A complete URL will look like: http://kitepaint.com/?embed=1&css-url=http://example.com/pretty.css&id=5&default-background-id=1#!/edit/new/?id=5</p>
+		<iframe width="900px" height="900px" src="http://beta.kitepaint.com/?embed=1&default-background-id=1&css-url=http://beta.kitepaint.com/embed_test/test.css&id=5#!/edit/new?id=5" frameborder="0"></iframe>
 	</body>
 </html>
