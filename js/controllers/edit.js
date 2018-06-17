@@ -5,7 +5,7 @@ app.controller("EditController", [
     "$state",
     "$sce",
     function(scope, root, location, state, sce) {
-        var defaultBackgroundId = defaultBackground || 0;
+        var defaultBackgroundId = window.defaultBackground || 0;
         scope.background = root.backgrounds[defaultBackgroundId]
             ? root.backgrounds[defaultBackgroundId].img
             : "";
