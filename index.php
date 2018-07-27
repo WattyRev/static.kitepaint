@@ -172,7 +172,7 @@
 				<button ng-click="$root.return_mobile_version();">Return to Mobile Version</button>
 			<?php endif;?>
 			<?php if ($embed) :?>
-				<p>Powered by <a target="_blank" href="http://www.kitepaint.com">KitePaint.com</a></p>
+				<p>Powered by <a target="_blank" href="https://www.kitepaint.com">KitePaint.com</a></p>
 			<?php else:?>
 				<p>&copy; 2014 <a href="http://www.wattydev.com">Spencer Watson</a></p>
 			<?php endif;?>

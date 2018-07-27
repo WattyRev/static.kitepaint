@@ -143,7 +143,7 @@ if (embed) {
 function verify_embed() {
     if (parent === window) {
         //don't allow embed url unless in iframe
-        window.location.replace("http://kitepaint.com");
+        window.location.replace("https://kitepaint.com");
     }
     var parent_url = document.referrer;
     var parent_domain = parent_url.split("://")[1]; //take of protocol
