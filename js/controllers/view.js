@@ -106,7 +106,10 @@ app.controller("ViewController", [
 
                 var colorsUsed = fillMatches.map(function(match) {
                     var colorDetails = colorOptions.find(function(colorOption) {
-                        return colorOption.color === match;
+                        if (!match || !colorOption.color) {
+                            return false;
+                        }
+                        return colorOption.color.toLowerCase() === match.toLowerCase();
                     });
                     if (colorDetails) {
                         return colorDetails;
