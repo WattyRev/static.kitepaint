@@ -42,6 +42,7 @@ app.controller("AccountController", [
                                 design.primary = variation;
                             }
                         });
+                        design.status = parseInt(design.status);
                     });
                     root.done(3);
                     scope.$apply();
