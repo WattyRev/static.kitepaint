@@ -700,7 +700,6 @@ app.controller("EditController", [
         scope.$watch(
             "status",
             function(status) {
-                console.log("status changed", status);
                 if (state.params.type === "saved" && !scope.loading) {
                     scope.saving = true;
                     scope.design.status = parseInt(status);
@@ -714,7 +713,7 @@ app.controller("EditController", [
             true
         );
 
-        root.$on("share_set_status", function(status) {
+        root.$on("share_set_status", function(event, status) {
             scope.status = status;
             scope.design.status = status;
         });

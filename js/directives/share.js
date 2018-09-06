@@ -36,7 +36,7 @@ app.directive("share", function() {
         scope.set_status = function(design, status) {
             var content = {
                 id: design.id,
-                status: status
+                status: parseInt(status)
             };
             $.ajax({
                 type: "POST",
@@ -49,8 +49,8 @@ app.directive("share", function() {
                         return;
                     }
                     scope.make_public = false;
-                    root.share_design.status = true;
-                    root.$broadcast("share_set_status", status);
+                    root.share_design.status = 0;
+                    root.$broadcast("share_set_status", parseInt(status));
                     root.$apply();
                 },
                 error: function(data) {
@@ -119,7 +119,7 @@ app.directive("share", function() {
                     root.base_url +
                     encodeURIComponent("/#/view?id=" + design.id);
 
-                if (design.status === 0) {
+                if (parseInt(design.status) === 0) {
                     scope.make_public = true;
                 } else {
                     scope.make_public = false;
