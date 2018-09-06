@@ -37,9 +37,6 @@ if ($_GET){
 		$query = sprintf("SELECT * FROM designs WHERE id = " . $_GET['id']);
 	} else if (isset($_GET['status'])) {
 		$query = sprintf("SELECT * FROM designs WHERE status = " . $_GET['status']);
-	// TODO Remove public
-	} else if (isset($_GET['public'])) {
-		$query = sprintf("SELECT * FROM designs WHERE public = 1");
 	} else {
 		$query = sprintf("SELECT * FROM designs");
 	}
@@ -58,8 +55,6 @@ if ($_GET){
 		$designs->product = mysql_result($result,$i,"product");
 		$designs->variations = mysql_result($result,$i,"variations");
 		$designs->status = mysql_result($result,$i,"status");
-		// TODO Remove public
-		$designs->public = mysql_result($result,$i,"public");
 		$designs->active = mysql_result($result,$i,"active");
 		$designs->images = mysql_result($result,$i,"images");
 		array_push($response, $designs);
@@ -104,15 +99,12 @@ if ($_GET){
 		$product = $_POST['product'];
 		$variations = $_POST['variations'];
 		$status = $_POST['status'];
-		// TODO Remove public
-		$public = $_POST['public'];
 
 		$code = generate_code(20);
 
-		// TODO Remove public
-		$sql = sprintf("insert into designs (created, updated, name, user, product, variations, status, public) value (now(), now(), '%s', '%s', '%s', '%s', '%s', '%s')",
+		$sql = sprintf("insert into designs (created, updated, name, user, product, variations, status) value (now(), now(), '%s', '%s', '%s', '%s', '%s')",
 		mysql_real_escape_string($name), mysql_real_escape_string($user)
-		, mysql_real_escape_string($product), mysql_real_escape_string($variations), mysql_real_escape_string($status), mysql_real_escape_string($public));
+		, mysql_real_escape_string($product), mysql_real_escape_string($variations), mysql_real_escape_string($status));
 
 
 		if (mysql_query($sql)) {
@@ -170,10 +162,6 @@ if ($_GET){
 		}
 		if (isset($_POST['status'])) {
 			$vars['status'] = $_POST['status'];
-		}
-		// TODO Remove public
-		if (isset($_POST['public'])) {
-			$vars['public'] = $_POST['public'];
 		}
 		if (isset($_POST['images'])) {
 			$p_images = json_decode($_POST['images']);
