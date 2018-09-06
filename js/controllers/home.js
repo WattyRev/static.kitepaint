@@ -11,7 +11,7 @@ app.controller("HomeController", [
             var content = {
                 filter: {
                     active: 1,
-                    public: 1
+                    status: 2
                 },
                 return: ["id", "created", "name", "variations"],
                 limit: 6,

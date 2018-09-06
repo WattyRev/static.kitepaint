@@ -109,7 +109,10 @@ app.controller("ViewController", [
                         if (!match || !colorOption.color) {
                             return false;
                         }
-                        return colorOption.color.toLowerCase() === match.toLowerCase();
+                        return (
+                            colorOption.color.toLowerCase() ===
+                            match.toLowerCase()
+                        );
                     });
                     if (colorDetails) {
                         return colorDetails;
@@ -138,10 +141,10 @@ app.controller("ViewController", [
                     scope.design = data[0];
                     scope.variations = JSON.parse(scope.design.variations);
                     scope.current_variation = scope.variations[0];
-                    scope.public = scope.design.public === "1" ? true : false;
+                    scope.status = parseInt(scope.design.status);
                     root.done(3);
                     scope.$apply();
-                    if (!scope.public) {
+                    if (!scope.status) {
                         scope.authorize_user(scope.design.user);
                     }
                     scope.get_product();

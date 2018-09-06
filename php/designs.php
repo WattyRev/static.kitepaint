@@ -1,5 +1,5 @@
 <?php
-require_once "header.php"; 
+require_once "header.php";
 if ($_GET){
 	if (isset($_GET['filter'])) {
 		$filter = "";
@@ -35,12 +35,15 @@ if ($_GET){
 
 	if (isset($_GET['id'])) {
 		$query = sprintf("SELECT * FROM designs WHERE id = " . $_GET['id']);
+	} else if (isset($_GET['status'])) {
+		$query = sprintf("SELECT * FROM designs WHERE status = " . $_GET['status']);
+	// TODO Remove public
 	} else if (isset($_GET['public'])) {
 		$query = sprintf("SELECT * FROM designs WHERE public = 1");
 	} else {
 		$query = sprintf("SELECT * FROM designs");
 	}
-		 
+
 	$result = mysql_query($query);
 	$num = mysql_num_rows($result);
 	mysql_close();
@@ -54,6 +57,8 @@ if ($_GET){
 		$designs->user = mysql_result($result,$i,"user");
 		$designs->product = mysql_result($result,$i,"product");
 		$designs->variations = mysql_result($result,$i,"variations");
+		$designs->status = mysql_result($result,$i,"status");
+		// TODO Remove public
 		$designs->public = mysql_result($result,$i,"public");
 		$designs->active = mysql_result($result,$i,"active");
 		$designs->images = mysql_result($result,$i,"images");
@@ -98,19 +103,23 @@ if ($_GET){
 		$user = $_POST['user'];
 		$product = $_POST['product'];
 		$variations = $_POST['variations'];
+		$status = $_POST['status'];
+		// TODO Remove public
 		$public = $_POST['public'];
 
 		$code = generate_code(20);
-		$sql = sprintf("insert into designs (created, updated, name, user, product, variations, public) value (now(), now(), '%s', '%s', '%s', '%s', '%s')",
+
+		// TODO Remove public
+		$sql = sprintf("insert into designs (created, updated, name, user, product, variations, status, public) value (now(), now(), '%s', '%s', '%s', '%s', '%s', '%s')",
 		mysql_real_escape_string($name), mysql_real_escape_string($user)
-		, mysql_real_escape_string($product), mysql_real_escape_string($variations), mysql_real_escape_string($public));
-		
-		
+		, mysql_real_escape_string($product), mysql_real_escape_string($variations), mysql_real_escape_string($status), mysql_real_escape_string($public));
+
+
 		if (mysql_query($sql)) {
 			$id = mysql_insert_id();
 
 			$response->id = $id;
-		
+
 		} else {
 			$response->valid = false;
 			$response->message = 'Unable to save';
@@ -159,6 +168,10 @@ if ($_GET){
 		if (isset($_POST['name'])) {
 			$vars['name'] = $_POST['name'];
 		}
+		if (isset($_POST['status'])) {
+			$vars['status'] = $_POST['status'];
+		}
+		// TODO Remove public
 		if (isset($_POST['public'])) {
 			$vars['public'] = $_POST['public'];
 		}

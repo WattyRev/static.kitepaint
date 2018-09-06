@@ -20,9 +20,9 @@
 				<ul class="designs unstyled">
 					<li class="design" ng-repeat="design in designs">
 						<div class="variations">
-							<div 
-								class="variation" 
-								title="{{design.primary.name}}" 
+							<div
+								class="variation"
+								title="{{design.primary.name}}"
 								ng-bind-html="design.primary.svg"
 							>
 							</div>
@@ -48,16 +48,16 @@
 											<path fill="none" stroke="#CDCDCD" stroke-width="45" stroke-miterlimit="10" d="M200.363,560.679
 												c-4.72,4.652-12.318,4.597-16.97-0.122L74.586,450.167c-4.652-4.72-4.598-12.318,0.122-16.97L478.521,35.171
 												c4.72-4.652,12.318-4.598,16.97,0.122l108.808,110.39c4.652,4.72,4.598,12.318-0.122,16.97L200.363,560.679z"/>
-											
+
 											<line fill="none" stroke="#CDCDCD" stroke-width="45" stroke-miterlimit="10" x1="404.814" y1="107.12" x2="530.469" y2="234.602"/>
-											<polygon fill="none" stroke="#CDCDCD" stroke-width="45" stroke-linejoin="round" stroke-miterlimit="10" points="33.427,599.204 
+											<polygon fill="none" stroke="#CDCDCD" stroke-width="45" stroke-linejoin="round" stroke-miterlimit="10" points="33.427,599.204
 												188.307,565.542 70.023,445.537 	"/>
 										</svg>
 									</span>
 								</a>
 								<span ng-click="show_share(design);" class="icon share">
 									<svg viewBox="0 0 823.459 830.958">
-										<polyline fill="none" stroke="#CDCDCD" stroke-width="60" stroke-miterlimit="10" points="677.387,140.997 151.387,414.997 
+										<polyline fill="none" stroke="#CDCDCD" stroke-width="60" stroke-miterlimit="10" points="677.387,140.997 151.387,414.997
 											677.387,686.997 "/>
 										<circle fill="#CDCDCD" cx="677.387" cy="140.997" r="133.696"/>
 										<circle fill="#CDCDCD" cx="151.387" cy="414.997" r="133.696"/>
@@ -72,7 +72,7 @@
 								</span>
 							</div>
 						</div>
-						<span class="icon public" title="This design is public" ng-show="design.public === '1'">
+						<span class="icon public" title="This design is public" ng-show="design.status === 2">
 							<svg viewBox="0 0 1000 1000">
 								<path fill="#CDCDCD" d="M500.101,70.076c238.973,0,432.698,193.726,432.698,432.698S739.073,935.473,500.101,935.473
 									S67.402,741.747,67.402,502.774S261.128,70.076,500.101,70.076 M500.101,11.527c-66.292,0-130.633,12.997-191.233,38.629
@@ -97,7 +97,10 @@
 									s97.581-62.208,54.889-373.248L908.078,358.337z"/>
 							</svg>
 						</span>
-						<span class="icon public" title="This design is private" ng-show="design.public === '0'">
+						<span class="icon public" title="This design is unlisted" ng-show="design.status === 1">
+							Unlisted
+						</span>
+						<span class="icon public" title="This design is private" ng-show="design.status === 0">
 							<svg viewBox="0 0 1000 1000">
 								<path fill="#CDCDCD" d="M500.101,67.076c238.973,0,432.698,193.726,432.698,432.698S739.073,932.473,500.101,932.473
 									S67.402,738.747,67.402,499.774S261.128,67.076,500.101,67.076 M500.101,8.527c-66.292,0-130.633,12.997-191.233,38.629

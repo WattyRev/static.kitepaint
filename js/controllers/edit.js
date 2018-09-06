@@ -15,7 +15,7 @@ app.controller("EditController", [
         scope.design = {};
         scope.loading = true;
         scope.product = {};
-        scope.public = false;
+        scope.status = 0;
         scope.retailers = [];
         scope.send_retailer = {
             retailer: false,
@@ -125,7 +125,7 @@ app.controller("EditController", [
                     $.each(scope.variations, function(i, variation) {
                         scope.send_retailer[variation.name] = true;
                     });
-                    scope.public = scope.design.public === "1" ? true : false;
+                    scope.status = parseInt(scope.design.status);
                     if (root.editing_share) {
                         scope.show_share();
                     }
@@ -354,13 +354,13 @@ app.controller("EditController", [
 
         scope.save_as = function() {
             scope.saving = true;
-            var user_id, public;
+            var user_id, status;
             if (root.no_account) {
                 user_id = 0;
-                public = true;
+                status = 2;
             } else {
                 user_id = root.user.user_id;
-                public = scope.public;
+                status = scope.status;
             }
 
             var design = {
@@ -368,7 +368,7 @@ app.controller("EditController", [
                 user: user_id,
                 product: scope.product.id,
                 variations: JSON.stringify(scope.variations),
-                public: public ? 1 : 0,
+                status: status,
                 new: 1
             };
             var images = [];
@@ -390,7 +390,7 @@ app.controller("EditController", [
                         scope.show_retailers = true;
                     } else if (root.no_account && root.editing_share) {
                         root.no_account = false;
-                        root.share_design = { id: data.id, public: "1" };
+                        root.share_design = { id: data.id, status: 3 };
                         root.show_share = true;
                     } else {
                         scope.edit_design(data.id);
@@ -698,14 +698,15 @@ app.controller("EditController", [
 
         /* LISTENERS */
         scope.$watch(
-            "public",
-            function(public) {
+            "status",
+            function(status) {
+                console.log("status changed", status);
                 if (state.params.type === "saved" && !scope.loading) {
                     scope.saving = true;
-                    scope.design.public = public ? 1 : 0;
+                    scope.design.status = parseInt(status);
                     var design = {
                         id: scope.design.id,
-                        public: scope.design.public
+                        status: scope.design.status
                     };
                     scope.update_design(design, function() {});
                 }
@@ -713,9 +714,9 @@ app.controller("EditController", [
             true
         );
 
-        root.$on("share_set_public", function() {
-            scope.public = true;
-            scope.design.public = 1;
+        root.$on("share_set_status", function(status) {
+            scope.status = status;
+            scope.design.status = status;
         });
     }
 ]);

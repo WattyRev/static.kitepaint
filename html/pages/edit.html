@@ -61,8 +61,9 @@
 						<a ng-click="show_reset = true;">Reset</a>
 					</div>
 					<div ng-show="$root.user.logged_in">
-						<a ng-click="public = true;" ng-hide="public">Make Design Public</a>
-						<a ng-click="public = false;" ng-show="public">Make Design Private</a>
+						<a ng-click="status = 2;" ng-show="status !== 2">Make Design Public</a>
+						<a ng-click="status = 1;" ng-show="status !== 1">Make Design Unlisted</a>
+						<a ng-click="status = 0;" ng-show="status !== 0">Make Design Private</a>
 					</div>
 					<div>
 						<label for="set-background">Background</label>
