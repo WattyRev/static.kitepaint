@@ -69,7 +69,8 @@
 		</div>
 	</div>
 	<div class="content" ng-show="make_public">
-		<p class="center">This design is set to private. Please set to public before sharing.</p>
-		<button class="button action center" ng-click="set_public($root.share_design)">Set Public</button>
+		<p class="center">This design is set to private. Please set to public or unlisted before sharing.</p>
+		<button class="button action center" ng-click="set_status($root.share_design, 2)">Set Public</button>
+		<button class="button action center" ng-click="set_status($root.share_design, 1)">Set Unlisted</button>
 	</div>
 </div>

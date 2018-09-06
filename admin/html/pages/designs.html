@@ -20,55 +20,55 @@
 		<thead>
 			<tr>
 				<th></th>
-				<th 
-					ng-click="sort_by('id')" 
+				<th
+					ng-click="sort_by('id')"
 					ng-class="{sorted: sort.metric === 'id', ascending: sort.metric === 'id' && sort.ascending, descending: sort.metric === 'id' && !sort.ascending}"
 				>ID</th>
-				<th 
+				<th
 					ng-click="sort_by('created')"
 					ng-class="{sorted: sort.metric === 'created', ascending: sort.metric === 'created' && sort.ascending, descending: sort.metric === 'created' && !sort.ascending}"
 				>Created</th>
-				<th 
+				<th
 					ng-click="sort_by('updated')"
 					ng-class="{sorted: sort.metric === 'updated', ascending: sort.metric === 'updated' && sort.ascending, descending: sort.metric === 'updated' && !sort.ascending}"
 				>Updated</th>
-				<th 
+				<th
 					ng-click="sort_by('name')"
 					ng-class="{sorted: sort.metric === 'name', ascending: sort.metric === 'name' && sort.ascending, descending: sort.metric === 'name' && !sort.ascending}"
 				>Name</th>
-				<th 
+				<th
 					ng-click="sort_by('user')"
 					ng-class="{sorted: sort.metric === 'user', ascending: sort.metric === 'user' && sort.ascending, descending: sort.metric === 'user' && !sort.ascending}"
 				>User</th>
-				<th 
+				<th
 					ng-click="sort_by('product')"
 					ng-class="{sorted: sort.metric === 'product', ascending: sort.metric === 'product' && sort.ascending, descending: sort.metric === 'product' && !sort.ascending}"
 				>Product</th>
 				<th
-					ng-click="sort_by('public')"
-					ng-class="{sorted: sort.metric === 'public', ascending: sort.metric === 'public' && sort.ascending, descending: sort.metric === 'public' && !sort.ascending}"
-				>Public</th>
+					ng-click="sort_by('status')"
+					ng-class="{sorted: sort.metric === 'status', ascending: sort.metric === 'status' && sort.ascending, descending: sort.metric === 'status' && !sort.ascending}"
+				>Status</th>
 				<th
 					ng-click="sort_by('active')"
 				ng-class="{sorted: sort.metric === 'active', ascending: sort.metric === 'active' && sort.ascending, descending: sort.metric === 'active' && !sort.ascending}"
 				>Active</th>
 			</tr>
 		</thead>
-		<tbody>	
+		<tbody>
 			<tr ng-repeat="design in display_designs" ng-click="edit_design(design)">
 				<td ng-bind-html="design.primary_variation.svg"></td>
 				<td>{{design.id}}</td>
 				<td>{{design.created}}</td>
 				<td>{{design.updated}}</td>
 				<td>{{design.name}}</td>
-				<td>{{design.user}}</td>				
+				<td>{{design.user}}</td>
 				<td>{{design.product}}</td>
-				<td>{{design.public ? 'Yes' : 'No'}}</td>
+				<td>{{design.status === 0 ? 'Private' : ''}}{{design.status === 1 ? 'Unlisted' : ''}}{{design.status === 2 ? 'Public' : ''}}</td>
 				<td>{{design.active ? 'Yes' : 'No'}}</td>
 			</tr>
 		</tbody>
 	</table>
-	
+
 	<div class="block">
 		<button class="button" ng-show="!loading && display_designs.length < filtered_designs.length" ng-click="show_more();">Show More</button>
 	</div>
@@ -81,36 +81,36 @@
 			<form ng-submit="save_design(editing)">
 				<div class="half" ng-hide="editing.new">
 					<label for="input-active">Active</label>
-					<input 
-						type="checkbox" 
+					<input
+						type="checkbox"
 						id="input-active"
-						ng-model="editing.active" 
+						ng-model="editing.active"
 					>
 				</div>
-				<div class="half" ng-hide="editing.new">
-					<label for="input-public">Public</label>
-					<input 
-						type="checkbox" 
-						id="input-public"
-						ng-model="editing.public" 
+				<div ng-hide="editing.new">
+					<label for="input-status">Status (0 - Private, 1 - Unlisted, 2 - Public)</label>
+					<input
+						type="number"
+						id="input-status"
+						ng-model="editing.status"
 					>
 				</div>
 				<div class="half left">
 					<label for="input-name">Name</label>
-					<input 
-						type="text" 
+					<input
+						type="text"
 						id="input-name"
 						ng-model="editing.name"
-						required 
+						required
 					>
 				</div>
 				<div class="half right">
 					<label for="input-user">User</label>
-					<input 
-						type="text" 
+					<input
+						type="text"
 						id="input-user"
 						ng-model="editing.user"
-						required 
+						required
 					>
 				</div>
 				<input type="submit" value="Save" class="button"  tabindex="4"/>

@@ -1,5 +1,5 @@
 <?php
-require_once "header.php"; 
+require_once "header.php";
 if ($_GET){
 	$filter = "";
 	if (isset($_GET['filter'])){
@@ -42,7 +42,7 @@ if ($_GET){
 
 	//Delete
 	if (isset($_POST['delete'])) {
-		$query = sprintf("delete from designs where id = '%s'", 
+		$query = sprintf("delete from designs where id = '%s'",
 			mysql_real_escape_string($_POST['id']));
 
 		if (mysql_query($query)) {
@@ -63,7 +63,7 @@ if ($_GET){
 		'active' => $_POST['active'] === 'true' ? '1' : '0',
 		'name' => $_POST['name'],
 		'user' => $_POST['user'],
-		'public' => $_POST['public'] === 'true' ? '1' : '0'
+		'status' => $_POST['status']
 	);
 
 	foreach($vars as $metric => $val){
