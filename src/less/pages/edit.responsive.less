@@ -1,0 +1,64 @@
+/**
+ * Styles for responsive edit page
+ */
+body.is-responsive {
+    @media only screen and (max-width: 800px) {
+        /* line 11, ../../scss/pages/edit.responsive.scss */
+        #edit .colors button {
+            display: none;
+        }
+        /* line 14, ../../scss/pages/edit.responsive.scss */
+        #edit .colors {
+            width: 27px;
+        }
+        /* line 17, ../../scss/pages/edit.responsive.scss */
+        #edit .colors ul {
+            margin-left: 0;
+            padding-left: 0;
+        }
+        /* line 21, ../../scss/pages/edit.responsive.scss */
+        #edit .colors .label {
+            width: 0px;
+        }
+        /* line 25, ../../scss/pages/edit.responsive.scss */
+        #edit .canvas-wrap {
+            width: 85%;
+        }
+    }
+    /* ~Phone */
+    @media only screen and (max-width: 450px) {
+        /* line 34, ../../scss/pages/edit.responsive.scss */
+        #edit .colors {
+            width: 100%;
+        }
+        /* line 37, ../../scss/pages/edit.responsive.scss */
+        #edit .colors ul {
+            float: none;
+            width: 100%;
+            -moz-box-shadow: none;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            border: 0;
+        }
+        /* line 43, ../../scss/pages/edit.responsive.scss */
+        #edit .colors ul li {
+            display: inline-block;
+        }
+        /* line 47, ../../scss/pages/edit.responsive.scss */
+        #edit .colors .current {
+            padding: 0 3px 0 0;
+            margin: 0 -6px 0 0;
+            border: 0;
+            border-right: 1px solid #cdcdcd;
+        }
+        /* line 54, ../../scss/pages/edit.responsive.scss */
+        #edit .template {
+            height: auto;
+            margin: 20px 0;
+        }
+        /* line 58, ../../scss/pages/edit.responsive.scss */
+        #edit .canvas-wrap {
+            width: 100%;
+        }
+    }
+}

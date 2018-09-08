@@ -45,7 +45,6 @@
                     "layout/responsive.css",
                     "sections/tooltip.responsive.css"
                 ],
-                "legacy": ["layout/legacy.css"],
                 "embed": ["layout/embed.css"]
             },
             "pages": {
@@ -94,7 +93,6 @@
             "layout": {
                 "main": ["min/layout/main.css"],
                 "responsive": ["min/layout/responsive.css"],
-                "legacy": ["min/layout/legacy.css"],
                 "embed": ["min/layout/embed.css"]
             },
             "pages": {

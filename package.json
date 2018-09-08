@@ -1,0 +1,27 @@
+{
+    "name": "static.kitepaint",
+    "version": "1.0.0",
+    "description": "A site for kite colorizers.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"I got no tests\"",
+        "deploy-prod": "grunt deploy-prod",
+        "deploy-beta": "grunt deploy-beta"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/WattyRev/static.kitepaint.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/WattyRev/static.kitepaint/issues"
+    },
+    "homepage": "https://github.com/WattyRev/static.kitepaint#readme",
+    "devDependencies": {
+        "grunt": "^1.0.3",
+        "grunt-contrib-less": "^2.0.0",
+        "grunt-ftpush": "https://github.com/WattyRev/grunt-ftpush.git",
+        "load-grunt-tasks": "^3.5.2"
+    }
+}

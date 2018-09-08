@@ -79,12 +79,6 @@
 				<?php endforeach;
 			endif; ?>
 
-			<!--[if IE 9]>
-				<?php foreach($css_files['legacy'] as $css):?>
-				<link rel="stylesheet" href="css/<?php echo $css ?>" />
-				<?php endforeach;?>
-			<![endif]-->
-
 			<?php
 				$ua = $_SERVER['HTTP_USER_AGENT'];
 				$safariorchrome = strpos($ua, 'Safari') ? true : false;
