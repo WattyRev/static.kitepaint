@@ -2,7 +2,6 @@
     "development": {
         "js": [
             "libraries/jquery.min.js",
-            "modernizr.js",
             "libraries/angular.min.js",
             "libraries/angular-ui-router.js",
             "libraries/ui-router-styles.js",
@@ -141,7 +140,6 @@
     "process": {
         "js": [
             "libraries/jquery.min.js",
-            "modernizr.js",
             "libraries/angular.min.js",
             "libraries/angular-ui-router.js",
             "libraries/ui-router-styles.js",
