@@ -21,116 +21,97 @@ app.config(function(
     // For any unmatched url, send to /route1
     $urlRouterProvider.otherwise("/");
 
+    var currentDomain = window.location.hostname;
+    var staticDomains = {
+        "beta.kitepaint.com": "https://static.beta.kitepaint.com/",
+        "kitepaint.com": "https://static.kitepaint.com/",
+        default: ""
+    };
+    app.staticDomain = staticDomains[currentDomain] || staticDomains.default;
+
     $stateProvider
         .state("about", {
             url: "/about",
-            templateUrl: "html/pages/about.html",
+            templateUrl: app.staticDomain + "html/pages/about.html",
             controller: "AboutController",
             data: {
-                title: "About",
-                css: get_dependency("about")
+                title: "About"
             }
         })
         .state("activate", {
             url: "/activate",
-            templateUrl: "html/pages/activate.html",
+            templateUrl: app.staticDomain + "html/pages/activate.html",
             controller: "ActivateController",
             data: {
-                title: "Activate",
-                css: get_dependency("activate")
+                title: "Activate"
             }
         })
         .state("account", {
             url: "/account",
-            templateUrl: "html/pages/account.html",
+            templateUrl: app.staticDomain + "html/pages/account.html",
             controller: "AccountController",
             data: {
-                title: "Account",
-                css: get_dependency("account")
+                title: "Account"
             }
         })
         .state("changePassword", {
             url: "/changePassword",
-            templateUrl: "html/pages/changePassword.html",
+            templateUrl: app.staticDomain + "html/pages/changePassword.html",
             controller: "ChangePasswordController",
             data: {
-                title: "Change Password",
-                css: get_dependency("changePassword")
+                title: "Change Password"
             }
         })
         .state("contact", {
             url: "/contact",
-            templateUrl: "html/pages/contact.html",
+            templateUrl: app.staticDomain + "html/pages/contact.html",
             controller: "ContactController",
             data: {
-                title: "Contact",
-                css: get_dependency("contact")
+                title: "Contact"
             }
         })
         .state("create", {
             url: "/create",
-            templateUrl: "html/pages/create.html",
+            templateUrl: app.staticDomain + "html/pages/create.html",
             controller: "CreateController",
             data: {
-                title: "Create",
-                css: get_dependency("create")
+                title: "Create"
             }
         })
         .state("designs", {
             url: "/designs",
-            templateUrl: "html/pages/designs.html",
+            templateUrl: app.staticDomain + "html/pages/designs.html",
             controller: "DesignsController",
             data: {
-                title: "Designs",
-                css: get_dependency("designs")
+                title: "Designs"
             }
         })
         .state("edit", {
             url: "/edit/:type?id",
-            templateUrl: "html/pages/edit.html",
+            templateUrl: app.staticDomain + "html/pages/edit.html",
             controller: "EditController",
             data: {
-                title: "Edit",
-                css: get_dependency("edit")
+                title: "Edit"
             }
         })
         .state("home", {
             url: "/",
-            templateUrl: "html/pages/home.html",
+            templateUrl: app.staticDomain + "html/pages/home.html",
             controller: "HomeController",
             data: {
-                title: "",
-                css: get_dependency("home")
+                title: ""
             }
         })
         .state("view", {
             url: "/view?id",
-            templateUrl: "html/pages/view.html",
+            templateUrl: app.staticDomain + "html/pages/view.html",
             controller: "ViewController",
             data: {
-                title: "View",
-                css: get_dependency("view")
+                title: "View"
             }
         });
 });
 
-function get_dependency(page) {
-    var css = dependencies[environment].css.pages[page],
-        responsive = !read_cookie("desktop"),
-        dependency;
-    if (!css) {
-        return;
-    }
-    if (responsive) {
-        dependency = ["css/" + css.main, "css/" + css.responsive];
-        if (!css.responsive.length) {
-            dependency = "css/" + css.main;
-        }
-    } else {
-        dependency = "css/" + css.main;
-    }
-    return dependency;
-}
 if (embed) {
     verify_embed();
 } else {

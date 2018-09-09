@@ -20,6 +20,8 @@
     "homepage": "https://github.com/WattyRev/static.kitepaint#readme",
     "devDependencies": {
         "grunt": "^1.0.3",
+        "grunt-contrib-concat": "^1.0.1",
+        "grunt-contrib-copy": "^1.0.0",
         "grunt-contrib-less": "^2.0.0",
         "grunt-ftpush": "https://github.com/WattyRev/grunt-ftpush.git",
         "load-grunt-tasks": "^3.5.2"

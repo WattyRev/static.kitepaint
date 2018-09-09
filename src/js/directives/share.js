@@ -130,7 +130,7 @@ app.directive("share", function() {
     }
     return {
         restrict: "E",
-        templateUrl: "html/directives/share.html",
+        templateUrl: app.staticDomain + "html/directives/share.html",
         link: link
     };
 });
