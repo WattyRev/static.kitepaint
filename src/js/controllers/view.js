@@ -18,7 +18,7 @@ app.controller("ViewController", [
 
             $.ajax({
                 type: "GET",
-                url: "php/products.php?id=" + id,
+                url: app.apiDomain + "products.php?id=" + id,
                 dataType: "json",
                 success: function(data) {
                     scope.product = data[0];
@@ -40,7 +40,10 @@ app.controller("ViewController", [
         scope.get_manufacturer = function() {
             $.ajax({
                 type: "GET",
-                url: "php/manufacturers.php?id=" + scope.product.manufacturer,
+                url:
+                    app.apiDomain +
+                    "manufacturers.php?id=" +
+                    scope.product.manufacturer,
                 dataType: "json",
                 success: function(data) {
                     scope.manufacturer = data[0];
@@ -65,7 +68,7 @@ app.controller("ViewController", [
             };
             $.ajax({
                 type: "GET",
-                url: "php/users.php",
+                url: app.apiDomain + "users.php",
                 data: request,
                 dataType: "json",
                 success: function(data) {
@@ -129,7 +132,7 @@ app.controller("ViewController", [
         scope.get_design = function() {
             $.ajax({
                 type: "GET",
-                url: "php/designs.php?id=" + location.$$search.id,
+                url: app.apiDomain + "designs.php?id=" + location.$$search.id,
                 dataType: "json",
                 success: function(data) {
                     if (!data.length) {

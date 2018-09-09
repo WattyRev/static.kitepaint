@@ -56,7 +56,7 @@ app.controller("PrimaryController", [
             root.login_loading = true;
             $.ajax({
                 type: "POST",
-                url: "php/index.php",
+                url: app.apiDomain + "index.php",
                 data: root.sign_in,
                 dataType: "json",
                 success: function(data) {
@@ -90,7 +90,7 @@ app.controller("PrimaryController", [
             root.logging_out = true;
             $.ajax({
                 type: "POST",
-                url: "php/logout.php",
+                url: app.apiDomain + "logout.php",
                 data: root.sign_in,
                 success: function(data) {
                     root.user = false;
@@ -110,7 +110,7 @@ app.controller("PrimaryController", [
             root.registering = true;
             $.ajax({
                 type: "POST",
-                url: "php/register.php",
+                url: app.apiDomain + "register.php",
                 data: root.register,
                 dataType: "json",
                 success: function(data) {
@@ -143,7 +143,7 @@ app.controller("PrimaryController", [
             root.resetting = true;
             $.ajax({
                 type: "POST",
-                url: "php/lostpassword.php",
+                url: app.apiDomain + "lostpassword.php",
                 data: root.reset,
                 dataType: "json",
                 success: function(data) {
@@ -183,7 +183,7 @@ app.controller("PrimaryController", [
             user_data.update_login = true;
             $.ajax({
                 type: "POST",
-                url: "php/index.php",
+                url: app.apiDomain + "index.php",
                 data: user_data,
                 dataType: "json",
                 success: function(data) {

@@ -21,13 +21,20 @@ app.config(function(
     // For any unmatched url, send to /route1
     $urlRouterProvider.otherwise("/");
 
+    // Store some domain references based on environment
     var currentDomain = window.location.hostname;
     var staticDomains = {
         "beta.kitepaint.com": "https://static.beta.kitepaint.com/",
         "kitepaint.com": "https://static.kitepaint.com/",
         default: ""
     };
+    var apiDomains = {
+        "beta.kitepaint.com": "https://api.beta.kitepaint.com/api/php/",
+        "kitepaint.com": "https://api.kitepaint.com/api/php/",
+        default: ""
+    };
     app.staticDomain = staticDomains[currentDomain] || staticDomains.default;
+    app.apiDomain = apiDomains[currentDomain] || apiDomains.default;
 
     $stateProvider
         .state("about", {
@@ -149,7 +156,7 @@ function verify_embed() {
     var checks = 0;
     $.ajax({
         type: "GET",
-        url: "php/manufacturers.php",
+        url: app.apiDomain + "manufacturers.php",
         data: content,
         dataType: "json",
         success: function(data) {
@@ -178,7 +185,7 @@ function verify_embed() {
     };
     $.ajax({
         type: "GET",
-        url: "php/retailers.php",
+        url: app.apiDomain + "retailers.php",
         data: content,
         dataType: "json",
         success: function(data) {

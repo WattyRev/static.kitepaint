@@ -40,7 +40,7 @@ app.directive("share", function() {
             };
             $.ajax({
                 type: "POST",
-                url: "php/designs.php",
+                url: app.apiDomain + "designs.php",
                 data: content,
                 dataType: "json",
                 success: function(data) {

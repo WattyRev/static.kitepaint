@@ -19,7 +19,7 @@ app.controller("HomeController", [
             };
             $.ajax({
                 type: "GET",
-                url: "php/designs.php",
+                url: app.apiDomain + "designs.php",
                 data: content,
                 dataType: "json",
                 success: function(data) {

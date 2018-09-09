@@ -52,7 +52,7 @@ app.controller("EditController", [
             }
             $.ajax({
                 type: "GET",
-                url: "php/products.php?id=" + id,
+                url: app.apiDomain + "products.php?id=" + id,
                 dataType: "json",
                 success: function(data) {
                     scope.product = data[0];
@@ -102,7 +102,7 @@ app.controller("EditController", [
             scope.loading = true;
             $.ajax({
                 type: "GET",
-                url: "php/designs.php?id=" + location.$$search.id,
+                url: app.apiDomain + "designs.php?id=" + location.$$search.id,
                 dataType: "json",
                 success: function(data) {
                     scope.design = data[0];
@@ -151,7 +151,10 @@ app.controller("EditController", [
         scope.get_manufacturer = function() {
             $.ajax({
                 type: "GET",
-                url: "php/manufacturers.php?id=" + scope.product.manufacturer,
+                url:
+                    app.apiDomain +
+                    "manufacturers.php?id=" +
+                    scope.product.manufacturer,
                 dataType: "json",
                 success: function(data) {
                     scope.manufacturer = data[0];
@@ -190,7 +193,7 @@ app.controller("EditController", [
             $.ajax({
                 type: "GET",
                 data: content,
-                url: "php/retailers.php",
+                url: app.apiDomain + "retailers.php",
                 dataType: "json",
                 success: function(data) {
                     $.each(data, function(i, retailer) {
@@ -379,7 +382,7 @@ app.controller("EditController", [
 
             $.ajax({
                 type: "POST",
-                url: "php/designs.php",
+                url: app.apiDomain + "designs.php",
                 data: design,
                 dataType: "json",
                 success: function(data) {
@@ -445,7 +448,7 @@ app.controller("EditController", [
             design.images = JSON.stringify(images);
             $.ajax({
                 type: "POST",
-                url: "php/designs.php",
+                url: app.apiDomain + "designs.php",
                 data: design,
                 dataType: "json",
                 success: function(data) {
@@ -492,7 +495,7 @@ app.controller("EditController", [
             };
             $.ajax({
                 type: "POST",
-                url: "php/designs.php",
+                url: app.apiDomain + "designs.php",
                 data: data,
                 dataType: "json",
                 success: function(data) {
@@ -620,7 +623,7 @@ app.controller("EditController", [
             order.variations = JSON.stringify(order.variations);
             $.ajax({
                 type: "POST",
-                url: "php/orders.php",
+                url: app.apiDomain + "orders.php",
                 data: order,
                 dataType: "json",
                 success: function(data) {
@@ -643,7 +646,7 @@ app.controller("EditController", [
             function send_email() {
                 $.ajax({
                     type: "POST",
-                    url: "php/email.php",
+                    url: app.apiDomain + "email.php",
                     data: content,
                     dataType: "json",
                     success: function(data) {

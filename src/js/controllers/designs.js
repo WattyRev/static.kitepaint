@@ -30,7 +30,7 @@ app.controller("DesignsController", [
             };
             $.ajax({
                 type: "GET",
-                url: "php/designs.php",
+                url: app.apiDomain + "designs.php",
                 data: content,
                 dataType: "json",
                 success: function(data) {
@@ -69,7 +69,7 @@ app.controller("DesignsController", [
             };
             $.ajax({
                 type: "GET",
-                url: "php/users.php",
+                url: app.apiDomain + "users.php",
                 data: content,
                 dataType: "json",
                 success: function(data) {
@@ -99,7 +99,7 @@ app.controller("DesignsController", [
             };
             $.ajax({
                 type: "GET",
-                url: "php/manufacturers.php",
+                url: app.apiDomain + "manufacturers.php",
                 data: content,
                 dataType: "json",
                 success: function(data) {
@@ -131,7 +131,7 @@ app.controller("DesignsController", [
             };
             $.ajax({
                 type: "GET",
-                url: "php/products.php",
+                url: app.apiDomain + "products.php",
                 data: content,
                 dataType: "json",
                 success: function(data) {
@@ -174,7 +174,7 @@ app.controller("DesignsController", [
             };
             $.ajax({
                 type: "GET",
-                url: "php/designs.php",
+                url: app.apiDomain + "designs.php",
                 data: content,
                 dataType: "json",
                 success: function(data) {

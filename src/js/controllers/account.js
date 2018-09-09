@@ -30,7 +30,7 @@ app.controller("AccountController", [
             };
             $.ajax({
                 type: "GET",
-                url: "php/designs.php",
+                url: app.apiDomain + "designs.php",
                 data: content,
                 dataType: "json",
                 success: function(data) {
@@ -65,7 +65,7 @@ app.controller("AccountController", [
             };
             $.ajax({
                 type: "GET",
-                url: "php/manufacturers.php",
+                url: app.apiDomain + "manufacturers.php",
                 data: content,
                 dataType: "json",
                 success: function(data) {
@@ -96,7 +96,7 @@ app.controller("AccountController", [
             };
             $.ajax({
                 type: "GET",
-                url: "php/products.php",
+                url: app.apiDomain + "products.php",
                 data: content,
                 dataType: "json",
                 success: function(data) {
@@ -136,7 +136,7 @@ app.controller("AccountController", [
             };
             $.ajax({
                 type: "POST",
-                url: "php/change_email.php",
+                url: app.apiDomain + "change_email.php",
                 data: content,
                 dataType: "json",
                 success: function(data) {
@@ -165,7 +165,7 @@ app.controller("AccountController", [
             };
             $.ajax({
                 type: "POST",
-                url: "php/users.php",
+                url: app.apiDomain + "users.php",
                 data: content,
                 dataType: "json",
                 success: function(data) {
@@ -195,7 +195,7 @@ app.controller("AccountController", [
             };
             $.ajax({
                 type: "POST",
-                url: "php/users.php",
+                url: app.apiDomain + "users.php",
                 data: content,
                 dataType: "json",
                 success: function(data) {
@@ -224,7 +224,7 @@ app.controller("AccountController", [
             };
             $.ajax({
                 type: "POST",
-                url: "php/delete_account.php",
+                url: app.apiDomain + "delete_account.php",
                 data: content,
                 dataType: "json",
                 success: function(data) {
@@ -261,7 +261,7 @@ app.controller("AccountController", [
             };
             $.ajax({
                 type: "POST",
-                url: "php/designs.php",
+                url: app.apiDomain + "designs.php",
                 data: data,
                 dataType: "json",
                 success: function(data) {
