@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"I got no tests\"",
+        "build": "grunt build",
         "deploy-prod": "grunt deploy-prod",
         "deploy-beta": "grunt deploy-beta"
     },
