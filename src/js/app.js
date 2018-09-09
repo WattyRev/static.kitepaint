@@ -29,8 +29,8 @@ app.config(function(
         default: ""
     };
     var apiDomains = {
-        "beta.kitepaint.com": "https://api.beta.kitepaint.com/api/php/",
-        "kitepaint.com": "https://api.kitepaint.com/api/php/",
+        "beta.kitepaint.com": "https://api.beta.kitepaint.com/php/",
+        "kitepaint.com": "https://api.kitepaint.com/php/",
         default: ""
     };
     app.staticDomain = staticDomains[currentDomain] || staticDomains.default;
