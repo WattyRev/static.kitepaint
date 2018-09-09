@@ -56,6 +56,12 @@ module.exports = function(grunt) {
                         cwd: "src/img",
                         src: "**",
                         dest: "dist/img/"
+                    },
+                    {
+                        expand: true,
+                        cwd: "src",
+                        src: ".htaccess",
+                        dest: "dist/"
                     }
                 ]
             }
