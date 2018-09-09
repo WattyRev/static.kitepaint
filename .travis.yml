@@ -2,13 +2,10 @@ language: node_js
 node_js:
   - "7"
 stages:
-  - name: build
   - name: deploy-beta
     if: branch = beta
 jobs:
   include:
-    - stage: build
-      script: npm run build
     - stage: deploy-beta
       script: npm run deploy-beta -- --ftp-username=${FTP_USER} --ftp-pass=${FTP_PASS}
 notifications:

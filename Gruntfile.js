@@ -96,6 +96,6 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask("build", ["concat", "less", "copy"]);
-    grunt.registerTask("deploy-beta", ["ftpush:beta"]);
-    grunt.registerTask("deploy-prod", ["ftpush:prod"]);
+    grunt.registerTask("deploy-beta", ["build", "ftpush:beta"]);
+    grunt.registerTask("deploy-prod", ["build", "ftpush:prod"]);
 };
