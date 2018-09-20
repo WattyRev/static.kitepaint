@@ -17,6 +17,7 @@ app.controller("CreateController", [
             metric: "name",
             ascending: true
         };
+        scope.staticDomain = app.staticDomain;
 
         //FUNCTIONS
         scope.get_products = function() {
