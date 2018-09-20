@@ -12,7 +12,7 @@
 <ul class="unstyled" ng-show="display_products.length">
 	<li ng-repeat="product in display_products" ng-click="create(product.id)">
 		<div class="logo">
-			<div style="background: #fff url(img/logos/{{manufacturers[product.manufacturer].logo}}) no-repeat center">
+			<div style="background: #fff url({{staticDomain}}img/logos/{{manufacturers[product.manufacturer].logo}}) no-repeat center">
 			</div>
 		</div>
 		<div class="details">
