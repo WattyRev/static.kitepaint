@@ -34,6 +34,7 @@ app.controller("EditController", [
         if (window.retailer !== undefined) {
             scope.embedded_retailer = window.retailer;
         }
+        scope.staticDomain = app.staticDomain;
 
         window.scope = scope;
 

@@ -11,6 +11,7 @@ app.controller("ViewController", [
         scope.show_outlines = true;
         scope.background = "";
         scope.user = {};
+        scope.staticDomain = app.staticDomain;
 
         //FUNCTIONS
         scope.get_product = function() {

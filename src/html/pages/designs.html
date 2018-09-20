@@ -8,7 +8,7 @@
 		</a>
 		<p><a ui-sref="view({id:{{design.id}}})">{{design.name}}</a></p>
 		<p>by {{users[design.user].username}}</span></p>
-		<span class="manufacturer" style="background-image:url(img/logos/{{manufacturers[products[design.product].manufacturer].logo}});"></span>
+		<span class="manufacturer" style="background-image:url({{staticDomain}}img/logos/{{manufacturers[products[design.product].manufacturer].logo}});"></span>
 	</li>
 	<div class="clearfix"></div>
 </ul>

@@ -9,6 +9,7 @@ app.controller("DesignsController", [
         scope.manufacturers = {};
         scope.designs_limit = 50;
         scope.have_more = true;
+        scope.staticDomain = app.staticDomain;
 
         //FUNCTIONS
         scope.get_designs = function() {

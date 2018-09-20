@@ -88,7 +88,7 @@
 			</li>
 		</ul>
 	</div>
-	<div class="canvas-background" style="background-image:url(img/backgrounds/{{background}})"></div>
+	<div class="canvas-background" style="background-image:url({{staticDomain}}img/backgrounds/{{background}})"></div>
 	<div class="canvas-wrap" ng-class="{wide: collapse_colors}">
 		<div class="variations">
 			<div
@@ -266,7 +266,7 @@
 		<h3>Order this design from one of these retailers:</h3>
 		<ul class="retailers">
 			<li ng-repeat="retailer in retailers">
-				<div class="image left" style="background-image:url(img/retailers/{{retailer.image}})" alt="{{retailer.name}}" ></div>
+				<div class="image left" style="background-image:url({{staticDomain}}img/retailers/{{retailer.image}})" alt="{{retailer.name}}" ></div>
 				<div class="info left">
 					<p><strong>{{retailer.name}} <a ng-show="retailer.url" target="_blank" href="{{retailer.url}}">(website)</a></strong></p>
 					<p>{{retailer.city}}, {{retailer.state}}
