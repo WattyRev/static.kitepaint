@@ -1,0 +1,35 @@
+/**
+ * Styles for responsive functionality
+ */
+body.is-responsive {
+    min-width: 300px;
+    header {
+        min-width: 300px;
+    }
+
+    /* ~Tablet Portrait */
+    @media only screen and (max-width: 800px) {
+        .half {
+            width: 100%;
+        }
+
+        .mobile {
+            display: initial;
+        }
+
+        .lightbox {
+            max-width: 600px;
+            width: 90%;
+            margin: 0 auto;
+            left: 0;
+        }
+
+        /* HEADER */
+        header .logged-in {
+            display: none;
+        }
+        header .container > .right {
+            width: auto;
+        }
+    }
+}

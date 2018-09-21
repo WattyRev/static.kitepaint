@@ -1,0 +1,296 @@
+<div class="content">
+	<div class="heading">
+		<div class="left half">
+			<a class="manufacturer-reference" ng-href="{{manufacturer.website}}" target="_blank" style="background: url({{staticDomain}}img/logos/{{manufacturer.logo}}) no-repeat center">
+			</a>
+			<h1>{{product.name}} - {{current_variation.name}} <span class="small small" ng-show="current_variation.primary">Primary</span><a ng-click="set_primary(current_variation)" class="small" ng-hide="current_variation.primary">Set as primary</a></h1>
+			<h2 class="design-name" ng-click="show_rename = true">
+				{{design ? design.name : 'Unsaved'}}
+				<span class="icon" ng-show="design">
+					<svg viewBox="0 0 637.468 628.469" enable-background="new 0 0 637.468 628.469" xml:space="preserve">
+						<path fill="none" stroke="#CDCDCD" stroke-width="45" stroke-miterlimit="10" d="M200.363,560.679
+							c-4.72,4.652-12.318,4.597-16.97-0.122L74.586,450.167c-4.652-4.72-4.598-12.318,0.122-16.97L478.521,35.171
+							c4.72-4.652,12.318-4.598,16.97,0.122l108.808,110.39c4.652,4.72,4.598,12.318-0.122,16.97L200.363,560.679z"/>
+
+							<line fill="none" stroke="#CDCDCD" stroke-width="45" stroke-miterlimit="10" x1="404.814" y1="107.12" x2="530.469" y2="234.602"/>
+						<polygon fill="none" stroke="#CDCDCD" stroke-width="45" stroke-linejoin="round" stroke-miterlimit="10" points="33.427,599.204
+							188.307,565.542 70.023,445.537 	"/>
+					</svg>
+				</span>
+			</h2>
+		</div>
+		<div class="right half actions">
+			<button class="button" ng-click="save();" ng-show="design.id && $root.user.logged_in">{{saving ? 'Saving' : 'Save'}}</button>
+			<button class="button" ng-click="show_save_as = true" ng-show="$root.user.logged_in">Save As</button>
+			<button class="button" ng-click="show_send_retailer()" ng-show="retailers.length">Retailers</button>
+			<button class="button share" ng-click="show_share()">Share</button>
+			<div title="Settings" class="settings-button">
+				<svg viewBox="0 0 1000 1000" ng-click="show_settings = !show_settings;">
+					<defs>
+						<filter id="Adobe_OpacityMaskFilter" filterUnits="userSpaceOnUse" x="-0.656" y="-0.587" width="1001.312" height="1001.312">
+							<feFlood  style="flood-color:white;flood-opacity:1" result="back"/>
+							<feBlend  in="SourceGraphic" in2="back" mode="normal"/>
+						</filter>
+					</defs>
+					<mask maskUnits="userSpaceOnUse" x="-0.656" y="-0.587" width="1001.312" height="1001.312" id="SVGID_1_">
+						<g filter="url(#Adobe_OpacityMaskFilter)">
+							<g>
+								<circle stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="500" cy="500.069" r="245.407"/>
+								<circle stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="1035.433" cy="500.069" r="152.231"/>
+								<circle stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="878.608" cy="121.461" r="152.231"/>
+								<circle stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="500" cy="-35.364" r="152.231"/>
+								<circle stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="121.392" cy="121.461" r="152.231"/>
+								<circle stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="-35.433" cy="500.069" r="152.231"/>
+								<circle stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="121.392" cy="878.678" r="152.231"/>
+								<circle stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="500" cy="1035.503" r="152.231"/>
+								<circle stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="878.608" cy="878.678" r="152.231"/>
+							</g>
+						</g>
+					</mask>
+					<circle mask="url(#SVGID_1_)" stroke="#000000" stroke-width="1.3123" stroke-miterlimit="10" cx="500" cy="500.069" r="500"/>
+				</svg>
+				<div class="settings-dropdown dropdown" ng-show="show_settings">
+					<div>
+						<a ng-click="show_outlines = true" ng-hide="show_outlines">Show Outlines</a>
+						<a ng-click="show_outlines = false" ng-show="show_outlines">Hide Outlines</a>
+					</div>
+					<div>
+						<a ng-click="autofill();">AutoFill</a>
+					</div>
+					<div>
+						<a ng-click="show_reset = true;">Reset</a>
+					</div>
+					<div ng-show="$root.user.logged_in">
+						<a ng-click="status = 2;" ng-show="status !== 2">Make Design Public</a>
+						<a ng-click="status = 1;" ng-show="status !== 1">Make Design Unlisted</a>
+						<a ng-click="status = 0;" ng-show="status !== 0">Make Design Private</a>
+					</div>
+					<div>
+						<label for="set-background">Background</label>
+						<select name="background" id="set-background" ng-options="item.img as item.label for item in $root.backgrounds" ng-model="background"></select>
+					</div>
+					<div ng-show="$root.user.logged_in">
+						<a ng-click="delete_design()" class="delete">Delete</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="colors">
+		<ul class="unstyled" ng-class="{collapse: collapse_colors}">
+			<button ng-click="collapse_colors = !collapse_colors;">{{collapse_colors ? '&gt;' : '&lt;'}}</button>
+			<li class="current">
+				<span class="label">Current</span> <span class="color" ng-style="current_color_style"></span>
+			</li>
+			<li ng-repeat="color in colors">
+				<span class="label">{{color.name}}</span> <span class="color" ng-style="{'background-color':'{{color.color}}'}" ng-click="change_color(color.color)"></span>
+			</li>
+		</ul>
+	</div>
+	<div class="canvas-background" style="background-image:url({{staticDomain}}img/backgrounds/{{background}})"></div>
+	<div class="canvas-wrap" ng-class="{wide: collapse_colors}">
+		<div class="variations">
+			<div
+				class="variation"
+				ng-repeat="variation in variations"
+				title="{{variation.name}}"
+				ng-bind-html="variation.svg"
+				ng-click="select_variation(variation);"
+				ng-class="{selected: current_variation.name === variation.name}"
+			>
+			</div>
+		</div>
+		<div class="template" ng-class="{outlines: show_outlines}" compile="current_variation.svg">
+		</div>
+		<p ng-repeat="note in notes">Note:</strong> {{note}}</p>
+	</div>
+	<div class="prompt save_as" ng-show="show_save_as">
+		<label for="save_as_name">What do you want to name your design?</label>
+		<input type="text" id="save_as_name" ng-model="save_as_name" />
+		<button class="button" ng-click="save_as();">Save</button>
+		<button class="button" ng-click="show_save_as = false; $root.editing_send_retailer = false; root.editing_share = false;">Cancel</button>
+	</div>
+
+	<div class="prompt rename" ng-show="show_rename">
+		<label for="rename_name">What do you want to name your design?</label>
+		<input type="text" id="rename_name" ng-model="design.name" />
+		<button class="button" ng-click="rename();">Save</button>
+		<button class="button" ng-click="show_rename = false">Cancel</button>
+	</div>
+
+	<div class="prompt" ng-show="show_delete_design">
+		<form ng-submit="delete_design()">
+			<label>Are you sure you want to delete this design?</label><br/>
+			<div class="clearfix"></div>
+			<button class="button red">Delete</button>
+			<button type="button" class="button" ng-click="show_delete_design = false">Cancel</button>
+		</form>
+	</div>
+
+	<div class="prompt" ng-show="show_reset">
+		<form ng-submit="reset()">
+			<label>Are you sure you want to reset your design?</label><br/>
+			<div class="clearfix"></div>
+			<button class="button red">Reset</button>
+			<button type="button" class="button" ng-click="show_reset = false">Cancel</button>
+		</form>
+	</div>
+	<div class="clearfix"></div>
+</div>
+
+<share></share>
+
+<div class="lightbox show-login" ng-show="show_login">
+	<a ng-click="show_login = false" class="close right">Close</a>
+	<div class="content">
+		<form class="login" ng-hide="$root.lost_password || !$root.has_account" ng-submit="$root.login(fn_show_save_as);">
+			<p class="success" ng-show="$root.register_status === 'registered'">You have successfully registered! An activation email has been sent to your inbox. You may log in once your account has been activated.</p>
+			<p class="success" ng-show="$root.reset_status === 'reset'">Your password has been reset. An email has been sent to {{$root.reset.email}}.</p>
+			<label for="edit-input-username">Username</label>
+			<input
+				type="text"
+				id="edit-input-username"
+				name="username"
+				ng-model="$root.sign_in.username"
+				required
+				ng-pattern="/^[A-Za-z0-9_\-]+$/"
+				ng-minlength="3"
+				ng-maxlength="30"
+			/>
+			<label for="edit-input-password">Password <tooltip content="password"></tooltip></label>
+			<input
+				type="password"
+				id="edit-input-password"
+				name="password"
+				ng-model="$root.sign_in.password"
+				required
+				ng-minlength="6"
+				ng-maxlength="15"
+				ng-pattern="/[A-Za-z0-9@*#.]/"
+			/>
+			<input type="submit" class="button action" ng-hide="$root.login_loading" value="Sign In" />
+			<button class="button action" ng-show="$root.login_loading">Signing In</button>
+			<p><a ng-click="$root.lost_password=true">Lost Password?</a></p>
+			<p><a ng-click="$root.has_account = false">Register</a></p>
+		</form>
+		<form class="lost-password" ng-show="$root.lost_password  && $root.has_account" ng-submit="$root.reset_password();">
+			<p class="error" ng-show="$root.reset_status === 'invalid' && $root.reset_message">{{$root.reset_message}}</p>
+			<div>
+				<p>Enter your username and email to reset your password.</p>
+				<br/>
+				<label for="edit-reset-username">Username</label>
+				<input
+					type="text"
+					id="edit-reset-username"
+					ng-model="$root.reset.username"
+					required
+					ng-pattern="/^[A-Za-z0-9_\-]+$/"
+					ng-minlength="3"
+					ng-maxlength="30"
+				/>
+				<label for="edit-reset-email">Email</label>
+				<input
+					type="text"
+					id="edit-reset-email"
+					ng-model="$root.reset.email"
+					required
+				/>
+				<input type="submit" class="button action" ng-hide="$root.resetting" value="Reset Password" />
+				<button class="button action" ng-show="$root.resetting">Resetting Password</button>
+				<p><a ng-click="$root.lost_password = false">Cancel</a></p>
+			</div>
+		</form>
+		<form ng-submit="$root.register()" ng-hide="$root.has_account">
+			<div ng-show="$root.register_status !== 'registered'">
+				<label for="edit-register-username">Username <tooltip content="username"></tooltip></label>
+				<input
+					type="text"
+					id="edit-register-username"
+					name="username"
+					ng-model="$root.register.username"
+					placeholder="e.g. JoeBob86"
+					required
+					ng-pattern="/^[A-Za-z0-9_\-]+$/"
+					ng-minlength="3"
+					ng-maxlength="30"
+				/>
+				<label for="edit-register-email">Email Address</label>
+				<input
+					type="email"
+					id="edit-register-email"
+					name="email"
+					ng-model="$root.register.email"
+					placeholder="e.g. joe@bob.com"
+					required
+				/>
+				<label for="edit-register-password">Password <tooltip content="password"></tooltip></label>
+				<input
+					type="password"
+					id="edit-register-password"
+					name="password"
+					ng-model="$root.register.password"
+					required
+					ng-minlength="6"
+					ng-maxlength="15"
+					ng-pattern="/[A-Za-z0-9@*#.]/"
+				/>
+				<label for="edit-register-password-2">Confirm Password <tooltip content="password"></tooltip></label>
+				<input
+					type="password"
+					id="edit-register-password-2"
+					name="password2"
+					ng-model="$root.register.password2"
+					required
+					ng-minlength="6"
+					ng-maxlength="15"
+					ng-pattern="/[A-Za-z0-9@*#.]/"
+				/>
+				<input type="submit" class="button action" ng-hide="$root.registering" value="Sign Up" />
+				<button class="button action" ng-show="$root.registering">Signing Up</button>
+				<p><a href="docs/KitePaintTermsandConditions.pdf" target="_blank">Terms and Conditions</a></p>
+				<p><a ng-click="$root.has_account = true">Already registered? Sign In</a></p>
+			</div>
+		</form>
+		<p><a ng-click="$root.no_account = true; show_login = false; show_save_as = true;">Continue without an account</a></p>
+	</div>
+</div>
+
+<div class="lightbox show-retailers" ng-show="show_retailers">
+	<a ng-click="show_retailers = false" class="close right">Close</a>
+	<div class="content" ng-show="!design.id && !$root.no_account">
+		<p>Save your design before sending it to a retailer.</p>
+		<button class="button action" ng-click="show_save_as = true">Save</button>
+	</div>
+	<div class="content" ng-show="!send_retailer.retailer && (design.id || $root.no_account)">
+		<h3>Order this design from one of these retailers:</h3>
+		<ul class="retailers">
+			<li ng-repeat="retailer in retailers">
+				<div class="image left" style="background-image:url({{staticDomain}}img/retailers/{{retailer.image}})" alt="{{retailer.name}}" ></div>
+				<div class="info left">
+					<p><strong>{{retailer.name}} <a ng-show="retailer.url" target="_blank" href="{{retailer.url}}">(website)</a></strong></p>
+					<p>{{retailer.city}}, {{retailer.state}}
+					<p ng-show="retailer.product_urls[product.id]"><a target="_blank" href="{{retailer.product_urls[product.id]}}">View Store Page</a></p>
+				</div>
+				<button class="button left" ng-click="send_retailer.retailer=retailer">Send Design</button>
+				<div class="clearfix"></div>
+			</li>
+		</ul>
+	</div>
+	<form class="content" ng-show="send_retailer.retailer" ng-submit="send_to_retailer(send_retailer)" >
+		<h3>Craft your message to {{send_retailer.retailer.name}}</h3>
+		<p>Which variations do you want to send?</p>
+		<span ng-repeat="variation in variations" class="select-variation">
+			<label for="send-retailer-{{variation.name}}">{{variation.name}}</label>
+			<input type="checkbox" id="send-retailer-{{variation.name}}" ng-model="send_retailer[variation.name]"/>
+		</span>
+		<label for="send-retailer-message">Add a message:</label>
+		<textarea id="send-retailer-message" ng-model="send_retailer.message"></textarea>
+		<p>Who is it from?</p>
+		<input type="text" ng-model="send_retailer.first_name" placeholder="First Name" required/>
+		<input type="text" ng-model="send_retailer.last_name" placeholder="Last Name" required/>
+		<input type="email" ng-model="send_retailer.email" placeholder="Email Address" required/>
+		<button class="button">Send your design</button>
+	</form>
+</div>
+<canvas id="canvas" class='hidden' width="1000px" height="600px"></canvas>

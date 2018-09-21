@@ -1,4 +1,8 @@
-# kitepaint
+![](https://travis-ci.com/WattyRev/static.kitepaint.svg?branch=master)
+
+[View Build](https://travis-ci.com/WattyRev/static.kitepaint)
+
+# static.kitepaint
 
 A site for kite colorizers.
 
