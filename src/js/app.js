@@ -1,5 +1,20 @@
 var app = angular.module("kitePaint", ["ui.router", "uiRouterStyles"]);
 
+// Store some domain references based on environment
+var currentDomain = window.location.hostname;
+var staticDomains = {
+    "beta.kitepaint.com": "https://static.beta.kitepaint.com/",
+    "kitepaint.com": "https://static.kitepaint.com/",
+    default: ""
+};
+var apiDomains = {
+    "beta.kitepaint.com": "https://api.beta.kitepaint.com/php/",
+    "kitepaint.com": "https://api.kitepaint.com/php/",
+    default: ""
+};
+app.staticDomain = staticDomains[currentDomain] || staticDomains.default;
+app.apiDomain = apiDomains[currentDomain] || apiDomains.default;
+
 app.config(function($sceProvider) {
     // Completely disable SCE.  For demonstration purposes only!
     // Do not use in new projects.
@@ -20,21 +35,6 @@ app.config(function(
 
     // For any unmatched url, send to /route1
     $urlRouterProvider.otherwise("/");
-
-    // Store some domain references based on environment
-    var currentDomain = window.location.hostname;
-    var staticDomains = {
-        "beta.kitepaint.com": "https://static.beta.kitepaint.com/",
-        "kitepaint.com": "https://static.kitepaint.com/",
-        default: ""
-    };
-    var apiDomains = {
-        "beta.kitepaint.com": "https://api.beta.kitepaint.com/php/",
-        "kitepaint.com": "https://api.kitepaint.com/php/",
-        default: ""
-    };
-    app.staticDomain = staticDomains[currentDomain] || staticDomains.default;
-    app.apiDomain = apiDomains[currentDomain] || apiDomains.default;
 
     $stateProvider
         .state("about", {
