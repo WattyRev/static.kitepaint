@@ -13,9 +13,9 @@ jobs:
     - stage: build
       script: npm run build
     - stage: deploy-prod
-      script: npm run deploy-prod -- --ftp-username=${FTP_USER} --ftp-pass=${FTP_PASS}
+      script: npm run deploy:prod -- --sftp-user=${SFTP_USER} --sftp-pass=${SFTP_PASS} --sftp-host=${SFTP_HOST}
     - stage: deploy-beta
-      script: npm run deploy-beta -- --ftp-username=${FTP_USER} --ftp-pass=${FTP_PASS}
+      script: npm run deploy:beta -- --sftp-user=${SFTP_USER} --sftp-pass=${SFTP_PASS} --sftp-host=${SFTP_HOST}
 notifications:
   email:
     on_success: never

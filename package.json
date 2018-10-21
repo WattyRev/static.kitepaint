@@ -6,8 +6,8 @@
     "scripts": {
         "test": "echo \"I got no tests\"",
         "build": "grunt build",
-        "deploy-prod": "grunt deploy-prod",
-        "deploy-beta": "grunt deploy-beta"
+        "deploy:prod": "grunt deploy-prod",
+        "deploy:beta": "grunt deploy-beta"
     },
     "repository": {
         "type": "git",
@@ -24,7 +24,8 @@
         "grunt-contrib-concat": "^1.0.1",
         "grunt-contrib-copy": "^1.0.0",
         "grunt-contrib-less": "^2.0.0",
-        "grunt-ftpush": "https://github.com/WattyRev/grunt-ftpush.git",
-        "load-grunt-tasks": "^3.5.2"
+        "grunt-run": "^0.8.1",
+        "load-grunt-tasks": "^3.5.2",
+        "ssh2-sftp-client": "^3.1.0"
     }
 }
