@@ -73,35 +73,31 @@ module.exports = function(grunt) {
                 }
             }
         },
-        ftpush: {
-            beta: {
-                auth: {
-                    host: "wattyrev.com",
-                    port: 21,
-                    username: grunt.option("ftp-username"),
-                    password: grunt.option("ftp-pass")
-                },
-                src: "./dist",
-                dest: "/static.beta.kitepaint.com",
-                simple: false,
-                useList: true
+        run: {
+            deploy_beta: {
+                cmd: "node",
+                args: [
+                    "deploy.js",
+                    "path=./public_html/static.beta.kitepaint.com/",
+                    `user=${grunt.option("sftp-user")}`,
+                    `pass=${grunt.option("sftp-pass")}`,
+                    `host=${grunt.option("sftp-host")}`
+                ]
             },
-            prod: {
-                auth: {
-                    host: "wattyrev.com",
-                    port: 21,
-                    username: grunt.option("ftp-username"),
-                    password: grunt.option("ftp-pass")
-                },
-                src: "./dist",
-                dest: "/static.kitepaint.com",
-                simple: false,
-                useList: true
+            deploy_prod: {
+                cmd: "node",
+                args: [
+                    "deploy.js",
+                    "path=./public_html/static.kitepaint.com/",
+                    `user=${grunt.option("sftp-user")}`,
+                    `pass=${grunt.option("sftp-pass")}`,
+                    `host=${grunt.option("sftp-host")}`
+                ]
             }
         }
     });
 
     grunt.registerTask("build", ["concat", "less", "copy"]);
-    grunt.registerTask("deploy-beta", ["build", "ftpush:beta"]);
-    grunt.registerTask("deploy-prod", ["build", "ftpush:prod"]);
+    grunt.registerTask("deploy-beta", ["build", "run:deploy_beta"]);
+    grunt.registerTask("deploy-prod", ["build", "run:deploy_prod"]);
 };
