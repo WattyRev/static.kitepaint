@@ -3,6 +3,15 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
+        connect: {
+            server: {
+                options: {
+                    keepalive: true,
+                    port: 9000,
+                    base: "dist"
+                }
+            }
+        },
         concat: {
             build: {
                 src: [
@@ -36,6 +45,9 @@ module.exports = function(grunt) {
                 dest: "dist/app.js"
             }
         },
+        concurrent: {
+            serve: ["watch", "connect"]
+        },
         copy: {
             build: {
                 files: [
@@ -61,6 +73,12 @@ module.exports = function(grunt) {
                         expand: true,
                         cwd: "src",
                         src: ".htaccess",
+                        dest: "dist/"
+                    },
+                    {
+                        expand: true,
+                        cwd: "src",
+                        src: "index.html",
                         dest: "dist/"
                     }
                 ]
@@ -94,10 +112,21 @@ module.exports = function(grunt) {
                     `host=${grunt.option("sftp-host")}`
                 ]
             }
+        },
+        watch: {
+            scripts: {
+                files: "src/**/*.js",
+                tasks: ["concat"]
+            },
+            styles: {
+                files: "src/**/*.less",
+                tasks: ["less"]
+            }
         }
     });
 
     grunt.registerTask("build", ["concat", "less", "copy"]);
     grunt.registerTask("deploy-beta", ["build", "run:deploy_beta"]);
     grunt.registerTask("deploy-prod", ["build", "run:deploy_prod"]);
+    grunt.registerTask("start", ["build", "concurrent:serve"]);
 };
