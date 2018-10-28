@@ -6,13 +6,18 @@
         "enzyme": "^3.7.0",
         "enzyme-adapter-react-16": "^1.6.0",
         "husky": "^1.1.2",
+        "immutable": "^3.8.2",
         "lint-staged": "^7.3.0",
         "prettier": "^1.14.3",
         "prop-types": "^15.6.2",
         "react": "^16.6.0",
         "react-dom": "^16.6.0",
+        "react-redux": "^5.1.0",
         "react-scripts": "2.0.5",
         "react-test-renderer": "^16.6.0",
+        "redux": "^4.0.1",
+        "redux-actions": "^2.6.3",
+        "redux-immutable": "^4.0.0",
         "styled-components": "^4.0.2"
     },
     "scripts": {
