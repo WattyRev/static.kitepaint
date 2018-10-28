@@ -1,0 +1,4 @@
+sftp-config.*
+node_modules
+.grunt
+dist

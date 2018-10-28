@@ -1,35 +1,25 @@
 {
-    "name": "static.kitepaint",
-    "version": "1.0.0",
-    "description": "A site for kite colorizers.",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"I got no tests\"",
-        "start": "grunt start",
-        "build": "grunt build",
-        "deploy:prod": "grunt deploy-prod",
-        "deploy:beta": "grunt deploy-beta"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/WattyRev/static.kitepaint.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/WattyRev/static.kitepaint/issues"
-    },
-    "homepage": "https://github.com/WattyRev/static.kitepaint#readme",
-    "devDependencies": {
-        "grunt": "^1.0.3",
-        "grunt-concurrent": "^2.3.1",
-        "grunt-contrib-concat": "^1.0.1",
-        "grunt-contrib-connect": "^2.0.0",
-        "grunt-contrib-copy": "^1.0.0",
-        "grunt-contrib-less": "^2.0.0",
-        "grunt-contrib-watch": "^1.1.0",
-        "grunt-run": "^0.8.1",
-        "load-grunt-tasks": "^3.5.2",
-        "ssh2-sftp-client": "^3.1.0"
-    }
+  "name": "kitepaint",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-scripts": "2.0.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
