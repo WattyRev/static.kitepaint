@@ -2,6 +2,7 @@ import React from "react";
 import Wrapper from "../Wrapper";
 import CTABanner from "./CTABanner";
 import AccountBanner from "./AccountBanner";
+import RecognizedUserContainer from "../../containers/RecognizedUser";
 
 /**
  * A coordinating component for the Home page.
@@ -9,7 +10,14 @@ import AccountBanner from "./AccountBanner";
 const Home = () => (
   <Wrapper>
     <CTABanner onClick={() => {}} />
-    <AccountBanner isRecognizedUser={false} />
+    <RecognizedUserContainer>
+      {recognizedUserData => (
+        <AccountBanner
+          isRecognizedUser={recognizedUserData.props.isRecognizedUser}
+          onToggleRecognition={recognizedUserData.actions.toggle}
+        />
+      )}
+    </RecognizedUserContainer>
   </Wrapper>
 );
 

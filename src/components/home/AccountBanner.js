@@ -9,7 +9,6 @@ const StyleWrapper = styled.div`
   padding: 16px 24px;
   display: flex;
   justify-content: center;
-  box-shadow: 0 0 1px 1px ${({ theme }) => theme.colors.black} inset;
 
   .message {
     padding: 16px;
@@ -21,7 +20,7 @@ const StyleWrapper = styled.div`
  *
  * @param {Boolean} isRecognizedUser Is this a recognized user who has logged in before?
  */
-const AccountBanner = ({ isRecognizedUser }) => {
+const AccountBanner = ({ isRecognizedUser, onToggleRecognition }) => {
   const recognizedUserContent = (
     <div className="message">
       <H2>Welcome Back!</H2>
@@ -54,9 +53,7 @@ const AccountBanner = ({ isRecognizedUser }) => {
         onLogin={() => {
           console.log("onLogin!");
         }}
-        onToggleRecognition={() => {
-          console.log("onToggleRecognition!");
-        }}
+        onToggleRecognition={onToggleRecognition}
         onResetPassword={() => console.log("onResetPassword!")}
         id="account-banner-login"
         isRecognizedUser={isRecognizedUser}
