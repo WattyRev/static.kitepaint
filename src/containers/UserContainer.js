@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getUserRecognition } from "../redux/modules/user";
-import { SET_RECOGNIZED_USER } from "../redux/actions";
+import { getUser, getUserRecognition } from "../redux/modules/user";
+import { SET_RECOGNIZED_USER, LOG_IN } from "../redux/actions";
 
 /**
  * Maintains a local storage variable that indicates if the user is recognized as a registered user.
@@ -11,11 +11,12 @@ import { SET_RECOGNIZED_USER } from "../redux/actions";
  *
  * @param {Function} children
  */
-class RecognizedUserContainer extends React.Component {
+class UserContainer extends React.Component {
   static propTypes = {
     children: PropTypes.func.isRequired,
-    isRecognizedUser: PropTypes.bool.isRequired,
-    onSetRecognition: PropTypes.func.isRequired
+    user: PropTypes.object.isRequired,
+    onSetRecognition: PropTypes.func.isRequired,
+    onLogIn: PropTypes.func.isRequired
   };
 
   /**
@@ -27,26 +28,43 @@ class RecognizedUserContainer extends React.Component {
   };
 
   render() {
+    const {
+      firstName,
+      id,
+      isLoggedIn,
+      isLoggingIn,
+      lastName,
+      username
+    } = this.props.user;
     return this.props.children({
       actions: {
-        toggle: this.toggleRecognition
+        toggleRecognition: this.toggleRecognition,
+        logIn: this.props.onLogIn
       },
       props: {
-        isRecognizedUser: this.props.isRecognizedUser
+        firstName,
+        id,
+        isLoggedIn,
+        isLoggingIn,
+        isRecognizedUser: this.props.isRecognizedUser,
+        lastName,
+        username
       }
     });
   }
 }
 
 const mapStateToProps = state => ({
+  user: getUser(state),
   isRecognizedUser: getUserRecognition(state)
 });
 
 const mapDispatchToProps = {
+  onLogIn: LOG_IN,
   onSetRecognition: SET_RECOGNIZED_USER
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RecognizedUserContainer);
+)(UserContainer);

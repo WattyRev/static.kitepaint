@@ -22,6 +22,11 @@ const StyledButton = styled.button`
   &:hover {
     box-shadow: 0px 0px 1px 1px ${({ theme }) => theme.colors.blue};
   }
+  &[disabled] {
+    opacity: 0.5;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
 `;
 
 const Button = ({ isPrimary, isBlock, children, ...props }) => {

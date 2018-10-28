@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import Wrapper from "./Wrapper";
 import { A, P, Label, Input, Button } from "../theme";
 
 const StyleWrapper = styled.form`
@@ -18,6 +19,7 @@ class LoginForm extends React.Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     isRecognizedUser: PropTypes.bool.isRequired,
+    isDisabled: PropTypes.bool,
     onRegister: PropTypes.func.isRequired,
     onLogin: PropTypes.func.isRequired,
     onResetPassword: PropTypes.func.isRequired,
@@ -25,7 +27,9 @@ class LoginForm extends React.Component {
   };
 
   state = {
-    showResetPassword: false
+    showResetPassword: false,
+    username: "",
+    password: ""
   };
 
   toggleResetPassword = () => {
@@ -35,15 +39,54 @@ class LoginForm extends React.Component {
     });
   };
 
+  handleUsernameChange = event => {
+    this.setState({
+      username: event.target.value
+    });
+  };
+
+  handlePasswordChange = event => {
+    this.setState({
+      password: event.target.value
+    });
+  };
+
   render() {
     const {
       onRegister,
       onLogin,
       id,
+      isDisabled,
       isRecognizedUser,
       onToggleRecognition,
       onResetPassword
     } = this.props;
+
+    const usernameInput = (
+      <Wrapper>
+        <Label htmlFor={`${id}-username`}>Username</Label>
+        <Input
+          id={`${id}-username`}
+          value={this.state.username}
+          onChange={this.handleUsernameChange}
+          disabled={isDisabled}
+        />
+      </Wrapper>
+    );
+
+    const passwordInput = (
+      <Wrapper>
+        <Label htmlFor={`${id}-password`}>Password</Label>
+        <Input
+          id={`${id}-password`}
+          type="password"
+          value={this.state.password}
+          onChange={this.handlePasswordChange}
+          disabled={isDisabled}
+        />
+      </Wrapper>
+    );
+
     // If we don't recognize the user, show the registration form
     if (!isRecognizedUser) {
       return (
@@ -54,12 +97,10 @@ class LoginForm extends React.Component {
             onRegister();
           }}
         >
-          <Label htmlFor={`${id}-username`}>Username</Label>
-          <Input id={`${id}-username`} />
+          {usernameInput}
           <Label htmlFor={`${id}-email`}>EmailAddress</Label>
           <Input id={`${id}-email`} type="email" />
-          <Label htmlFor={`${id}-password`}>Password</Label>
-          <Input id={`${id}-password`} type="password" />
+          {passwordInput}
           <Label htmlFor={`${id}-password-2`}>Confirm Password</Label>
           <Input id={`${id}-password-2`} type="password" />
           <Button isPrimary isBlock type="submit">
@@ -84,14 +125,12 @@ class LoginForm extends React.Component {
           id={id}
           onSubmit={e => {
             e.preventDefault();
-            onLogin();
+            onLogin(this.state.username, this.state.password);
           }}
         >
-          <Label htmlFor={`${id}-username`}>Username</Label>
-          <Input id={`${id}-username`} />
-          <Label htmlFor={`${id}-password`}>Password</Label>
-          <Input id={`${id}-password`} type="password" />
-          <Button isPrimary isBlock type="submit">
+          {usernameInput}
+          {passwordInput}
+          <Button isPrimary isBlock type="submit" disabled={isDisabled}>
             Sign In
           </Button>
           <P>
@@ -113,8 +152,7 @@ class LoginForm extends React.Component {
         }}
       >
         <P>Enter your username and email address to reset your password.</P>
-        <Label htmlFor={`${id}-username`}>Username</Label>
-        <Input id={`${id}-username`} />
+        {usernameInput}
         <Label htmlFor={`${id}-email`}>EmailAddress</Label>
         <Input id={`${id}-email`} type="email" />
         <Button isPrimary isBlock type="submit">

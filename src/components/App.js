@@ -1,11 +1,11 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
 import { Provider as ReduxProvider } from "react-redux";
-import Header from "./layout/Header";
+import AppContainer from "../containers/AppContainer";
 import Theme from "../theme";
 import Store from "../redux";
+import Header from "./layout/Header";
 import Home from "./home";
-import Wrapper from "./Wrapper";
 
 /**
  * The entry for the app. The router will go here.
@@ -13,10 +13,10 @@ import Wrapper from "./Wrapper";
 const App = () => (
   <ReduxProvider store={Store}>
     <ThemeProvider theme={Theme}>
-      <Wrapper>
+      <AppContainer>
         <Header />
         <Home />
-      </Wrapper>
+      </AppContainer>
     </ThemeProvider>
   </ReduxProvider>
 );

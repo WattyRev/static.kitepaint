@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { H2, P } from "../../theme";
-import LoginForm from "../LoginForm";
 
 const StyleWrapper = styled.div`
   background: ${({ theme }) => theme.colors.silver};
@@ -20,7 +19,7 @@ const StyleWrapper = styled.div`
  *
  * @param {Boolean} isRecognizedUser Is this a recognized user who has logged in before?
  */
-const AccountBanner = ({ isRecognizedUser, onToggleRecognition }) => {
+const AccountBanner = ({ isRecognizedUser, children }) => {
   const recognizedUserContent = (
     <div className="message">
       <H2>Welcome Back!</H2>
@@ -46,18 +45,7 @@ const AccountBanner = ({ isRecognizedUser, onToggleRecognition }) => {
   );
   return (
     <StyleWrapper>
-      <LoginForm
-        onRegister={() => {
-          console.log("onRegister!");
-        }}
-        onLogin={() => {
-          console.log("onLogin!");
-        }}
-        onToggleRecognition={onToggleRecognition}
-        onResetPassword={() => console.log("onResetPassword!")}
-        id="account-banner-login"
-        isRecognizedUser={isRecognizedUser}
-      />
+      {children}
       {isRecognizedUser ? recognizedUserContent : unrecognizedUserContent}
     </StyleWrapper>
   );
