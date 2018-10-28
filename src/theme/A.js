@@ -11,6 +11,7 @@ const StyledA = styled(A)`
   color: ${({ theme }) => theme.colors.blue};
   text-decoration: none;
   margin: 0;
+  cursor: pointer;
 
   &:hover {
     text-decoration: underline;

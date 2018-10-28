@@ -18,6 +18,8 @@ const Text = ({ as, children, ...props }) => {
       return <h2 {...props}>{children}</h2>;
     case "h3":
       return <h3 {...props}>{children}</h3>;
+    case "label":
+      return <label {...props}>{children}</label>;
     default:
       return null;
   }
