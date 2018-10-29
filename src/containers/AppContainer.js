@@ -3,6 +3,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { CHECK_LOGIN } from "../redux/actions";
 import { getCheckingLogin } from "../redux/modules/user";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faSignOutAlt);
 
 class AppContainer extends React.Component {
   static propTypes = {

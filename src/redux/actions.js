@@ -30,3 +30,10 @@ export const LOG_IN = createAsyncAction("LOG_IN", (username, password) => {
 export const CHECK_LOGIN = createAsyncAction("CHECK_LOGIN", () => {
   return KitePaintApi.checkLoginStatus();
 });
+
+/**
+ * Log out the current user.
+ */
+export const LOG_OUT = createAsyncAction("LOG_OUT", () => {
+  return KitePaintApi.logOut();
+});

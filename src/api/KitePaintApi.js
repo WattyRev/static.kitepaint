@@ -77,6 +77,15 @@ export class KitePaintApi {
   }
 
   /**
+   * Logs out the user and destroys their session.
+   * @return {Promise}
+   */
+  async logOut() {
+    await this.axiosInstance.post("/logout.php");
+    sessionStorage.removeItem("user");
+  }
+
+  /**
    * Check if the user is already logged in based on session data.
    * @return {Promise}
    */

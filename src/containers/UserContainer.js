@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getUser, getUserRecognition } from "../redux/modules/user";
-import { SET_RECOGNIZED_USER, LOG_IN } from "../redux/actions";
+import { SET_RECOGNIZED_USER, LOG_IN, LOG_OUT } from "../redux/actions";
 
 /**
  * Maintains a local storage variable that indicates if the user is recognized as a registered user.
@@ -39,7 +39,8 @@ class UserContainer extends React.Component {
     return this.props.children({
       actions: {
         toggleRecognition: this.toggleRecognition,
-        logIn: this.props.onLogIn
+        logIn: this.props.onLogIn,
+        logOut: this.props.onLogOut
       },
       props: {
         firstName,
@@ -61,6 +62,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   onLogIn: LOG_IN,
+  onLogOut: LOG_OUT,
   onSetRecognition: SET_RECOGNIZED_USER
 };
 

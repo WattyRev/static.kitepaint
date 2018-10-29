@@ -1,6 +1,6 @@
 import { handleActions } from "redux-actions";
 import { fromJS } from "immutable";
-import { SET_RECOGNIZED_USER, LOG_IN, CHECK_LOGIN } from "../actions";
+import { SET_RECOGNIZED_USER, LOG_IN, CHECK_LOGIN, LOG_OUT } from "../actions";
 
 /**
  * The reducer managing data about the user.
@@ -48,6 +48,16 @@ export default handleActions(
     },
     [LOG_IN.FAILED]: (state, action) => {
       return state.set("isLoggingIn", false);
+    },
+    [LOG_OUT.RECEIVED]: (state, action) => {
+      return state.merge({
+        actcode: null,
+        firstName: null,
+        id: null,
+        isLoggedIn: false,
+        lastName: null,
+        username: null
+      });
     }
   },
   fromJS({
