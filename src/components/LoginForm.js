@@ -27,15 +27,26 @@ class LoginForm extends React.Component {
   };
 
   state = {
+    email: "",
+    password: "",
+    password2: "",
     showResetPassword: false,
     username: "",
-    password: ""
+    registrationSent: false
   };
 
   toggleResetPassword = () => {
     const { showResetPassword } = this.state;
     this.setState({
+      password: "",
+      password2: "",
       showResetPassword: !showResetPassword
+    });
+  };
+
+  handleEmailChange = event => {
+    this.setState({
+      email: event.target.value
     });
   };
 
@@ -51,14 +62,41 @@ class LoginForm extends React.Component {
     });
   };
 
+  handlePassword2Change = event => {
+    this.setState({
+      password2: event.target.value
+    });
+  };
+
+  handleRegistration = async event => {
+    event.preventDefault();
+    const data = {
+      email: this.state.email,
+      username: this.state.username,
+      password: this.state.password,
+      password2: this.state.password2
+    };
+    await this.props.onRegister(data);
+    this.setState({
+      registrationSent: true
+    });
+  };
+
+  handleRecognitionToggle = () => {
+    this.props.onToggleRecognition();
+    this.setState({
+      password: "",
+      password2: "",
+      registrationSent: false
+    });
+  };
+
   render() {
     const {
-      onRegister,
-      onLogin,
       id,
       isDisabled,
       isRecognizedUser,
-      onToggleRecognition,
+      onLogin,
       onResetPassword
     } = this.props;
 
@@ -87,33 +125,60 @@ class LoginForm extends React.Component {
       </Wrapper>
     );
 
+    const emailInput = (
+      <Wrapper>
+        <Label htmlFor={`${id}-email`}>Email Address</Label>
+        <Input
+          id={`${id}-email`}
+          type="email"
+          value={this.state.email}
+          disabled={isDisabled}
+          onChange={this.handleEmailChange}
+        />
+      </Wrapper>
+    );
+
     // If we don't recognize the user, show the registration form
     if (!isRecognizedUser) {
       return (
-        <StyleWrapper
-          id={id}
-          onSubmit={e => {
-            e.preventDefault();
-            onRegister();
-          }}
-        >
-          {usernameInput}
-          <Label htmlFor={`${id}-email`}>EmailAddress</Label>
-          <Input id={`${id}-email`} type="email" />
-          {passwordInput}
-          <Label htmlFor={`${id}-password-2`}>Confirm Password</Label>
-          <Input id={`${id}-password-2`} type="password" />
-          <Button isPrimary isBlock type="submit">
-            Sign Up
-          </Button>
-          <P>
-            <A href="/KitePaintTermsandConditions.pdf" target="_blank">
-              Terms and Conditions
-            </A>
-          </P>
-          <P>
-            Already registered? <A onClick={onToggleRecognition}>Sign In</A>
-          </P>
+        <StyleWrapper id={id} onSubmit={this.handleRegistration}>
+          {this.state.registrationSent ? (
+            <Wrapper>
+              <P>
+                A confirmation email has been sent to {this.state.email}. After
+                confirming your email address, you main sign in.
+              </P>
+              <Button isPrimary isBlock onClick={this.handleRecognitionToggle}>
+                Sign In
+              </Button>
+            </Wrapper>
+          ) : (
+            <Wrapper>
+              {usernameInput}
+              {emailInput}
+              {passwordInput}
+              <Label htmlFor={`${id}-password-2`}>Confirm Password</Label>
+              <Input
+                id={`${id}-password-2`}
+                type="password"
+                value={this.state.password2}
+                disabled={isDisabled}
+                onChange={this.handlePassword2Change}
+              />
+              <Button isPrimary isBlock type="submit">
+                Sign Up
+              </Button>
+              <P>
+                <A href="/KitePaintTermsandConditions.pdf" target="_blank">
+                  Terms and Conditions
+                </A>
+              </P>
+              <P>
+                Already registered?{" "}
+                <A onClick={this.handleRecognitionToggle}>Sign In</A>
+              </P>
+            </Wrapper>
+          )}
         </StyleWrapper>
       );
     }
@@ -137,7 +202,7 @@ class LoginForm extends React.Component {
             <A onClick={this.toggleResetPassword}>Lost your password?</A>
           </P>
           <P>
-            <A onClick={onToggleRecognition}>Register</A>
+            <A onClick={this.handleRecognitionToggle}>Register</A>
           </P>
         </StyleWrapper>
       );
@@ -153,8 +218,7 @@ class LoginForm extends React.Component {
       >
         <P>Enter your username and email address to reset your password.</P>
         {usernameInput}
-        <Label htmlFor={`${id}-email`}>EmailAddress</Label>
-        <Input id={`${id}-email`} type="email" />
+        {emailInput}
         <Button isPrimary isBlock type="submit">
           Reset Password
         </Button>

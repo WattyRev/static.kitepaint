@@ -22,7 +22,8 @@ export class KitePaintApi {
     this.config = {
       baseURL: this.baseUrl,
       headers: {
-        Accept: "application/json"
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data"
       }
     };
 
@@ -46,44 +47,6 @@ export class KitePaintApi {
    * @type {Axios}
    */
   axiosInstance = null;
-
-  /**
-   * Log in to a KitePaint account.
-   * @param  {String}  username
-   * @param  {String}  password
-   * @return {Promise}
-   */
-  async logIn(username, password) {
-    // Build the form data
-    const bodyFormData = new FormData();
-    bodyFormData.set("username", username);
-    bodyFormData.set("password", password);
-
-    // Make the request
-    const response = await this.axiosInstance.post("/index.php", bodyFormData, {
-      headers: { "Content-Type": "multipart/form-data" }
-    });
-
-    // If the response has no data or indicates that the user is not logged in, reject.
-    if (!response.data || !response.data.logged_in) {
-      return new Promise((resolve, reject) => reject(response));
-    }
-
-    // Store the user data in session storage
-    sessionStorage.setItem("user", JSON.stringify(response.data));
-
-    // Return the response
-    return response;
-  }
-
-  /**
-   * Logs out the user and destroys their session.
-   * @return {Promise}
-   */
-  async logOut() {
-    await this.axiosInstance.post("/logout.php");
-    sessionStorage.removeItem("user");
-  }
 
   /**
    * Check if the user is already logged in based on session data.
@@ -116,9 +79,7 @@ export class KitePaintApi {
     bodyFormData.set("update_login", true);
 
     // Make the request
-    const response = await this.axiosInstance.post("/index.php", bodyFormData, {
-      headers: { "Content-Type": "multipart/form-data" }
-    });
+    const response = await this.axiosInstance.post("/index.php", bodyFormData);
 
     // If the response has no data or indicates that the user is not logged in, reject.
     if (!response.data || !response.data.logged_in) {
@@ -130,6 +91,56 @@ export class KitePaintApi {
 
     // Return the response
     return response;
+  }
+
+  /**
+   * Log in to a KitePaint account.
+   * @param  {String}  username
+   * @param  {String}  password
+   * @return {Promise}
+   */
+  async logIn(username, password) {
+    // Build the form data
+    const bodyFormData = new FormData();
+    bodyFormData.set("username", username);
+    bodyFormData.set("password", password);
+
+    // Make the request
+    const response = await this.axiosInstance.post("/index.php", bodyFormData);
+
+    // If the response has no data or indicates that the user is not logged in, reject.
+    if (!response.data || !response.data.logged_in) {
+      return new Promise((resolve, reject) => reject(response));
+    }
+
+    // Store the user data in session storage
+    sessionStorage.setItem("user", JSON.stringify(response.data));
+
+    // Return the response
+    return response;
+  }
+
+  /**
+   * Logs out the user and destroys their session.
+   * @return {Promise}
+   */
+  async logOut() {
+    await this.axiosInstance.post("/logout.php");
+    sessionStorage.removeItem("user");
+  }
+
+  /**
+   * Sends a request to register a new KitePaint account.
+   * @param  {Object}  data Must contain `{username, email, password, password2}`
+   * @return {Promise}
+   */
+  async register(data) {
+    // Build the form data
+    const bodyFormData = new FormData();
+    Object.keys(data).forEach(key => bodyFormData.set(key, data[key]));
+
+    // Make the request
+    return this.axiosInstance.post("/register.php", bodyFormData);
   }
 }
 
