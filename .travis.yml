@@ -2,6 +2,7 @@ language: node_js
 node_js:
   - "7"
 stages:
+  - name: test
   - name: build
     if: (type IN (pull_request)) OR (NOT branch = master OR branch = staging)
   - name: deploy-prod
@@ -10,6 +11,8 @@ stages:
     if: (NOT type IN (pull_request)) AND (branch = staging)
 jobs:
   include:
+    - stage: test
+      script: npm run test -- --coverage
     - stage: build
       script: npm run build
     - stage: deploy-prod

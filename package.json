@@ -1,54 +1,56 @@
 {
-    "name": "kitepaint",
-    "version": "0.1.0",
-    "private": true,
-    "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "^1.2.7",
-        "@fortawesome/free-solid-svg-icons": "^5.4.2",
-        "@fortawesome/react-fontawesome": "^0.1.3",
-        "axios": "^0.18.0",
-        "enzyme": "^3.7.0",
-        "enzyme-adapter-react-16": "^1.6.0",
-        "husky": "^1.1.2",
-        "immutable": "^3.8.2",
-        "lint-staged": "^7.3.0",
-        "prettier": "^1.14.3",
-        "prop-types": "^15.6.2",
-        "react": "^16.6.0",
-        "react-dom": "^16.6.0",
-        "react-redux": "^5.1.0",
-        "react-scripts": "2.0.5",
-        "react-test-renderer": "^16.6.0",
-        "redux": "^4.0.1",
-        "redux-actions": "^2.6.3",
-        "redux-immutable": "^4.0.0",
-        "redux-thunk": "^2.3.0",
-        "styled-components": "^4.0.2"
-    },
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject"
-    },
-    "eslintConfig": {
-        "extends": "react-app"
-    },
-    "browserslist": [
-        ">0.2%",
-        "not dead",
-        "not ie <= 11",
-        "not op_mini all"
-    ],
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
-    },
-    "lint-staged": {
-        "src/**/*.{js,jsx,json,css}": [
-            "prettier --write",
-            "git add"
-        ]
+  "name": "kitepaint",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.7",
+    "@fortawesome/free-solid-svg-icons": "^5.4.2",
+    "@fortawesome/react-fontawesome": "^0.1.3",
+    "axios": "^0.18.0",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "husky": "^1.1.2",
+    "immutable": "^3.8.2",
+    "lint-staged": "^7.3.0",
+    "prettier": "^1.14.3",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-redux": "^5.1.0",
+    "react-scripts": "2.0.5",
+    "react-test-renderer": "^16.6.0",
+    "redux": "^4.0.1",
+    "redux-actions": "^2.6.3",
+    "redux-immutable": "^4.0.0",
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^4.0.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,json,css}": ["prettier --write", "git add"]
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
+  }
 }

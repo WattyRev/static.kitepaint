@@ -1,7 +1,6 @@
 import React from "react";
 import UserContainer from "../../containers/UserContainer";
-import Wrapper from "../Wrapper";
-import LoginForm from "../LoginForm";
+import AccountForm from "../AccountForm";
 import CTABanner from "./CTABanner";
 import AccountBanner from "./AccountBanner";
 
@@ -9,13 +8,13 @@ import AccountBanner from "./AccountBanner";
  * A coordinating component for the Home page.
  */
 const Home = () => (
-  <Wrapper>
+  <React.Fragment>
     <CTABanner onClick={() => {}} />
     <UserContainer>
       {userData =>
         !userData.props.isLoggedIn && (
           <AccountBanner isRecognizedUser={userData.props.isRecognizedUser}>
-            <LoginForm
+            <AccountForm
               onRegister={userData.actions.register}
               onLogin={userData.actions.logIn}
               onToggleRecognition={userData.actions.toggleRecognition}
@@ -28,7 +27,7 @@ const Home = () => (
         )
       }
     </UserContainer>
-  </Wrapper>
+  </React.Fragment>
 );
 
 export default Home;

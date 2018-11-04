@@ -4,13 +4,12 @@ import axios from "axios";
  * Determine the correct domain to communicate with based on the current applicaiton domain.
  * @return {String}
  */
-export function getApiDomain() {
+export function _getApiDomain(currentDomain = window.location.hostname) {
   const apiDomains = {
     "beta.kitepaint.com": "https://api.beta.kitepaint.com/php",
     "kitepaint.com": "https://api.kitepaint.com/php",
     default: "https://api.beta.kitepaint.com/php"
   };
-  const currentDomain = window.location.hostname;
   return apiDomains[currentDomain] || apiDomains.default;
 }
 
@@ -34,7 +33,7 @@ export class KitePaintApi {
    * The base url for all API requests
    * @type {String}
    */
-  baseUrl = getApiDomain();
+  baseUrl = _getApiDomain();
 
   /**
    * The axios configuration.
@@ -66,7 +65,7 @@ export class KitePaintApi {
     if (!parsedSessionData) {
       return new Promise((resolve, reject) =>
         reject({
-          data: "No session data found."
+          data: "No session data was found. The user is not logged in."
         })
       );
     }
@@ -74,9 +73,9 @@ export class KitePaintApi {
     // Build the form data
     const bodyFormData = new FormData();
     Object.keys(parsedSessionData).forEach(key =>
-      bodyFormData.set(key, parsedSessionData[key])
+      bodyFormData.append(key, parsedSessionData[key])
     );
-    bodyFormData.set("update_login", true);
+    bodyFormData.append("update_login", true);
 
     // Make the request
     const response = await this.axiosInstance.post("/index.php", bodyFormData);
@@ -102,8 +101,8 @@ export class KitePaintApi {
   async logIn(username, password) {
     // Build the form data
     const bodyFormData = new FormData();
-    bodyFormData.set("username", username);
-    bodyFormData.set("password", password);
+    bodyFormData.append("username", username);
+    bodyFormData.append("password", password);
 
     // Make the request
     const response = await this.axiosInstance.post("/index.php", bodyFormData);
@@ -137,7 +136,7 @@ export class KitePaintApi {
   async register(data) {
     // Build the form data
     const bodyFormData = new FormData();
-    Object.keys(data).forEach(key => bodyFormData.set(key, data[key]));
+    Object.keys(data).forEach(key => bodyFormData.append(key, data[key]));
 
     // Make the request
     return this.axiosInstance.post("/register.php", bodyFormData);
