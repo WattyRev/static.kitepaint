@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { A, P, Label, Input, Button } from "../theme";
+import LogInForm from "./LogInForm";
 
 const StyleWrapper = styled.div`
   width: 100%;
@@ -50,15 +51,15 @@ class AccountForm extends React.Component {
     });
   };
 
-  handleUsernameChange = event => {
+  handleUsernameChange = username => {
     this.setState({
-      username: event.target.value
+      username
     });
   };
 
-  handlePasswordChange = event => {
+  handlePasswordChange = password => {
     this.setState({
-      password: event.target.value
+      password
     });
   };
 
@@ -186,24 +187,21 @@ class AccountForm extends React.Component {
     // Show the login form unless the user wants to reset their password
     if (!this.state.showResetPassword) {
       return (
-        <StyleWrapper
-          id={id}
-          onSubmit={e => {
-            e.preventDefault();
-            onLogin(this.state.username, this.state.password);
-          }}
-        >
-          {usernameInput}
-          {passwordInput}
-          <Button isPrimary isBlock type="submit" disabled={isDisabled}>
-            Sign In
-          </Button>
-          <P>
-            <A onClick={this.toggleResetPassword}>Lost your password?</A>
-          </P>
-          <P>
-            <A onClick={this.handleRecognitionToggle}>Register</A>
-          </P>
+        <StyleWrapper>
+          <LogInForm
+            id={id}
+            username={this.state.username}
+            password={this.state.password}
+            isDisabled={isDisabled}
+            onUsernameChange={this.handleUsernameChange}
+            onPasswordChange={this.handlePasswordChange}
+            onSubmit={e => {
+              e.preventDefault();
+              onLogin(this.state.username, this.state.password);
+            }}
+            onRegister={this.handleRecognitionToggle}
+            onResetPassword={this.toggleResetPassword}
+          />
         </StyleWrapper>
       );
     }

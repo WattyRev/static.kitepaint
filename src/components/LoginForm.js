@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { A, P, Label, Input, Button } from "../theme";
 
 /**
@@ -6,49 +7,59 @@ import { A, P, Label, Input, Button } from "../theme";
  */
 const LogInForm = ({
   id,
-  username,
-  password,
   isDisabled,
-  onSubmit,
+  onPasswordChange,
+  onRegister,
   onResetPassword,
-  onRegister
+  onSubmit,
+  onUsernameChange,
+  password,
+  username
 }) => (
   <form
     id={id}
     onSubmit={e => {
       e.preventDefault();
-      onLogin(this.state.username, this.state.password);
+      onSubmit();
     }}
   >
     <Label htmlFor={`${id}-username`}>Username</Label>
-    <Input id={`${id}-username`} value={username} disabled={isDisabled} />
+    <Input
+      id={`${id}-username`}
+      value={username}
+      disabled={isDisabled}
+      onChange={e => onUsernameChange(e.target.value)}
+    />
     <Label htmlFor={`${id}-password`}>Password</Label>
     <Input
       id={`${id}-password`}
       type="password"
       value={password}
       disabled={isDisabled}
+      onChange={e => onPasswordChange(e.target.value)}
     />
     <Button isPrimary isBlock type="submit" disabled={isDisabled}>
       Sign In
     </Button>
     <P>
-      <A onClick={this.toggleResetPassword}>Lost your password?</A>
+      <A onClick={onResetPassword}>Lost your password?</A>
     </P>
     <P>
-      <A onClick={this.handleRecognitionToggle}>Register</A>
+      <A onClick={onRegister}>Register</A>
     </P>
   </form>
 );
 
 LogInForm.propTypes = {
   id: PropTypes.string,
-  username: PropTypes.string,
-  password: PropTypes.string,
   isDisabled: PropTypes.bool,
-  onSubmit: PropTypes.func.isRequired,
+  onPasswordChange: PropTypes.func.isRequired,
+  onRegister: PropTypes.func.isRequired,
   onResetPassword: PropTypes.func.isRequired,
-  onRegister: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  onUsernameChange: PropTypes.func.isRequired,
+  password: PropTypes.string,
+  username: PropTypes.string
 };
 
 export default LogInForm;
