@@ -51,7 +51,7 @@ const LogInForm = ({
 );
 
 LogInForm.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.string.isRequired,
   isDisabled: PropTypes.bool,
   onPasswordChange: PropTypes.func.isRequired,
   onRegister: PropTypes.func.isRequired,

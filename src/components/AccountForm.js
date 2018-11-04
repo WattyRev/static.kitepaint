@@ -3,6 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { A, P, Label, Input, Button } from "../theme";
 import LogInForm from "./LogInForm";
+import RegisterForm from "./RegisterForm";
 
 const StyleWrapper = styled.div`
   width: 100%;
@@ -45,9 +46,9 @@ class AccountForm extends React.Component {
     });
   };
 
-  handleEmailChange = event => {
+  handleEmailChange = email => {
     this.setState({
-      email: event.target.value
+      email
     });
   };
 
@@ -63,14 +64,13 @@ class AccountForm extends React.Component {
     });
   };
 
-  handlePassword2Change = event => {
+  handlePassword2Change = password2 => {
     this.setState({
-      password2: event.target.value
+      password2
     });
   };
 
-  handleRegistration = async event => {
-    event.preventDefault();
+  handleRegistration = async () => {
     const data = {
       email: this.state.email,
       username: this.state.username,
@@ -113,19 +113,6 @@ class AccountForm extends React.Component {
       </React.Fragment>
     );
 
-    const passwordInput = (
-      <React.Fragment>
-        <Label htmlFor={`${id}-password`}>Password</Label>
-        <Input
-          id={`${id}-password`}
-          type="password"
-          value={this.state.password}
-          onChange={this.handlePasswordChange}
-          disabled={isDisabled}
-        />
-      </React.Fragment>
-    );
-
     const emailInput = (
       <React.Fragment>
         <Label htmlFor={`${id}-email`}>Email Address</Label>
@@ -142,44 +129,22 @@ class AccountForm extends React.Component {
     // If we don't recognize the user, show the registration form
     if (!isRecognizedUser) {
       return (
-        <StyleWrapper id={id} onSubmit={this.handleRegistration}>
-          {this.state.registrationSent ? (
-            <React.Fragment>
-              <P>
-                A confirmation email has been sent to {this.state.email}. After
-                confirming your email address, you main sign in.
-              </P>
-              <Button isPrimary isBlock onClick={this.handleRecognitionToggle}>
-                Sign In
-              </Button>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              {usernameInput}
-              {emailInput}
-              {passwordInput}
-              <Label htmlFor={`${id}-password-2`}>Confirm Password</Label>
-              <Input
-                id={`${id}-password-2`}
-                type="password"
-                value={this.state.password2}
-                disabled={isDisabled}
-                onChange={this.handlePassword2Change}
-              />
-              <Button isPrimary isBlock type="submit">
-                Sign Up
-              </Button>
-              <P>
-                <A href="/KitePaintTermsandConditions.pdf" target="_blank">
-                  Terms and Conditions
-                </A>
-              </P>
-              <P>
-                Already registered?{" "}
-                <A onClick={this.handleRecognitionToggle}>Sign In</A>
-              </P>
-            </React.Fragment>
-          )}
+        <StyleWrapper>
+          <RegisterForm
+            email={this.state.email}
+            id={id}
+            isDisabled={isDisabled}
+            onEmailChange={this.handleEmailChange}
+            onLogIn={this.handleRecognitionToggle}
+            onPasswordChange={this.handlePasswordChange}
+            onPasswordConfirmationChange={this.handlePassword2Change}
+            onSubmit={this.handleRegistration}
+            onUsernameChange={this.handleUsernameChange}
+            password={this.state.password}
+            passwordConfirmation={this.state.password2}
+            showSuccessMessage={this.state.registrationSent}
+            username={this.state.username}
+          />
         </StyleWrapper>
       );
     }
