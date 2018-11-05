@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { TypographyStyles } from "./Text";
 
 const StyledButton = styled.button`
+  ${TypographyStyles}
   background: ${({ theme }) => theme.colors.silver};
   border-radius: 4px;
   border: 0;
@@ -10,7 +12,6 @@ const StyledButton = styled.button`
   cursor: pointer;
   transition: 0.2s box-shadow;
   box-sizing: border-box;
-
   &.is-primary {
     background: ${({ theme }) => theme.colors.blue};
     color: ${({ theme }) => theme.colors.silver};

@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 /**
  * Displays styled text with the provided tag
@@ -24,14 +24,17 @@ const Text = ({ as, children, ...props }) => {
       return null;
   }
 };
-const StyledText = styled(Text)`
-  margin: 0;
-  padding: 0;
+export const TypographyStyles = css`
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+`;
+const StyledText = styled(Text)`
+  margin: 0;
+  padding: 0;
+  ${TypographyStyles}
 
   color: ${props =>
     props.isLight ? props.theme.colors.silver : props.theme.colors.black};
