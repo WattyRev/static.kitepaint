@@ -87,18 +87,61 @@ const RegisterForm = ({
 );
 
 RegisterForm.propTypes = {
+  /**
+   * The value for the email field.
+   */
   email: PropTypes.string,
+  /**
+   * A unique identifier to distinguish this from other instances.
+   */
   id: PropTypes.string.isRequired,
+  /**
+   * Indicates if the form should be disabled.
+   */
   isDisabled: PropTypes.bool,
+  /**
+   * A function called when the email value is changed. Is called with the new email as the first
+   * parameter.
+   */
   onEmailChange: PropTypes.func.isRequired,
+  /**
+   * A function called when the link to go to the log in form is clicked.
+   */
   onLogIn: PropTypes.func.isRequired,
+  /**
+   * A function called when the password field changes. Is called with the new password as the first
+   * parameter.
+   */
   onPasswordChange: PropTypes.func.isRequired,
+  /**
+   * A function called when the confirmation password changes. Is called with the new password as
+   * the first parameter.
+   */
   onPasswordConfirmationChange: PropTypes.func.isRequired,
+  /**
+   * A function called when the form is submitted.
+   */
   onSubmit: PropTypes.func.isRequired,
+  /**
+   * A function called when the username changes. Is called with the new username as the first
+   * parameter.
+   */
   onUsernameChange: PropTypes.func.isRequired,
+  /**
+   * The value of the password field.
+   */
   password: PropTypes.string,
+  /**
+   * The value of the confirmation password field.
+   */
   passwordConfirmation: PropTypes.string,
+  /**
+   * Indicates if the success message should be shown.
+   */
   showSuccessMessage: PropTypes.bool,
+  /**
+   * The value of the username field.
+   */
   username: PropTypes.string
 };
 

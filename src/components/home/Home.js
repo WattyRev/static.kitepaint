@@ -16,7 +16,7 @@ const Home = () => (
           <AccountBanner isRecognizedUser={userData.props.isRecognizedUser}>
             <AccountForm
               onRegister={userData.actions.register}
-              onLogin={userData.actions.logIn}
+              onLogIn={userData.actions.logIn}
               onToggleRecognition={userData.actions.toggleRecognition}
               onResetPassword={() => {}}
               id="account-banner-login"
