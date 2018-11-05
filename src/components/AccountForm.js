@@ -15,7 +15,6 @@ const StyleWrapper = styled.div`
 
 /**
  * The UI for the Login/Register/Reset Password form.
- * TODO refactor each part of this form into independent components.
  */
 class AccountForm extends React.Component {
   static propTypes = {
@@ -92,14 +91,12 @@ class AccountForm extends React.Component {
     });
   };
 
+  handlePasswordReset = () => {
+    this.props.onLogin(this.state.username, this.state.password);
+  };
+
   render() {
-    const {
-      id,
-      isDisabled,
-      isRecognizedUser,
-      onLogin,
-      onResetPassword
-    } = this.props;
+    const { id, isDisabled, isRecognizedUser, onResetPassword } = this.props;
 
     // If we don't recognize the user, show the registration form
     if (!isRecognizedUser) {
@@ -135,10 +132,7 @@ class AccountForm extends React.Component {
             isDisabled={isDisabled}
             onUsernameChange={this.handleUsernameChange}
             onPasswordChange={this.handlePasswordChange}
-            onSubmit={e => {
-              e.preventDefault();
-              onLogin(this.state.username, this.state.password);
-            }}
+            onSubmit={this.handlePasswordReset}
             onRegister={this.handleRecognitionToggle}
             onResetPassword={this.toggleResetPassword}
           />
