@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { A, P, Label, Input, Button } from "../theme";
 import LogInForm from "./LogInForm";
 import RegisterForm from "./RegisterForm";
+import ResetPasswordForm from "./ResetPasswordForm";
 
 const StyleWrapper = styled.div`
   width: 100%;
@@ -101,31 +101,6 @@ class AccountForm extends React.Component {
       onResetPassword
     } = this.props;
 
-    const usernameInput = (
-      <React.Fragment>
-        <Label htmlFor={`${id}-username`}>Username</Label>
-        <Input
-          id={`${id}-username`}
-          value={this.state.username}
-          onChange={this.handleUsernameChange}
-          disabled={isDisabled}
-        />
-      </React.Fragment>
-    );
-
-    const emailInput = (
-      <React.Fragment>
-        <Label htmlFor={`${id}-email`}>Email Address</Label>
-        <Input
-          id={`${id}-email`}
-          type="email"
-          value={this.state.email}
-          disabled={isDisabled}
-          onChange={this.handleEmailChange}
-        />
-      </React.Fragment>
-    );
-
     // If we don't recognize the user, show the registration form
     if (!isRecognizedUser) {
       return (
@@ -172,22 +147,17 @@ class AccountForm extends React.Component {
     }
 
     return (
-      <StyleWrapper
-        id={id}
-        onSubmit={e => {
-          e.preventDefault();
-          onResetPassword();
-        }}
-      >
-        <P>Enter your username and email address to reset your password.</P>
-        {usernameInput}
-        {emailInput}
-        <Button isPrimary isBlock type="submit">
-          Reset Password
-        </Button>
-        <P>
-          <A onClick={this.toggleResetPassword}>Cancel</A>
-        </P>
+      <StyleWrapper>
+        <ResetPasswordForm
+          email={this.state.email}
+          id={id}
+          isDisabled={isDisabled}
+          onCancel={this.toggleResetPassword}
+          onEmailChange={this.handleEmailChange}
+          onSubmit={onResetPassword}
+          onUsernameChange={this.handleUsernameChange}
+          username={this.state.username}
+        />
       </StyleWrapper>
     );
   }

@@ -5,7 +5,7 @@ import { A, P, Label, Input, Button } from "../theme";
 /**
  * A form for registering an account for KitePaint.
  */
-const RegisterForm = (
+const RegisterForm = ({
   email,
   id,
   isDisabled,
@@ -19,7 +19,7 @@ const RegisterForm = (
   passwordConfirmation,
   showSuccessMessage,
   username
-) => (
+}) => (
   <form
     id={id}
     onSubmit={e => {
@@ -30,8 +30,8 @@ const RegisterForm = (
     {showSuccessMessage ? (
       <React.Fragment>
         <P>
-          A confirmation email has been sent to {this.state.email}. After
-          confirming your email address, you main sign in.
+          A confirmation email has been sent to {email}. After confirming your
+          email address, you main sign in.
         </P>
         <Button isPrimary isBlock onClick={onLogIn}>
           Sign In
@@ -52,7 +52,7 @@ const RegisterForm = (
           type="email"
           value={email}
           disabled={isDisabled}
-          onChange={e => onEmailChange(e.target.valut)}
+          onChange={e => onEmailChange(e.target.value)}
         />
         <Label htmlFor={`${id}-password`}>Password</Label>
         <Input

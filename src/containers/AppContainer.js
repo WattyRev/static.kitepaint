@@ -15,8 +15,9 @@ class AppContainer extends React.Component {
     onCheckLogin: PropTypes.func.isRequired
   };
 
-  componentWillMount() {
-    this.props.onCheckLogin();
+  constructor(props, ...rest) {
+    super(props, ...rest);
+    props.onCheckLogin();
   }
 
   render() {

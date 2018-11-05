@@ -42,7 +42,7 @@ const CTABanner = ({ onClick }) => (
   </StyleWrapper>
 );
 
-CTABanner.proptypes = {
+CTABanner.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 export default CTABanner;

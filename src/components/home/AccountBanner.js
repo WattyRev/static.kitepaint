@@ -52,7 +52,8 @@ const AccountBanner = ({ isRecognizedUser, children }) => {
 };
 
 AccountBanner.propTypes = {
-  isRecognizedUser: PropTypes.bool.isRequired
+  isRecognizedUser: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired
 };
 
 export default AccountBanner;

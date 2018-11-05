@@ -1,0 +1,32 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "prettier",
+    "prettier/react",
+  ],
+  "plugins": ["jest"],
+  "settings": {
+    "react": {
+      "createClass": "createReactClass",
+      "pragma": "React",
+      "version": "16.6",
+    },
+    "propWrapperFunctions": [ "forbidExtraProps" ]
+  },
+  "globals": {
+    "describe": true,
+    "it": true,
+    "expect": true,
+    "Promise": true,
+    "sessionStorage": true,
+    "jest": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "window": true,
+    "FormData": true,
+    "document": true,
+    "localStorage": true
+  }
+}

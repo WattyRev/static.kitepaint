@@ -11,7 +11,7 @@ export default handleActions(
       const isRecognizedUser = action.payload;
       return state.set("isRecognizedUser", isRecognizedUser);
     },
-    [CHECK_LOGIN.REQUESTED]: (state, action) => {
+    [CHECK_LOGIN.REQUESTED]: state => {
       return state.set("isCheckingLogin", true);
     },
     [CHECK_LOGIN.RECEIVED]: (state, action) => {
@@ -27,10 +27,10 @@ export default handleActions(
         username: data.username
       });
     },
-    [CHECK_LOGIN.FAILED]: (state, action) => {
+    [CHECK_LOGIN.FAILED]: state => {
       return state.set("isCheckingLogin", false);
     },
-    [LOG_IN.REQUESTED]: (state, action) => {
+    [LOG_IN.REQUESTED]: state => {
       return state.set("isLoggingIn", true);
     },
     [LOG_IN.RECEIVED]: (state, action) => {
@@ -46,10 +46,10 @@ export default handleActions(
         username: data.username
       });
     },
-    [LOG_IN.FAILED]: (state, action) => {
+    [LOG_IN.FAILED]: state => {
       return state.set("isLoggingIn", false);
     },
-    [LOG_OUT.RECEIVED]: (state, action) => {
+    [LOG_OUT.RECEIVED]: state => {
       return state.merge({
         actcode: null,
         firstName: null,

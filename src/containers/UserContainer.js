@@ -19,6 +19,7 @@ import {
 class UserContainer extends React.Component {
   static propTypes = {
     children: PropTypes.func.isRequired,
+    isRecognizedUser: PropTypes.bool,
     user: PropTypes.object.isRequired,
     onLogIn: PropTypes.func.isRequired,
     onLogOut: PropTypes.func.isRequired,
