@@ -20,6 +20,7 @@
     "husky": "^1.1.2",
     "immutable": "^3.8.2",
     "lint-staged": "^7.3.0",
+    "normalize.css": "^8.0.0",
     "prettier": "^1.14.3",
     "prop-types": "^15.6.2",
     "react": "^16.6.0",
@@ -50,6 +51,7 @@
   "lint-staged": {
     "src/**/*.{js,jsx,json,css}": [
       "prettier --write",
+      "eslint --fix",
       "git add"
     ]
   },
