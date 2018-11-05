@@ -42,10 +42,14 @@ const LogInForm = ({
       Sign In
     </Button>
     <P>
-      <A onClick={onResetPassword}>Lost your password?</A>
+      <A className="testing_reset-password" onClick={onResetPassword}>
+        Lost your password?
+      </A>
     </P>
     <P>
-      <A onClick={onRegister}>Register</A>
+      <A className="testing_register" onClick={onRegister}>
+        Register
+      </A>
     </P>
   </form>
 );

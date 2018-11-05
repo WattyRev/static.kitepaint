@@ -53,6 +53,7 @@ ShallowWrapper {
         </Button>,
         <P>
           <ForwardRef
+            className="testing_reset-password"
             onClick={[MockFunction]}
           >
             Lost your password?
@@ -60,6 +61,7 @@ ShallowWrapper {
         </P>,
         <P>
           <ForwardRef
+            className="testing_register"
             onClick={[MockFunction]}
           >
             Register
@@ -187,6 +189,7 @@ ShallowWrapper {
         "nodeType": "function",
         "props": Object {
           "children": <ForwardRef
+            className="testing_reset-password"
             onClick={[MockFunction]}
           >
             Lost your password?
@@ -199,6 +202,7 @@ ShallowWrapper {
           "nodeType": "function",
           "props": Object {
             "children": "Lost your password?",
+            "className": "testing_reset-password",
             "onClick": [MockFunction],
           },
           "ref": null,
@@ -242,6 +246,7 @@ ShallowWrapper {
         "nodeType": "function",
         "props": Object {
           "children": <ForwardRef
+            className="testing_register"
             onClick={[MockFunction]}
           >
             Register
@@ -254,6 +259,7 @@ ShallowWrapper {
           "nodeType": "function",
           "props": Object {
             "children": "Register",
+            "className": "testing_register",
             "onClick": [MockFunction],
           },
           "ref": null,
@@ -329,6 +335,7 @@ ShallowWrapper {
           </Button>,
           <P>
             <ForwardRef
+              className="testing_reset-password"
               onClick={[MockFunction]}
             >
               Lost your password?
@@ -336,6 +343,7 @@ ShallowWrapper {
           </P>,
           <P>
             <ForwardRef
+              className="testing_register"
               onClick={[MockFunction]}
             >
               Register
@@ -463,6 +471,7 @@ ShallowWrapper {
           "nodeType": "function",
           "props": Object {
             "children": <ForwardRef
+              className="testing_reset-password"
               onClick={[MockFunction]}
             >
               Lost your password?
@@ -475,6 +484,7 @@ ShallowWrapper {
             "nodeType": "function",
             "props": Object {
               "children": "Lost your password?",
+              "className": "testing_reset-password",
               "onClick": [MockFunction],
             },
             "ref": null,
@@ -518,6 +528,7 @@ ShallowWrapper {
           "nodeType": "function",
           "props": Object {
             "children": <ForwardRef
+              className="testing_register"
               onClick={[MockFunction]}
             >
               Register
@@ -530,6 +541,7 @@ ShallowWrapper {
             "nodeType": "function",
             "props": Object {
               "children": "Register",
+              "className": "testing_register",
               "onClick": [MockFunction],
             },
             "ref": null,
