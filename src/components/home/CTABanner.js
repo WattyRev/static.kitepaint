@@ -2,13 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import bgRev from "./bg-rev.jpg";
-import H3 from "../../theme/H3";
-import Button from "../../theme/Button";
+import { H3, Button } from "../../theme";
 
 /**
  * Styles for the CTABanner
  */
-const StyleWrapper = styled.div`
+export const StyleWrapper = styled.div`
   height: 408px;
   width: 100vw;
   background: url(${bgRev}) no-repeat center;
@@ -28,8 +27,6 @@ const StyleWrapper = styled.div`
 
 /**
  * Displays a banner with a Call To Action.
- *
- * @param {Function} onClick Called when the user clicks on the CTA
  */
 const CTABanner = ({ onClick }) => (
   <StyleWrapper>
@@ -43,6 +40,9 @@ const CTABanner = ({ onClick }) => (
 );
 
 CTABanner.propTypes = {
+  /**
+   * A function called when the CTA is clicked.
+   */
   onClick: PropTypes.func.isRequired
 };
 export default CTABanner;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { H2, P } from "../../theme";
 
-const StyleWrapper = styled.div`
+export const StyleWrapper = styled.div`
   background: ${({ theme }) => theme.colors.silver};
   padding: 16px 24px;
   display: flex;
@@ -16,8 +16,6 @@ const StyleWrapper = styled.div`
 
 /**
  * Displays a banner with login or account information.
- *
- * @param {Boolean} isRecognizedUser Is this a recognized user who has logged in before?
  */
 const AccountBanner = ({ isRecognizedUser, children }) => {
   const recognizedUserContent = (
@@ -52,7 +50,13 @@ const AccountBanner = ({ isRecognizedUser, children }) => {
 };
 
 AccountBanner.propTypes = {
-  isRecognizedUser: PropTypes.bool.isRequired,
+  /**
+   * Indicates if the user is known to have a KitePaint account or not.
+   */
+  isRecognizedUser: PropTypes.bool,
+  /**
+   * Children nodes to be displayed to the left of the message.
+   */
   children: PropTypes.node.isRequired
 };
 
