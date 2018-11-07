@@ -18,7 +18,7 @@ const Home = () => (
               onRegister={userData.actions.register}
               onLogIn={userData.actions.logIn}
               onToggleRecognition={userData.actions.toggleRecognition}
-              onResetPassword={() => {}}
+              onResetPassword={userData.actions.resetPassword}
               id="account-banner-login"
               isDisabled={userData.props.isLoggingIn}
               isRecognizedUser={userData.props.isRecognizedUser}

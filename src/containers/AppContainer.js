@@ -4,9 +4,12 @@ import { connect } from "react-redux";
 import { CHECK_LOGIN } from "../redux/actions";
 import { getCheckingLogin } from "../redux/modules/user";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSignOutAlt,
+  faExclamationCircle
+} from "@fortawesome/free-solid-svg-icons";
 
-library.add(faSignOutAlt);
+library.add(faSignOutAlt, faExclamationCircle);
 
 class AppContainer extends React.Component {
   static propTypes = {
@@ -17,7 +20,7 @@ class AppContainer extends React.Component {
 
   constructor(props, ...rest) {
     super(props, ...rest);
-    props.onCheckLogin();
+    props.onCheckLogin().catch(() => {});
   }
 
   render() {

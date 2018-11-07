@@ -6,15 +6,12 @@ import {
   SET_RECOGNIZED_USER,
   LOG_IN,
   LOG_OUT,
-  REGISTER
+  REGISTER,
+  RESET_PASSWORD
 } from "../redux/actions";
 
 /**
- * Maintains a local storage variable that indicates if the user is recognized as a registered user.
- * TODO this needs to be done in redux, because there will need to be more than one of these, and
- * they need to stay in sync.
- *
- * @param {Function} children
+ * Provides information and actions about/for the current user.
  */
 class UserContainer extends React.Component {
   static propTypes = {
@@ -24,6 +21,7 @@ class UserContainer extends React.Component {
     onLogIn: PropTypes.func.isRequired,
     onLogOut: PropTypes.func.isRequired,
     onRegister: PropTypes.func.isRequired,
+    onResetPassword: PropTypes.func.isRequired,
     onSetRecognition: PropTypes.func.isRequired
   };
 
@@ -49,6 +47,7 @@ class UserContainer extends React.Component {
         logIn: this.props.onLogIn,
         logOut: this.props.onLogOut,
         register: this.props.onRegister,
+        resetPassword: this.props.onResetPassword,
         toggleRecognition: this.toggleRecognition
       },
       props: {
@@ -73,6 +72,7 @@ const mapDispatchToProps = {
   onLogIn: LOG_IN,
   onLogOut: LOG_OUT,
   onRegister: REGISTER,
+  onResetPassword: RESET_PASSWORD,
   onSetRecognition: SET_RECOGNIZED_USER
 };
 

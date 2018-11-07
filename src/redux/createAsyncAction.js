@@ -16,13 +16,15 @@ export default function createAsyncAction(actionType, request) {
     return dispatch => {
       dispatch(asyncAction.REQUESTED());
 
-      return request(...args)
+      const promise = request(...args);
+      promise
         .then(payload => {
           dispatch(asyncAction.RECEIVED(payload));
         })
         .catch(payload => {
           dispatch(asyncAction.FAILED(payload));
         });
+      return promise;
     };
   }
 

@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { TypographyStyles } from "./Text";
 
 const StyledInput = styled.input`
-  display: block;
+  ${TypographyStyles} display: block;
   width: 100%;
   padding: 4px;
   border-radius: 4px;

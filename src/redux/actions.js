@@ -34,6 +34,18 @@ export const REGISTER = createAsyncAction("REGISTER", data => {
 });
 
 /**
+ * Reset a user's password.
+ * @param {String} username
+ * @param {String} email
+ */
+export const RESET_PASSWORD = createAsyncAction(
+  "RESET_PASSWORD",
+  (username, email) => {
+    return KitePaintApi.resetPassword(username, email);
+  }
+);
+
+/**
  * Set the isRecognizedUser local storage variable.
  * This indicates if the user is recognized as someone who has a registered account.
  * @param {Boolean} newValue

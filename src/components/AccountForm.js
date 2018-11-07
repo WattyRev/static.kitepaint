@@ -36,8 +36,8 @@ class AccountForm extends React.Component {
      */
     isDisabled: PropTypes.bool,
     /**
-     * A function called when the register form is submitted. Is called with an object as the first
-     * parameter.
+     * An async function called when the register form is submitted. Is called with an object as the
+     * first parameter.
      */
     onRegister: PropTypes.func.isRequired,
     /**
@@ -46,7 +46,8 @@ class AccountForm extends React.Component {
      */
     onLogIn: PropTypes.func.isRequired,
     /**
-     * A function called when the reset password form is submitted. TODO finish hooking this up.
+     * An async function called when the reset password form is submitted. Is called with the
+     * username as the first param, and the email address as the second.
      */
     onResetPassword: PropTypes.func.isRequired,
     /**
@@ -73,6 +74,16 @@ class AccountForm extends React.Component {
      */
     password2: "",
     /**
+     * An error message to display when a reset password request fails.
+     */
+    resetPasswordErrorMessage: null,
+    /**
+     * Indicates that a reset password request has been sent. Should be set to true after submission
+     * of the reset password form, that way we can display a success message to the user.
+     * @type {Boolean}
+     */
+    resetPasswordSent: false,
+    /**
      * Indicates if we should be showing the reset password form.
      * @type {Boolean}
      */
@@ -87,6 +98,14 @@ class AccountForm extends React.Component {
      * of the registration form, that way we can display a success message to the user.
      * @type {Boolean}
      */
+    registrationSent: false
+  };
+
+  resetStateValues = {
+    password: "",
+    password2: "",
+    resetPasswordErrorMessage: null,
+    resetPasswordSent: false,
     registrationSent: false
   };
 
@@ -154,18 +173,25 @@ class AccountForm extends React.Component {
    */
   handleRecognitionToggle = () => {
     this.props.onToggleRecognition();
-    this.setState({
-      password: "",
-      password2: "",
-      registrationSent: false
-    });
+    this.setState(this.resetStateValues);
   };
 
   /**
    * Handles the password reset form submission.
    */
   handlePasswordReset = () => {
-    this.props.onResetPassword(this.state.username, this.state.email);
+    return this.props
+      .onResetPassword(this.state.username, this.state.email)
+      .then(() => {
+        this.setState({
+          resetPasswordSent: true
+        });
+      })
+      .catch(error => {
+        this.setState({
+          resetPasswordErrorMessage: error
+        });
+      });
   };
 
   /**
@@ -182,8 +208,7 @@ class AccountForm extends React.Component {
   handleResetPasswordToggle = () => {
     const { showResetPassword } = this.state;
     this.setState({
-      password: "",
-      password2: "",
+      ...this.resetStateValues,
       showResetPassword: !showResetPassword
     });
   };
@@ -214,36 +239,39 @@ class AccountForm extends React.Component {
       );
     }
 
-    // Show the login form unless the user wants to reset their password
-    if (!this.state.showResetPassword) {
+    // Show the reset password form
+    if (this.state.showResetPassword) {
       return (
         <StyleWrapper>
-          <LogInForm
+          <ResetPasswordForm
+            email={this.state.email}
+            errorMessage={this.state.resetPasswordErrorMessage}
             id={id}
-            username={this.state.username}
-            password={this.state.password}
             isDisabled={isDisabled}
+            onCancel={this.handleResetPasswordToggle}
+            onEmailChange={this.handleEmailChange}
+            onSubmit={this.handlePasswordReset}
             onUsernameChange={this.handleUsernameChange}
-            onPasswordChange={this.handlePasswordChange}
-            onSubmit={this.handleLogIn}
-            onRegister={this.handleRecognitionToggle}
-            onResetPassword={this.handleResetPasswordToggle}
+            showSuccessMessage={this.state.resetPasswordSent}
+            username={this.state.username}
           />
         </StyleWrapper>
       );
     }
 
+    // If all else is false, show the login form
     return (
       <StyleWrapper>
-        <ResetPasswordForm
-          email={this.state.email}
+        <LogInForm
           id={id}
-          isDisabled={isDisabled}
-          onCancel={this.handleResetPasswordToggle}
-          onEmailChange={this.handleEmailChange}
-          onSubmit={this.handlePasswordReset}
-          onUsernameChange={this.handleUsernameChange}
           username={this.state.username}
+          password={this.state.password}
+          isDisabled={isDisabled}
+          onUsernameChange={this.handleUsernameChange}
+          onPasswordChange={this.handlePasswordChange}
+          onSubmit={this.handleLogIn}
+          onRegister={this.handleRecognitionToggle}
+          onResetPassword={this.handleResetPasswordToggle}
         />
       </StyleWrapper>
     );

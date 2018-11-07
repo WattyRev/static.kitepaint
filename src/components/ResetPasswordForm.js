@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { A, P, Label, Input, Button } from "../theme";
+import { A, P, Error, Label, Input, Button } from "../theme";
 
 const ResetPasswordForm = ({
   email,
+  errorMessage,
   id,
   isDisabled,
   onCancel,
@@ -23,7 +24,7 @@ const ResetPasswordForm = ({
     {showSuccessMessage ? (
       <React.Fragment>
         <P className="testing_success-message">
-          An email container a password reset link has been sent to {email}.
+          An email containing a password reset link has been sent to {email}.
         </P>
         <Button type="button" isPrimary isBlock onClick={onCancel}>
           Sign In
@@ -31,6 +32,11 @@ const ResetPasswordForm = ({
       </React.Fragment>
     ) : (
       <React.Fragment>
+        {errorMessage && (
+          <Error>
+            <P>{errorMessage}</P>
+          </Error>
+        )}
         <P>Enter your username and email address to reset your password.</P>
         <Label htmlFor={`${id}-username`}>Username</Label>
         <Input
@@ -65,6 +71,11 @@ ResetPasswordForm.propTypes = {
    * The value for the email field.
    */
   email: PropTypes.string,
+  /**
+   * A message to display as an error.
+   * @type {String}
+   */
+  errorMessage: PropTypes.string,
   /**
    * A unique identifier needed to differentiate instances of this componnet.
    */
