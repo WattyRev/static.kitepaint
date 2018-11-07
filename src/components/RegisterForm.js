@@ -29,11 +29,11 @@ const RegisterForm = ({
   >
     {showSuccessMessage ? (
       <React.Fragment>
-        <P>
+        <P className="testing_success-message">
           A confirmation email has been sent to {email}. After confirming your
           email address, you main sign in.
         </P>
-        <Button isPrimary isBlock onClick={onLogIn}>
+        <Button type="button" isPrimary isBlock onClick={onLogIn}>
           Sign In
         </Button>
       </React.Fragment>
@@ -79,7 +79,10 @@ const RegisterForm = ({
           </A>
         </P>
         <P>
-          Already registered? <A onClick={onLogIn}>Sign In</A>
+          Already registered?{" "}
+          <A className="testing_log-in" onClick={onLogIn}>
+            Sign In
+          </A>
         </P>
       </React.Fragment>
     )}

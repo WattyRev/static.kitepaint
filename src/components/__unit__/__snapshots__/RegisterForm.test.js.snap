@@ -81,8 +81,10 @@ ShallowWrapper {
           </ForwardRef>
         </P>
         <P>
-          Already registered? 
+          Already registered?
+           
           <ForwardRef
+            className="testing_log-in"
             onClick={[MockFunction]}
           >
             Sign In
@@ -154,8 +156,10 @@ ShallowWrapper {
             </ForwardRef>
           </P>,
           <P>
-            Already registered? 
+            Already registered?
+             
             <ForwardRef
+              className="testing_log-in"
               onClick={[MockFunction]}
             >
               Sign In
@@ -433,8 +437,10 @@ ShallowWrapper {
           "nodeType": "function",
           "props": Object {
             "children": Array [
-              "Already registered? ",
+              "Already registered?",
+              " ",
               <ForwardRef
+                className="testing_log-in"
                 onClick={[MockFunction]}
               >
                 Sign In
@@ -443,13 +449,15 @@ ShallowWrapper {
           },
           "ref": null,
           "rendered": Array [
-            "Already registered? ",
+            "Already registered?",
+            " ",
             Object {
               "instance": null,
               "key": undefined,
               "nodeType": "function",
               "props": Object {
                 "children": "Sign In",
+                "className": "testing_log-in",
                 "onClick": [MockFunction],
               },
               "ref": null,
@@ -555,8 +563,10 @@ ShallowWrapper {
             </ForwardRef>
           </P>
           <P>
-            Already registered? 
+            Already registered?
+             
             <ForwardRef
+              className="testing_log-in"
               onClick={[MockFunction]}
             >
               Sign In
@@ -628,8 +638,10 @@ ShallowWrapper {
               </ForwardRef>
             </P>,
             <P>
-              Already registered? 
+              Already registered?
+               
               <ForwardRef
+                className="testing_log-in"
                 onClick={[MockFunction]}
               >
                 Sign In
@@ -907,8 +919,10 @@ ShallowWrapper {
             "nodeType": "function",
             "props": Object {
               "children": Array [
-                "Already registered? ",
+                "Already registered?",
+                " ",
                 <ForwardRef
+                  className="testing_log-in"
                   onClick={[MockFunction]}
                 >
                   Sign In
@@ -917,13 +931,15 @@ ShallowWrapper {
             },
             "ref": null,
             "rendered": Array [
-              "Already registered? ",
+              "Already registered?",
+              " ",
               Object {
                 "instance": null,
                 "key": undefined,
                 "nodeType": "function",
                 "props": Object {
                   "children": "Sign In",
+                  "className": "testing_log-in",
                   "onClick": [MockFunction],
                 },
                 "ref": null,

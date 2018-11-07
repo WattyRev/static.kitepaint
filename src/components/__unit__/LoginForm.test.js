@@ -88,7 +88,7 @@ describe("LogInForm", () => {
       });
     });
     describe("#onSubmit", () => {
-      it("is called when the form is submitted", () => {
+      it("should be called when the form is submitted", () => {
         expect.assertions(1);
         const wrapper = shallow(<LoginForm {...defaultProps} />);
         wrapper.find("form").simulate("submit", {

@@ -78,32 +78,132 @@ describe("RegisterForm", () => {
         expect(defaultProps.onEmailChange.mock.calls[0][0]).toEqual("boogers");
       });
     });
-    // describe('#onLogIn', () => {
-    //
-    // });
-    // describe('#onPasswordChange', () => {
-    //
-    // });
-    // describe('#onPasswordConfirmationChange', () => {
-    //
-    // });
-    // describe('#onSubmit', () => {
-    //
-    // });
-    // describe('#onUsernameChange', () => {
-    //
-    // });
-    // describe('.password', () => {
-    //
-    // });
-    // describe('.passwordConfirmation', () => {
-    //
-    // });
-    // describe('.showSuccessMessage', () => {
-    //
-    // });
-    // describe('.username', () => {
-    //
-    // });
+    describe("#onLogIn", () => {
+      it("should be called when the login link is clicked", () => {
+        expect.assertions(1);
+        const wrapper = shallow(<RegisterForm {...defaultProps} />);
+        wrapper.find(".testing_log-in").simulate("click");
+        expect(defaultProps.onLogIn.mock.calls).toHaveLength(1);
+      });
+    });
+    describe("#onPasswordChange", () => {
+      it("should be called with the new password when it changes", () => {
+        expect.assertions(2);
+        const wrapper = shallow(<RegisterForm {...defaultProps} />);
+        const input = wrapper.find("#abc-password");
+        input.simulate("change", {
+          target: {
+            value: "boogers"
+          }
+        });
+        expect(defaultProps.onPasswordChange.mock.calls).toHaveLength(1);
+        expect(defaultProps.onPasswordChange.mock.calls[0][0]).toEqual(
+          "boogers"
+        );
+      });
+    });
+    describe("#onPasswordConfirmationChange", () => {
+      it("should be called with the new password when it changes", () => {
+        expect.assertions(2);
+        const wrapper = shallow(<RegisterForm {...defaultProps} />);
+        const input = wrapper.find("#abc-password-2");
+        input.simulate("change", {
+          target: {
+            value: "boogers"
+          }
+        });
+        expect(
+          defaultProps.onPasswordConfirmationChange.mock.calls
+        ).toHaveLength(1);
+        expect(
+          defaultProps.onPasswordConfirmationChange.mock.calls[0][0]
+        ).toEqual("boogers");
+      });
+    });
+    describe("#onSubmit", () => {
+      it("is called when the form is submitted", () => {
+        expect.assertions(1);
+        const wrapper = shallow(<RegisterForm {...defaultProps} />);
+        wrapper.find("form").simulate("submit", {
+          preventDefault: jest.fn()
+        });
+        expect(defaultProps.onSubmit.mock.calls).toHaveLength(1);
+      });
+    });
+    describe("#onUsernameChange", () => {
+      it("should be called with the new username when it changes", () => {
+        expect.assertions(2);
+        const wrapper = shallow(<RegisterForm {...defaultProps} />);
+        const input = wrapper.find("#abc-username");
+        input.simulate("change", {
+          target: {
+            value: "boogers"
+          }
+        });
+        expect(defaultProps.onUsernameChange.mock.calls).toHaveLength(1);
+        expect(defaultProps.onUsernameChange.mock.calls[0][0]).toEqual(
+          "boogers"
+        );
+      });
+    });
+    describe(".password", () => {
+      it("is used to populate the password field", () => {
+        expect.assertions(1);
+        defaultProps.password = "sugartits";
+        const wrapper = shallow(<RegisterForm {...defaultProps} />);
+        const input = wrapper.find("#abc-password");
+        expect(input.prop("value")).toEqual("sugartits");
+      });
+    });
+    describe(".passwordConfirmation", () => {
+      it("is used to populate the password confirmation field", () => {
+        expect.assertions(1);
+        defaultProps.passwordConfirmation = "sugartits";
+        const wrapper = shallow(<RegisterForm {...defaultProps} />);
+        const input = wrapper.find("#abc-password-2");
+        expect(input.prop("value")).toEqual("sugartits");
+      });
+    });
+    describe(".showSuccessMessage", () => {
+      describe("when true", () => {
+        beforeEach(() => {
+          defaultProps.showSuccessMessage = true;
+        });
+        it("shows the success message", () => {
+          expect.assertions(1);
+          const wrapper = shallow(<RegisterForm {...defaultProps} />);
+          expect(wrapper.find(".testing_success-message")).toHaveLength(1);
+        });
+        it("does not show any form fields", () => {
+          expect.assertions(1);
+          const wrapper = shallow(<RegisterForm {...defaultProps} />);
+          expect(wrapper.find(Input)).toHaveLength(0);
+        });
+      });
+      describe("when false", () => {
+        beforeEach(() => {
+          defaultProps.showSuccessMessage = false;
+        });
+        it("shows the form fields", () => {
+          expect.assertions(1);
+          const wrapper = shallow(<RegisterForm {...defaultProps} />);
+          expect(wrapper.find(Input).length).toBeGreaterThan(0);
+        });
+        it("does not show the success message", () => {
+          expect.assertions(1);
+          const wrapper = shallow(<RegisterForm {...defaultProps} />);
+          expect(wrapper.find(".testing_success-message")).toHaveLength(0);
+        });
+      });
+    });
+    describe(".username", () => {
+      it("is used to populate the username field", () => {
+        expect.assertions(1);
+        defaultProps.username = "sugartits";
+        const wrapper = shallow(<RegisterForm {...defaultProps} />);
+        const input = wrapper.find("#abc-username");
+        expect(input.prop("value")).toEqual("sugartits");
+      });
+    });
   });
 });
