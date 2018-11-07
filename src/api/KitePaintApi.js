@@ -109,7 +109,13 @@ export class KitePaintApi {
 
     // If the response has no data or indicates that the user is not logged in, reject.
     if (!response.data || !response.data.logged_in) {
-      return new Promise((resolve, reject) => reject(response));
+      return new Promise((resolve, reject) =>
+        reject(
+          response.data
+            ? response.data.message
+            : "The log in request was unsuccessful"
+        )
+      );
     }
 
     // Store the user data in session storage
@@ -139,7 +145,22 @@ export class KitePaintApi {
     Object.keys(data).forEach(key => bodyFormData.append(key, data[key]));
 
     // Make the request
-    return this.axiosInstance.post("/register.php", bodyFormData);
+    const response = await this.axiosInstance.post(
+      "/register.php",
+      bodyFormData
+    );
+
+    // If there's no data, or if the data returns with registered as false, reject.
+    if (!response.data || !response.data.registered) {
+      return new Promise((resolve, reject) =>
+        reject(
+          response.data
+            ? response.data.message
+            : "The registration request was unsuccessful"
+        )
+      );
+    }
+    return response;
   }
 
   /**
@@ -165,7 +186,7 @@ export class KitePaintApi {
         reject(
           response.data
             ? response.data.message
-            : "Reset password did not return the expected data"
+            : "The reset password request was unsuccessful."
         )
       );
     }

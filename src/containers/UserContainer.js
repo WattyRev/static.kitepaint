@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { getUser, getUserRecognition } from "../redux/modules/user";
 import {
   SET_RECOGNIZED_USER,
-  LOG_IN,
   LOG_OUT,
   REGISTER,
   RESET_PASSWORD
@@ -18,7 +17,6 @@ class UserContainer extends React.Component {
     children: PropTypes.func.isRequired,
     isRecognizedUser: PropTypes.bool,
     user: PropTypes.object.isRequired,
-    onLogIn: PropTypes.func.isRequired,
     onLogOut: PropTypes.func.isRequired,
     onRegister: PropTypes.func.isRequired,
     onResetPassword: PropTypes.func.isRequired,
@@ -44,7 +42,6 @@ class UserContainer extends React.Component {
     } = this.props.user;
     return this.props.children({
       actions: {
-        logIn: this.props.onLogIn,
         logOut: this.props.onLogOut,
         register: this.props.onRegister,
         resetPassword: this.props.onResetPassword,
@@ -69,7 +66,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  onLogIn: LOG_IN,
   onLogOut: LOG_OUT,
   onRegister: REGISTER,
   onResetPassword: RESET_PASSWORD,

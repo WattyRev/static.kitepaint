@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { A, P, Label, Input, Button } from "../theme";
+import { A, P, Label, Input, Button, Error } from "../theme";
 
 /**
  * A form for registering an account for KitePaint.
  */
 const RegisterForm = ({
   email,
+  errorMessage,
   id,
   isDisabled,
   onEmailChange,
@@ -39,6 +40,11 @@ const RegisterForm = ({
       </React.Fragment>
     ) : (
       <React.Fragment>
+        {errorMessage && (
+          <Error>
+            <P>{errorMessage}</P>
+          </Error>
+        )}
         <Label htmlFor={`${id}-username`}>Username</Label>
         <Input
           id={`${id}-username`}
@@ -94,6 +100,10 @@ RegisterForm.propTypes = {
    * The value for the email field.
    */
   email: PropTypes.string,
+  /**
+   * An error message to be displayed at the top of the form.
+   */
+  errorMessage: PropTypes.string,
   /**
    * A unique identifier to distinguish this from other instances.
    */

@@ -101,6 +101,7 @@ ShallowWrapper {
       "nodeType": "function",
       "props": Object {
         "children": Array [
+          undefined,
           <ForwardRef
             htmlFor="abc-username"
           >
@@ -169,6 +170,7 @@ ShallowWrapper {
       },
       "ref": null,
       "rendered": Array [
+        undefined,
         Object {
           "instance": null,
           "key": undefined,
@@ -183,7 +185,7 @@ ShallowWrapper {
             "$$typeof": Symbol(react.forward_ref),
             "attrs": undefined,
             "componentStyle": ComponentStyle {
-              "componentId": "sc-gzVnrw",
+              "componentId": "sc-htoDjs",
               "isStatic": true,
               "rules": Array [
                 "
@@ -194,7 +196,7 @@ ShallowWrapper {
             },
             "displayName": "Styled(Label)",
             "render": [Function],
-            "styledComponentId": "sc-gzVnrw",
+            "styledComponentId": "sc-htoDjs",
             "target": [Function],
             "toString": [Function],
             "warnTooManyClasses": [Function],
@@ -230,7 +232,7 @@ ShallowWrapper {
             "$$typeof": Symbol(react.forward_ref),
             "attrs": undefined,
             "componentStyle": ComponentStyle {
-              "componentId": "sc-gzVnrw",
+              "componentId": "sc-htoDjs",
               "isStatic": true,
               "rules": Array [
                 "
@@ -241,7 +243,7 @@ ShallowWrapper {
             },
             "displayName": "Styled(Label)",
             "render": [Function],
-            "styledComponentId": "sc-gzVnrw",
+            "styledComponentId": "sc-htoDjs",
             "target": [Function],
             "toString": [Function],
             "warnTooManyClasses": [Function],
@@ -278,7 +280,7 @@ ShallowWrapper {
             "$$typeof": Symbol(react.forward_ref),
             "attrs": undefined,
             "componentStyle": ComponentStyle {
-              "componentId": "sc-gzVnrw",
+              "componentId": "sc-htoDjs",
               "isStatic": true,
               "rules": Array [
                 "
@@ -289,7 +291,7 @@ ShallowWrapper {
             },
             "displayName": "Styled(Label)",
             "render": [Function],
-            "styledComponentId": "sc-gzVnrw",
+            "styledComponentId": "sc-htoDjs",
             "target": [Function],
             "toString": [Function],
             "warnTooManyClasses": [Function],
@@ -326,7 +328,7 @@ ShallowWrapper {
             "$$typeof": Symbol(react.forward_ref),
             "attrs": undefined,
             "componentStyle": ComponentStyle {
-              "componentId": "sc-gzVnrw",
+              "componentId": "sc-htoDjs",
               "isStatic": true,
               "rules": Array [
                 "
@@ -337,7 +339,7 @@ ShallowWrapper {
             },
             "displayName": "Styled(Label)",
             "render": [Function],
-            "styledComponentId": "sc-gzVnrw",
+            "styledComponentId": "sc-htoDjs",
             "target": [Function],
             "toString": [Function],
             "warnTooManyClasses": [Function],
@@ -583,6 +585,7 @@ ShallowWrapper {
         "nodeType": "function",
         "props": Object {
           "children": Array [
+            undefined,
             <ForwardRef
               htmlFor="abc-username"
             >
@@ -651,6 +654,7 @@ ShallowWrapper {
         },
         "ref": null,
         "rendered": Array [
+          undefined,
           Object {
             "instance": null,
             "key": undefined,
@@ -665,7 +669,7 @@ ShallowWrapper {
               "$$typeof": Symbol(react.forward_ref),
               "attrs": undefined,
               "componentStyle": ComponentStyle {
-                "componentId": "sc-gzVnrw",
+                "componentId": "sc-htoDjs",
                 "isStatic": true,
                 "rules": Array [
                   "
@@ -676,7 +680,7 @@ ShallowWrapper {
               },
               "displayName": "Styled(Label)",
               "render": [Function],
-              "styledComponentId": "sc-gzVnrw",
+              "styledComponentId": "sc-htoDjs",
               "target": [Function],
               "toString": [Function],
               "warnTooManyClasses": [Function],
@@ -712,7 +716,7 @@ ShallowWrapper {
               "$$typeof": Symbol(react.forward_ref),
               "attrs": undefined,
               "componentStyle": ComponentStyle {
-                "componentId": "sc-gzVnrw",
+                "componentId": "sc-htoDjs",
                 "isStatic": true,
                 "rules": Array [
                   "
@@ -723,7 +727,7 @@ ShallowWrapper {
               },
               "displayName": "Styled(Label)",
               "render": [Function],
-              "styledComponentId": "sc-gzVnrw",
+              "styledComponentId": "sc-htoDjs",
               "target": [Function],
               "toString": [Function],
               "warnTooManyClasses": [Function],
@@ -760,7 +764,7 @@ ShallowWrapper {
               "$$typeof": Symbol(react.forward_ref),
               "attrs": undefined,
               "componentStyle": ComponentStyle {
-                "componentId": "sc-gzVnrw",
+                "componentId": "sc-htoDjs",
                 "isStatic": true,
                 "rules": Array [
                   "
@@ -771,7 +775,7 @@ ShallowWrapper {
               },
               "displayName": "Styled(Label)",
               "render": [Function],
-              "styledComponentId": "sc-gzVnrw",
+              "styledComponentId": "sc-htoDjs",
               "target": [Function],
               "toString": [Function],
               "warnTooManyClasses": [Function],
@@ -808,7 +812,7 @@ ShallowWrapper {
               "$$typeof": Symbol(react.forward_ref),
               "attrs": undefined,
               "componentStyle": ComponentStyle {
-                "componentId": "sc-gzVnrw",
+                "componentId": "sc-htoDjs",
                 "isStatic": true,
                 "rules": Array [
                   "
@@ -819,7 +823,7 @@ ShallowWrapper {
               },
               "displayName": "Styled(Label)",
               "render": [Function],
-              "styledComponentId": "sc-gzVnrw",
+              "styledComponentId": "sc-htoDjs",
               "target": [Function],
               "toString": [Function],
               "warnTooManyClasses": [Function],
