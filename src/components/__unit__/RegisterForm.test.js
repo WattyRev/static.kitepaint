@@ -48,20 +48,43 @@ describe("RegisterForm", () => {
       });
     });
     describe(".isDisabled", () => {
-      it("should disable all inputs and buttons", () => {
-        expect.assertions(4);
-        defaultProps.isDisabled = true;
-        const wrapper = shallow(<RegisterForm {...defaultProps} />);
-        const inputs = wrapper.find(Input);
-        const buttons = wrapper.find(Button);
-        expect(inputs).toHaveLength(4);
-        expect(buttons).toHaveLength(1);
-        expect(inputs.everyWhere(element => element.prop("disabled"))).toEqual(
-          true
-        );
-        expect(inputs.everyWhere(element => element.prop("disabled"))).toEqual(
-          true
-        );
+      describe("if true", () => {
+        beforeEach(() => {
+          defaultProps.isDisabled = true;
+        });
+        it("should disable all inputs and buttons", () => {
+          expect.assertions(4);
+          const wrapper = shallow(<RegisterForm {...defaultProps} />);
+          const inputs = wrapper.find(Input);
+          const buttons = wrapper.find(Button);
+          expect(inputs).toHaveLength(4);
+          expect(buttons).toHaveLength(1);
+          expect(
+            inputs.everyWhere(element => element.prop("disabled"))
+          ).toEqual(true);
+          expect(
+            inputs.everyWhere(element => element.prop("disabled"))
+          ).toEqual(true);
+        });
+      });
+      describe("if false", () => {
+        beforeEach(() => {
+          defaultProps.isDisabled = false;
+        });
+        it("should leave all inputs and buttons enabled", () => {
+          expect.assertions(4);
+          const wrapper = shallow(<RegisterForm {...defaultProps} />);
+          const inputs = wrapper.find(Input);
+          const buttons = wrapper.find(Button);
+          expect(inputs).toHaveLength(4);
+          expect(buttons).toHaveLength(1);
+          expect(
+            inputs.everyWhere(element => !element.prop("disabled"))
+          ).toEqual(true);
+          expect(
+            inputs.everyWhere(element => !element.prop("disabled"))
+          ).toEqual(true);
+        });
       });
     });
     describe("#onEmailChange", () => {

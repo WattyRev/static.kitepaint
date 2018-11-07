@@ -10,6 +10,7 @@ const ResetPasswordForm = ({
   onEmailChange,
   onSubmit,
   onUsernameChange,
+  showSuccessMessage,
   username
 }) => (
   <form
@@ -19,31 +20,43 @@ const ResetPasswordForm = ({
       onSubmit();
     }}
   >
-    <P>
-      *This is not hooked up yet.*Enter your username and email address to reset
-      your password.
-    </P>
-    <Label htmlFor={`${id}-username`}>Username</Label>
-    <Input
-      id={`${id}-username`}
-      value={username}
-      disabled={isDisabled}
-      onChange={e => onUsernameChange(e.target.value)}
-    />
-    <Label htmlFor={`${id}-email`}>Email Address</Label>
-    <Input
-      id={`${id}-email`}
-      type="email"
-      value={email}
-      disabled={isDisabled}
-      onChange={e => onEmailChange(e.target.value)}
-    />
-    <Button isPrimary isBlock type="submit">
-      Reset Password
-    </Button>
-    <P>
-      <A onClick={onCancel}>Cancel</A>
-    </P>
+    {showSuccessMessage ? (
+      <React.Fragment>
+        <P className="testing_success-message">
+          An email container a password reset link has been sent to {email}.
+        </P>
+        <Button type="button" isPrimary isBlock onClick={onCancel}>
+          Sign In
+        </Button>
+      </React.Fragment>
+    ) : (
+      <React.Fragment>
+        <P>Enter your username and email address to reset your password.</P>
+        <Label htmlFor={`${id}-username`}>Username</Label>
+        <Input
+          id={`${id}-username`}
+          value={username}
+          disabled={isDisabled}
+          onChange={e => onUsernameChange(e.target.value)}
+        />
+        <Label htmlFor={`${id}-email`}>Email Address</Label>
+        <Input
+          id={`${id}-email`}
+          type="email"
+          value={email}
+          disabled={isDisabled}
+          onChange={e => onEmailChange(e.target.value)}
+        />
+        <Button isPrimary isBlock type="submit">
+          Reset Password
+        </Button>
+        <P>
+          <A className="testing_cancel" onClick={onCancel}>
+            Cancel
+          </A>
+        </P>
+      </React.Fragment>
+    )}
   </form>
 );
 
@@ -77,6 +90,10 @@ ResetPasswordForm.propTypes = {
    * A function called when the username changes. Is called with the new username as the first parameter.
    */
   onUsernameChange: PropTypes.func.isRequired,
+  /**
+   * Indicates if the pasword reset request has been sent successfully.
+   */
+  showSuccessMessage: PropTypes.bool,
   /**
    * The value for the username field.
    */
