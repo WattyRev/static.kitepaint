@@ -2,12 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getUser, getUserRecognition } from "../redux/modules/user";
-import {
-  SET_RECOGNIZED_USER,
-  LOG_OUT,
-  REGISTER,
-  RESET_PASSWORD
-} from "../redux/actions";
+import { SET_RECOGNIZED_USER, LOG_OUT } from "../redux/actions";
 
 /**
  * Provides information and actions about/for the current user.
@@ -18,8 +13,6 @@ class UserContainer extends React.Component {
     isRecognizedUser: PropTypes.bool,
     user: PropTypes.object.isRequired,
     onLogOut: PropTypes.func.isRequired,
-    onRegister: PropTypes.func.isRequired,
-    onResetPassword: PropTypes.func.isRequired,
     onSetRecognition: PropTypes.func.isRequired
   };
 
@@ -43,8 +36,6 @@ class UserContainer extends React.Component {
     return this.props.children({
       actions: {
         logOut: this.props.onLogOut,
-        register: this.props.onRegister,
-        resetPassword: this.props.onResetPassword,
         toggleRecognition: this.toggleRecognition
       },
       props: {
@@ -67,8 +58,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   onLogOut: LOG_OUT,
-  onRegister: REGISTER,
-  onResetPassword: RESET_PASSWORD,
   onSetRecognition: SET_RECOGNIZED_USER
 };
 

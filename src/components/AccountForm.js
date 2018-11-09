@@ -32,16 +32,6 @@ class AccountForm extends React.Component {
      */
     isRecognizedUser: PropTypes.bool.isRequired,
     /**
-     * An async function called when the register form is submitted. Is called with an object as the
-     * first parameter.
-     */
-    onRegister: PropTypes.func.isRequired,
-    /**
-     * An async function called when the reset password form is submitted. Is called with the
-     * username as the first param, and the email address as the second.
-     */
-    onResetPassword: PropTypes.func.isRequired,
-    /**
      * A function called when the user indicates that they do, or do not have a KitePaint account.
      */
     onToggleRecognition: PropTypes.func.isRequired

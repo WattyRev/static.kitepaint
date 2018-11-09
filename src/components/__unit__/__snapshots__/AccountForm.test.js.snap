@@ -6,9 +6,6 @@ ShallowWrapper {
   Symbol(enzyme.__unrendered__): <AccountForm
     id="abc"
     isRecognizedUser={false}
-    onLogIn={[MockFunction]}
-    onRegister={[MockFunction]}
-    onResetPassword={[MockFunction]}
     onToggleRecognition={[MockFunction]}
   />,
   Symbol(enzyme.__renderer__): Object {

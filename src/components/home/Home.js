@@ -15,9 +15,7 @@ const Home = () => (
         !userData.props.isLoggedIn && (
           <AccountBanner isRecognizedUser={userData.props.isRecognizedUser}>
             <AccountForm
-              onRegister={userData.actions.register}
               onToggleRecognition={userData.actions.toggleRecognition}
-              onResetPassword={userData.actions.resetPassword}
               id="account-banner-login"
               isRecognizedUser={userData.props.isRecognizedUser}
             />
