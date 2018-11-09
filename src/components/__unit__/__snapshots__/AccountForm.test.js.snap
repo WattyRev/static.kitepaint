@@ -5,7 +5,6 @@ ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <AccountForm
     id="abc"
-    isDisabled={false}
     isRecognizedUser={false}
     onLogIn={[MockFunction]}
     onRegister={[MockFunction]}
@@ -27,7 +26,6 @@ ShallowWrapper {
     "props": Object {
       "children": <Connect(RegisterFormContainer)
         id="abc"
-        isDisabled={false}
         onLogIn={[MockFunction]}
       />,
     },
@@ -38,7 +36,6 @@ ShallowWrapper {
       "nodeType": "class",
       "props": Object {
         "id": "abc",
-        "isDisabled": false,
         "onLogIn": [MockFunction],
       },
       "ref": null,
@@ -80,7 +77,6 @@ ShallowWrapper {
       "props": Object {
         "children": <Connect(RegisterFormContainer)
           id="abc"
-          isDisabled={false}
           onLogIn={[MockFunction]}
         />,
       },
@@ -91,7 +87,6 @@ ShallowWrapper {
         "nodeType": "class",
         "props": Object {
           "id": "abc",
-          "isDisabled": false,
           "onLogIn": [MockFunction],
         },
         "ref": null,

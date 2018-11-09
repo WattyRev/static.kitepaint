@@ -53,7 +53,7 @@ const ResetPasswordForm = ({
           disabled={isDisabled}
           onChange={e => onEmailChange(e.target.value)}
         />
-        <Button isPrimary isBlock type="submit">
+        <Button isPrimary isBlock type="submit" disabled={isDisabled}>
           Reset Password
         </Button>
         <P>

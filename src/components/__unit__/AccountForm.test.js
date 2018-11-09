@@ -8,7 +8,6 @@ describe("AccountForm", () => {
     defaultProps = {
       id: "abc",
       isRecognizedUser: false,
-      isDisabled: false,
       onRegister: jest.fn(),
       onLogIn: jest.fn(),
       onResetPassword: jest.fn(),

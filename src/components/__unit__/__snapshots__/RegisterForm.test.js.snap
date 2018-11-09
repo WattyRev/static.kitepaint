@@ -368,6 +368,7 @@ ShallowWrapper {
           "nodeType": "function",
           "props": Object {
             "children": "Sign Up",
+            "disabled": undefined,
             "isBlock": true,
             "isPrimary": true,
             "type": "submit",
@@ -852,6 +853,7 @@ ShallowWrapper {
             "nodeType": "function",
             "props": Object {
               "children": "Sign Up",
+              "disabled": undefined,
               "isBlock": true,
               "isPrimary": true,
               "type": "submit",

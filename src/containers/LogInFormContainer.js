@@ -11,10 +11,6 @@ export class LogInFormContainer extends React.Component {
      */
     id: PropTypes.string.isRequired,
     /**
-     * Indicates if the form should be disabled.
-     */
-    isDisabled: PropTypes.bool,
-    /**
      * A function called when the log in form is submitted.
      * Provided by redux.
      */
@@ -30,7 +26,13 @@ export class LogInFormContainer extends React.Component {
   };
   state = {
     username: "",
-    password: ""
+    errorMessage: null,
+    password: "",
+    /**
+     * Is the register request pending?
+     * @type {Boolean}
+     */
+    pendingRequest: false
   };
 
   /**
@@ -57,16 +59,32 @@ export class LogInFormContainer extends React.Component {
    * Handles the log in form submission
    */
   handleSubmit = () => {
-    this.props.onSubmit(this.state.username, this.state.password);
+    this.setState({
+      pendingRequest: true
+    });
+    return this.props
+      .onSubmit(this.state.username, this.state.password)
+      .then(() => {
+        this.setState({
+          pendingRequest: false
+        });
+      })
+      .catch(error => {
+        this.setState({
+          pendingRequest: false,
+          errorMessage: error
+        });
+      });
   };
 
   render() {
     return (
       <LogInForm
         id={this.props.id}
+        errorMessage={this.state.errorMessage}
         username={this.state.username}
         password={this.state.password}
-        isDisabled={this.props.isDisabled}
+        isDisabled={this.state.pendingRequest}
         onUsernameChange={this.handleUsernameChange}
         onPasswordChange={this.handlePasswordChange}
         onSubmit={this.handleSubmit}

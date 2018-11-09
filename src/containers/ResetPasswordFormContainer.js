@@ -11,10 +11,6 @@ export class ResetPasswordFormContainer extends React.Component {
      */
     id: PropTypes.string.isRequired,
     /**
-     * Indicates if the form is disabled.
-     */
-    isDisabled: PropTypes.bool,
-    /**
      * A function called when the user clicks on the cancel button.
      */
     onCancel: PropTypes.func.isRequired,
@@ -30,6 +26,11 @@ export class ResetPasswordFormContainer extends React.Component {
      * @type {String}
      */
     email: "",
+    /**
+     * Is the register request pending?
+     * @type {Boolean}
+     */
+    pendingRequest: false,
     /**
      * An error message to display when reset password fails.
      * @type {String}
@@ -72,15 +73,20 @@ export class ResetPasswordFormContainer extends React.Component {
    * Handles the password reset form submission.
    */
   handleSubmit = () => {
+    this.setState({
+      pendingRequest: true
+    });
     return this.props
       .onSubmit(this.state.username, this.state.email)
       .then(() => {
         this.setState({
+          pendingRequest: false,
           resetPasswordSent: true
         });
       })
       .catch(error => {
         this.setState({
+          pendingRequest: false,
           resetPasswordErrorMessage: error
         });
       });
@@ -92,7 +98,7 @@ export class ResetPasswordFormContainer extends React.Component {
         email={this.state.email}
         errorMessage={this.state.resetPasswordErrorMessage}
         id={this.props.id}
-        isDisabled={this.props.isDisabled}
+        isDisabled={this.state.pendingRequest}
         onCancel={this.props.onCancel}
         onEmailChange={this.handleEmailChange}
         onSubmit={this.handleSubmit}

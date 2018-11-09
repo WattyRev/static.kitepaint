@@ -19,7 +19,6 @@ const Home = () => (
               onToggleRecognition={userData.actions.toggleRecognition}
               onResetPassword={userData.actions.resetPassword}
               id="account-banner-login"
-              isDisabled={userData.props.isLoggingIn}
               isRecognizedUser={userData.props.isRecognizedUser}
             />
           </AccountBanner>

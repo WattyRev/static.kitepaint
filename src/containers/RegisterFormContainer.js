@@ -11,10 +11,6 @@ export class RegisterFormContainer extends React.Component {
      */
     id: PropTypes.string.isRequired,
     /**
-     * Indicates if the form should be disabled.
-     */
-    isDisabled: PropTypes.bool,
-    /**
      * A function called when the link to go to the log in form is clicked.
      */
     onLogIn: PropTypes.func.isRequired,
@@ -30,6 +26,11 @@ export class RegisterFormContainer extends React.Component {
      * @type {String}
      */
     email: "",
+    /**
+     * Is the register request pending?
+     * @type {Boolean}
+     */
+    pendingRequest: false,
     /**
      * The user entered password. Used on the registration and log in forms.
      * @type {String}
@@ -112,15 +113,20 @@ export class RegisterFormContainer extends React.Component {
       password: this.state.password,
       password2: this.state.password2
     };
+    this.setState({
+      pendingRequest: true
+    });
     return this.props
       .onSubmit(data)
       .then(() => {
         this.setState({
+          pendingRequest: false,
           registrationSent: true
         });
       })
       .catch(error => {
         this.setState({
+          pendingRequest: false,
           registrationErrorMessage: error
         });
       });
@@ -132,7 +138,7 @@ export class RegisterFormContainer extends React.Component {
         email={this.state.email}
         errorMessage={this.state.registrationErrorMessage}
         id={this.props.id}
-        isDisabled={this.props.isDisabled}
+        isDisabled={this.state.pendingRequest}
         onEmailChange={this.handleEmailChange}
         onLogIn={this.props.onLogIn}
         onPasswordChange={this.handlePasswordChange}

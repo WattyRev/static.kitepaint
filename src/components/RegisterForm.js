@@ -76,7 +76,7 @@ const RegisterForm = ({
           disabled={isDisabled}
           onChange={e => onPasswordConfirmationChange(e.target.value)}
         />
-        <Button isPrimary isBlock type="submit">
+        <Button disabled={isDisabled} isPrimary isBlock type="submit">
           Sign Up
         </Button>
         <P>

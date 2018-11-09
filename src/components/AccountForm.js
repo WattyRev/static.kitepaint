@@ -32,10 +32,6 @@ class AccountForm extends React.Component {
      */
     isRecognizedUser: PropTypes.bool.isRequired,
     /**
-     * Is this form disabled? This may be done when processing a request.
-     */
-    isDisabled: PropTypes.bool,
-    /**
      * An async function called when the register form is submitted. Is called with an object as the
      * first parameter.
      */
@@ -71,7 +67,7 @@ class AccountForm extends React.Component {
   };
 
   render() {
-    const { id, isDisabled, isRecognizedUser } = this.props;
+    const { id, isRecognizedUser } = this.props;
 
     // If we don't recognize the user, show the registration form
     if (!isRecognizedUser) {
@@ -79,7 +75,6 @@ class AccountForm extends React.Component {
         <StyleWrapper>
           <RegisterFormContainer
             id={id}
-            isDisabled={isDisabled}
             onLogIn={this.props.onToggleRecognition}
           />
         </StyleWrapper>
@@ -92,7 +87,6 @@ class AccountForm extends React.Component {
         <StyleWrapper>
           <ResetPasswordFormContainer
             id={id}
-            isDisabled={isDisabled}
             onCancel={this.handleResetPasswordToggle}
             onSubmit={this.handlePasswordReset}
             onUsernameChange={this.handleUsernameChange}
@@ -108,7 +102,6 @@ class AccountForm extends React.Component {
       <StyleWrapper>
         <LogInFormContainer
           id={id}
-          isDisabled={isDisabled}
           onRegister={this.props.onToggleRecognition}
           onResetPassword={this.handleResetPasswordToggle}
         />

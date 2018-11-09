@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { A, P, Label, Input, Button } from "../theme";
+import { A, P, Label, Input, Button, Error } from "../theme";
 
 /**
  * A from for logging in to KitePaint.
@@ -8,6 +8,7 @@ import { A, P, Label, Input, Button } from "../theme";
 const LogInForm = ({
   id,
   isDisabled,
+  errorMessage,
   onPasswordChange,
   onRegister,
   onResetPassword,
@@ -23,6 +24,11 @@ const LogInForm = ({
       onSubmit();
     }}
   >
+    {errorMessage && (
+      <Error>
+        <P>{errorMessage}</P>
+      </Error>
+    )}
     <Label htmlFor={`${id}-username`}>Username</Label>
     <Input
       id={`${id}-username`}
@@ -63,6 +69,10 @@ LogInForm.propTypes = {
    * Indicates if the form should be disabled.
    */
   isDisabled: PropTypes.bool,
+  /**
+   * An error message to be displayed at the top of the form.
+   */
+  errorMessage: PropTypes.string,
   /**
    * A function called when the password field changes. Is called with the new value as the first
    * parameter
