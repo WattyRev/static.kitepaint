@@ -25,6 +25,7 @@ ShallowWrapper {
     "nodeType": "host",
     "props": Object {
       "children": Array [
+        undefined,
         <ForwardRef
           htmlFor="abc-username"
         >
@@ -73,6 +74,7 @@ ShallowWrapper {
     },
     "ref": null,
     "rendered": Array [
+      undefined,
       Object {
         "instance": null,
         "key": undefined,
@@ -307,6 +309,7 @@ ShallowWrapper {
       "nodeType": "host",
       "props": Object {
         "children": Array [
+          undefined,
           <ForwardRef
             htmlFor="abc-username"
           >
@@ -355,6 +358,7 @@ ShallowWrapper {
       },
       "ref": null,
       "rendered": Array [
+        undefined,
         Object {
           "instance": null,
           "key": undefined,
