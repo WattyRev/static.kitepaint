@@ -78,6 +78,22 @@ describe("LogInForm", () => {
         });
       });
     });
+    describe(".errorMessage", () => {
+      it("should display the error message if provided", () => {
+        expect.assertions(1);
+        defaultProps.errorMessage = "Boogers";
+        const wrapper = shallow(<LogInForm {...defaultProps} />);
+        const foundErrorMessage = wrapper.find(".testing_error-message");
+        expect(foundErrorMessage).toHaveLength(1);
+      });
+      it("should not display the error message if not provided", () => {
+        expect.assertions(1);
+        defaultProps.errorMessage = null;
+        const wrapper = shallow(<LogInForm {...defaultProps} />);
+        const foundErrorMessage = wrapper.find(".testing_error-message");
+        expect(foundErrorMessage).toHaveLength(0);
+      });
+    });
     describe("#onPasswordChange", () => {
       it("should be called with the new password when the password changes", () => {
         expect.assertions(2);

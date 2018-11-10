@@ -25,7 +25,7 @@ const LogInForm = ({
     }}
   >
     {errorMessage && (
-      <Error>
+      <Error className="testing_error-message">
         <P>{errorMessage}</P>
       </Error>
     )}

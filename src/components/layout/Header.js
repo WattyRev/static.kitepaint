@@ -41,7 +41,7 @@ const Header = () => (
         {userData =>
           userData.props.isLoggedIn && (
             <P>
-              <A onClick={userData.actions.logOut}>
+              <A onClick={userData.actions.logOut} className="testing_sign-out">
                 Sign Out <FontAwesomeIcon icon="sign-out-alt" />
               </A>
             </P>
