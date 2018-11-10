@@ -25,8 +25,20 @@ export class LogInFormContainer extends React.Component {
     onResetPassword: PropTypes.func.isRequired
   };
   state = {
+    /**
+     * The user-entered username value.
+     * @type {String}
+     */
     username: "",
+    /**
+     * The displayed error message.
+     * @type {String}
+     */
     errorMessage: null,
+    /**
+     * The user-entered password value.
+     * @type {String}
+     */
     password: "",
     /**
      * Is the register request pending?

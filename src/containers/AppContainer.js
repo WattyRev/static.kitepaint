@@ -11,7 +11,7 @@ import {
 
 library.add(faSignOutAlt, faExclamationCircle);
 
-class AppContainer extends React.Component {
+export class AppContainer extends React.Component {
   static propTypes = {
     children: PropTypes.node,
     isCheckingLogin: PropTypes.bool.isRequired,
