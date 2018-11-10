@@ -7,7 +7,7 @@ import { SET_RECOGNIZED_USER, LOG_OUT } from "../redux/actions";
 /**
  * Provides information and actions about/for the current user.
  */
-class UserContainer extends React.Component {
+export class UserContainer extends React.Component {
   static propTypes = {
     children: PropTypes.func.isRequired,
     isRecognizedUser: PropTypes.bool,
