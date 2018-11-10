@@ -53,7 +53,8 @@ export class LogInFormContainer extends React.Component {
    */
   handleUsernameChange = username => {
     this.setState({
-      username
+      username,
+      errorMessage: null
     });
   };
 
@@ -63,7 +64,8 @@ export class LogInFormContainer extends React.Component {
    */
   handlePasswordChange = password => {
     this.setState({
-      password
+      password,
+      errorMessage: null
     });
   };
 

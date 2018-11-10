@@ -46,7 +46,7 @@ export class RegisterFormContainer extends React.Component {
      * An error message to display when registration fails.
      * @type {String}
      */
-    registrationErrorMessage: null,
+    errorMessage: null,
     /**
      * Indicates that a registration request has been sent. Should be set to true after submission
      * of the registration form, that way we can display a success message to the user.
@@ -66,7 +66,7 @@ export class RegisterFormContainer extends React.Component {
   handleEmailChange = email => {
     this.setState({
       email,
-      registrationErrorMessage: null
+      errorMessage: null
     });
   };
 
@@ -77,7 +77,7 @@ export class RegisterFormContainer extends React.Component {
   handleUsernameChange = username => {
     this.setState({
       username,
-      registrationErrorMessage: null
+      errorMessage: null
     });
   };
 
@@ -88,7 +88,7 @@ export class RegisterFormContainer extends React.Component {
   handlePasswordChange = password => {
     this.setState({
       password,
-      registrationErrorMessage: null
+      errorMessage: null
     });
   };
 
@@ -99,7 +99,7 @@ export class RegisterFormContainer extends React.Component {
   handlePasswordConfirmationChange = passwordConfirmation => {
     this.setState({
       passwordConfirmation,
-      registrationErrorMessage: null
+      errorMessage: null
     });
   };
 
@@ -127,7 +127,7 @@ export class RegisterFormContainer extends React.Component {
       .catch(error => {
         this.setState({
           pendingRequest: false,
-          registrationErrorMessage: error
+          errorMessage: error
         });
       });
   };
@@ -136,7 +136,7 @@ export class RegisterFormContainer extends React.Component {
     return (
       <RegisterForm
         email={this.state.email}
-        errorMessage={this.state.registrationErrorMessage}
+        errorMessage={this.state.errorMessage}
         id={this.props.id}
         isDisabled={this.state.pendingRequest}
         onEmailChange={this.handleEmailChange}

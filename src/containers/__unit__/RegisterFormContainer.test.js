@@ -1,26 +1,39 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { LogInFormContainer } from "../LogInFormContainer";
+import { RegisterFormContainer } from "../RegisterFormContainer";
 
-describe("LogInFormContainer", () => {
+describe("RegisterFormContainer", () => {
   let props;
   beforeEach(() => {
     props = {
       id: "abc",
-      onSubmit: jest.fn(),
-      onRegister: jest.fn(),
-      onResetPassword: jest.fn()
+      onLogIn: jest.fn(),
+      onSubmit: jest.fn()
     };
   });
   it("renders", () => {
     expect.assertions(1);
-    const wrapper = shallow(<LogInFormContainer {...props} />);
+    const wrapper = shallow(<RegisterFormContainer {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
-  describe("#handleUsernameChange", () => {
+
+  describe("handleEmailChange", () => {
     it("triggers setState with the provided value", () => {
       expect.assertions(2);
-      const subject = new LogInFormContainer(props);
+      const subject = new RegisterFormContainer(props);
+      subject.setState = jest.fn();
+      subject.handleEmailChange("boogers");
+      expect(subject.setState.mock.calls).toHaveLength(1);
+      expect(subject.setState.mock.calls[0][0]).toEqual({
+        email: "boogers",
+        errorMessage: null
+      });
+    });
+  });
+  describe("handleUsernameChange", () => {
+    it("triggers setState with the provided value", () => {
+      expect.assertions(2);
+      const subject = new RegisterFormContainer(props);
       subject.setState = jest.fn();
       subject.handleUsernameChange("boogers");
       expect(subject.setState.mock.calls).toHaveLength(1);
@@ -30,10 +43,10 @@ describe("LogInFormContainer", () => {
       });
     });
   });
-  describe("#handlePasswordChange", () => {
+  describe("handlePasswordChange", () => {
     it("triggers setState with the provided value", () => {
       expect.assertions(2);
-      const subject = new LogInFormContainer(props);
+      const subject = new RegisterFormContainer(props);
       subject.setState = jest.fn();
       subject.handlePasswordChange("boogers");
       expect(subject.setState.mock.calls).toHaveLength(1);
@@ -43,11 +56,24 @@ describe("LogInFormContainer", () => {
       });
     });
   });
-  describe("#handleSubmit", () => {
+  describe("handlePasswordConfirmationChange", () => {
+    it("triggers setState with the provided value", () => {
+      expect.assertions(2);
+      const subject = new RegisterFormContainer(props);
+      subject.setState = jest.fn();
+      subject.handlePasswordConfirmationChange("boogers");
+      expect(subject.setState.mock.calls).toHaveLength(1);
+      expect(subject.setState.mock.calls[0][0]).toEqual({
+        passwordConfirmation: "boogers",
+        errorMessage: null
+      });
+    });
+  });
+  describe("handleSubmit", () => {
     it("maintains the pendingRequest state value", () => {
       expect.assertions(4);
       props.onSubmit.mockResolvedValue();
-      const subject = new LogInFormContainer(props);
+      const subject = new RegisterFormContainer(props);
       subject.setState = jest.fn();
 
       let promise = subject.handleSubmit();
@@ -58,7 +84,8 @@ describe("LogInFormContainer", () => {
       promise = promise.then(() => {
         expect(subject.setState.mock.calls).toHaveLength(2);
         expect(subject.setState.mock.calls[1][0]).toEqual({
-          pendingRequest: false
+          pendingRequest: false,
+          registrationSent: true
         });
       });
       return promise;
@@ -66,7 +93,7 @@ describe("LogInFormContainer", () => {
     it("sets the error message if the call fails", () => {
       expect.assertions(4);
       props.onSubmit.mockRejectedValue("fuck you");
-      const subject = new LogInFormContainer(props);
+      const subject = new RegisterFormContainer(props);
       subject.setState = jest.fn();
 
       let promise = subject.handleSubmit();

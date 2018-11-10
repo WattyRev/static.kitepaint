@@ -35,7 +35,7 @@ export class ResetPasswordFormContainer extends React.Component {
      * An error message to display when reset password fails.
      * @type {String}
      */
-    resetPasswordErrorMessage: null,
+    errorMessage: null,
     /**
      * Indicates that a reset password request has been sent. Should be set to true after submission
      * of the reset password form, that way we can display a success message to the user.
@@ -55,7 +55,8 @@ export class ResetPasswordFormContainer extends React.Component {
    */
   handleEmailChange = email => {
     this.setState({
-      email
+      email,
+      errorMessage: null
     });
   };
 
@@ -65,7 +66,8 @@ export class ResetPasswordFormContainer extends React.Component {
    */
   handleUsernameChange = username => {
     this.setState({
-      username
+      username,
+      errorMessage: null
     });
   };
 
@@ -87,7 +89,7 @@ export class ResetPasswordFormContainer extends React.Component {
       .catch(error => {
         this.setState({
           pendingRequest: false,
-          resetPasswordErrorMessage: error
+          errorMessage: error
         });
       });
   };
@@ -96,7 +98,7 @@ export class ResetPasswordFormContainer extends React.Component {
     return (
       <ResetPasswordForm
         email={this.state.email}
-        errorMessage={this.state.resetPasswordErrorMessage}
+        errorMessage={this.state.errorMessage}
         id={this.props.id}
         isDisabled={this.state.pendingRequest}
         onCancel={this.props.onCancel}
