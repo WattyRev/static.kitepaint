@@ -18,9 +18,7 @@ ShallowWrapper {
     "nodeType": "function",
     "props": Object {
       "children": Array [
-        <CTABanner
-          onClick={[Function]}
-        />,
+        <CTABanner />,
         <Connect(UserContainer)>
           [Function]
         </Connect(UserContainer)>,
@@ -35,9 +33,7 @@ ShallowWrapper {
         "instance": null,
         "key": undefined,
         "nodeType": "function",
-        "props": Object {
-          "onClick": [Function],
-        },
+        "props": Object {},
         "ref": null,
         "rendered": null,
         "type": [Function],
@@ -74,9 +70,7 @@ ShallowWrapper {
       "nodeType": "function",
       "props": Object {
         "children": Array [
-          <CTABanner
-            onClick={[Function]}
-          />,
+          <CTABanner />,
           <Connect(UserContainer)>
             [Function]
           </Connect(UserContainer)>,
@@ -91,9 +85,7 @@ ShallowWrapper {
           "instance": null,
           "key": undefined,
           "nodeType": "function",
-          "props": Object {
-            "onClick": [Function],
-          },
+          "props": Object {},
           "ref": null,
           "rendered": null,
           "type": [Function],

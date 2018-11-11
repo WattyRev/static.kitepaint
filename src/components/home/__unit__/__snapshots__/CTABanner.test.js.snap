@@ -28,9 +28,10 @@ ShallowWrapper {
           Get started new by creating a new kite design!
         </ForwardRef>
         <Button
+          as={[Function]}
           isBlock={true}
           isPrimary={true}
-          onClick={[MockFunction]}
+          to="/create"
         >
           Get Started
         </Button>
@@ -49,9 +50,10 @@ ShallowWrapper {
             Get started new by creating a new kite design!
           </ForwardRef>,
           <Button
+            as={[Function]}
             isBlock={true}
             isPrimary={true}
-            onClick={[MockFunction]}
+            to="/create"
           >
             Get Started
           </Button>,
@@ -74,7 +76,7 @@ ShallowWrapper {
             "$$typeof": Symbol(react.forward_ref),
             "attrs": undefined,
             "componentStyle": ComponentStyle {
-              "componentId": "sc-bZQynM",
+              "componentId": "sc-dnqmqq",
               "isStatic": true,
               "rules": Array [
                 "
@@ -84,7 +86,7 @@ ShallowWrapper {
             },
             "displayName": "Styled(H3)",
             "render": [Function],
-            "styledComponentId": "sc-bZQynM",
+            "styledComponentId": "sc-dnqmqq",
             "target": [Function],
             "toString": [Function],
             "warnTooManyClasses": [Function],
@@ -97,10 +99,11 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "function",
           "props": Object {
+            "as": [Function],
             "children": "Get Started",
             "isBlock": true,
             "isPrimary": true,
-            "onClick": [MockFunction],
+            "to": "/create",
           },
           "ref": null,
           "rendered": "Get Started",
@@ -113,12 +116,12 @@ ShallowWrapper {
       "$$typeof": Symbol(react.forward_ref),
       "attrs": undefined,
       "componentStyle": ComponentStyle {
-        "componentId": "sc-gqjmRU",
+        "componentId": "sc-fjdhpX",
         "isStatic": true,
         "rules": Array [
           "
   height: 408px;
-  width: 100vw;
+  width: 100&=%;
   background: url(",
           "bg-rev.jpg",
           ") no-repeat center;
@@ -139,7 +142,7 @@ ShallowWrapper {
       },
       "displayName": "styled.div",
       "render": [Function],
-      "styledComponentId": "sc-gqjmRU",
+      "styledComponentId": "sc-fjdhpX",
       "target": "div",
       "toString": [Function],
       "warnTooManyClasses": [Function],
@@ -161,9 +164,10 @@ ShallowWrapper {
             Get started new by creating a new kite design!
           </ForwardRef>
           <Button
+            as={[Function]}
             isBlock={true}
             isPrimary={true}
-            onClick={[MockFunction]}
+            to="/create"
           >
             Get Started
           </Button>
@@ -182,9 +186,10 @@ ShallowWrapper {
               Get started new by creating a new kite design!
             </ForwardRef>,
             <Button
+              as={[Function]}
               isBlock={true}
               isPrimary={true}
-              onClick={[MockFunction]}
+              to="/create"
             >
               Get Started
             </Button>,
@@ -207,7 +212,7 @@ ShallowWrapper {
               "$$typeof": Symbol(react.forward_ref),
               "attrs": undefined,
               "componentStyle": ComponentStyle {
-                "componentId": "sc-bZQynM",
+                "componentId": "sc-dnqmqq",
                 "isStatic": true,
                 "rules": Array [
                   "
@@ -217,7 +222,7 @@ ShallowWrapper {
               },
               "displayName": "Styled(H3)",
               "render": [Function],
-              "styledComponentId": "sc-bZQynM",
+              "styledComponentId": "sc-dnqmqq",
               "target": [Function],
               "toString": [Function],
               "warnTooManyClasses": [Function],
@@ -230,10 +235,11 @@ ShallowWrapper {
             "key": undefined,
             "nodeType": "function",
             "props": Object {
+              "as": [Function],
               "children": "Get Started",
               "isBlock": true,
               "isPrimary": true,
-              "onClick": [MockFunction],
+              "to": "/create",
             },
             "ref": null,
             "rendered": "Get Started",
@@ -246,12 +252,12 @@ ShallowWrapper {
         "$$typeof": Symbol(react.forward_ref),
         "attrs": undefined,
         "componentStyle": ComponentStyle {
-          "componentId": "sc-gqjmRU",
+          "componentId": "sc-fjdhpX",
           "isStatic": true,
           "rules": Array [
             "
   height: 408px;
-  width: 100vw;
+  width: 100&=%;
   background: url(",
             "bg-rev.jpg",
             ") no-repeat center;
@@ -272,7 +278,7 @@ ShallowWrapper {
         },
         "displayName": "styled.div",
         "render": [Function],
-        "styledComponentId": "sc-gqjmRU",
+        "styledComponentId": "sc-fjdhpX",
         "target": "div",
         "toString": [Function],
         "warnTooManyClasses": [Function],

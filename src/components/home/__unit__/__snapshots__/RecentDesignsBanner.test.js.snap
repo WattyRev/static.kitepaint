@@ -41,8 +41,10 @@ ShallowWrapper {
         <div
           className="designs"
         >
-          <div
+          <Link
             className="design-wrapper"
+            replace={false}
+            to="/view/123"
           >
             <div
               className="design-preview"
@@ -58,13 +60,15 @@ ShallowWrapper {
             >
               abc
             </P>
-          </div>
+          </Link>
         </div>,
         <div
           className="see-all-wrapper"
         >
           <Button
+            as={[Function]}
             isBlock={true}
+            to="/designs"
           >
             See All Designs
           </Button>
@@ -86,7 +90,7 @@ ShallowWrapper {
           "$$typeof": Symbol(react.forward_ref),
           "attrs": undefined,
           "componentStyle": ComponentStyle {
-            "componentId": "sc-EHOje",
+            "componentId": "sc-htoDjs",
             "isStatic": true,
             "rules": Array [
               "
@@ -96,7 +100,7 @@ ShallowWrapper {
           },
           "displayName": "Styled(H2)",
           "render": [Function],
-          "styledComponentId": "sc-EHOje",
+          "styledComponentId": "sc-htoDjs",
           "target": [Function],
           "toString": [Function],
           "warnTooManyClasses": [Function],
@@ -110,8 +114,10 @@ ShallowWrapper {
         "nodeType": "host",
         "props": Object {
           "children": Array [
-            <div
+            <Link
               className="design-wrapper"
+              replace={false}
+              to="/view/123"
             >
               <div
                 className="design-preview"
@@ -127,7 +133,7 @@ ShallowWrapper {
               >
                 abc
               </P>
-            </div>,
+            </Link>,
           ],
           "className": "designs",
         },
@@ -136,7 +142,7 @@ ShallowWrapper {
           Object {
             "instance": null,
             "key": "123",
-            "nodeType": "host",
+            "nodeType": "class",
             "props": Object {
               "children": Array [
                 <div
@@ -155,6 +161,8 @@ ShallowWrapper {
                 </P>,
               ],
               "className": "design-wrapper",
+              "replace": false,
+              "to": "/view/123",
             },
             "ref": null,
             "rendered": Array [
@@ -186,7 +194,7 @@ ShallowWrapper {
                 "type": [Function],
               },
             ],
-            "type": "div",
+            "type": [Function],
           },
         ],
         "type": "div",
@@ -197,7 +205,9 @@ ShallowWrapper {
         "nodeType": "host",
         "props": Object {
           "children": <Button
+            as={[Function]}
             isBlock={true}
+            to="/designs"
           >
             See All Designs
           </Button>,
@@ -209,8 +219,10 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "function",
           "props": Object {
+            "as": [Function],
             "children": "See All Designs",
             "isBlock": true,
+            "to": "/designs",
           },
           "ref": null,
           "rendered": "See All Designs",
@@ -223,7 +235,7 @@ ShallowWrapper {
       "$$typeof": Symbol(react.forward_ref),
       "attrs": undefined,
       "componentStyle": ComponentStyle {
-        "componentId": "sc-gqjmRU",
+        "componentId": "sc-fjdhpX",
         "isStatic": true,
         "rules": Array [
           "
@@ -274,7 +286,7 @@ ShallowWrapper {
       },
       "displayName": "styled.div",
       "render": [Function],
-      "styledComponentId": "sc-gqjmRU",
+      "styledComponentId": "sc-fjdhpX",
       "target": "div",
       "toString": [Function],
       "warnTooManyClasses": [Function],
@@ -294,8 +306,10 @@ ShallowWrapper {
           <div
             className="designs"
           >
-            <div
+            <Link
               className="design-wrapper"
+              replace={false}
+              to="/view/123"
             >
               <div
                 className="design-preview"
@@ -311,13 +325,15 @@ ShallowWrapper {
               >
                 abc
               </P>
-            </div>
+            </Link>
           </div>,
           <div
             className="see-all-wrapper"
           >
             <Button
+              as={[Function]}
               isBlock={true}
+              to="/designs"
             >
               See All Designs
             </Button>
@@ -339,7 +355,7 @@ ShallowWrapper {
             "$$typeof": Symbol(react.forward_ref),
             "attrs": undefined,
             "componentStyle": ComponentStyle {
-              "componentId": "sc-EHOje",
+              "componentId": "sc-htoDjs",
               "isStatic": true,
               "rules": Array [
                 "
@@ -349,7 +365,7 @@ ShallowWrapper {
             },
             "displayName": "Styled(H2)",
             "render": [Function],
-            "styledComponentId": "sc-EHOje",
+            "styledComponentId": "sc-htoDjs",
             "target": [Function],
             "toString": [Function],
             "warnTooManyClasses": [Function],
@@ -363,8 +379,10 @@ ShallowWrapper {
           "nodeType": "host",
           "props": Object {
             "children": Array [
-              <div
+              <Link
                 className="design-wrapper"
+                replace={false}
+                to="/view/123"
               >
                 <div
                   className="design-preview"
@@ -380,7 +398,7 @@ ShallowWrapper {
                 >
                   abc
                 </P>
-              </div>,
+              </Link>,
             ],
             "className": "designs",
           },
@@ -389,7 +407,7 @@ ShallowWrapper {
             Object {
               "instance": null,
               "key": "123",
-              "nodeType": "host",
+              "nodeType": "class",
               "props": Object {
                 "children": Array [
                   <div
@@ -408,6 +426,8 @@ ShallowWrapper {
                   </P>,
                 ],
                 "className": "design-wrapper",
+                "replace": false,
+                "to": "/view/123",
               },
               "ref": null,
               "rendered": Array [
@@ -439,7 +459,7 @@ ShallowWrapper {
                   "type": [Function],
                 },
               ],
-              "type": "div",
+              "type": [Function],
             },
           ],
           "type": "div",
@@ -450,7 +470,9 @@ ShallowWrapper {
           "nodeType": "host",
           "props": Object {
             "children": <Button
+              as={[Function]}
               isBlock={true}
+              to="/designs"
             >
               See All Designs
             </Button>,
@@ -462,8 +484,10 @@ ShallowWrapper {
             "key": undefined,
             "nodeType": "function",
             "props": Object {
+              "as": [Function],
               "children": "See All Designs",
               "isBlock": true,
+              "to": "/designs",
             },
             "ref": null,
             "rendered": "See All Designs",
@@ -476,7 +500,7 @@ ShallowWrapper {
         "$$typeof": Symbol(react.forward_ref),
         "attrs": undefined,
         "componentStyle": ComponentStyle {
-          "componentId": "sc-gqjmRU",
+          "componentId": "sc-fjdhpX",
           "isStatic": true,
           "rules": Array [
             "
@@ -527,7 +551,7 @@ ShallowWrapper {
         },
         "displayName": "styled.div",
         "render": [Function],
-        "styledComponentId": "sc-gqjmRU",
+        "styledComponentId": "sc-fjdhpX",
         "target": "div",
         "toString": [Function],
         "warnTooManyClasses": [Function],

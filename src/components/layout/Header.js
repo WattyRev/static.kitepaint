@@ -88,6 +88,7 @@ const Header = () => (
         {userData =>
           userData.props.isLoggedIn && (
             <Dropdown
+              className="testing_account-dropdown"
               dropdownContent={accountDropdown => (
                 <React.Fragment>
                   <BlockListItem>
