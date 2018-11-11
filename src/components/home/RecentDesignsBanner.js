@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import designShape from "../../models/design";
 import { H2, Button, P } from "../../theme";
 
@@ -58,7 +59,11 @@ const RecentDesignsBanner = ({ designs }) => (
     <div className="designs">
       {designs.map(design => {
         return (
-          <div key={design.id} className="design-wrapper">
+          <Link
+            key={design.id}
+            className="design-wrapper"
+            to={`/view/${design.id}`}
+          >
             <div
               className="design-preview"
               dangerouslySetInnerHTML={{
@@ -69,12 +74,14 @@ const RecentDesignsBanner = ({ designs }) => (
             <P isLight className="design-name">
               {design.name}
             </P>
-          </div>
+          </Link>
         );
       })}
     </div>
     <div className="see-all-wrapper">
-      <Button isBlock>See All Designs</Button>
+      <Button isBlock as={Link} to="/designs">
+        See All Designs
+      </Button>
     </div>
   </StyleWrapper>
 );

@@ -21,6 +21,9 @@ const StyledButton = styled.button`
   transition: 0.6s background;
   box-sizing: border-box;
   outline: none;
+  text-decoration: none;
+  text-align: center;
+  color: ${props => props.theme.colors.black};
 
   &:hover {
     background-position: 0% 50%;

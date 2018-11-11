@@ -1,6 +1,8 @@
 import * as colors from "./colors";
 import A from "./A";
+import BlockListItem from "./BlockListItem";
 import Button from "./Button";
+import Dropdown from "./Dropdown";
 import Error from "./Error";
 import H1 from "./H1";
 import H2 from "./H2";
@@ -14,4 +16,18 @@ import Tooltip from "./Tooltip";
 const Theme = { colors };
 export default Theme;
 
-export { A, Error, Button, H1, H2, H3, Icon, Input, Label, P, Tooltip };
+export {
+  A,
+  BlockListItem,
+  Button,
+  Dropdown,
+  Error,
+  H1,
+  H2,
+  H3,
+  Icon,
+  Input,
+  Label,
+  P,
+  Tooltip
+};

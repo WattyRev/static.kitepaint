@@ -1,9 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { ThemeProvider } from "styled-components";
+import { BrowserRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import Theme from "../theme";
 import { CHECK_LOGIN } from "../redux/actions";
 import { getCheckingLogin } from "../redux/modules/user";
 import { setupFontAwesome } from "../theme/Icon";
+import App from "../components/App";
 
 setupFontAwesome();
 
@@ -23,7 +27,13 @@ export class AppContainer extends React.Component {
     if (this.props.isCheckingLogin) {
       return "";
     }
-    return this.props.children;
+    return (
+      <BrowserRouter>
+        <ThemeProvider theme={Theme}>
+          <App />
+        </ThemeProvider>
+      </BrowserRouter>
+    );
   }
 }
 

@@ -2,6 +2,7 @@ import React from "react";
 import LogInForm from "../components/LogInForm";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import makeCancelable from "../utils/makeCancelable";
 import { LOG_IN } from "../redux/actions";
 
 export class LogInFormContainer extends React.Component {
@@ -76,20 +77,33 @@ export class LogInFormContainer extends React.Component {
     this.setState({
       pendingRequest: true
     });
-    return this.props
-      .onSubmit(this.state.username, this.state.password)
+    const cancelablePromise = makeCancelable(
+      this.props.onSubmit(this.state.username, this.state.password)
+    );
+    const promise = cancelablePromise.promise
       .then(() => {
         this.setState({
           pendingRequest: false
         });
       })
       .catch(error => {
+        if (error.isCanceled) {
+          return;
+        }
         this.setState({
           pendingRequest: false,
           errorMessage: error
         });
       });
+    this.pendingPromises.push(cancelablePromise);
+    return promise;
   };
+
+  pendingPromises = [];
+
+  componentWillUnmount() {
+    this.pendingPromises.forEach(promise => promise.cancel());
+  }
 
   render() {
     return (
