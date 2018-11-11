@@ -1,5 +1,6 @@
 export const navy = "#001F3F";
 export const blue = "#0074D9";
+export const blueDarker = "#005daa";
 export const aqua = "#7FDBFF";
 export const teal = "#39CCCC";
 export const olive = "#3D9970";
