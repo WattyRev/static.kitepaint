@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { A, P, Error, Label, Input, Button } from "../theme";
+import { A, P, Error, Label, Input, Button, Tooltip } from "../theme";
 
 const ResetPasswordForm = ({
   email,
@@ -38,7 +38,14 @@ const ResetPasswordForm = ({
           </Error>
         )}
         <P>Enter your username and email address to reset your password.</P>
-        <Label htmlFor={`${id}-username`}>Username</Label>
+        <Label htmlFor={`${id}-username`}>
+          Username{" "}
+          <Tooltip>
+            Usernames may be between 3-30 characters.
+            <br />
+            They may include these characters: a-z, A-Z, 0-9.
+          </Tooltip>
+        </Label>
         <Input
           id={`${id}-username`}
           value={username}

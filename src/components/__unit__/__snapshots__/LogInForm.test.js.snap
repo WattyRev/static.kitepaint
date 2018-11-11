@@ -30,6 +30,14 @@ ShallowWrapper {
           htmlFor="abc-username"
         >
           Username
+           
+          <Tooltip
+            fadeSpeedMs={250}
+          >
+            Usernames may be between 3-30 characters.
+            <br />
+            They may include these characters: a-z, A-Z, 0-9.
+          </Tooltip>
         </ForwardRef>,
         <ForwardRef
           id="abc-username"
@@ -39,6 +47,14 @@ ShallowWrapper {
           htmlFor="abc-password"
         >
           Password
+           
+          <Tooltip
+            fadeSpeedMs={250}
+          >
+            Passwords may be between 6-15 characters.
+            <br />
+            They may include these characters: a-z, A-Z, 0-9, #, @, or *.
+          </Tooltip>
         </ForwardRef>,
         <ForwardRef
           id="abc-password"
@@ -80,11 +96,52 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "function",
         "props": Object {
-          "children": "Username",
+          "children": Array [
+            "Username",
+            " ",
+            <Tooltip
+              fadeSpeedMs={250}
+            >
+              Usernames may be between 3-30 characters.
+              <br />
+              They may include these characters: a-z, A-Z, 0-9.
+            </Tooltip>,
+          ],
           "htmlFor": "abc-username",
         },
         "ref": null,
-        "rendered": "Username",
+        "rendered": Array [
+          "Username",
+          " ",
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "children": Array [
+                "Usernames may be between 3-30 characters.",
+                <br />,
+                "They may include these characters: a-z, A-Z, 0-9.",
+              ],
+              "fadeSpeedMs": 250,
+            },
+            "ref": null,
+            "rendered": Array [
+              "Usernames may be between 3-30 characters.",
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {},
+                "ref": null,
+                "rendered": null,
+                "type": "br",
+              },
+              "They may include these characters: a-z, A-Z, 0-9.",
+            ],
+            "type": [Function],
+          },
+        ],
         "type": Object {
           "$$typeof": Symbol(react.forward_ref),
           "attrs": undefined,
@@ -161,11 +218,52 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "function",
         "props": Object {
-          "children": "Password",
+          "children": Array [
+            "Password",
+            " ",
+            <Tooltip
+              fadeSpeedMs={250}
+            >
+              Passwords may be between 6-15 characters.
+              <br />
+              They may include these characters: a-z, A-Z, 0-9, #, @, or *.
+            </Tooltip>,
+          ],
           "htmlFor": "abc-password",
         },
         "ref": null,
-        "rendered": "Password",
+        "rendered": Array [
+          "Password",
+          " ",
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "children": Array [
+                "Passwords may be between 6-15 characters.",
+                <br />,
+                "They may include these characters: a-z, A-Z, 0-9, #, @, or *.",
+              ],
+              "fadeSpeedMs": 250,
+            },
+            "ref": null,
+            "rendered": Array [
+              "Passwords may be between 6-15 characters.",
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {},
+                "ref": null,
+                "rendered": null,
+                "type": "br",
+              },
+              "They may include these characters: a-z, A-Z, 0-9, #, @, or *.",
+            ],
+            "type": [Function],
+          },
+        ],
         "type": Object {
           "$$typeof": Symbol(react.forward_ref),
           "attrs": undefined,
@@ -380,6 +478,14 @@ ShallowWrapper {
             htmlFor="abc-username"
           >
             Username
+             
+            <Tooltip
+              fadeSpeedMs={250}
+            >
+              Usernames may be between 3-30 characters.
+              <br />
+              They may include these characters: a-z, A-Z, 0-9.
+            </Tooltip>
           </ForwardRef>,
           <ForwardRef
             id="abc-username"
@@ -389,6 +495,14 @@ ShallowWrapper {
             htmlFor="abc-password"
           >
             Password
+             
+            <Tooltip
+              fadeSpeedMs={250}
+            >
+              Passwords may be between 6-15 characters.
+              <br />
+              They may include these characters: a-z, A-Z, 0-9, #, @, or *.
+            </Tooltip>
           </ForwardRef>,
           <ForwardRef
             id="abc-password"
@@ -430,11 +544,52 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "function",
           "props": Object {
-            "children": "Username",
+            "children": Array [
+              "Username",
+              " ",
+              <Tooltip
+                fadeSpeedMs={250}
+              >
+                Usernames may be between 3-30 characters.
+                <br />
+                They may include these characters: a-z, A-Z, 0-9.
+              </Tooltip>,
+            ],
             "htmlFor": "abc-username",
           },
           "ref": null,
-          "rendered": "Username",
+          "rendered": Array [
+            "Username",
+            " ",
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "class",
+              "props": Object {
+                "children": Array [
+                  "Usernames may be between 3-30 characters.",
+                  <br />,
+                  "They may include these characters: a-z, A-Z, 0-9.",
+                ],
+                "fadeSpeedMs": 250,
+              },
+              "ref": null,
+              "rendered": Array [
+                "Usernames may be between 3-30 characters.",
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {},
+                  "ref": null,
+                  "rendered": null,
+                  "type": "br",
+                },
+                "They may include these characters: a-z, A-Z, 0-9.",
+              ],
+              "type": [Function],
+            },
+          ],
           "type": Object {
             "$$typeof": Symbol(react.forward_ref),
             "attrs": undefined,
@@ -511,11 +666,52 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "function",
           "props": Object {
-            "children": "Password",
+            "children": Array [
+              "Password",
+              " ",
+              <Tooltip
+                fadeSpeedMs={250}
+              >
+                Passwords may be between 6-15 characters.
+                <br />
+                They may include these characters: a-z, A-Z, 0-9, #, @, or *.
+              </Tooltip>,
+            ],
             "htmlFor": "abc-password",
           },
           "ref": null,
-          "rendered": "Password",
+          "rendered": Array [
+            "Password",
+            " ",
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "class",
+              "props": Object {
+                "children": Array [
+                  "Passwords may be between 6-15 characters.",
+                  <br />,
+                  "They may include these characters: a-z, A-Z, 0-9, #, @, or *.",
+                ],
+                "fadeSpeedMs": 250,
+              },
+              "ref": null,
+              "rendered": Array [
+                "Passwords may be between 6-15 characters.",
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {},
+                  "ref": null,
+                  "rendered": null,
+                  "type": "br",
+                },
+                "They may include these characters: a-z, A-Z, 0-9, #, @, or *.",
+              ],
+              "type": [Function],
+            },
+          ],
           "type": Object {
             "$$typeof": Symbol(react.forward_ref),
             "attrs": undefined,

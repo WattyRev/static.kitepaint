@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { A, P, Label, Input, Button, Error } from "../theme";
+import { A, P, Label, Input, Button, Error, Tooltip } from "../theme";
 
 /**
  * A from for logging in to KitePaint.
@@ -29,14 +29,28 @@ const LogInForm = ({
         <P>{errorMessage}</P>
       </Error>
     )}
-    <Label htmlFor={`${id}-username`}>Username</Label>
+    <Label htmlFor={`${id}-username`}>
+      Username{" "}
+      <Tooltip>
+        Usernames may be between 3-30 characters.
+        <br />
+        They may include these characters: a-z, A-Z, 0-9.
+      </Tooltip>
+    </Label>
     <Input
       id={`${id}-username`}
       value={username}
       disabled={isDisabled}
       onChange={e => onUsernameChange(e.target.value)}
     />
-    <Label htmlFor={`${id}-password`}>Password</Label>
+    <Label htmlFor={`${id}-password`}>
+      Password{" "}
+      <Tooltip>
+        Passwords may be between 6-15 characters.
+        <br />
+        They may include these characters: a-z, A-Z, 0-9, #, @, or *.
+      </Tooltip>
+    </Label>
     <Input
       id={`${id}-password`}
       type="password"

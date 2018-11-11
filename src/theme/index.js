@@ -8,8 +8,9 @@ import H3 from "./H3";
 import Input from "./Input";
 import Label from "./Label";
 import P from "./P";
+import Tooltip from "./Tooltip";
 
 const Theme = { colors };
 export default Theme;
 
-export { A, Error, Button, H1, H2, H3, Input, Label, P };
+export { A, Error, Button, H1, H2, H3, Input, Label, P, Tooltip };

@@ -43,7 +43,7 @@ ShallowWrapper {
       "$$typeof": Symbol(react.forward_ref),
       "attrs": undefined,
       "componentStyle": ComponentStyle {
-        "componentId": "sc-dnqmqq",
+        "componentId": "sc-gqjmRU",
         "isStatic": false,
         "rules": Array [
           "
@@ -59,7 +59,7 @@ ShallowWrapper {
       },
       "displayName": "styled.div",
       "render": [Function],
-      "styledComponentId": "sc-dnqmqq",
+      "styledComponentId": "sc-gqjmRU",
       "target": "div",
       "toString": [Function],
       "warnTooManyClasses": [Function],
@@ -94,7 +94,7 @@ ShallowWrapper {
         "$$typeof": Symbol(react.forward_ref),
         "attrs": undefined,
         "componentStyle": ComponentStyle {
-          "componentId": "sc-dnqmqq",
+          "componentId": "sc-gqjmRU",
           "isStatic": false,
           "rules": Array [
             "
@@ -110,7 +110,7 @@ ShallowWrapper {
         },
         "displayName": "styled.div",
         "render": [Function],
-        "styledComponentId": "sc-dnqmqq",
+        "styledComponentId": "sc-gqjmRU",
         "target": "div",
         "toString": [Function],
         "warnTooManyClasses": [Function],
