@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 /**
@@ -6,8 +5,7 @@ import styled from "styled-components";
  *
  * @param {Node} children The items to be rendered inside the <a> tag
  */
-const A = ({ children, ...props }) => <a {...props}>{children}</a>;
-const StyledA = styled(A)`
+const A = styled.a`
   color: ${({ theme }) => theme.colors.blue};
   text-decoration: none;
   margin: 0;
@@ -17,4 +15,4 @@ const StyledA = styled(A)`
     text-decoration: underline;
   }
 `;
-export default StyledA;
+export default A;

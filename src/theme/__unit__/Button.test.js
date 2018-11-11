@@ -1,13 +1,13 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
 import Theme from "../../theme";
 import Button from "../Button";
 
 describe("Button", () => {
   it("renders", () => {
     expect.assertions(1);
-    const wrapper = shallow(<Button>button</Button>);
-    expect(wrapper).toMatchSnapshot();
+    const wrapper = mount(<Button theme={Theme}>button</Button>);
+    expect(wrapper.find("button")).toHaveLength(1);
   });
   describe("isPrimary", () => {
     it("uses the is-primary class when isPrimary is true", () => {
