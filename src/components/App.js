@@ -6,6 +6,7 @@ import AppContainer from "../containers/AppContainer";
 import Theme from "../theme";
 import Store from "../redux";
 import Header from "./layout/Header";
+import Footer from "./layout/Footer";
 import Home from "./home";
 import ErrorPage from "./ErrorPage";
 
@@ -22,6 +23,7 @@ const App = () => (
             <Route exact path="/" component={Home} />
             <Route component={ErrorPage} />
           </Switch>
+          <Footer />
         </AppContainer>
       </ThemeProvider>
     </ReduxProvider>

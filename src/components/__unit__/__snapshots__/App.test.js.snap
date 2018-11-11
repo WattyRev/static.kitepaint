@@ -66,6 +66,7 @@ ShallowWrapper {
                 component={[Function]}
               />
             </Switch>
+            <Footer />
           </Connect(AppContainer)>
         </ThemeProvider>
       </Provider>,
@@ -114,6 +115,7 @@ ShallowWrapper {
                 component={[Function]}
               />
             </Switch>
+            <Footer />
           </Connect(AppContainer)>
         </ThemeProvider>,
         "store": Object {
@@ -142,6 +144,7 @@ ShallowWrapper {
                 component={[Function]}
               />
             </Switch>
+            <Footer />
           </Connect(AppContainer)>,
           "theme": Object {
             "colors": Object {
@@ -184,6 +187,7 @@ ShallowWrapper {
                   component={[Function]}
                 />
               </Switch>,
+              <Footer />,
             ],
           },
           "ref": null,
@@ -240,6 +244,15 @@ ShallowWrapper {
                   "type": [Function],
                 },
               ],
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {},
+              "ref": null,
+              "rendered": null,
               "type": [Function],
             },
           ],
@@ -306,6 +319,7 @@ ShallowWrapper {
                   component={[Function]}
                 />
               </Switch>
+              <Footer />
             </Connect(AppContainer)>
           </ThemeProvider>
         </Provider>,
@@ -354,6 +368,7 @@ ShallowWrapper {
                   component={[Function]}
                 />
               </Switch>
+              <Footer />
             </Connect(AppContainer)>
           </ThemeProvider>,
           "store": Object {
@@ -382,6 +397,7 @@ ShallowWrapper {
                   component={[Function]}
                 />
               </Switch>
+              <Footer />
             </Connect(AppContainer)>,
             "theme": Object {
               "colors": Object {
@@ -424,6 +440,7 @@ ShallowWrapper {
                     component={[Function]}
                   />
                 </Switch>,
+                <Footer />,
               ],
             },
             "ref": null,
@@ -480,6 +497,15 @@ ShallowWrapper {
                     "type": [Function],
                   },
                 ],
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {},
+                "ref": null,
+                "rendered": null,
                 "type": [Function],
               },
             ],
