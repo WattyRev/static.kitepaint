@@ -17,118 +17,56 @@ ShallowWrapper {
     "key": undefined,
     "nodeType": "class",
     "props": Object {
-      "children": <ThemeProvider
-        theme={
+      "children": <Provider
+        store={
           Object {
-            "colors": Object {
-              "aqua": "#7FDBFF",
-              "black": "#111111",
-              "blue": "#0074D9",
-              "blueDarker": "#005daa",
-              "fuchsia": "#F012BE",
-              "gray": "#AAAAAA",
-              "green": "#2ECC40",
-              "lime": "#01FF70",
-              "maroon": "#85144B",
-              "navy": "#001F3F",
-              "olive": "#3D9970",
-              "orange": "#FF851B",
-              "purple": "#B10DC9",
-              "red": "#FF4136",
-              "silver": "#DDDDDD",
-              "teal": "#39CCCC",
-              "white": "#FFFFFF",
-              "yellow": "#FFDC00",
-            },
+            "dispatch": [Function],
+            "getState": [Function],
+            "replaceReducer": [Function],
+            "subscribe": [Function],
+            Symbol(observable): [Function],
           }
         }
       >
-        <Connect(AppContainer)>
-          <Header />
-          <Home />
-        </Connect(AppContainer)>
-      </ThemeProvider>,
-      "store": Object {
-        "dispatch": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-        Symbol(observable): [Function],
-      },
+        <ThemeProvider
+          theme={
+            Object {
+              "colors": Object {
+                "aqua": "#7FDBFF",
+                "black": "#111111",
+                "blue": "#0074D9",
+                "blueDarker": "#005daa",
+                "fuchsia": "#F012BE",
+                "gray": "#AAAAAA",
+                "green": "#2ECC40",
+                "lime": "#01FF70",
+                "maroon": "#85144B",
+                "navy": "#001F3F",
+                "olive": "#3D9970",
+                "orange": "#FF851B",
+                "purple": "#B10DC9",
+                "red": "#FF4136",
+                "silver": "#DDDDDD",
+                "teal": "#39CCCC",
+                "white": "#FFFFFF",
+                "yellow": "#FFDC00",
+              },
+            }
+          }
+        >
+          <Connect(AppContainer)>
+            <Header />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/"
+            />
+          </Connect(AppContainer)>
+        </ThemeProvider>
+      </Provider>,
     },
     "ref": null,
     "rendered": Object {
-      "instance": null,
-      "key": undefined,
-      "nodeType": "class",
-      "props": Object {
-        "children": <Connect(AppContainer)>
-          <Header />
-          <Home />
-        </Connect(AppContainer)>,
-        "theme": Object {
-          "colors": Object {
-            "aqua": "#7FDBFF",
-            "black": "#111111",
-            "blue": "#0074D9",
-            "blueDarker": "#005daa",
-            "fuchsia": "#F012BE",
-            "gray": "#AAAAAA",
-            "green": "#2ECC40",
-            "lime": "#01FF70",
-            "maroon": "#85144B",
-            "navy": "#001F3F",
-            "olive": "#3D9970",
-            "orange": "#FF851B",
-            "purple": "#B10DC9",
-            "red": "#FF4136",
-            "silver": "#DDDDDD",
-            "teal": "#39CCCC",
-            "white": "#FFFFFF",
-            "yellow": "#FFDC00",
-          },
-        },
-      },
-      "ref": null,
-      "rendered": Object {
-        "instance": null,
-        "key": undefined,
-        "nodeType": "class",
-        "props": Object {
-          "children": Array [
-            <Header />,
-            <Home />,
-          ],
-        },
-        "ref": null,
-        "rendered": Array [
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {},
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {},
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-        ],
-        "type": [Function],
-      },
-      "type": [Function],
-    },
-    "type": [Function],
-  },
-  Symbol(enzyme.__nodes__): Array [
-    Object {
       "instance": null,
       "key": undefined,
       "nodeType": "class",
@@ -161,7 +99,11 @@ ShallowWrapper {
         >
           <Connect(AppContainer)>
             <Header />
-            <Home />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/"
+            />
           </Connect(AppContainer)>
         </ThemeProvider>,
         "store": Object {
@@ -180,7 +122,11 @@ ShallowWrapper {
         "props": Object {
           "children": <Connect(AppContainer)>
             <Header />
-            <Home />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/"
+            />
           </Connect(AppContainer)>,
           "theme": Object {
             "colors": Object {
@@ -213,7 +159,11 @@ ShallowWrapper {
           "props": Object {
             "children": Array [
               <Header />,
-              <Home />,
+              <Route
+                component={[Function]}
+                exact={true}
+                path="/"
+              />,
             ],
           },
           "ref": null,
@@ -230,13 +180,207 @@ ShallowWrapper {
             Object {
               "instance": null,
               "key": undefined,
-              "nodeType": "function",
-              "props": Object {},
+              "nodeType": "class",
+              "props": Object {
+                "component": [Function],
+                "exact": true,
+                "path": "/",
+              },
               "ref": null,
               "rendered": null,
               "type": [Function],
             },
           ],
+          "type": [Function],
+        },
+        "type": [Function],
+      },
+      "type": [Function],
+    },
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "class",
+      "props": Object {
+        "children": <Provider
+          store={
+            Object {
+              "dispatch": [Function],
+              "getState": [Function],
+              "replaceReducer": [Function],
+              "subscribe": [Function],
+              Symbol(observable): [Function],
+            }
+          }
+        >
+          <ThemeProvider
+            theme={
+              Object {
+                "colors": Object {
+                  "aqua": "#7FDBFF",
+                  "black": "#111111",
+                  "blue": "#0074D9",
+                  "blueDarker": "#005daa",
+                  "fuchsia": "#F012BE",
+                  "gray": "#AAAAAA",
+                  "green": "#2ECC40",
+                  "lime": "#01FF70",
+                  "maroon": "#85144B",
+                  "navy": "#001F3F",
+                  "olive": "#3D9970",
+                  "orange": "#FF851B",
+                  "purple": "#B10DC9",
+                  "red": "#FF4136",
+                  "silver": "#DDDDDD",
+                  "teal": "#39CCCC",
+                  "white": "#FFFFFF",
+                  "yellow": "#FFDC00",
+                },
+              }
+            }
+          >
+            <Connect(AppContainer)>
+              <Header />
+              <Route
+                component={[Function]}
+                exact={true}
+                path="/"
+              />
+            </Connect(AppContainer)>
+          </ThemeProvider>
+        </Provider>,
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "children": <ThemeProvider
+            theme={
+              Object {
+                "colors": Object {
+                  "aqua": "#7FDBFF",
+                  "black": "#111111",
+                  "blue": "#0074D9",
+                  "blueDarker": "#005daa",
+                  "fuchsia": "#F012BE",
+                  "gray": "#AAAAAA",
+                  "green": "#2ECC40",
+                  "lime": "#01FF70",
+                  "maroon": "#85144B",
+                  "navy": "#001F3F",
+                  "olive": "#3D9970",
+                  "orange": "#FF851B",
+                  "purple": "#B10DC9",
+                  "red": "#FF4136",
+                  "silver": "#DDDDDD",
+                  "teal": "#39CCCC",
+                  "white": "#FFFFFF",
+                  "yellow": "#FFDC00",
+                },
+              }
+            }
+          >
+            <Connect(AppContainer)>
+              <Header />
+              <Route
+                component={[Function]}
+                exact={true}
+                path="/"
+              />
+            </Connect(AppContainer)>
+          </ThemeProvider>,
+          "store": Object {
+            "dispatch": [Function],
+            "getState": [Function],
+            "replaceReducer": [Function],
+            "subscribe": [Function],
+            Symbol(observable): [Function],
+          },
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "children": <Connect(AppContainer)>
+              <Header />
+              <Route
+                component={[Function]}
+                exact={true}
+                path="/"
+              />
+            </Connect(AppContainer)>,
+            "theme": Object {
+              "colors": Object {
+                "aqua": "#7FDBFF",
+                "black": "#111111",
+                "blue": "#0074D9",
+                "blueDarker": "#005daa",
+                "fuchsia": "#F012BE",
+                "gray": "#AAAAAA",
+                "green": "#2ECC40",
+                "lime": "#01FF70",
+                "maroon": "#85144B",
+                "navy": "#001F3F",
+                "olive": "#3D9970",
+                "orange": "#FF851B",
+                "purple": "#B10DC9",
+                "red": "#FF4136",
+                "silver": "#DDDDDD",
+                "teal": "#39CCCC",
+                "white": "#FFFFFF",
+                "yellow": "#FFDC00",
+              },
+            },
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "children": Array [
+                <Header />,
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/"
+                />,
+              ],
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {},
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "class",
+                "props": Object {
+                  "component": [Function],
+                  "exact": true,
+                  "path": "/",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+            ],
+            "type": [Function],
+          },
           "type": [Function],
         },
         "type": [Function],
