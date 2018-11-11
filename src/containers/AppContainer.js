@@ -16,7 +16,7 @@ export class AppContainer extends React.Component {
 
   constructor(props, ...rest) {
     super(props, ...rest);
-    props.onCheckLogin().catch(() => {});
+    props.onCheckLogin();
   }
 
   render() {
