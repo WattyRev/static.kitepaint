@@ -1,8 +1,13 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import Theme from "../../theme";
-import setupFontAwesome from "../FontAwesome";
-import Tooltip, { StyleWrapper, Icon, fadeIn, fadeOut } from "../Tooltip";
+import { setupFontAwesome } from "../Icon";
+import Tooltip, {
+  StyleWrapper,
+  TooltipIcon,
+  fadeIn,
+  fadeOut
+} from "../Tooltip";
 
 describe("Tooltip", () => {
   beforeEach(() => {
@@ -83,10 +88,10 @@ describe("Tooltip", () => {
       });
     });
   });
-  describe("Icon", () => {
+  describe("TooltipIcon", () => {
     it("renders", () => {
       expect.assertions(1);
-      const wrapper = mount(<Icon theme={Theme} icon="info" />);
+      const wrapper = mount(<TooltipIcon theme={Theme} icon="info" />);
       expect(wrapper.find("svg")).toHaveLength(1);
     });
   });
@@ -100,7 +105,7 @@ describe("Tooltip", () => {
   it("displays the tooltip when hovering over the icon", () => {
     expect.assertions(1);
     const wrapper = shallow(<Tooltip>hello</Tooltip>);
-    wrapper.find(Icon).simulate("mouseEnter", {
+    wrapper.find(TooltipIcon).simulate("mouseEnter", {
       target: {
         getBoundingClientRect: jest.fn(() => ({
           x: 10,
@@ -113,7 +118,7 @@ describe("Tooltip", () => {
   it("removes the tooltip when the mouse leaves the icon", () => {
     expect.assertions(3);
     const wrapper = shallow(<Tooltip fadeSpeedMs={1}>hello</Tooltip>);
-    const icon = wrapper.find(Icon);
+    const icon = wrapper.find(TooltipIcon);
     icon.simulate("mouseEnter", {
       target: {
         getBoundingClientRect: jest.fn(() => ({

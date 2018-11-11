@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserContainer from "../../containers/UserContainer";
-import { A, P, H2 } from "../../theme";
+import { A, P, H2, Icon } from "../../theme";
 
 export const StyleWrapper = styled.div`
   background: ${({ theme }) => theme.colors.silver};
@@ -42,7 +41,7 @@ const Header = () => (
           userData.props.isLoggedIn && (
             <P>
               <A onClick={userData.actions.logOut} className="testing_sign-out">
-                Sign Out <FontAwesomeIcon icon="sign-out-alt" />
+                Sign Out <Icon icon="sign-out-alt" />
               </A>
             </P>
           )

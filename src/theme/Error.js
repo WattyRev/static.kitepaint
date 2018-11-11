@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Icon from "./Icon";
 
 const StyledError = styled.div`
   color: ${({ theme }) => theme.colors.red};
@@ -20,7 +20,7 @@ const StyledError = styled.div`
  */
 const Error = ({ children, ...props }) => (
   <StyledError {...props}>
-    <FontAwesomeIcon className="error-icon" icon="exclamation-circle" />
+    <Icon className="error-icon" icon="exclamation-circle" />
     <div>{children}</div>
   </StyledError>
 );

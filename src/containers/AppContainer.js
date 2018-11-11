@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { CHECK_LOGIN } from "../redux/actions";
 import { getCheckingLogin } from "../redux/modules/user";
-import setupFontAwesome from "../theme/FontAwesome.js";
+import { setupFontAwesome } from "../theme/Icon";
 
 setupFontAwesome();
 

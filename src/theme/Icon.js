@@ -4,7 +4,10 @@ import {
   faExclamationCircle,
   faInfo
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function setupFontAwesome() {
+export function setupFontAwesome() {
   library.add(faSignOutAlt, faExclamationCircle, faInfo);
 }
+
+export default FontAwesomeIcon;

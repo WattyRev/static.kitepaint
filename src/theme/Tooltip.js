@@ -1,9 +1,9 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import BodyPortal from "./utilities/BodyPortal";
 import Text from "./Text";
+import Icon from "./Icon";
 
 export const fadeIn = keyframes`
   from {
@@ -61,7 +61,7 @@ export const StyleWrapper = styled.div`
   }
 `;
 
-export const Icon = styled(FontAwesomeIcon)`
+export const TooltipIcon = styled(Icon)`
   border: 1px solid ${props => props.theme.colors.gray};
   color: gray;
   border-radius: 50%;
@@ -164,7 +164,7 @@ class Tooltip extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Icon
+        <TooltipIcon
           icon="info"
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
