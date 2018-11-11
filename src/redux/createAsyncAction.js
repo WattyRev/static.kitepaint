@@ -17,13 +17,12 @@ export default function createAsyncAction(actionType, request) {
       dispatch(asyncAction.REQUESTED());
 
       const promise = request(...args);
-      promise
-        .then(payload => {
-          dispatch(asyncAction.RECEIVED(payload));
-        })
-        .catch(payload => {
-          dispatch(asyncAction.FAILED(payload));
-        });
+      promise.then(payload => {
+        dispatch(asyncAction.RECEIVED(payload));
+      });
+      promise.catch(payload => {
+        dispatch(asyncAction.FAILED(payload));
+      });
       return promise;
     };
   }
