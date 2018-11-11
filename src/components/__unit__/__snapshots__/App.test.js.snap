@@ -56,11 +56,16 @@ ShallowWrapper {
         >
           <Connect(AppContainer)>
             <Header />
-            <Route
-              component={[Function]}
-              exact={true}
-              path="/"
-            />
+            <Switch>
+              <Route
+                component={[Function]}
+                exact={true}
+                path="/"
+              />
+              <Route
+                component={[Function]}
+              />
+            </Switch>
           </Connect(AppContainer)>
         </ThemeProvider>
       </Provider>,
@@ -99,11 +104,16 @@ ShallowWrapper {
         >
           <Connect(AppContainer)>
             <Header />
-            <Route
-              component={[Function]}
-              exact={true}
-              path="/"
-            />
+            <Switch>
+              <Route
+                component={[Function]}
+                exact={true}
+                path="/"
+              />
+              <Route
+                component={[Function]}
+              />
+            </Switch>
           </Connect(AppContainer)>
         </ThemeProvider>,
         "store": Object {
@@ -122,11 +132,16 @@ ShallowWrapper {
         "props": Object {
           "children": <Connect(AppContainer)>
             <Header />
-            <Route
-              component={[Function]}
-              exact={true}
-              path="/"
-            />
+            <Switch>
+              <Route
+                component={[Function]}
+                exact={true}
+                path="/"
+              />
+              <Route
+                component={[Function]}
+              />
+            </Switch>
           </Connect(AppContainer)>,
           "theme": Object {
             "colors": Object {
@@ -159,11 +174,16 @@ ShallowWrapper {
           "props": Object {
             "children": Array [
               <Header />,
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/"
-              />,
+              <Switch>
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/"
+                />
+                <Route
+                  component={[Function]}
+                />
+              </Switch>,
             ],
           },
           "ref": null,
@@ -182,12 +202,44 @@ ShallowWrapper {
               "key": undefined,
               "nodeType": "class",
               "props": Object {
-                "component": [Function],
-                "exact": true,
-                "path": "/",
+                "children": Array [
+                  <Route
+                    component={[Function]}
+                    exact={true}
+                    path="/"
+                  />,
+                  <Route
+                    component={[Function]}
+                  />,
+                ],
               },
               "ref": null,
-              "rendered": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "class",
+                  "props": Object {
+                    "component": [Function],
+                    "exact": true,
+                    "path": "/",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "class",
+                  "props": Object {
+                    "component": [Function],
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+              ],
               "type": [Function],
             },
           ],
@@ -244,11 +296,16 @@ ShallowWrapper {
           >
             <Connect(AppContainer)>
               <Header />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/"
-              />
+              <Switch>
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/"
+                />
+                <Route
+                  component={[Function]}
+                />
+              </Switch>
             </Connect(AppContainer)>
           </ThemeProvider>
         </Provider>,
@@ -287,11 +344,16 @@ ShallowWrapper {
           >
             <Connect(AppContainer)>
               <Header />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/"
-              />
+              <Switch>
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/"
+                />
+                <Route
+                  component={[Function]}
+                />
+              </Switch>
             </Connect(AppContainer)>
           </ThemeProvider>,
           "store": Object {
@@ -310,11 +372,16 @@ ShallowWrapper {
           "props": Object {
             "children": <Connect(AppContainer)>
               <Header />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/"
-              />
+              <Switch>
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/"
+                />
+                <Route
+                  component={[Function]}
+                />
+              </Switch>
             </Connect(AppContainer)>,
             "theme": Object {
               "colors": Object {
@@ -347,11 +414,16 @@ ShallowWrapper {
             "props": Object {
               "children": Array [
                 <Header />,
-                <Route
-                  component={[Function]}
-                  exact={true}
-                  path="/"
-                />,
+                <Switch>
+                  <Route
+                    component={[Function]}
+                    exact={true}
+                    path="/"
+                  />
+                  <Route
+                    component={[Function]}
+                  />
+                </Switch>,
               ],
             },
             "ref": null,
@@ -370,12 +442,44 @@ ShallowWrapper {
                 "key": undefined,
                 "nodeType": "class",
                 "props": Object {
-                  "component": [Function],
-                  "exact": true,
-                  "path": "/",
+                  "children": Array [
+                    <Route
+                      component={[Function]}
+                      exact={true}
+                      path="/"
+                    />,
+                    <Route
+                      component={[Function]}
+                    />,
+                  ],
                 },
                 "ref": null,
-                "rendered": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "class",
+                    "props": Object {
+                      "component": [Function],
+                      "exact": true,
+                      "path": "/",
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": [Function],
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "class",
+                    "props": Object {
+                      "component": [Function],
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": [Function],
+                  },
+                ],
                 "type": [Function],
               },
             ],
