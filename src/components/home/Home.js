@@ -1,8 +1,10 @@
 import React from "react";
 import UserContainer from "../../containers/UserContainer";
+import RecentDesignsContainer from "../../containers/RecentDesignsContainer";
 import AccountForm from "../AccountForm";
 import CTABanner from "./CTABanner";
 import AccountBanner from "./AccountBanner";
+import RecentDesignsBanner from "./RecentDesignsBanner";
 
 /**
  * A coordinating component for the Home page.
@@ -23,6 +25,11 @@ const Home = () => (
         )
       }
     </UserContainer>
+    <RecentDesignsContainer>
+      {designsData => (
+        <RecentDesignsBanner designs={designsData.props.designs} />
+      )}
+    </RecentDesignsContainer>
   </React.Fragment>
 );
 

@@ -1,4 +1,5 @@
 import axios from "axios";
+import Qs from "qs";
 
 /**
  * Determine the correct domain to communicate with based on the current applicaiton domain.
@@ -190,6 +191,92 @@ export class KitePaintApi {
         )
       );
     }
+    return response;
+  }
+
+  /**
+   * A cache for getDesigns requests to prevent making the same request repeatedly.
+   * @type {Array}
+   * @private
+   */
+  _getDesignsCache = [];
+
+  /**
+   * Get saved designs.
+   * @param  {Object}  [filter={}] A list of filters. See filterDefaults as an example.
+   * @param {Boolean} [useCache=true] If true, the request will be cached, and subsequent duplicate
+   * requests will not be made within 10 minutes.
+   * @return {Promise}
+   */
+  async getDesigns(filter = {}, useCache = true) {
+    // Define the default filtes and merge them with the user provided filters
+    const filterDefaults = {
+      isPublic: true,
+      limit: 50
+    };
+    const filterWithDefaults = Object.assign({}, filterDefaults, filter);
+
+    // Build the request data to be sent to the server as query params
+    const requestData = {
+      filter: {
+        active: 1
+      },
+      return: ["id", "created", "name", "variations"],
+      limit: filterWithDefaults.limit,
+      order: ["id", "DESC"]
+    };
+    if (filterWithDefaults.isPublic) {
+      requestData.filter.status = 2;
+    }
+
+    // Convert the request data to query params using Qs. This is done because providing nested
+    // parms to Axios's params config prop doesn't work correctly.
+    const requestString = Qs.stringify(requestData);
+
+    // Look for cached values if useCache is true
+    if (useCache) {
+      const relevantCache = this._getDesignsCache.find(
+        cache => cache.value === requestString
+      );
+      if (relevantCache) {
+        const cacheDuration = 10 * 60 * 1000; // 10 minutes
+        const currentTime = new Date().getTime();
+        if (relevantCache.cacheTime + cacheDuration >= currentTime) {
+          return new Promise(resolve =>
+            resolve({
+              data: []
+            })
+          );
+        }
+      }
+
+      this._getDesignsCache.push({
+        cacheTime: new Date().getTime(),
+        value: requestString
+      });
+    }
+
+    // Make the request
+    const response = await this.axiosInstance.get(
+      `/designs.php?${requestString}`
+    );
+
+    // Handle invalid responses
+    if (!response.data) {
+      return new Promise((resolve, reject) =>
+        reject(
+          response.data
+            ? response.data.message
+            : "The request for designs was unsuccessful"
+        )
+      );
+    }
+
+    response.data = response.data.map(design => {
+      design.variations = JSON.parse(design.variations);
+      return design;
+    });
+
     return response;
   }
 }
