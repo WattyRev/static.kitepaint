@@ -24,6 +24,9 @@ ShallowWrapper {
         <Connect(UserContainer)>
           [Function]
         </Connect(UserContainer)>,
+        <Connect(RecentDesignsContainer)>
+          [Function]
+        </Connect(RecentDesignsContainer)>,
       ],
     },
     "ref": null,
@@ -37,6 +40,17 @@ ShallowWrapper {
         },
         "ref": null,
         "rendered": null,
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "children": [Function],
+        },
+        "ref": null,
+        "rendered": [Function],
         "type": [Function],
       },
       Object {
@@ -66,6 +80,9 @@ ShallowWrapper {
           <Connect(UserContainer)>
             [Function]
           </Connect(UserContainer)>,
+          <Connect(RecentDesignsContainer)>
+            [Function]
+          </Connect(RecentDesignsContainer)>,
         ],
       },
       "ref": null,
@@ -79,6 +96,17 @@ ShallowWrapper {
           },
           "ref": null,
           "rendered": null,
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "children": [Function],
+          },
+          "ref": null,
+          "rendered": [Function],
           "type": [Function],
         },
         Object {

@@ -35,7 +35,8 @@ describe("KitePaintApi", () => {
   beforeEach(() => {
     Api = new KitePaintApi();
     Api.axiosInstance = {
-      post: jest.fn(() => new Promise(resolve => resolve({})))
+      post: jest.fn().mockResolvedValue({}),
+      get: jest.fn().mockResolvedValue({})
     };
   });
 
@@ -308,7 +309,7 @@ describe("KitePaintApi", () => {
   describe("#resetPassword", () => {
     it("should make the correct request with the provided data", () => {
       expect.assertions(3);
-      Api.resetPassword("stuff", "things@poop.com");
+      Api.resetPassword("stuff", "things@poop.com").catch(() => {});
       expect(Api.axiosInstance.post.mock.calls).toHaveLength(1);
       const postCall = Api.axiosInstance.post.mock.calls[0];
       expect(postCall[0]).toEqual("/lostpassword.php");
@@ -363,6 +364,76 @@ describe("KitePaintApi", () => {
       );
       return Api.resetPassword("stuff", "things@poop.com").then(() => {
         expect(true).toEqual(true);
+      });
+    });
+  });
+
+  describe("#getDesigns", () => {
+    beforeEach(() => {
+      Api._getDesignsCache = [];
+    });
+    it("makes the relevant request", () => {
+      expect.assertions(1);
+      Api.getDesigns();
+      expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual(
+        "/designs.php?filter%5Bactive%5D=1&filter%5Bstatus%5D=2&return%5B0%5D=id&return%5B1%5D=created&return%5B2%5D=name&return%5B3%5D=variations&limit=50&order%5B0%5D=id&order%5B1%5D=DESC"
+      );
+    });
+    it("adopts the provided filters", () => {
+      expect.assertions(1);
+      Api.getDesigns({
+        isPublic: false,
+        limit: 5
+      }).catch(() => {});
+      expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual(
+        "/designs.php?filter%5Bactive%5D=1&return%5B0%5D=id&return%5B1%5D=created&return%5B2%5D=name&return%5B3%5D=variations&limit=5&order%5B0%5D=id&order%5B1%5D=DESC"
+      );
+    });
+    it("does not make identical requests when they have been cached", () => {
+      expect.assertions(1);
+      Api.getDesigns().catch(() => {});
+      Api.getDesigns().catch(() => {});
+      expect(Api.axiosInstance.get.mock.calls).toHaveLength(1);
+    });
+    it("does make identical requests when caching is disabled", () => {
+      expect.assertions(1);
+      Api.getDesigns({}, false).catch(() => {});
+      Api.getDesigns({}, false).catch(() => {});
+      expect(Api.axiosInstance.get.mock.calls).toHaveLength(2);
+    });
+    it("rejects if the request fails", () => {
+      expect.assertions(1);
+      Api.axiosInstance.get.mockRejectedValue();
+      return Api.getDesigns().catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("rejects if the request returns with no data", () => {
+      expect.assertions(1);
+      Api.axiosInstance.get.mockResolvedValue({});
+      return Api.getDesigns().catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("resolves with the data", () => {
+      expect.assertions(1);
+      Api.axiosInstance.get.mockResolvedValue({
+        data: [
+          {
+            id: "123",
+            variations: "[]"
+          }
+        ]
+      });
+      return Api.getDesigns().then(response => {
+        expect(response).toEqual({
+          data: [
+            {
+              id: "123",
+              variations: []
+            }
+          ]
+        });
       });
     });
   });
