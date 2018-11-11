@@ -10,8 +10,18 @@ import { GET_DESIGNS } from "../redux/actions";
  */
 export class RecentDesignsContainer extends React.Component {
   static propTypes = {
+    /**
+     * A function returning content to be rendered
+     */
     children: PropTypes.func.isRequired,
+    /**
+     * A list of designs
+     */
     designs: PropTypes.arrayOf(designShape).isRequired,
+    /**
+     * A function to trigger the retreival of the designs. This should update the redux state,
+     * causing designs to be provided through redux.
+     */
     getDesigns: PropTypes.func.isRequired
   };
 

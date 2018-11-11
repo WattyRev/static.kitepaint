@@ -60,7 +60,7 @@ export const SET_RECOGNIZED_USER = createAction(
 
 /**
  * Retrieves designs from the KitePaintApi
- * @param {Object} filters
+ * @param {Object} [filters={}]
  * @param {Boolean} [useCache=true] If true, the request will be cached, and subsequent duplicate
  * requests will not be made within 10 minutes.
  */
