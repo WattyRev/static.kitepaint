@@ -3,13 +3,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { CHECK_LOGIN } from "../redux/actions";
 import { getCheckingLogin } from "../redux/modules/user";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faSignOutAlt,
-  faExclamationCircle
-} from "@fortawesome/free-solid-svg-icons";
+import setupFontAwesome from "../theme/FontAwesome.js";
 
-library.add(faSignOutAlt, faExclamationCircle);
+setupFontAwesome();
 
 export class AppContainer extends React.Component {
   static propTypes = {

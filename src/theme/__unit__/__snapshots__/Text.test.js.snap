@@ -1,0 +1,195 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Text renders 1`] = `
+ShallowWrapper {
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <ForwardRef
+    theme={
+      Object {
+        "colors": Object {
+          "aqua": "#7FDBFF",
+          "black": "#111111",
+          "blue": "#0074D9",
+          "fuchsia": "#F012BE",
+          "gray": "#AAAAAA",
+          "green": "#2ECC40",
+          "lime": "#01FF70",
+          "maroon": "#85144B",
+          "navy": "#001F3F",
+          "olive": "#3D9970",
+          "orange": "#FF851B",
+          "purple": "#B10DC9",
+          "red": "#FF4136",
+          "silver": "#DDDDDD",
+          "teal": "#39CCCC",
+          "white": "#FFFFFF",
+          "yellow": "#FFDC00",
+        },
+      }
+    }
+  >
+    button
+  </ForwardRef>,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateError": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "class",
+    "props": Object {
+      "children": "button",
+      "forwardedClass": Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "attrs": undefined,
+        "componentStyle": ComponentStyle {
+          "componentId": "sc-bwzfXH",
+          "isStatic": false,
+          "rules": Array [
+            "
+  margin: 0;
+  padding: 0;
+  ",
+            "
+  font-family: -apple-system, BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\",
+    \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+",
+            "
+
+  color: ",
+            [Function],
+            ";
+",
+          ],
+        },
+        "displayName": "styled.p",
+        "render": [Function],
+        "styledComponentId": "sc-bwzfXH",
+        "target": "p",
+        "toString": [Function],
+        "warnTooManyClasses": [Function],
+        "withComponent": [Function],
+      },
+      "forwardedRef": null,
+      "theme": Object {
+        "colors": Object {
+          "aqua": "#7FDBFF",
+          "black": "#111111",
+          "blue": "#0074D9",
+          "fuchsia": "#F012BE",
+          "gray": "#AAAAAA",
+          "green": "#2ECC40",
+          "lime": "#01FF70",
+          "maroon": "#85144B",
+          "navy": "#001F3F",
+          "olive": "#3D9970",
+          "orange": "#FF851B",
+          "purple": "#B10DC9",
+          "red": "#FF4136",
+          "silver": "#DDDDDD",
+          "teal": "#39CCCC",
+          "white": "#FFFFFF",
+          "yellow": "#FFDC00",
+        },
+      },
+    },
+    "ref": null,
+    "rendered": "button",
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "class",
+      "props": Object {
+        "children": "button",
+        "forwardedClass": Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "attrs": undefined,
+          "componentStyle": ComponentStyle {
+            "componentId": "sc-bwzfXH",
+            "isStatic": false,
+            "rules": Array [
+              "
+  margin: 0;
+  padding: 0;
+  ",
+              "
+  font-family: -apple-system, BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\",
+    \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+",
+              "
+
+  color: ",
+              [Function],
+              ";
+",
+            ],
+          },
+          "displayName": "styled.p",
+          "render": [Function],
+          "styledComponentId": "sc-bwzfXH",
+          "target": "p",
+          "toString": [Function],
+          "warnTooManyClasses": [Function],
+          "withComponent": [Function],
+        },
+        "forwardedRef": null,
+        "theme": Object {
+          "colors": Object {
+            "aqua": "#7FDBFF",
+            "black": "#111111",
+            "blue": "#0074D9",
+            "fuchsia": "#F012BE",
+            "gray": "#AAAAAA",
+            "green": "#2ECC40",
+            "lime": "#01FF70",
+            "maroon": "#85144B",
+            "navy": "#001F3F",
+            "olive": "#3D9970",
+            "orange": "#FF851B",
+            "purple": "#B10DC9",
+            "red": "#FF4136",
+            "silver": "#DDDDDD",
+            "teal": "#39CCCC",
+            "white": "#FFFFFF",
+            "yellow": "#FFDC00",
+          },
+        },
+      },
+      "ref": null,
+      "rendered": "button",
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getDerivedStateFromProps": true,
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+  },
+}
+`;

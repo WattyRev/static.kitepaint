@@ -1,0 +1,309 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Error renders 1`] = `
+ShallowWrapper {
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Error
+    theme={
+      Object {
+        "colors": Object {
+          "aqua": "#7FDBFF",
+          "black": "#111111",
+          "blue": "#0074D9",
+          "fuchsia": "#F012BE",
+          "gray": "#AAAAAA",
+          "green": "#2ECC40",
+          "lime": "#01FF70",
+          "maroon": "#85144B",
+          "navy": "#001F3F",
+          "olive": "#3D9970",
+          "orange": "#FF851B",
+          "purple": "#B10DC9",
+          "red": "#FF4136",
+          "silver": "#DDDDDD",
+          "teal": "#39CCCC",
+          "white": "#FFFFFF",
+          "yellow": "#FFDC00",
+        },
+      }
+    }
+  >
+    error
+  </Error>,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateError": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "function",
+    "props": Object {
+      "children": Array [
+        <FontAwesomeIcon
+          border={false}
+          className="error-icon"
+          fixedWidth={false}
+          flip={null}
+          icon="exclamation-circle"
+          inverse={false}
+          listItem={false}
+          mask={null}
+          pull={null}
+          pulse={false}
+          rotation={null}
+          size={null}
+          spin={false}
+          symbol={false}
+          title=""
+          transform={null}
+        />,
+        <div>
+          error
+        </div>,
+      ],
+      "theme": Object {
+        "colors": Object {
+          "aqua": "#7FDBFF",
+          "black": "#111111",
+          "blue": "#0074D9",
+          "fuchsia": "#F012BE",
+          "gray": "#AAAAAA",
+          "green": "#2ECC40",
+          "lime": "#01FF70",
+          "maroon": "#85144B",
+          "navy": "#001F3F",
+          "olive": "#3D9970",
+          "orange": "#FF851B",
+          "purple": "#B10DC9",
+          "red": "#FF4136",
+          "silver": "#DDDDDD",
+          "teal": "#39CCCC",
+          "white": "#FFFFFF",
+          "yellow": "#FFDC00",
+        },
+      },
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "border": false,
+          "className": "error-icon",
+          "fixedWidth": false,
+          "flip": null,
+          "icon": "exclamation-circle",
+          "inverse": false,
+          "listItem": false,
+          "mask": null,
+          "pull": null,
+          "pulse": false,
+          "rotation": null,
+          "size": null,
+          "spin": false,
+          "symbol": false,
+          "title": "",
+          "transform": null,
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": "error",
+        },
+        "ref": null,
+        "rendered": "error",
+        "type": "div",
+      },
+    ],
+    "type": Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": undefined,
+      "componentStyle": ComponentStyle {
+        "componentId": "sc-bxivhb",
+        "isStatic": false,
+        "rules": Array [
+          "
+  color: ",
+          [Function],
+          ";
+  border: 1px solid ",
+          [Function],
+          ";
+  padding: 4px;
+  margin: 0 0 8px;
+  border-radius: 4px;
+  display: flex;
+
+  > .error-icon {
+    padding: 1px 4px 0 0;
+  }
+",
+        ],
+      },
+      "displayName": "styled.div",
+      "render": [Function],
+      "styledComponentId": "sc-bxivhb",
+      "target": "div",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    },
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": Array [
+          <FontAwesomeIcon
+            border={false}
+            className="error-icon"
+            fixedWidth={false}
+            flip={null}
+            icon="exclamation-circle"
+            inverse={false}
+            listItem={false}
+            mask={null}
+            pull={null}
+            pulse={false}
+            rotation={null}
+            size={null}
+            spin={false}
+            symbol={false}
+            title=""
+            transform={null}
+          />,
+          <div>
+            error
+          </div>,
+        ],
+        "theme": Object {
+          "colors": Object {
+            "aqua": "#7FDBFF",
+            "black": "#111111",
+            "blue": "#0074D9",
+            "fuchsia": "#F012BE",
+            "gray": "#AAAAAA",
+            "green": "#2ECC40",
+            "lime": "#01FF70",
+            "maroon": "#85144B",
+            "navy": "#001F3F",
+            "olive": "#3D9970",
+            "orange": "#FF851B",
+            "purple": "#B10DC9",
+            "red": "#FF4136",
+            "silver": "#DDDDDD",
+            "teal": "#39CCCC",
+            "white": "#FFFFFF",
+            "yellow": "#FFDC00",
+          },
+        },
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "border": false,
+            "className": "error-icon",
+            "fixedWidth": false,
+            "flip": null,
+            "icon": "exclamation-circle",
+            "inverse": false,
+            "listItem": false,
+            "mask": null,
+            "pull": null,
+            "pulse": false,
+            "rotation": null,
+            "size": null,
+            "spin": false,
+            "symbol": false,
+            "title": "",
+            "transform": null,
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "error",
+          },
+          "ref": null,
+          "rendered": "error",
+          "type": "div",
+        },
+      ],
+      "type": Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "attrs": undefined,
+        "componentStyle": ComponentStyle {
+          "componentId": "sc-bxivhb",
+          "isStatic": false,
+          "rules": Array [
+            "
+  color: ",
+            [Function],
+            ";
+  border: 1px solid ",
+            [Function],
+            ";
+  padding: 4px;
+  margin: 0 0 8px;
+  border-radius: 4px;
+  display: flex;
+
+  > .error-icon {
+    padding: 1px 4px 0 0;
+  }
+",
+          ],
+        },
+        "displayName": "styled.div",
+        "render": [Function],
+        "styledComponentId": "sc-bxivhb",
+        "target": "div",
+        "toString": [Function],
+        "warnTooManyClasses": [Function],
+        "withComponent": [Function],
+      },
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getDerivedStateFromProps": true,
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+  },
+}
+`;
