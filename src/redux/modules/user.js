@@ -2,6 +2,18 @@ import { handleActions } from "redux-actions";
 import { fromJS } from "immutable";
 import { SET_RECOGNIZED_USER, LOG_IN, CHECK_LOGIN, LOG_OUT } from "../actions";
 
+export const defaultState = fromJS({
+  actcode: null,
+  firstName: null,
+  id: null,
+  isCheckingLogin: false,
+  isLoggedIn: false,
+  isLoggingIn: false,
+  isRecognizedUser: localStorage.getItem("isRecognizedUser") === "true",
+  lastName: null,
+  username: null
+});
+
 /**
  * The reducer managing data about the user.
  */
@@ -52,6 +64,7 @@ export default handleActions(
     [LOG_OUT.RECEIVED]: state => {
       return state.merge({
         actcode: null,
+        email: null,
         firstName: null,
         id: null,
         isLoggedIn: false,
@@ -60,17 +73,7 @@ export default handleActions(
       });
     }
   },
-  fromJS({
-    actcode: null,
-    firstName: null,
-    id: null,
-    isCheckingLogin: false,
-    isLoggedIn: false,
-    isLoggingIn: false,
-    isRecognizedUser: localStorage.getItem("isRecognizedUser") === "true",
-    lastName: null,
-    username: null
-  })
+  defaultState
 );
 
 /**
