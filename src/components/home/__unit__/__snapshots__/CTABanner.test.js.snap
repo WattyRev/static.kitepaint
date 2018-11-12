@@ -121,7 +121,7 @@ ShallowWrapper {
         "rules": Array [
           "
   height: 408px;
-  width: 100&=%;
+  width: 100%;
   background: url(",
           "bg-rev.jpg",
           ") no-repeat center;
@@ -257,7 +257,7 @@ ShallowWrapper {
           "rules": Array [
             "
   height: 408px;
-  width: 100&=%;
+  width: 100%;
   background: url(",
             "bg-rev.jpg",
             ") no-repeat center;

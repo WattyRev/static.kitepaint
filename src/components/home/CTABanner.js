@@ -9,7 +9,7 @@ import { H3, Button } from "../../theme";
  */
 export const StyleWrapper = styled.div`
   height: 408px;
-  width: 100&=%;
+  width: 100%;
   background: url(${bgRev}) no-repeat center;
   background-size: cover;
   display: flex;
