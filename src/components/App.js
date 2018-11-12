@@ -1,33 +1,36 @@
 import React from "react";
-import { ThemeProvider } from "styled-components";
-import { Provider as ReduxProvider } from "react-redux";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import AppContainer from "../containers/AppContainer";
-import Theme from "../theme";
-import Store from "../redux";
+import { Route, Switch } from "react-router-dom";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
-import Home from "./home";
+import About from "./about";
+import Account from "./account";
+import Create from "./create";
+import CreateNew from "./createNew";
+import Designs from "./designs";
+import Edit from "./edit";
 import ErrorPage from "./ErrorPage";
+import Home from "./home";
+import View from "./view";
 
 /**
  * The entry for the app. The router will go here.
  */
 const App = () => (
-  <BrowserRouter>
-    <ReduxProvider store={Store}>
-      <ThemeProvider theme={Theme}>
-        <AppContainer>
-          <Header />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route component={ErrorPage} />
-          </Switch>
-          <Footer />
-        </AppContainer>
-      </ThemeProvider>
-    </ReduxProvider>
-  </BrowserRouter>
+  <React.Fragment>
+    <Header />
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/about" component={About} />
+      <Route exact path="/account" component={Account} />
+      <Route exact path="/create" component={Create} />
+      <Route exact path="/create/:productId" component={CreateNew} />
+      <Route exact path="/designs" component={Designs} />
+      <Route exact path="/edit/:designId" component={Edit} />
+      <Route exact path="/view/:designId" component={View} />
+      <Route component={ErrorPage} />
+    </Switch>
+    <Footer />
+  </React.Fragment>
 );
 
 export default App;

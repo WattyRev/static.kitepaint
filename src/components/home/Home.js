@@ -11,7 +11,7 @@ import RecentDesignsBanner from "./RecentDesignsBanner";
  */
 const Home = () => (
   <React.Fragment>
-    <CTABanner onClick={() => {}} />
+    <CTABanner />
     <UserContainer>
       {userData =>
         !userData.props.isLoggedIn && (

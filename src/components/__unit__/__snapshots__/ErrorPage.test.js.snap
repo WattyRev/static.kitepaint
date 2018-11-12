@@ -44,7 +44,7 @@ ShallowWrapper {
           "$$typeof": Symbol(react.forward_ref),
           "attrs": undefined,
           "componentStyle": ComponentStyle {
-            "componentId": "sc-ifAKCX",
+            "componentId": "sc-gzVnrw",
             "isStatic": true,
             "rules": Array [
               "
@@ -54,7 +54,7 @@ ShallowWrapper {
           },
           "displayName": "Styled(H1)",
           "render": [Function],
-          "styledComponentId": "sc-ifAKCX",
+          "styledComponentId": "sc-gzVnrw",
           "target": [Function],
           "toString": [Function],
           "warnTooManyClasses": [Function],
@@ -78,7 +78,7 @@ ShallowWrapper {
       "$$typeof": Symbol(react.forward_ref),
       "attrs": undefined,
       "componentStyle": ComponentStyle {
-        "componentId": "sc-gqjmRU",
+        "componentId": "sc-fjdhpX",
         "isStatic": true,
         "rules": Array [
           "
@@ -88,7 +88,7 @@ ShallowWrapper {
       },
       "displayName": "styled.div",
       "render": [Function],
-      "styledComponentId": "sc-gqjmRU",
+      "styledComponentId": "sc-fjdhpX",
       "target": "div",
       "toString": [Function],
       "warnTooManyClasses": [Function],
@@ -125,7 +125,7 @@ ShallowWrapper {
             "$$typeof": Symbol(react.forward_ref),
             "attrs": undefined,
             "componentStyle": ComponentStyle {
-              "componentId": "sc-ifAKCX",
+              "componentId": "sc-gzVnrw",
               "isStatic": true,
               "rules": Array [
                 "
@@ -135,7 +135,7 @@ ShallowWrapper {
             },
             "displayName": "Styled(H1)",
             "render": [Function],
-            "styledComponentId": "sc-ifAKCX",
+            "styledComponentId": "sc-gzVnrw",
             "target": [Function],
             "toString": [Function],
             "warnTooManyClasses": [Function],
@@ -159,7 +159,7 @@ ShallowWrapper {
         "$$typeof": Symbol(react.forward_ref),
         "attrs": undefined,
         "componentStyle": ComponentStyle {
-          "componentId": "sc-gqjmRU",
+          "componentId": "sc-fjdhpX",
           "isStatic": true,
           "rules": Array [
             "
@@ -169,7 +169,7 @@ ShallowWrapper {
         },
         "displayName": "styled.div",
         "render": [Function],
-        "styledComponentId": "sc-gqjmRU",
+        "styledComponentId": "sc-fjdhpX",
         "target": "div",
         "toString": [Function],
         "warnTooManyClasses": [Function],

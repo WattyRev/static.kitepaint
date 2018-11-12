@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import bgRev from "./bg-rev.jpg";
 import { H3, Button } from "../../theme";
 
@@ -9,7 +9,7 @@ import { H3, Button } from "../../theme";
  */
 export const StyleWrapper = styled.div`
   height: 408px;
-  width: 100vw;
+  width: 100%;
   background: url(${bgRev}) no-repeat center;
   background-size: cover;
   display: flex;
@@ -28,21 +28,14 @@ export const StyleWrapper = styled.div`
 /**
  * Displays a banner with a Call To Action.
  */
-const CTABanner = ({ onClick }) => (
+const CTABanner = () => (
   <StyleWrapper>
     <div className="cta-wrapper">
       <H3 isLight>Get started new by creating a new kite design!</H3>
-      <Button isPrimary isBlock onClick={onClick}>
+      <Button isPrimary isBlock as={Link} to="/create">
         Get Started
       </Button>
     </div>
   </StyleWrapper>
 );
-
-CTABanner.propTypes = {
-  /**
-   * A function called when the CTA is clicked.
-   */
-  onClick: PropTypes.func.isRequired
-};
 export default CTABanner;
