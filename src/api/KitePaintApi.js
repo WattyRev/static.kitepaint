@@ -279,6 +279,94 @@ export class KitePaintApi {
 
     return response;
   }
+
+  _getProductsCache = [];
+  async getProducts(useCache = true) {
+    // Look for cached values if useCache is true
+    if (useCache) {
+      const relevantCache = this._getProductsCache[0];
+
+      if (relevantCache) {
+        const cacheDuration = 10 * 60 * 1000; // 10 minutes
+        const currentTime = new Date().getTime();
+        if (relevantCache.cacheTime + cacheDuration >= currentTime) {
+          return new Promise(resolve =>
+            resolve({
+              data: []
+            })
+          );
+        }
+      }
+
+      this._getProductsCache.push({
+        cacheTime: new Date().getTime()
+      });
+    }
+
+    // Make the request
+    const response = await this.axiosInstance.get(`/products.php`, {
+      params: {
+        activated: 1
+      }
+    });
+
+    // Handle invalid responses
+    if (!response.data) {
+      return new Promise((resolve, reject) =>
+        reject(
+          response.data
+            ? response.data.message
+            : "The request for products was unsuccessful"
+        )
+      );
+    }
+
+    return response;
+  }
+
+  _getManufacturersCache = [];
+  async getManufacturers(useCache = true) {
+    // Look for cached values if useCache is true
+    if (useCache) {
+      const relevantCache = this._getManufacturersCache[0];
+
+      if (relevantCache) {
+        const cacheDuration = 10 * 60 * 1000; // 10 minutes
+        const currentTime = new Date().getTime();
+        if (relevantCache.cacheTime + cacheDuration >= currentTime) {
+          return new Promise(resolve =>
+            resolve({
+              data: []
+            })
+          );
+        }
+      }
+
+      this._getManufacturersCache.push({
+        cacheTime: new Date().getTime()
+      });
+    }
+
+    // Make the request
+    const response = await this.axiosInstance.get(`/manufacturers.php`, {
+      params: {
+        activated: 1
+      }
+    });
+
+    // Handle invalid responses
+    if (!response.data) {
+      return new Promise((resolve, reject) =>
+        reject(
+          response.data
+            ? response.data.message
+            : "The request for manufacturers was unsuccessful"
+        )
+      );
+    }
+
+    return response;
+  }
 }
 
 export default new KitePaintApi();

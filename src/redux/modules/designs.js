@@ -23,12 +23,12 @@ export default handleActions(
 
 /**
  * Get the 6 most recent designs.
- * @param  {Map} state [description]
+ * @param  {Map} state
  * @return {Object[]} an array of designs
  */
 export const getRecentDesigns = state => {
   const designs = state.get("designs");
-  const stuff = designs
+  return designs
     .sort((designA, designB) => {
       const aId = designA.get("id");
       const bId = designB.get("id");
@@ -43,5 +43,4 @@ export const getRecentDesigns = state => {
     .toList()
     .toJS()
     .slice(0, 6);
-  return stuff;
 };
