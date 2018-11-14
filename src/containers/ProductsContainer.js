@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { getProductsGrouped } from "../redux/modules/products";
 import { getManufacturers } from "../redux/modules/manufacturers";
 import { GET_PRODUCTS, GET_MANUFACTURERS } from "../redux/actions";
+import productShape from "../models/product";
+import manufacturerShape from "../models/manufacturer";
 
 /**
  * Provides information and actions about/for Designs.
@@ -17,11 +19,12 @@ export class ProductsContainer extends React.Component {
     /**
      * The products indexed by manufacturer id.
      */
-    products: PropTypes.objectOf(PropTypes.array.isRequired).isRequired,
+    products: PropTypes.objectOf(PropTypes.arrayOf(productShape).isRequired)
+      .isRequired,
     /**
      * A list of manufacturers
      */
-    manufacturers: PropTypes.array.isRequired,
+    manufacturers: PropTypes.arrayOf(manufacturerShape).isRequired,
     /**
      * A function to trigger the retreival of the products. This should update the redux state,
      * causing products to be provided through redux.
@@ -34,6 +37,10 @@ export class ProductsContainer extends React.Component {
     getManufacturers: PropTypes.func.isRequired
   };
 
+  state = { isLoading: true };
+
+  _cancelPromises = [];
+
   componentDidMount() {
     this.props.getProducts();
     this.props.getManufacturers();
@@ -43,8 +50,9 @@ export class ProductsContainer extends React.Component {
     return this.props.children({
       actions: {},
       props: {
-        products: this.props.products,
-        manufacturers: this.props.manufacturers
+        isLoading: this.state.isLoading,
+        products: this.props.products || {},
+        manufacturers: this.props.manufacturers || []
       }
     });
   }

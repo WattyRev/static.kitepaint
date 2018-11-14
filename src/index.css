@@ -2,3 +2,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.mesh {
+  fill: rgba(50, 50, 50, 0.5);
+}

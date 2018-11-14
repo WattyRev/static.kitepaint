@@ -321,6 +321,12 @@ export class KitePaintApi {
       );
     }
 
+    response.data = response.data.map(product => {
+      product.variations = JSON.parse(product.variations);
+      product.colors = JSON.parse(product.colors);
+      return product;
+    });
+
     return response;
   }
 

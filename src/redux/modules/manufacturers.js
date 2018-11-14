@@ -28,5 +28,18 @@ export default handleActions(
  */
 export const getManufacturers = state => {
   const manufacturers = state.get("manufacturers");
-  return manufacturers.toList().toJS();
+  return manufacturers
+    .sort((manA, manB) => {
+      const aName = manA.get("name");
+      const bName = manB.get("name");
+      if (aName > bName) {
+        return 1;
+      }
+      if (aName < bName) {
+        return -1;
+      }
+      return 0;
+    })
+    .toList()
+    .toJS();
 };
