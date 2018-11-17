@@ -5,6 +5,9 @@ import ProductsContainer from "../../containers/ProductsContainer";
 import ManufacturerShowcase from "./ManufacturerShowcase";
 import ProductShowcase from "./ProductShowcase";
 
+/**
+ * General styling for the create page
+ */
 const StyleWrapper = styled.div`
   .products-wrapper {
     display: flex;
@@ -16,6 +19,9 @@ const StyleWrapper = styled.div`
   }
 `;
 
+/**
+ * A coordinating component that builds the /create page.
+ */
 const Create = () => (
   <StyleWrapper>
     <div className="heading">
