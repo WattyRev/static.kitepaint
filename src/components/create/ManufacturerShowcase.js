@@ -4,7 +4,10 @@ import PropTypes from "prop-types";
 import manufacturerShape from "../../models/manufacturer";
 import { H3, A, P } from "../../theme";
 
-const StyleWrapper = styled.div`
+/**
+ * A general wrapper for the showcase. Gives it the border and the light background
+ */
+export const StyleWrapper = styled.div`
   background: ${props => props.theme.colors.blueLighter};
   border: 1px solid ${props => props.theme.colors.gray};
   margin: 8px 16px;
@@ -12,12 +15,18 @@ const StyleWrapper = styled.div`
   padding: 8px;
 `;
 
+/**
+ * A wrapper for the layout of the heading
+ */
 const HeadingWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
 
-const StyledImage = styled.div`
+/**
+ * Styling for the manufacturer logo
+ */
+export const StyledImage = styled.div`
   background-image: url(${props => props.src});
   background-size: contain;
   background-repeat: no-repeat;
@@ -32,6 +41,9 @@ const StyledImage = styled.div`
   background-color: ${props => props.theme.colors.white};
 `;
 
+/**
+ * Displays a showcase UI for the specified manufacturer.
+ */
 const ManufacturerShowcase = ({ manufacturer, children }) => (
   <StyleWrapper>
     <HeadingWrapper>
@@ -39,7 +51,7 @@ const ManufacturerShowcase = ({ manufacturer, children }) => (
       <div>
         <H3>{manufacturer.name}</H3>
         {manufacturer.website && (
-          <P>
+          <P className="testing_website">
             <A href={manufacturer.website} target="_blank">
               {manufacturer.website}
             </A>
@@ -52,7 +64,14 @@ const ManufacturerShowcase = ({ manufacturer, children }) => (
 );
 
 ManufacturerShowcase.propTypes = {
-  manufacturer: manufacturerShape,
+  /**
+   * The manufacturer being showcased
+   */
+  manufacturer: manufacturerShape.isRequired,
+
+  /**
+   * Content to display within the showcase
+   */
   children: PropTypes.node
 };
 

@@ -280,7 +280,19 @@ export class KitePaintApi {
     return response;
   }
 
+  /**
+   * A cache for getProducts to prevent making the same request repeatedly.
+   * @type {Array}
+   * @private
+   */
   _getProductsCache = [];
+
+  /**
+   * Get all products.
+   * @param  {Boolean} [useCache=true] If true, the request will be cached, and subsequent duplicate
+   * requests will not be made within 10 minutes.
+   * @return {Promise}
+   */
   async getProducts(useCache = true) {
     // Look for cached values if useCache is true
     if (useCache) {
@@ -330,7 +342,19 @@ export class KitePaintApi {
     return response;
   }
 
+  /**
+   * A cache for getManufacturers to prevent making the same request repeatedly.
+   * @type {Array}
+   * @private
+   */
   _getManufacturersCache = [];
+
+  /**
+   * Get all manufacturers.
+   * @param  {Boolean} [useCache=true] If true, the request will be cached, and subsequent duplicate
+   * requests will not be made within 10 minutes.
+   * @return {Promise}
+   */
   async getManufacturers(useCache = true) {
     // Look for cached values if useCache is true
     if (useCache) {

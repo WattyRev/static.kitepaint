@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
+import { mockManufacturer } from "./manufacturer";
 
 /**
  * A product is a kite that can be customized to create a design.
  */
-const manufacturerShapw = PropTypes.shape({
+const productShape = PropTypes.shape({
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   manufacturer: PropTypes.string.isRequired,
@@ -22,4 +23,33 @@ const manufacturerShapw = PropTypes.shape({
   )
 });
 
-export default manufacturerShapw;
+export default productShape;
+
+/**
+ * A mock product used for testing
+ * @type {Object}
+ */
+const mockProduct = {
+  id: "abc",
+  name: "Krazy Kite",
+  manufacturer: mockManufacturer.id,
+  url: "http://krazykites.com/krazy-kite",
+  colors: [
+    {
+      name: "red",
+      color: "#ff0000"
+    },
+    {
+      name: "black",
+      color: "#000000"
+    }
+  ],
+  variations: [
+    {
+      name: "Standard",
+      svg: "<div>Kool Kite</div>"
+    }
+  ]
+};
+
+export { mockProduct };

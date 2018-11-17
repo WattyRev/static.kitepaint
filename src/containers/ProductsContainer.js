@@ -37,10 +37,6 @@ export class ProductsContainer extends React.Component {
     getManufacturers: PropTypes.func.isRequired
   };
 
-  state = { isLoading: true };
-
-  _cancelPromises = [];
-
   componentDidMount() {
     this.props.getProducts();
     this.props.getManufacturers();
@@ -50,7 +46,6 @@ export class ProductsContainer extends React.Component {
     return this.props.children({
       actions: {},
       props: {
-        isLoading: this.state.isLoading,
         products: this.props.products || {},
         manufacturers: this.props.manufacturers || []
       }

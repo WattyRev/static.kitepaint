@@ -3,7 +3,7 @@ import KitePaintApi from "../../api/KitePaintApi";
 jest.mock("../../api/KitePaintApi");
 
 function dispatchAsyncAction(action, params = []) {
-  action(...params)(() => {});
+  return action(...params)(() => {});
 }
 
 describe("Redux actions", () => {
@@ -13,7 +13,7 @@ describe("Redux actions", () => {
     });
     it("should call KitePaintApi.checkLoginStatus", () => {
       expect.assertions(1);
-      dispatchAsyncAction(Actions.CHECK_LOGIN);
+      dispatchAsyncAction(Actions.CHECK_LOGIN).catch(() => {});
       expect(KitePaintApi.checkLoginStatus.mock.calls).toHaveLength(1);
     });
   });
@@ -23,7 +23,9 @@ describe("Redux actions", () => {
     });
     it("should call KitePaintApi.logIn with the params", () => {
       expect.assertions(2);
-      dispatchAsyncAction(Actions.LOG_IN, ["frank", "securepass"]);
+      dispatchAsyncAction(Actions.LOG_IN, ["frank", "securepass"]).catch(
+        () => {}
+      );
       expect(KitePaintApi.logIn.mock.calls).toHaveLength(1);
       expect(KitePaintApi.logIn.mock.calls[0]).toEqual(["frank", "securepass"]);
     });
@@ -34,7 +36,7 @@ describe("Redux actions", () => {
     });
     it("should call KitePaintApi.logOut", () => {
       expect.assertions(1);
-      dispatchAsyncAction(Actions.LOG_OUT);
+      dispatchAsyncAction(Actions.LOG_OUT).catch(() => {});
       expect(KitePaintApi.logOut.mock.calls).toHaveLength(1);
     });
   });
@@ -44,7 +46,7 @@ describe("Redux actions", () => {
     });
     it("should call KitePaintApi.register with the params", () => {
       expect.assertions(2);
-      dispatchAsyncAction(Actions.REGISTER, [{ foo: "bar" }]);
+      dispatchAsyncAction(Actions.REGISTER, [{ foo: "bar" }]).catch(() => {});
       expect(KitePaintApi.register.mock.calls).toHaveLength(1);
       expect(KitePaintApi.register.mock.calls[0][0]).toEqual({ foo: "bar" });
     });
@@ -55,7 +57,10 @@ describe("Redux actions", () => {
     });
     it("should call KitePaintApi.resetPassword with the params", () => {
       expect.assertions(2);
-      dispatchAsyncAction(Actions.RESET_PASSWORD, ["frank", "frank@yahoo.com"]);
+      dispatchAsyncAction(Actions.RESET_PASSWORD, [
+        "frank",
+        "frank@yahoo.com"
+      ]).catch(() => {});
       expect(KitePaintApi.resetPassword.mock.calls).toHaveLength(1);
       expect(KitePaintApi.resetPassword.mock.calls[0]).toEqual([
         "frank",

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import productShape from "../../models/product";
 import { H3 } from "../../theme";
 
-const StyleWrapper = styled.div`
+export const StyleWrapper = styled.div`
   flex-basis: 500px;
   margin: 8px;
   flex-shrink: 1;
@@ -89,7 +89,7 @@ const ProductShowcase = ({ product }) => (
 );
 
 ProductShowcase.propTypes = {
-  product: productShape
+  product: productShape.isRequired
 };
 
 export default ProductShowcase;

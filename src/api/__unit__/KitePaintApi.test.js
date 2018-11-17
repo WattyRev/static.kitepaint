@@ -374,7 +374,7 @@ describe("KitePaintApi", () => {
     });
     it("makes the relevant request", () => {
       expect.assertions(1);
-      Api.getDesigns();
+      Api.getDesigns().catch(() => {});
       expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual(
         "/designs.php?filter%5Bactive%5D=1&filter%5Bstatus%5D=2&return%5B0%5D=id&return%5B1%5D=created&return%5B2%5D=name&return%5B3%5D=variations&limit=50&order%5B0%5D=id&order%5B1%5D=DESC"
       );
@@ -431,6 +431,130 @@ describe("KitePaintApi", () => {
             {
               id: "123",
               variations: []
+            }
+          ]
+        });
+      });
+    });
+  });
+
+  describe("#getProducts", () => {
+    beforeEach(() => {
+      Api._getProductsCache = [];
+    });
+    it("makes the relevant request", () => {
+      expect.assertions(2);
+      Api.getProducts().catch(() => {});
+      expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual("/products.php");
+      expect(Api.axiosInstance.get.mock.calls[0][1]).toEqual({
+        params: { activated: 1 }
+      });
+    });
+    it("does not make identical requests when they have been cached", () => {
+      expect.assertions(1);
+      Api.getProducts().catch(() => {});
+      Api.getProducts().catch(() => {});
+      expect(Api.axiosInstance.get.mock.calls).toHaveLength(1);
+    });
+    it("does make identical requests when caching is disabled", () => {
+      expect.assertions(1);
+      Api.getProducts(false).catch(() => {});
+      Api.getProducts(false).catch(() => {});
+      expect(Api.axiosInstance.get.mock.calls).toHaveLength(2);
+    });
+    it("rejects if the request fails", () => {
+      expect.assertions(1);
+      Api.axiosInstance.get.mockRejectedValue();
+      return Api.getProducts().catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("rejects if the request returns with no data", () => {
+      expect.assertions(1);
+      Api.axiosInstance.get.mockResolvedValue({});
+      return Api.getProducts().catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("resolves with the data", () => {
+      expect.assertions(1);
+      Api.axiosInstance.get.mockResolvedValue({
+        data: [
+          {
+            id: "123",
+            variations: "[]",
+            colors: "[]"
+          }
+        ]
+      });
+      return Api.getProducts().then(response => {
+        expect(response).toEqual({
+          data: [
+            {
+              id: "123",
+              variations: [],
+              colors: []
+            }
+          ]
+        });
+      });
+    });
+  });
+
+  describe("#getManufacturers", () => {
+    beforeEach(() => {
+      Api._getManufacturersCache = [];
+    });
+    it("makes the relevant request", () => {
+      expect.assertions(2);
+      Api.getManufacturers().catch(() => {});
+      expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual(
+        "/manufacturers.php"
+      );
+      expect(Api.axiosInstance.get.mock.calls[0][1]).toEqual({
+        params: { activated: 1 }
+      });
+    });
+    it("does not make identical requests when they have been cached", () => {
+      expect.assertions(1);
+      Api.getManufacturers().catch(() => {});
+      Api.getManufacturers().catch(() => {});
+      expect(Api.axiosInstance.get.mock.calls).toHaveLength(1);
+    });
+    it("does make identical requests when caching is disabled", () => {
+      expect.assertions(1);
+      Api.getManufacturers(false).catch(() => {});
+      Api.getManufacturers(false).catch(() => {});
+      expect(Api.axiosInstance.get.mock.calls).toHaveLength(2);
+    });
+    it("rejects if the request fails", () => {
+      expect.assertions(1);
+      Api.axiosInstance.get.mockRejectedValue();
+      return Api.getManufacturers().catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("rejects if the request returns with no data", () => {
+      expect.assertions(1);
+      Api.axiosInstance.get.mockResolvedValue({});
+      return Api.getManufacturers().catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("resolves with the data", () => {
+      expect.assertions(1);
+      Api.axiosInstance.get.mockResolvedValue({
+        data: [
+          {
+            id: "123"
+          }
+        ]
+      });
+      return Api.getManufacturers().then(response => {
+        expect(response).toEqual({
+          data: [
+            {
+              id: "123"
             }
           ]
         });

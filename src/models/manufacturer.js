@@ -11,3 +11,15 @@ const manufacturerState = PropTypes.shape({
 });
 
 export default manufacturerState;
+
+/**
+ * A mock manufacturer used for testing
+ * @type {Object}
+ */
+const mockManufacturer = {
+  id: "abc",
+  name: "Krazy Kites",
+  logo: "abc.jpg",
+  website: "http://krazykites.com"
+};
+export { mockManufacturer };
