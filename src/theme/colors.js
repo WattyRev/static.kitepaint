@@ -1,4 +1,5 @@
 export const navy = "#001F3F";
+export const blueLighter = "#f0fbff";
 export const blue = "#0074D9";
 export const blueDarker = "#005daa";
 export const aqua = "#7FDBFF";
@@ -14,5 +15,6 @@ export const purple = "#B10DC9";
 export const maroon = "#85144B";
 export const white = "#FFFFFF";
 export const gray = "#AAAAAA";
+export const grayDark = "#5e5e5e";
 export const silver = "#DDDDDD";
 export const black = "#111111";

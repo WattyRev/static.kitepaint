@@ -10,17 +10,9 @@ const StyleWrapper = styled.div`
     display: flex;
     margin: 8px 0 24px;
     justify-content: space-around;
-    flex-wrap: wrap;
-  }
-  .manufacturer-wrapper {
-    padding: 8px;
-    border-bottom: 1px solid ${props => props.theme.colors.gray};
-    &:nth-child(even) {
-      background: ${props => props.theme.colors.silver};
-    }
   }
   .heading {
-    padding: 8px;
+    padding: 8px 16px;
   }
 `;
 
@@ -34,15 +26,17 @@ const Create = () => (
       {productsData => (
         <React.Fragment>
           {productsData.props.manufacturers.map(manufacturer => (
-            <div className="manufacturer-wrapper" key={manufacturer.id}>
-              <ManufacturerShowcase manufacturer={manufacturer} />
+            <ManufacturerShowcase
+              manufacturer={manufacturer}
+              key={manufacturer.id}
+            >
               <div className="products-wrapper">
                 {productsData.props.products[manufacturer.id] &&
                   productsData.props.products[manufacturer.id].map(product => (
                     <ProductShowcase product={product} key={product.id} />
                   ))}
               </div>
-            </div>
+            </ManufacturerShowcase>
           ))}
         </React.Fragment>
       )}
