@@ -28,6 +28,8 @@
     "FormData": true,
     "document": true,
     "localStorage": true,
-    "console": true
+    "console": true,
+    "module": true,
+    "require": true,
   }
 }

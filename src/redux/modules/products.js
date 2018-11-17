@@ -34,3 +34,12 @@ export const getProductsGrouped = (state, groupBy) => {
     .groupBy(product => product.get(groupBy))
     .toJS();
 };
+
+export const getProductById = (state, id) => {
+  const products = state.get("products");
+  const product = products.get(id, null);
+  if (!product) {
+    return null;
+  }
+  return product.toJS();
+};

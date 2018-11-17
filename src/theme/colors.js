@@ -16,5 +16,6 @@ export const maroon = "#85144B";
 export const white = "#FFFFFF";
 export const gray = "#AAAAAA";
 export const grayDark = "#5e5e5e";
+export const grayDarker = "#3a3a3a";
 export const silver = "#DDDDDD";
 export const black = "#111111";

@@ -43,3 +43,16 @@ export const getManufacturers = state => {
     .toList()
     .toJS();
 };
+
+export const getManufacturerByProductId = (state, productId) => {
+  const product = state.getIn(["products", productId]);
+  if (!product) {
+    return null;
+  }
+  const manufacturerId = product.get("id");
+  const manufacturer = state.getIn(["manufacturers", manufacturerId]);
+  if (!manufacturer) {
+    return null;
+  }
+  return manufacturer.toJS();
+};
