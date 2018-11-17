@@ -10,8 +10,9 @@ const BlockListItem = styled.div`
     props.isLight ? props.theme.colors.silver : props.theme.colors.black};
   white-space: nowrap;
   padding: 8px;
+  text-decoration: none;
 
-  &:last-of-type {
+  &:last-child {
     border-bottom: 0;
   }
 `;

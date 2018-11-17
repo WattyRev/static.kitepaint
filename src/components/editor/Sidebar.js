@@ -13,7 +13,7 @@ const StyleWrapper = styled.div`
   display: block;
   flex-shrink: 0;
   background: ${props => props.theme.colors.grayDarker};
-  box-shadow: 0 4px 2px 2px ${props => props.theme.colors.black};
+  box-shadow: 0 0 2px 2px ${props => props.theme.colors.black};
 `;
 
 const ListItem = styled(BlockListItem)`
@@ -77,8 +77,10 @@ const Sidebar = ({
   <StyleWrapper>
     <ListItem
       isLight
-      as={manufacturer.website ? "a" : "div"}
-      href={manufacturer.website}
+      as={product.url || manufacturer.website ? "a" : "div"}
+      href={product.url || manufacturer.website}
+      target="_blank"
+      hasAction={!!(product.url || manufacturer.website)}
     >
       <ManufacturerLogo
         size={32}

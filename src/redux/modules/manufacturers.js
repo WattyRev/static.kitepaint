@@ -49,7 +49,8 @@ export const getManufacturerByProductId = (state, productId) => {
   if (!product) {
     return null;
   }
-  const manufacturerId = product.get("id");
+
+  const manufacturerId = product.get("manufacturer");
   const manufacturer = state.getIn(["manufacturers", manufacturerId]);
   if (!manufacturer) {
     return null;
