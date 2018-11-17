@@ -1,8 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import productShape from "../../models/product";
 import { H3 } from "../../theme";
 
+/**
+ * Provides styling for the showcase
+ */
 export const StyleWrapper = styled.div`
   flex-basis: 500px;
   margin: 8px;
@@ -75,8 +79,11 @@ export const StyleWrapper = styled.div`
   }
 `;
 
+/**
+ * A preview of a specific product, which links to the create page for that product.
+ */
 const ProductShowcase = ({ product }) => (
-  <StyleWrapper>
+  <StyleWrapper as={Link} to={`/create/${product.id}`}>
     <H3 className="product-heading">{product.name}</H3>
     {product.variations.map(variation => (
       <div
@@ -89,6 +96,9 @@ const ProductShowcase = ({ product }) => (
 );
 
 ProductShowcase.propTypes = {
+  /**
+   * The product being showcased
+   */
   product: productShape.isRequired
 };
 

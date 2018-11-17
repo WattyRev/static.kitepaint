@@ -12916,6 +12916,7 @@ ShallowWrapper {
     "key": undefined,
     "nodeType": "function",
     "props": Object {
+      "as": [Function],
       "children": Array [
         <ForwardRef
           className="product-heading"
@@ -12933,6 +12934,7 @@ ShallowWrapper {
           />,
         ],
       ],
+      "to": "/create/abc",
     },
     "ref": null,
     "rendered": Array [
@@ -13094,6 +13096,7 @@ ShallowWrapper {
       "key": undefined,
       "nodeType": "function",
       "props": Object {
+        "as": [Function],
         "children": Array [
           <ForwardRef
             className="product-heading"
@@ -13111,6 +13114,7 @@ ShallowWrapper {
             />,
           ],
         ],
+        "to": "/create/abc",
       },
       "ref": null,
       "rendered": Array [
