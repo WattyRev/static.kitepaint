@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ProductsContainer renders 1`] = `
+exports[`ProductsContainer renders with the expected data 1`] = `
 ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <ProductsContainer
@@ -69,7 +69,58 @@ ShallowWrapper {
       }
     }
   >
-    [Function]
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          Object {
+            "props": Object {
+              "manufacturers": Array [
+                Object {
+                  "id": "abc",
+                  "logo": "abc.jpg",
+                  "name": "Krazy Kites",
+                  "website": "http://krazykites.com",
+                },
+              ],
+              "products": Object {
+                "abc": Array [
+                  Object {
+                    "colors": Array [
+                      Object {
+                        "color": "#ff0000",
+                        "name": "red",
+                      },
+                      Object {
+                        "color": "#000000",
+                        "name": "black",
+                      },
+                    ],
+                    "id": "abc",
+                    "manufacturer": "abc",
+                    "name": "Krazy Kite",
+                    "url": "http://krazykites.com/krazy-kite",
+                    "variations": Array [
+                      Object {
+                        "name": "Standard",
+                        "svg": "<div>Kool Kite</div>",
+                      },
+                    ],
+                  },
+                ],
+              },
+            },
+          },
+        ],
+      ],
+      "results": Array [
+        Object {
+          "isThrow": false,
+          "value": <div>
+            Test
+          </div>,
+        },
+      ],
+    }
   </ProductsContainer>,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],

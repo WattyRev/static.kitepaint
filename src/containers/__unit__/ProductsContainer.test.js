@@ -16,14 +16,19 @@ describe("ProductsContainer", () => {
       getManufacturers: jest.fn()
     };
   });
-  it("renders", () => {
-    expect.assertions(1);
+  it("renders with the expected data", () => {
+    expect.assertions(2);
+    const render = jest.fn(() => <div>Test</div>);
     const wrapper = shallow(
-      <ProductsContainer {...defaultProps}>
-        {() => <div>Test</div>}
-      </ProductsContainer>
+      <ProductsContainer {...defaultProps}>{render}</ProductsContainer>
     );
     expect(wrapper).toMatchSnapshot();
+    expect(render.mock.calls[0][0]).toEqual({
+      props: {
+        products: defaultProps.products,
+        manufacturers: defaultProps.manufacturers
+      }
+    });
   });
   it("triggers getProducts when mounted", () => {
     expect.assertions(1);

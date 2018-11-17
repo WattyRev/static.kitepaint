@@ -44,7 +44,6 @@ export class ProductsContainer extends React.Component {
 
   render() {
     return this.props.children({
-      actions: {},
       props: {
         products: this.props.products || {},
         manufacturers: this.props.manufacturers || []
