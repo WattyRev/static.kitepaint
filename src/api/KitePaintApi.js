@@ -279,6 +279,124 @@ export class KitePaintApi {
 
     return response;
   }
+
+  /**
+   * A cache for getProducts to prevent making the same request repeatedly.
+   * @type {Array}
+   * @private
+   */
+  _getProductsCache = [];
+
+  /**
+   * Get all products.
+   * @param  {Boolean} [useCache=true] If true, the request will be cached, and subsequent duplicate
+   * requests will not be made within 10 minutes.
+   * @return {Promise}
+   */
+  async getProducts(useCache = true) {
+    // Look for cached values if useCache is true
+    if (useCache) {
+      const relevantCache = this._getProductsCache[0];
+
+      if (relevantCache) {
+        const cacheDuration = 10 * 60 * 1000; // 10 minutes
+        const currentTime = new Date().getTime();
+        if (relevantCache.cacheTime + cacheDuration >= currentTime) {
+          return new Promise(resolve =>
+            resolve({
+              data: []
+            })
+          );
+        }
+      }
+
+      this._getProductsCache.push({
+        cacheTime: new Date().getTime()
+      });
+    }
+
+    // Make the request
+    const response = await this.axiosInstance.get(`/products.php`, {
+      params: {
+        activated: 1
+      }
+    });
+
+    // Handle invalid responses
+    if (!response.data) {
+      return new Promise((resolve, reject) =>
+        reject(
+          response.data
+            ? response.data.message
+            : "The request for products was unsuccessful"
+        )
+      );
+    }
+
+    response.data = response.data.map(product => {
+      product.variations = JSON.parse(product.variations);
+      product.colors = JSON.parse(product.colors);
+      return product;
+    });
+
+    return response;
+  }
+
+  /**
+   * A cache for getManufacturers to prevent making the same request repeatedly.
+   * @type {Array}
+   * @private
+   */
+  _getManufacturersCache = [];
+
+  /**
+   * Get all manufacturers.
+   * @param  {Boolean} [useCache=true] If true, the request will be cached, and subsequent duplicate
+   * requests will not be made within 10 minutes.
+   * @return {Promise}
+   */
+  async getManufacturers(useCache = true) {
+    // Look for cached values if useCache is true
+    if (useCache) {
+      const relevantCache = this._getManufacturersCache[0];
+
+      if (relevantCache) {
+        const cacheDuration = 10 * 60 * 1000; // 10 minutes
+        const currentTime = new Date().getTime();
+        if (relevantCache.cacheTime + cacheDuration >= currentTime) {
+          return new Promise(resolve =>
+            resolve({
+              data: []
+            })
+          );
+        }
+      }
+
+      this._getManufacturersCache.push({
+        cacheTime: new Date().getTime()
+      });
+    }
+
+    // Make the request
+    const response = await this.axiosInstance.get(`/manufacturers.php`, {
+      params: {
+        activated: 1
+      }
+    });
+
+    // Handle invalid responses
+    if (!response.data) {
+      return new Promise((resolve, reject) =>
+        reject(
+          response.data
+            ? response.data.message
+            : "The request for manufacturers was unsuccessful"
+        )
+      );
+    }
+
+    return response;
+  }
 }
 
 export default new KitePaintApi();

@@ -38,23 +38,14 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 10",
-    "not op_mini all"
-  ],
+  "browserslist": [">0.2%", "not dead", "not ie <= 10", "not op_mini all"],
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,json,css}": [
-      "prettier --write",
-      "eslint --fix",
-      "git add"
-    ]
+    "src/**/*.{js,jsx,json}": ["prettier --write", "eslint --fix", "git add"]
   },
   "jest": {
     "coverageThreshold": {
@@ -64,7 +55,12 @@
         "lines": 80,
         "statements": 80
       }
-    }
+    },
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/setupTests.js",
+      "!src/**/*.test.js"
+    ]
   },
   "devDependencies": {
     "eslint-config-prettier": "^3.1.0",

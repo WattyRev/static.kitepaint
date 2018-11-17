@@ -27,6 +27,7 @@
     "window": true,
     "FormData": true,
     "document": true,
-    "localStorage": true
+    "localStorage": true,
+    "console": true
   }
 }

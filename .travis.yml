@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "7"
+  - "8"
 stages:
   - name: test
     if: (NOT type IN (pull_request))
