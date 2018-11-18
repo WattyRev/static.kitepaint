@@ -13,31 +13,8 @@ export const StyleWrapper = styled.div`
   flex-shrink: 1;
   border: 1px solid ${props => props.theme.colors.gray};
   border-radius: 4px;
-  background-image: linear-gradient(
-      45deg,
-      ${props => props.theme.colors.gray} 25%,
-      transparent 25%
-    ),
-    linear-gradient(
-      -45deg,
-      ${props => props.theme.colors.gray} 25%,
-      transparent 25%
-    ),
-    linear-gradient(
-      45deg,
-      transparent 75%,
-      ${props => props.theme.colors.gray} 75%
-    ),
-    linear-gradient(
-      -45deg,
-      transparent 75%,
-      ${props => props.theme.colors.gray} 75%
-    );
-  background-color: ${props => props.theme.colors.grayDark};
-  background-size: 20px 20px;
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  ${props => props.theme.patterns.transparencyBackground};
   cursor: pointer;
-  transition: 0.4s background-position;
   position: relative;
   display: flex;
   padding: 36px 8px 8px;

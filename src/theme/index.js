@@ -1,4 +1,5 @@
 import * as colors from "./colors";
+import * as patterns from "./patterns";
 import A from "./A";
 import BlockListItem from "./BlockListItem";
 import Button from "./Button";
@@ -13,7 +14,7 @@ import Label from "./Label";
 import P from "./P";
 import Tooltip from "./Tooltip";
 
-const Theme = { colors };
+const Theme = { colors, patterns };
 export default Theme;
 
 export {

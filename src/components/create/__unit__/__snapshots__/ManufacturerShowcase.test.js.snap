@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ManufacturerShowcase StyleWrapper renders 1`] = `
+.c0 {
+  background: #f0fbff;
+  border: 1px solid #AAAAAA;
+  margin: 8px 16px;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+<styled.div
+  theme={
+    Object {
+      "colors": Object {
+        "aqua": "#7FDBFF",
+        "black": "#111111",
+        "blue": "#0074D9",
+        "blueDarker": "#005daa",
+        "blueLighter": "#f0fbff",
+        "fuchsia": "#F012BE",
+        "gray": "#AAAAAA",
+        "grayDark": "#5e5e5e",
+        "grayDarker": "#3a3a3a",
+        "green": "#2ECC40",
+        "lime": "#01FF70",
+        "maroon": "#85144B",
+        "navy": "#001F3F",
+        "olive": "#3D9970",
+        "orange": "#FF851B",
+        "purple": "#B10DC9",
+        "red": "#FF4136",
+        "silver": "#DDDDDD",
+        "teal": "#39CCCC",
+        "white": "#FFFFFF",
+        "yellow": "#FFDC00",
+      },
+      "patterns": Object {
+        "transparencyBackground": Array [
+          "
+  background-image: linear-gradient(45deg, ",
+          "#AAAAAA",
+          " 25%, transparent 25%),
+    linear-gradient(-45deg, ",
+          "#AAAAAA",
+          " 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, ",
+          "#AAAAAA",
+          " 75%),
+    linear-gradient(-45deg, transparent 75%, ",
+          "#AAAAAA",
+          " 75%);
+  background-color: ",
+          "#5e5e5e",
+          ";
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+",
+        ],
+      },
+    }
+  }
+>
+  <StyledComponent
+    forwardedClass={
+      Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "attrs": undefined,
+        "componentStyle": ComponentStyle {
+          "componentId": "sc-jzJRlG",
+          "isStatic": false,
+          "lastClassName": "c0",
+          "rules": Array [
+            "
+  background: ",
+            [Function],
+            ";
+  border: 1px solid ",
+            [Function],
+            ";
+  margin: 8px 16px;
+  border-radius: 4px;
+  padding: 8px;
+",
+          ],
+        },
+        "displayName": "styled.div",
+        "render": [Function],
+        "styledComponentId": "sc-jzJRlG",
+        "target": "div",
+        "toString": [Function],
+        "warnTooManyClasses": [Function],
+        "withComponent": [Function],
+      }
+    }
+    forwardedRef={null}
+    theme={
+      Object {
+        "colors": Object {
+          "aqua": "#7FDBFF",
+          "black": "#111111",
+          "blue": "#0074D9",
+          "blueDarker": "#005daa",
+          "blueLighter": "#f0fbff",
+          "fuchsia": "#F012BE",
+          "gray": "#AAAAAA",
+          "grayDark": "#5e5e5e",
+          "grayDarker": "#3a3a3a",
+          "green": "#2ECC40",
+          "lime": "#01FF70",
+          "maroon": "#85144B",
+          "navy": "#001F3F",
+          "olive": "#3D9970",
+          "orange": "#FF851B",
+          "purple": "#B10DC9",
+          "red": "#FF4136",
+          "silver": "#DDDDDD",
+          "teal": "#39CCCC",
+          "white": "#FFFFFF",
+          "yellow": "#FFDC00",
+        },
+        "patterns": Object {
+          "transparencyBackground": Array [
+            "
+  background-image: linear-gradient(45deg, ",
+            "#AAAAAA",
+            " 25%, transparent 25%),
+    linear-gradient(-45deg, ",
+            "#AAAAAA",
+            " 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, ",
+            "#AAAAAA",
+            " 75%),
+    linear-gradient(-45deg, transparent 75%, ",
+            "#AAAAAA",
+            " 75%);
+  background-color: ",
+            "#5e5e5e",
+            ";
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+",
+          ],
+        },
+      }
+    }
+  >
+    <div
+      className="c0"
+    />
+  </StyledComponent>
+</styled.div>
+`;
+
+exports[`ManufacturerShowcase renders 1`] = `
+<styled.div>
+  <styled.div>
+    <styled.div
+      src="/logos/abc.jpg"
+    />
+    <div>
+      <Styled(H3)>
+        Krazy Kites
+      </Styled(H3)>
+      <P
+        className="testing_website"
+      >
+        <styled.a
+          href="http://krazykites.com"
+          target="_blank"
+        >
+          http://krazykites.com
+        </styled.a>
+      </P>
+    </div>
+  </styled.div>
+  <div>
+    Children!
+  </div>
+</styled.div>
+`;
