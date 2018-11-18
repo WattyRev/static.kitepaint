@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { appliedColorsShape } from "../../containers/EditorContainer";
 import ColorableSvg from "./ColorableSvg";
 
 export const StyleWrapper = styled.div`
@@ -53,12 +54,7 @@ class Canvas extends React.Component {
     /**
      * A map of colors currently applied to the svg
      */
-    colorMap: PropTypes.objectOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        color: PropTypes.string.isRequired
-      })
-    )
+    colorMap: appliedColorsShape.isRequired
   };
 
   /**

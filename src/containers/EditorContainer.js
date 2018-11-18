@@ -4,6 +4,17 @@ import { fromJS } from "immutable";
 import productShape from "../models/product";
 import { softCompareStrings } from "../utils";
 
+const appliedColorsShape = PropTypes.objectOf(
+  PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired
+  })
+);
+
+const productAppliedColorsShape = PropTypes.objectOf(appliedColorsShape);
+
+export { appliedColorsShape, productAppliedColorsShape };
+
 /**
  * Manages the overall state of the editor.
  */

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import manufacturerShape from "../../models/manufacturer";
 import productShape from "../../models/product";
 import designShape from "../../models/design";
+import { productAppliedColorsShape } from "../../containers/EditorContainer";
 import { BlockListItem, Icon } from "../../theme";
 import ManufacturerLogo from "../ManufacturerLogo";
 import ColorTile from "./ColorTile";
@@ -153,14 +154,7 @@ const Sidebar = ({
 );
 
 Sidebar.propTypes = {
-  appliedColors: PropTypes.objectOf(
-    PropTypes.objectOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        color: PropTypes.string.isRequired
-      })
-    )
-  ),
+  appliedColors: productAppliedColorsShape.isRequired,
   /**
    * The manufacturer that creates the product being edited.
    */

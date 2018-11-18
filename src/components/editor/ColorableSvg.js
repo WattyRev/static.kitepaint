@@ -1,15 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { appliedColorsShape } from "../../containers/EditorContainer";
 
 class ColorableSvg extends React.Component {
   static propTypes = {
     svg: PropTypes.string.isRequired,
-    colorMap: PropTypes.objectOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        color: PropTypes.string.isRequired
-      })
-    )
+    colorMap: appliedColorsShape.isRequired
   };
 
   componentDidMount() {
