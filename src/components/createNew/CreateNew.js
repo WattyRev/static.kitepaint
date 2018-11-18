@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import ProductContainer from "../../containers/ProductContainer";
+import EditorContainer from "../../containers/EditorContainer";
 import Toolbar from "../editor/Toolbar";
 import Sidebar from "../editor/Sidebar";
 import Canvas from "../editor/Canvas";
@@ -19,24 +20,28 @@ const PageLayout = styled.div`
 const CreateNew = ({ match }) => (
   <ProductContainer productId={match.params.productId}>
     {productData => (
-      <React.Fragment>
-        <Toolbar />
-        <PageLayout>
-          <Sidebar
-            product={productData.props.product}
-            manufacturer={productData.props.manufacturer}
-            selectedVariation={productData.props.product.variations[0].name}
-            selectedColor={productData.props.product.colors[0].name}
-            onColorSelect={() => {}}
-            onVariationSelect={() => {}}
-          />
-          <Canvas
-            svg={productData.props.product.variations[0].svg}
-            onClick={() => {}}
-            currentColor="blue"
-          />
-        </PageLayout>
-      </React.Fragment>
+      <EditorContainer product={productData.props.product}>
+        {editorData => (
+          <React.Fragment>
+            <Toolbar />
+            <PageLayout>
+              <Sidebar
+                product={productData.props.product}
+                manufacturer={productData.props.manufacturer}
+                selectedVariation={editorData.props.currentVariation.name}
+                selectedColor={editorData.props.currentColor.name}
+                onColorSelect={editorData.actions.selectColor}
+                onVariationSelect={editorData.actions.selectVariation}
+              />
+              <Canvas
+                svg={editorData.props.currentVariation.svg}
+                onClick={editorData.actions.applyColor}
+                currentColor={editorData.props.currentColor.name}
+              />
+            </PageLayout>
+          </React.Fragment>
+        )}
+      </EditorContainer>
     )}
   </ProductContainer>
 );
