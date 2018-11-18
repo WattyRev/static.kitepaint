@@ -17,7 +17,8 @@ describe("Canvas", () => {
     defaultProps = {
       svg: '<div class="testing_target">test</div>',
       onClick: jest.fn(),
-      currentColor: "Orange"
+      currentColor: "Orange",
+      colorMap: {}
     };
   });
   it("renders", () => {

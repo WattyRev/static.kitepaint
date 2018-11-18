@@ -1,14 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Canvas renders 1`] = `
-<styled.div>
-  <div
-    dangerouslySetInnerHTML={
-      Object {
-        "__html": "<div class=\\"testing_target\\">test</div>",
-      }
-    }
-    onClick={[Function]}
+<styled.div
+  onClick={[Function]}
+>
+  <ColorableSvg
+    colorMap={Object {}}
+    svg="<div class=\\"testing_target\\">test</div>"
   />
 </styled.div>
 `;
