@@ -34,6 +34,7 @@ const CreateNew = ({ match }) => (
                 onVariationSelect={editorData.actions.selectVariation}
               />
               <Canvas
+                colorMap={editorData.props.currentVariationColors}
                 svg={editorData.props.currentVariation.svg}
                 onClick={editorData.actions.applyColor}
                 currentColor={editorData.props.currentColor.name}
