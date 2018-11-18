@@ -2,6 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { appliedColorsShape } from "../../containers/EditorContainer";
 
+/**
+ * Renders the provided SVG and uses the colorMap to apply a fill color to verious elements
+ */
 class ColorableSvg extends React.Component {
   static propTypes = {
     svg: PropTypes.string.isRequired,

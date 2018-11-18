@@ -94,11 +94,9 @@ class EditorContainer extends React.Component {
     const currentColor = this.props.product.colors.find(color =>
       softCompareStrings(color.name, colorName)
     );
-    if (currentColor) {
-      this.setState({
-        currentColor
-      });
-    }
+    this.setState({
+      currentColor
+    });
   };
 
   /**
@@ -109,11 +107,9 @@ class EditorContainer extends React.Component {
     const currentVariation = this.props.product.variations.find(variation =>
       softCompareStrings(variation.name, variationName)
     );
-    if (currentVariation) {
-      this.setState({
-        currentVariation
-      });
-    }
+    this.setState({
+      currentVariation
+    });
   };
 
   /**

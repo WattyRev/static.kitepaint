@@ -40,3 +40,56 @@ exports[`CreateNew renders 2`] = `
   </EditorContainer>
 </div>
 `;
+
+exports[`CreateNew renders 3`] = `
+<div>
+  <Toolbar />
+  <styled.div>
+    <Sidebar
+      appliedColors={Object {}}
+      manufacturer={
+        Object {
+          "id": "abc",
+          "logo": "abc.jpg",
+          "name": "Krazy Kites",
+          "website": "http://krazykites.com",
+        }
+      }
+      onColorSelect={[MockFunction]}
+      onVariationSelect={[MockFunction]}
+      product={
+        Object {
+          "colors": Array [
+            Object {
+              "color": "#ff0000",
+              "name": "red",
+            },
+            Object {
+              "color": "#000000",
+              "name": "black",
+            },
+          ],
+          "id": "abc",
+          "manufacturer": "abc",
+          "name": "Krazy Kite",
+          "url": "http://krazykites.com/krazy-kite",
+          "variations": Array [
+            Object {
+              "name": "Standard",
+              "svg": "<div>Kool Kite</div>",
+            },
+          ],
+        }
+      }
+      selectedColor="blue"
+      selectedVariation="Standard"
+    />
+    <Canvas
+      colorMap={Object {}}
+      currentColor="blue"
+      onClick={[MockFunction]}
+      svg=""
+    />
+  </styled.div>
+</div>
+`;
