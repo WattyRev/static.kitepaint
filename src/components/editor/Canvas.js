@@ -56,26 +56,42 @@ class Canvas extends React.Component {
    * @param  {Object} event The DOM click event
    */
   handleClick = event => {
+    // Checks if the the currentColor can be applied given the content or absence of a whitelist.
+    const checkWhitelist = whitelist => {
+      return (
+        !whitelist ||
+        !whitelist.length ||
+        whitelist.includes(this.props.currentColor.toLowerCase())
+      );
+    };
+
+    // Parses a string form the data-whitelist property into an array of lowercase,trimmed values
+    const processWhitelist = whitelistString => {
+      return whitelistString
+        .split(",")
+        .map(color => color.trim().toLowerCase())
+        .filter(color => !!color);
+    };
+
     // Get the data-id attribute from the target.
     const targetId = event.target.getAttribute("data-id");
     if (targetId) {
       // Get the data-whitelist attribute which contains a comma separated list of color names that can
       // be applied
       const whitelistString = event.target.getAttribute("data-whitelist") || "";
-      const whitelist = whitelistString
-        .split(",")
-        .map(color => color.trim().toLowerCase())
-        .filter(color => !!color);
+      const whitelist = processWhitelist(whitelistString);
 
       // If the whitelist is empty or it contains the current color, trigger onClick
-      if (
-        !whitelist ||
-        !whitelist.length ||
-        whitelist.includes(this.props.currentColor.toLowerCase())
-      ) {
+      if (checkWhitelist(whitelist)) {
         this.props.onClick(targetId);
         return;
       }
+      return;
+    }
+
+    // If there is no parent element, return
+    if (!event.target.parentElement) {
+      return;
     }
 
     // If there was no id on the target, check the parent to see if it is colored as a group
@@ -87,17 +103,12 @@ class Canvas extends React.Component {
     }
 
     // Get the whitelist of colors for the group
-    const whitelist = (
-      event.target.parentElement.getAttribute("data-whitelist") || ""
-    )
-      .split(",")
-      .map(color => color.trim().toLowerCase());
+    const whitelistString =
+      event.target.parentElement.getAttribute("data-whitelist") || "";
+    const whitelist = processWhitelist(whitelistString);
 
     // Call onClick if the current color is in the whitelist or if the whitelist is empty
-    if (
-      !whitelist.length ||
-      whitelist.includes(this.props.currentColor.toLowerCase())
-    ) {
+    if (checkWhitelist(whitelist)) {
       this.props.onClick(parentGroupId);
       return;
     }

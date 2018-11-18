@@ -2,7 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { P, Icon } from "../../theme";
 
-const StyleWrapper = styled.div`
+/**
+ * Overall styling for the toolbar
+ */
+export const StyleWrapper = styled.div`
   background: ${props => props.theme.colors.grayDarker};
   display: flex;
   padding: 0 8px;
@@ -25,6 +28,9 @@ const StyleWrapper = styled.div`
   }
 `;
 
+/**
+ * The toolbar displayed at the top of the editor to provide various actions.
+ */
 const Toolbar = () => (
   <StyleWrapper>
     <P isLight>

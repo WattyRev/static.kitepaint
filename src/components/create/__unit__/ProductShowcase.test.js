@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
-import { mockProduct } from "../../../models/product";
+import { getMockProduct } from "../../../models/product";
 import Theme from "../../../theme";
 import ProductShowcase, { StyleWrapper } from "../ProductShowcase";
 
@@ -8,7 +8,7 @@ describe("ProductShowcase", () => {
   let defaultProps;
   beforeEach(() => {
     defaultProps = {
-      product: mockProduct
+      product: getMockProduct()
     };
   });
   it("renders", () => {

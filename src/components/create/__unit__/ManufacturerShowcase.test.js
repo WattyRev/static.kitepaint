@@ -1,14 +1,14 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import Theme from "../../../theme";
-import { mockManufacturer } from "../../../models/manufacturer";
+import { getMockManufacturer } from "../../../models/manufacturer";
 import ManufacturerShowcase, { StyleWrapper } from "../ManufacturerShowcase";
 
 describe("ManufacturerShowcase", () => {
   let mockProps;
   beforeEach(() => {
     mockProps = {
-      manufacturer: mockManufacturer
+      manufacturer: getMockManufacturer()
     };
   });
   it("renders", () => {

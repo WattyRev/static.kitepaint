@@ -8,7 +8,10 @@ import { BlockListItem, Icon } from "../../theme";
 import ManufacturerLogo from "../ManufacturerLogo";
 import ColorTile from "./ColorTile";
 
-const StyleWrapper = styled.div`
+/**
+ * An overall wrapper for the sidebar
+ */
+export const StyleWrapper = styled.div`
   width: 175px;
   display: block;
   flex-shrink: 0;
@@ -16,7 +19,10 @@ const StyleWrapper = styled.div`
   box-shadow: 0 0 2px 2px ${props => props.theme.colors.black};
 `;
 
-const ListItem = styled(BlockListItem)`
+/**
+ * An individual, possibly selectable, item that appreas in the sidebar.
+ */
+export const ListItem = styled(BlockListItem)`
   display: flex;
   align-items: center;
   cursor: ${props => (props.hasAction ? "pointer" : "default")};
@@ -48,12 +54,18 @@ const ListItem = styled(BlockListItem)`
   }
 `;
 
+/**
+ * A heading that can appear above a group of ListItems.
+ */
 const ListHeading = styled(BlockListItem)`
   padding: 16px 8px 2px;
   font-weight: bold;
   font-size: 12px;
 `;
 
+/**
+ * A styled preview of a variation's svg
+ */
 const VariationPreview = styled.div`
   display: block;
   width: 24px;
@@ -65,6 +77,9 @@ const VariationPreview = styled.div`
   }
 `;
 
+/**
+ * The sidebar displayed when editing/creating a new design
+ */
 const Sidebar = ({
   manufacturer,
   product,
@@ -76,6 +91,7 @@ const Sidebar = ({
 }) => (
   <StyleWrapper>
     <ListItem
+      className="testing_manufacturer"
       isLight
       as={product.url || manufacturer.website ? "a" : "div"}
       href={product.url || manufacturer.website}
@@ -93,9 +109,14 @@ const Sidebar = ({
         <small>by {manufacturer.name}</small>
       </div>
     </ListItem>
-    {design && <ListHeading isLight>{design.name}</ListHeading>}
+    {design && (
+      <ListHeading className="testing_design" isLight>
+        {design.name}
+      </ListHeading>
+    )}
     {product.variations.map(variation => (
       <ListItem
+        className="testing_variation"
         isLight
         hasAction
         isActive={variation.name === selectedVariation}
@@ -111,6 +132,7 @@ const Sidebar = ({
     </ListHeading>
     {product.colors.map(color => (
       <ListItem
+        className="testing_color"
         isLight
         hasAction
         key={color.name}
@@ -124,12 +146,35 @@ const Sidebar = ({
 );
 
 Sidebar.propTypes = {
+  /**
+   * The manufacturer that creates the product being edited.
+   */
   manufacturer: manufacturerShape.isRequired,
+  /**
+   * The produt that is being edited
+   */
   product: productShape.isRequired,
+  /**
+   * The pre-existing design that is being edited, if any
+   */
   design: designShape,
+  /**
+   * The name of the variation that is currently selected
+   */
   selectedVariation: PropTypes.string.isRequired,
+  /**
+   * The name of the color that is currently selected
+   */
   selectedColor: PropTypes.string.isRequired,
+  /**
+   * Called when a color is selected.
+   * Is provided with the color name as the first parameter.
+   */
   onColorSelect: PropTypes.func.isRequired,
+  /**
+   * Called when a variation is selected.
+   * Is provided with the variation name as the first parameter.
+   */
   onVariationSelect: PropTypes.func.isRequired
 };
 

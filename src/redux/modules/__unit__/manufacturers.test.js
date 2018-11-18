@@ -1,6 +1,12 @@
 import { fromJS } from "immutable";
+import { getMockProduct } from "../../../models/product";
+import { getMockManufacturer } from "../../../models/manufacturer";
 import { GET_MANUFACTURERS } from "../../actions";
-import Reducer, { defaultState, getManufacturers } from "../manufacturers";
+import Reducer, {
+  defaultState,
+  getManufacturers,
+  getManufacturerByProductId
+} from "../manufacturers";
 
 describe("Manufacturers redux module", () => {
   describe("reducer", () => {
@@ -52,6 +58,49 @@ describe("Manufacturers redux module", () => {
             name: "def"
           }
         ]);
+      });
+    });
+    describe("getManufacturerByProductId", () => {
+      it("returns null if it could not find the product", () => {
+        expect.assertions(1);
+        const mockState = fromJS({
+          products: {},
+          manufacturers: {}
+        });
+        const response = getManufacturerByProductId(mockState, "abc");
+        expect(response).toEqual(null);
+      });
+      it("returns null if it could not find the manufacturer", () => {
+        expect.assertions(1);
+        const mockProduct = getMockProduct();
+        mockProduct.id = "abc";
+        const mockState = fromJS({
+          products: {
+            [mockProduct.id]: mockProduct
+          },
+          manufacturers: {}
+        });
+        const response = getManufacturerByProductId(mockState, "abc");
+        expect(response).toEqual(null);
+      });
+      it("returns the manufacturer", () => {
+        expect.assertions(1);
+        const mockProduct = getMockProduct();
+        mockProduct.id = "abc";
+        mockProduct.manufacturer = "def";
+        const mockManufacturer = getMockManufacturer();
+        mockManufacturer.id = "def";
+        const mockState = fromJS({
+          products: {
+            [mockProduct.id]: mockProduct
+          },
+          manufacturers: {
+            [getMockManufacturer().id]: getMockManufacturer,
+            [mockManufacturer.id]: mockManufacturer
+          }
+        });
+        const response = getManufacturerByProductId(mockState, "abc");
+        expect(response).toEqual(mockManufacturer);
       });
     });
   });

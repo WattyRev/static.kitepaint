@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
-import { mockProduct } from "../../models/product";
-import { mockManufacturer } from "../../models/manufacturer";
+import { getMockProduct } from "../../models/product";
+import { getMockManufacturer } from "../../models/manufacturer";
 import { ProductsContainer } from "../ProductsContainer";
 
 describe("ProductsContainer", () => {
@@ -9,9 +9,9 @@ describe("ProductsContainer", () => {
   beforeEach(() => {
     defaultProps = {
       products: {
-        [mockManufacturer.id]: [mockProduct]
+        [getMockManufacturer().id]: [getMockProduct()]
       },
-      manufacturers: [mockManufacturer],
+      manufacturers: [getMockManufacturer()],
       getProducts: jest.fn(),
       getManufacturers: jest.fn()
     };

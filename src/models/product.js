@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { mockManufacturer } from "./manufacturer";
+import { getMockManufacturer } from "./manufacturer";
 
 /**
  * A product is a kite that can be customized to create a design.
@@ -29,10 +29,10 @@ export default productShape;
  * A mock product used for testing
  * @type {Object}
  */
-const mockProduct = {
+const getMockProduct = () => ({
   id: "abc",
   name: "Krazy Kite",
-  manufacturer: mockManufacturer.id,
+  manufacturer: getMockManufacturer().id,
   url: "http://krazykites.com/krazy-kite",
   colors: [
     {
@@ -50,6 +50,6 @@ const mockProduct = {
       svg: "<div>Kool Kite</div>"
     }
   ]
-};
+});
 
-export { mockProduct };
+export { getMockProduct };

@@ -17,3 +17,21 @@ const designShape = PropTypes.shape({
 });
 
 export default designShape;
+
+/**
+ * A mock design used for testing
+ * @type {Object}
+ */
+const getMockDesign = () => ({
+  id: "abc",
+  created: "01/01/2018",
+  name: "picasso",
+  variations: [
+    {
+      name: "Standard",
+      svg: "<div>picasso standard</div>",
+      primary: true
+    }
+  ]
+});
+export { getMockDesign };

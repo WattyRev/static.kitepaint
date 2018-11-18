@@ -1,8 +1,8 @@
 import React from "react";
 import { shallow } from "enzyme";
 import ProductContainer from "../../../containers/ProductContainer";
-import { mockProduct } from "../../../models/product";
-import { mockManufacturer } from "../../../models/manufacturer";
+import { getMockProduct } from "../../../models/product";
+import { getMockManufacturer } from "../../../models/manufacturer";
 import CreateNew from "../CreateNew";
 
 describe("CreateNew", () => {
@@ -23,8 +23,8 @@ describe("CreateNew", () => {
 
     const productData = {
       props: {
-        product: mockProduct,
-        manufacturer: mockManufacturer
+        product: getMockProduct(),
+        manufacturer: getMockManufacturer()
       }
     };
     const productContainerWrapper = shallow(

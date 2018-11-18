@@ -44,6 +44,12 @@ export const getManufacturers = state => {
     .toJS();
 };
 
+/**
+ * Retreives the stored manufacturer based on the provided product id
+ * @param  {Map} state
+ * @param  {String} productId
+ * @return {Object} The manufacturer
+ */
 export const getManufacturerByProductId = (state, productId) => {
   const product = state.getIn(["products", productId]);
   if (!product) {

@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
+/**
+ * Creates a circle that represents a color on the color palette.
+ *
+ * Provide a color prop to set the color.
+ */
 const ColorTile = styled.div`
   display: block;
   width: 16px;

@@ -1,6 +1,10 @@
 import { fromJS } from "immutable";
 import { GET_PRODUCTS } from "../../actions";
-import Reducer, { defaultState, getProductsGrouped } from "../products";
+import Reducer, {
+  defaultState,
+  getProductsGrouped,
+  getProductById
+} from "../products";
 
 describe("Products redux module", () => {
   describe("reducer", () => {
@@ -69,6 +73,60 @@ describe("Products redux module", () => {
               foo: "far"
             }
           ]
+        });
+      });
+    });
+    describe("getProductById", () => {
+      it("returns null if no product could be found", () => {
+        expect.assertions(1);
+        const mockState = fromJS({
+          products: {
+            "123": {
+              id: "123",
+              name: "def",
+              foo: "bar"
+            },
+            "234": {
+              id: "234",
+              name: "abc",
+              foo: "bar"
+            },
+            "456": {
+              id: "456",
+              name: "gfd",
+              foo: "far"
+            }
+          }
+        });
+        const response = getProductById(mockState, "76");
+        expect(response).toEqual(null);
+      });
+      it("returns the relevant product", () => {
+        expect.assertions(1);
+        const mockState = fromJS({
+          products: {
+            "123": {
+              id: "123",
+              name: "def",
+              foo: "bar"
+            },
+            "234": {
+              id: "234",
+              name: "abc",
+              foo: "bar"
+            },
+            "456": {
+              id: "456",
+              name: "gfd",
+              foo: "far"
+            }
+          }
+        });
+        const response = getProductById(mockState, "234");
+        expect(response).toEqual({
+          id: "234",
+          name: "abc",
+          foo: "bar"
         });
       });
     });

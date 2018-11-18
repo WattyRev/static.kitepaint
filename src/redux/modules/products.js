@@ -35,6 +35,12 @@ export const getProductsGrouped = (state, groupBy) => {
     .toJS();
 };
 
+/**
+ * Retrieve a stored product based on the provided id
+ * @param  {Map} state
+ * @param  {String} id
+ * @return {Object} the product
+ */
 export const getProductById = (state, id) => {
   const products = state.get("products");
   const product = products.get(id, null);

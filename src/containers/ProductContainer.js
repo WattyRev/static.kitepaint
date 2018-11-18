@@ -7,14 +7,38 @@ import { GET_PRODUCTS, GET_MANUFACTURERS } from "../redux/actions";
 import productShape from "../models/product";
 import manufacturerShape from "../models/manufacturer";
 
+/**
+ * Provides information about a specific product.
+ */
 export class ProductContainer extends React.Component {
   static propTypes = {
+    /**
+     * The ID of the product to get information about.
+     */
     productId: PropTypes.string.isRequired,
+    /**
+     * The product. Provided by redux.
+     */
     product: productShape,
+    /**
+     * The manufactuer of the product. Provided by redux.
+     */
     manufacturer: manufacturerShape,
+    /**
+     * A function to request the product be fetched. Provided by redux.
+     */
     onRequestProduct: PropTypes.func.isRequired,
+    /**
+     * A function to request the manufacturer of the product be fetched. Provided by redux.
+     */
     onRequestManufacturer: PropTypes.func.isRequired,
+    /**
+     * A function that returns the content to be rendered.
+     */
     children: PropTypes.func.isRequired,
+    /**
+     * Content that can be rendered while the component is loading.
+     */
     loadingRender: PropTypes.node
   };
 
