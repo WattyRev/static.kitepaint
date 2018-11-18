@@ -11,6 +11,11 @@ const PageLayout = styled.div`
   justify-content: stretch;
 `;
 
+/**
+ * A coordinating component that builds the CreatNew page.
+ * The CreateNew page is provided a productId from the router, and is intended to create a new
+ * design based on that product.
+ */
 const CreateNew = ({ match }) => (
   <ProductContainer productId={match.params.productId}>
     {productData => (

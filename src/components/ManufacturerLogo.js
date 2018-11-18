@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 /**
- * Styling for the manufacturer logo
+ * An element that displays an image to represent a manufacturer. Use this like an image tag.
  */
 const ManufacturerLogo = styled.div`
   background-image: url(${props => props.src});

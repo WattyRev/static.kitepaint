@@ -1,79 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ProductShowcase StyleWrapper renders 1`] = `
+exports[`ManufacturerShowcase StyleWrapper renders 1`] = `
 .c0 {
-  -webkit-flex-basis: 500px;
-  -ms-flex-preferred-size: 500px;
-  flex-basis: 500px;
-  margin: 8px;
-  -webkit-flex-shrink: 1;
-  -ms-flex-negative: 1;
-  flex-shrink: 1;
+  background: #f0fbff;
   border: 1px solid #AAAAAA;
+  margin: 8px 16px;
   border-radius: 4px;
-  background-image: linear-gradient(45deg,#AAAAAA 25%,transparent 25%), linear-gradient(-45deg,#AAAAAA 25%,transparent 25%), linear-gradient(45deg,transparent 75%,#AAAAAA 75%), linear-gradient(-45deg,transparent 75%,#AAAAAA 75%);
-  background-color: #5e5e5e;
-  background-size: 20px 20px;
-  background-position: 0 0,0 10px,10px -10px,-10px 0px;
-  cursor: pointer;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 36px 8px 8px;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-align-items: middle;
-  -webkit-box-align: middle;
-  -ms-flex-align: middle;
-  align-items: middle;
-  -webkit-box-pack: space-around;
-  -webkit-justify-content: space-around;
-  -ms-flex-pack: space-around;
-  justify-content: space-around;
-}
-
-.c0 .product-heading {
-  background: #FFFFFF;
-  border-bottom: 1px solid #AAAAAA;
-  text-align: center;
-  padding: 4px 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-}
-
-.c0 .preview {
-  width: 50%;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
   padding: 8px;
-  box-sizing: border-box;
-  -webkit-transition: 0.6s -webkit-transform;
-  -webkit-transition: 0.6s transform;
-  transition: 0.6s transform;
-}
-
-.c0 .preview.count-2 {
-  width: 100%;
-}
-
-.c0 .preview > svg {
-  height: 100%;
-  width: 100%;
-}
-
-.c0:hover .preview {
-  -webkit-transform: translateY(-15px);
-  -ms-transform: translateY(-15px);
-  transform: translateY(-15px);
 }
 
 <styled.div
@@ -134,71 +67,26 @@ exports[`ProductShowcase StyleWrapper renders 1`] = `
         "$$typeof": Symbol(react.forward_ref),
         "attrs": undefined,
         "componentStyle": ComponentStyle {
-          "componentId": "sc-fjdhpX",
+          "componentId": "sc-jzJRlG",
           "isStatic": false,
           "lastClassName": "c0",
           "rules": Array [
             "
-  flex-basis: 500px;
-  margin: 8px;
-  flex-shrink: 1;
+  background: ",
+            [Function],
+            ";
   border: 1px solid ",
             [Function],
             ";
+  margin: 8px 16px;
   border-radius: 4px;
-  ",
-            [Function],
-            ";
-  cursor: pointer;
-  position: relative;
-  display: flex;
-  padding: 36px 8px 8px;
-  flex-wrap: wrap;
-  align-items: middle;
-  justify-content: space-around;
-
-  .product-heading {
-    background: ",
-            [Function],
-            ";
-    border-bottom: 1px solid ",
-            [Function],
-            ";
-    text-align: center;
-    padding: 4px 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-  }
-  .preview {
-    width: 50%;
-    flex-grow: 1;
-    padding: 8px;
-    box-sizing: border-box;
-    transition: 0.6s transform;
-
-    &.count-2 {
-      width: 100%;
-    }
-    > svg {
-      height: 100%;
-      width: 100%;
-    }
-  }
-  &:hover {
-    .preview {
-      transform: translateY(-15px);
-    }
-  }
+  padding: 8px;
 ",
           ],
         },
         "displayName": "styled.div",
         "render": [Function],
-        "styledComponentId": "sc-fjdhpX",
+        "styledComponentId": "sc-jzJRlG",
         "target": "div",
         "toString": [Function],
         "warnTooManyClasses": [Function],
@@ -264,24 +152,30 @@ exports[`ProductShowcase StyleWrapper renders 1`] = `
 </styled.div>
 `;
 
-exports[`ProductShowcase renders 1`] = `
-<styled.div
-  as={[Function]}
-  to="/create/abc"
->
-  <Styled(H3)
-    className="product-heading"
-  >
-    Krazy Kite
-  </Styled(H3)>
-  <div
-    className="preview count-1"
-    dangerouslySetInnerHTML={
-      Object {
-        "__html": "<div>Kool Kite</div>",
-      }
-    }
-    key="Standard"
-  />
+exports[`ManufacturerShowcase renders 1`] = `
+<styled.div>
+  <styled.div>
+    <styled.div
+      src="/logos/abc.jpg"
+    />
+    <div>
+      <Styled(H3)>
+        Krazy Kites
+      </Styled(H3)>
+      <P
+        className="testing_website"
+      >
+        <styled.a
+          href="http://krazykites.com"
+          target="_blank"
+        >
+          http://krazykites.com
+        </styled.a>
+      </P>
+    </div>
+  </styled.div>
+  <div>
+    Children!
+  </div>
 </styled.div>
 `;

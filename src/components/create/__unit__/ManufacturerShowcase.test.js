@@ -2,10 +2,7 @@ import React from "react";
 import { shallow, mount } from "enzyme";
 import Theme from "../../../theme";
 import { mockManufacturer } from "../../../models/manufacturer";
-import ManufacturerShowcase, {
-  StyleWrapper,
-  StyledImage
-} from "../ManufacturerShowcase";
+import ManufacturerShowcase, { StyleWrapper } from "../ManufacturerShowcase";
 
 describe("ManufacturerShowcase", () => {
   let mockProps;
@@ -48,14 +45,6 @@ describe("ManufacturerShowcase", () => {
     it("renders", () => {
       expect.assertions(1);
       const wrapper = mount(<StyleWrapper theme={Theme} />);
-      expect(wrapper).toMatchSnapshot();
-    });
-  });
-
-  describe("StyledImage", () => {
-    it("renders", () => {
-      expect.assertions(1);
-      const wrapper = mount(<StyledImage theme={Theme} />);
       expect(wrapper).toMatchSnapshot();
     });
   });

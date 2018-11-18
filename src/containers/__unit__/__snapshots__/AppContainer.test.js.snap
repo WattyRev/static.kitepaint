@@ -1,214 +1,60 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AppContainer renders 1`] = `
-ShallowWrapper {
-  Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <AppContainer
-    isCheckingLogin={false}
-    onCheckLogin={
-      [MockFunction] {
-        "calls": Array [
-          Array [],
-        ],
-        "results": Array [
-          Object {
-            "isThrow": false,
-            "value": Promise {},
-          },
-        ],
+<BrowserRouter>
+  <ThemeProvider
+    theme={
+      Object {
+        "colors": Object {
+          "aqua": "#7FDBFF",
+          "black": "#111111",
+          "blue": "#0074D9",
+          "blueDarker": "#005daa",
+          "blueLighter": "#f0fbff",
+          "fuchsia": "#F012BE",
+          "gray": "#AAAAAA",
+          "grayDark": "#5e5e5e",
+          "grayDarker": "#3a3a3a",
+          "green": "#2ECC40",
+          "lime": "#01FF70",
+          "maroon": "#85144B",
+          "navy": "#001F3F",
+          "olive": "#3D9970",
+          "orange": "#FF851B",
+          "purple": "#B10DC9",
+          "red": "#FF4136",
+          "silver": "#DDDDDD",
+          "teal": "#39CCCC",
+          "white": "#FFFFFF",
+          "yellow": "#FFDC00",
+        },
+        "patterns": Object {
+          "transparencyBackground": Array [
+            "
+  background-image: linear-gradient(45deg, ",
+            "#AAAAAA",
+            " 25%, transparent 25%),
+    linear-gradient(-45deg, ",
+            "#AAAAAA",
+            " 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, ",
+            "#AAAAAA",
+            " 75%),
+    linear-gradient(-45deg, transparent 75%, ",
+            "#AAAAAA",
+            " 75%);
+  background-color: ",
+            "#5e5e5e",
+            ";
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+",
+          ],
+        },
       }
     }
-  />,
-  Symbol(enzyme.__renderer__): Object {
-    "batchedUpdates": [Function],
-    "getNode": [Function],
-    "render": [Function],
-    "simulateError": [Function],
-    "simulateEvent": [Function],
-    "unmount": [Function],
-  },
-  Symbol(enzyme.__node__): Object {
-    "instance": null,
-    "key": undefined,
-    "nodeType": "class",
-    "props": Object {
-      "children": <ThemeProvider
-        theme={
-          Object {
-            "colors": Object {
-              "aqua": "#7FDBFF",
-              "black": "#111111",
-              "blue": "#0074D9",
-              "blueDarker": "#005daa",
-              "blueLighter": "#f0fbff",
-              "fuchsia": "#F012BE",
-              "gray": "#AAAAAA",
-              "grayDark": "#5e5e5e",
-              "green": "#2ECC40",
-              "lime": "#01FF70",
-              "maroon": "#85144B",
-              "navy": "#001F3F",
-              "olive": "#3D9970",
-              "orange": "#FF851B",
-              "purple": "#B10DC9",
-              "red": "#FF4136",
-              "silver": "#DDDDDD",
-              "teal": "#39CCCC",
-              "white": "#FFFFFF",
-              "yellow": "#FFDC00",
-            },
-          }
-        }
-      >
-        <App />
-      </ThemeProvider>,
-    },
-    "ref": null,
-    "rendered": Object {
-      "instance": null,
-      "key": undefined,
-      "nodeType": "class",
-      "props": Object {
-        "children": <App />,
-        "theme": Object {
-          "colors": Object {
-            "aqua": "#7FDBFF",
-            "black": "#111111",
-            "blue": "#0074D9",
-            "blueDarker": "#005daa",
-            "blueLighter": "#f0fbff",
-            "fuchsia": "#F012BE",
-            "gray": "#AAAAAA",
-            "grayDark": "#5e5e5e",
-            "green": "#2ECC40",
-            "lime": "#01FF70",
-            "maroon": "#85144B",
-            "navy": "#001F3F",
-            "olive": "#3D9970",
-            "orange": "#FF851B",
-            "purple": "#B10DC9",
-            "red": "#FF4136",
-            "silver": "#DDDDDD",
-            "teal": "#39CCCC",
-            "white": "#FFFFFF",
-            "yellow": "#FFDC00",
-          },
-        },
-      },
-      "ref": null,
-      "rendered": Object {
-        "instance": null,
-        "key": undefined,
-        "nodeType": "function",
-        "props": Object {},
-        "ref": null,
-        "rendered": null,
-        "type": [Function],
-      },
-      "type": [Function],
-    },
-    "type": [Function],
-  },
-  Symbol(enzyme.__nodes__): Array [
-    Object {
-      "instance": null,
-      "key": undefined,
-      "nodeType": "class",
-      "props": Object {
-        "children": <ThemeProvider
-          theme={
-            Object {
-              "colors": Object {
-                "aqua": "#7FDBFF",
-                "black": "#111111",
-                "blue": "#0074D9",
-                "blueDarker": "#005daa",
-                "blueLighter": "#f0fbff",
-                "fuchsia": "#F012BE",
-                "gray": "#AAAAAA",
-                "grayDark": "#5e5e5e",
-                "green": "#2ECC40",
-                "lime": "#01FF70",
-                "maroon": "#85144B",
-                "navy": "#001F3F",
-                "olive": "#3D9970",
-                "orange": "#FF851B",
-                "purple": "#B10DC9",
-                "red": "#FF4136",
-                "silver": "#DDDDDD",
-                "teal": "#39CCCC",
-                "white": "#FFFFFF",
-                "yellow": "#FFDC00",
-              },
-            }
-          }
-        >
-          <App />
-        </ThemeProvider>,
-      },
-      "ref": null,
-      "rendered": Object {
-        "instance": null,
-        "key": undefined,
-        "nodeType": "class",
-        "props": Object {
-          "children": <App />,
-          "theme": Object {
-            "colors": Object {
-              "aqua": "#7FDBFF",
-              "black": "#111111",
-              "blue": "#0074D9",
-              "blueDarker": "#005daa",
-              "blueLighter": "#f0fbff",
-              "fuchsia": "#F012BE",
-              "gray": "#AAAAAA",
-              "grayDark": "#5e5e5e",
-              "green": "#2ECC40",
-              "lime": "#01FF70",
-              "maroon": "#85144B",
-              "navy": "#001F3F",
-              "olive": "#3D9970",
-              "orange": "#FF851B",
-              "purple": "#B10DC9",
-              "red": "#FF4136",
-              "silver": "#DDDDDD",
-              "teal": "#39CCCC",
-              "white": "#FFFFFF",
-              "yellow": "#FFDC00",
-            },
-          },
-        },
-        "ref": null,
-        "rendered": Object {
-          "instance": null,
-          "key": undefined,
-          "nodeType": "function",
-          "props": Object {},
-          "ref": null,
-          "rendered": null,
-          "type": [Function],
-        },
-        "type": [Function],
-      },
-      "type": [Function],
-    },
-  ],
-  Symbol(enzyme.__options__): Object {
-    "adapter": ReactSixteenAdapter {
-      "options": Object {
-        "enableComponentDidUpdateOnSetState": true,
-        "lifecycles": Object {
-          "componentDidUpdate": Object {
-            "onSetState": true,
-          },
-          "getDerivedStateFromProps": true,
-          "getSnapshotBeforeUpdate": true,
-          "setState": Object {
-            "skipsComponentDidUpdateOnNullish": true,
-          },
-        },
-      },
-    },
-  },
-}
+  >
+    <App />
+  </ThemeProvider>
+</BrowserRouter>
 `;

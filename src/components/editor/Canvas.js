@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-const StyleWrapper = styled.div`
+export const StyleWrapper = styled.div`
   flex-grow: 1;
   ${props => props.theme.patterns.transparencyBackground};
   padding: 16px;
@@ -23,13 +23,38 @@ const StyleWrapper = styled.div`
   }
 `;
 
+/**
+ * Canvas is a UI component for the editing area. It displays a product and allows the user to click
+ * on enabled panels.
+ */
 class Canvas extends React.Component {
   static propTypes = {
+    /**
+     * The product SVG to be rendered and interacted with. Colorable elements (path, polygon, g)
+     * should be given a data-id attribute. That is used to indicate that the panel/group can be
+     * colored, and it is also used to indicate the coorelation between panels/groups in different
+     * variations (used for autofill).
+     *
+     * A panel/group may also have a data-whitelist property that contains a comma separated list of
+     * color names that may be used on that panel/group.
+     */
     svg: PropTypes.string.isRequired,
+    /**
+     * Called when a colorable panel or group is clicked. Is provided with the data-id value as the
+     * first parameter.
+     */
     onClick: PropTypes.func.isRequired,
+    /**
+     * The currently selected color. This is needed to prevent triggering onClick when a panel/group
+     * with data-whitelist is clicked and the current color is not in that whitelist.
+     */
     currentColor: PropTypes.string.isRequired
   };
 
+  /**
+   * Handle click events by deciding if it is a relevant item that was clicked.
+   * @param  {Object} event The DOM click event
+   */
   handleClick = event => {
     // Get the data-id attribute from the target.
     const targetId = event.target.getAttribute("data-id");
