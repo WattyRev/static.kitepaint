@@ -32,13 +32,12 @@ exports[`Sidebar renders 1`] = `
     key="Standard"
     onClick={[Function]}
   >
-    <styled.div
-      dangerouslySetInnerHTML={
-        Object {
-          "__html": "<div>Kool Kite</div>",
-        }
-      }
-    />
+    <styled.div>
+      <ColorableSvg
+        colorMap={Object {}}
+        svg="<div>Kool Kite</div>"
+      />
+    </styled.div>
      
     Standard
   </Styled(styled.div)>

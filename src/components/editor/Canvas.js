@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { appliedColorsShape } from "../../containers/EditorContainer";
+import ColorableSvg from "./ColorableSvg";
 
 export const StyleWrapper = styled.div`
   flex-grow: 1;
@@ -48,7 +50,11 @@ class Canvas extends React.Component {
      * The currently selected color. This is needed to prevent triggering onClick when a panel/group
      * with data-whitelist is clicked and the current color is not in that whitelist.
      */
-    currentColor: PropTypes.string.isRequired
+    currentColor: PropTypes.string.isRequired,
+    /**
+     * A map of colors currently applied to the svg
+     */
+    colorMap: appliedColorsShape.isRequired
   };
 
   /**
@@ -116,11 +122,8 @@ class Canvas extends React.Component {
 
   render() {
     return (
-      <StyleWrapper>
-        <div
-          onClick={this.handleClick}
-          dangerouslySetInnerHTML={{ __html: this.props.svg }}
-        />
+      <StyleWrapper onClick={this.handleClick}>
+        <ColorableSvg svg={this.props.svg} colorMap={this.props.colorMap} />
       </StyleWrapper>
     );
   }

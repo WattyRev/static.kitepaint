@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditorContainer renders 1`] = `
+<EditorContainer
+  product={
+    Object {
+      "colors": Array [
+        Object {
+          "color": "#ff0000",
+          "name": "red",
+        },
+        Object {
+          "color": "#000000",
+          "name": "black",
+        },
+      ],
+      "id": "abc",
+      "manufacturer": "abc",
+      "name": "Krazy Kite",
+      "url": "http://krazykites.com/krazy-kite",
+      "variations": Array [
+        Object {
+          "name": "Standard",
+          "svg": "<div>Kool Kite</div>",
+        },
+      ],
+    }
+  }
+>
+  <div>
+    test
+  </div>
+</EditorContainer>
+`;

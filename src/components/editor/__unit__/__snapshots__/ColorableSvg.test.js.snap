@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ColorableSvg renders 1`] = `
+<div
+  dangerouslySetInnerHTML={
+    Object {
+      "__html": "<div>test</div>",
+    }
+  }
+/>
+`;

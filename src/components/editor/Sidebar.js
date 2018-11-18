@@ -4,9 +4,11 @@ import PropTypes from "prop-types";
 import manufacturerShape from "../../models/manufacturer";
 import productShape from "../../models/product";
 import designShape from "../../models/design";
+import { productAppliedColorsShape } from "../../containers/EditorContainer";
 import { BlockListItem, Icon } from "../../theme";
 import ManufacturerLogo from "../ManufacturerLogo";
 import ColorTile from "./ColorTile";
+import ColorableSvg from "./ColorableSvg";
 
 /**
  * An overall wrapper for the sidebar
@@ -81,6 +83,7 @@ const VariationPreview = styled.div`
  * The sidebar displayed when editing/creating a new design
  */
 const Sidebar = ({
+  appliedColors,
   manufacturer,
   product,
   design,
@@ -123,7 +126,12 @@ const Sidebar = ({
         key={variation.name}
         onClick={() => onVariationSelect(variation.name)}
       >
-        <VariationPreview dangerouslySetInnerHTML={{ __html: variation.svg }} />{" "}
+        <VariationPreview>
+          <ColorableSvg
+            svg={variation.svg}
+            colorMap={appliedColors[variation.name] || {}}
+          />
+        </VariationPreview>{" "}
         {variation.name}
       </ListItem>
     ))}
@@ -146,6 +154,7 @@ const Sidebar = ({
 );
 
 Sidebar.propTypes = {
+  appliedColors: productAppliedColorsShape.isRequired,
   /**
    * The manufacturer that creates the product being edited.
    */

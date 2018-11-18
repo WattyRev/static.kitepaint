@@ -57,6 +57,7 @@ describe("Sidebar", () => {
   let defaultProps;
   beforeEach(() => {
     defaultProps = {
+      appliedColors: {},
       manufacturer: getMockManufacturer(),
       product: getMockProduct(),
       selectedVariation: "Standard",
