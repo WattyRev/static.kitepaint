@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import { P, Icon } from "../../theme";
 
 /**
@@ -32,27 +33,47 @@ export const StyleWrapper = styled.div`
 /**
  * The toolbar displayed at the top of the editor to provide various actions.
  */
-const Toolbar = () => (
+const Toolbar = ({
+  onSave,
+  onShare,
+  onAutofill,
+  onReset,
+  onHideOutlines,
+  onBackgroundChange
+}) => (
   <StyleWrapper>
-    <P isLight>
-      <Icon icon="save" /> Save
-    </P>
-    <P isLight>
+    {!!onSave && (
+      <P isLight onClick={onSave}>
+        <Icon icon="save" /> Save
+      </P>
+    )}
+    <P isLight onClick={onShare}>
       <Icon icon="share" /> Share
     </P>
-    <P isLight>
-      <Icon icon="magic" /> Autofill
-    </P>
-    <P isLight>
+    {!!onAutofill && (
+      <P isLight onClick={onAutofill}>
+        <Icon icon="magic" /> Autofill
+      </P>
+    )}
+    <P isLight onClick={onReset}>
       <Icon icon="eraser" /> Reset
     </P>
-    <P isLight>
+    <P isLight onClick={onHideOutlines}>
       <Icon icon="eye-slash" /> Hide Outlines
     </P>
-    <P isLight>
+    <P isLight onClick={onBackgroundChange}>
       <Icon icon="image" /> Background
     </P>
   </StyleWrapper>
 );
+
+Toolbar.propTypes = {
+  onSave: PropTypes.func,
+  onShare: PropTypes.func.isRequired,
+  onAutofill: PropTypes.func,
+  onReset: PropTypes.func.isRequired,
+  onHideOutlines: PropTypes.func.isRequired,
+  onBackgroundChange: PropTypes.func.isRequired
+};
 
 export default Toolbar;

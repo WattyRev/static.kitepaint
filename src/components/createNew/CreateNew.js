@@ -34,7 +34,14 @@ const CreateNew = ({ match }) => (
       <EditorContainer product={productData.props.product}>
         {editorData => (
           <React.Fragment>
-            <Toolbar />
+            <Toolbar
+              onSave={() => {}}
+              onShare={() => {}}
+              onAutofill={() => {}}
+              onReset={() => {}}
+              onHideOutlines={() => {}}
+              onBackgroundChange={() => {}}
+            />
             <PageLayout>
               <Sidebar
                 product={productData.props.product}
