@@ -96,3 +96,7 @@ export const GET_MANUFACTURERS = createAsyncAction(
     return KitePaintApi.getManufacturers(useCache);
   }
 );
+
+export const CREATE_DESIGN = createAsyncAction("CREATE_DESIGN", designData => {
+  return KitePaintApi.createDesign(designData);
+});

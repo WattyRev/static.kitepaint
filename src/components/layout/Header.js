@@ -15,6 +15,7 @@ export const StyleWrapper = styled.div`
   box-shadow: 0 0 1px ${({ theme }) => theme.colors.black};
   position: relative;
   box-sizing: border-box;
+  z-index: 3;
 
   .left,
   .right {

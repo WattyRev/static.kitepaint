@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { P, Icon } from "../../theme";
+import { P, Icon, ModalPrompt } from "../../theme";
 
 /**
  * Overall styling for the toolbar
@@ -43,9 +43,16 @@ const Toolbar = ({
 }) => (
   <StyleWrapper>
     {!!onSave && (
-      <P isLight onClick={onSave}>
-        <Icon icon="save" /> Save
-      </P>
+      <ModalPrompt
+        onSubmit={onSave}
+        modalMessage="To save your design, you must give it a name. What would you like to name your design?"
+      >
+        {modal => (
+          <P isLight onClick={modal.actions.open}>
+            <Icon icon="save" /> Save
+          </P>
+        )}
+      </ModalPrompt>
     )}
     <P isLight onClick={onShare}>
       <Icon icon="share" /> Share

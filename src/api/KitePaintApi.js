@@ -398,6 +398,34 @@ export class KitePaintApi {
 
     return response;
   }
+
+  async createDesign(designData) {
+    const defaults = {
+      status: 0,
+      new: 1
+    };
+    const data = Object.assign(defaults, designData);
+    data.variations = JSON.stringify(data.variations);
+    const bodyFormData = new FormData();
+    Object.keys(data).forEach(key => bodyFormData.append(key, data[key]));
+
+    const response = await this.axiosInstance.post(
+      "/designs.php",
+      bodyFormData
+    );
+
+    if (!response.data || !response.data.id || !response.data.valid) {
+      return new Promise((resolve, reject) =>
+        reject(
+          response.data
+            ? response.data.message
+            : "The design could not be saved"
+        )
+      );
+    }
+
+    return response;
+  }
 }
 
 export default new KitePaintApi();

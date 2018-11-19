@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import ProductContainer from "../../containers/ProductContainer";
 import EditorContainer from "../../containers/EditorContainer";
+import UserContainer from "../../containers/UserContainer";
 import { Text, H3 } from "../../theme";
 import Toolbar from "../editor/Toolbar";
 import Sidebar from "../editor/Sidebar";
@@ -34,14 +35,26 @@ const CreateNew = ({ match }) => (
       <EditorContainer product={productData.props.product}>
         {editorData => (
           <React.Fragment>
-            <Toolbar
-              onSave={() => {}}
-              onShare={() => {}}
-              onAutofill={() => {}}
-              onReset={() => {}}
-              onHideOutlines={() => {}}
-              onBackgroundChange={() => {}}
-            />
+            <UserContainer>
+              {userData => (
+                <Toolbar
+                  onSave={
+                    userData.props.isLoggedIn
+                      ? name =>
+                          editorData.actions.save({
+                            name,
+                            user: userData.props.id
+                          })
+                      : null
+                  }
+                  onShare={() => {}}
+                  onAutofill={() => {}}
+                  onReset={() => {}}
+                  onHideOutlines={() => {}}
+                  onBackgroundChange={() => {}}
+                />
+              )}
+            </UserContainer>
             <PageLayout>
               <Sidebar
                 product={productData.props.product}

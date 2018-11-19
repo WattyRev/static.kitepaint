@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { fromJS } from "immutable";
+import { connect } from "react-redux";
+import { CREATE_DESIGN } from "../redux/actions";
 import productShape from "../models/product";
-import { softCompareStrings } from "../utils";
+import { softCompareStrings, makeCancelable } from "../utils";
 
 const appliedColorsShape = PropTypes.objectOf(
   PropTypes.shape({
@@ -18,7 +20,7 @@ export { appliedColorsShape, productAppliedColorsShape };
 /**
  * Manages the overall state of the editor.
  */
-class EditorContainer extends React.Component {
+export class EditorContainer extends React.Component {
   static propTypes = {
     /**
      * The product being edited
@@ -37,7 +39,9 @@ class EditorContainer extends React.Component {
     /**
      * A function that renders content
      */
-    children: PropTypes.func.isRequired
+    children: PropTypes.func.isRequired,
+
+    onSave: PropTypes.func.isRequired
   };
 
   constructor(props, ...rest) {
@@ -86,6 +90,11 @@ class EditorContainer extends React.Component {
       appliedColors: {}
     };
   }
+
+  componentWillUnmount() {
+    this.cancelablePromises.forEach(promise => promise.cancel());
+  }
+
   /**
    * Handles when a different color is selected by updating state.
    * @param  {String} colorName The name of the newly selected color
@@ -126,6 +135,49 @@ class EditorContainer extends React.Component {
     });
   };
 
+  generateDesignVariations = () => {
+    const appliedColors = this.state.appliedColors;
+    const productVariations = this.props.product.variations;
+    return productVariations.map((variation, index) => {
+      const render = new window.DOMParser().parseFromString(
+        variation.svg,
+        "text/xml"
+      );
+      const colorMap = appliedColors[variation.name] || {};
+      Object.keys(colorMap).forEach(id => {
+        const color = colorMap[id].color;
+        const panel = render.querySelector(`[data-id="${id}"]`);
+        panel.setAttribute("fill", color);
+      });
+      const svg = render.querySelector("svg").outerHTML;
+      return {
+        name: variation.name,
+        primary: !index,
+        svg
+      };
+    });
+  };
+
+  handleSave = data => {
+    const { name, user } = data;
+    const design = {
+      name,
+      user,
+      product: this.props.product.id,
+      variations: this.generateDesignVariations(),
+      status: 0,
+      new: 1
+    };
+    const promise = makeCancelable(this.props.onSave(design));
+    promise.then(response => {
+      const designId = response.data.id;
+      window.location.replace(`/edit/${designId}`);
+    });
+    this.cancelablePromises.push(promise);
+  };
+
+  cancelablePromises = [];
+
   /**
    * Gets the applied colors for the current variation
    */
@@ -139,7 +191,8 @@ class EditorContainer extends React.Component {
       actions: {
         selectColor: this.handleColorSelection,
         selectVariation: this.handleVariationSelection,
-        applyColor: this.handleColorApplied
+        applyColor: this.handleColorApplied,
+        save: this.handleSave
       },
       props: {
         currentColor: this.state.currentColor,
@@ -152,4 +205,13 @@ class EditorContainer extends React.Component {
   }
 }
 
-export default EditorContainer;
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = {
+  onSave: CREATE_DESIGN
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditorContainer);
