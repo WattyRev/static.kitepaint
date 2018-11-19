@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import ProductContainer from "../../containers/ProductContainer";
 import EditorContainer from "../../containers/EditorContainer";
+import { Text, H3 } from "../../theme";
 import Toolbar from "../editor/Toolbar";
 import Sidebar from "../editor/Sidebar";
 import Canvas from "../editor/Canvas";
@@ -10,6 +11,16 @@ import Canvas from "../editor/Canvas";
 const PageLayout = styled.div`
   display: flex;
   justify-content: stretch;
+  position: relative;
+
+  .product-notes {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    bottom: 0;
+    right: 0;
+    padding: 8px;
+    max-width: calc(100% - 200px);
+  }
 `;
 
 /**
@@ -40,6 +51,22 @@ const CreateNew = ({ match }) => (
                 onClick={editorData.actions.applyColor}
                 currentColor={editorData.props.currentColor.name}
               />
+              {productData.props.product.notes &&
+                productData.props.product.notes.length && (
+                  <div className="product-notes">
+                    <H3 isLight>Notes:</H3>
+                    <ul>
+                      {productData.props.product.notes.map(
+                        (note, index) =>
+                          note.trim() && (
+                            <Text isLight as="li" key={note + index}>
+                              {note}
+                            </Text>
+                          )
+                      )}
+                    </ul>
+                  </div>
+                )}
             </PageLayout>
           </React.Fragment>
         )}

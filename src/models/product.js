@@ -7,6 +7,7 @@ import { getMockManufacturer } from "./manufacturer";
 const productShape = PropTypes.shape({
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  notes: PropTypes.arrayOf(PropTypes.string),
   manufacturer: PropTypes.string.isRequired,
   url: PropTypes.string,
   colors: PropTypes.arrayOf(
