@@ -192,12 +192,10 @@ export class EditorContainer extends React.Component {
       name,
       user,
       product: this.props.product.id,
-      variations: this.generateDesignVariations(),
-      status: 0,
-      new: 1
+      variations: this.generateDesignVariations()
     };
     const promise = makeCancelable(this.props.onSave(design));
-    promise.then(response => {
+    promise.promise.then(response => {
       const designId = response.data.id;
       window.location.replace(`/edit/${designId}`);
     });

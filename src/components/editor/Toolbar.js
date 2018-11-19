@@ -45,10 +45,10 @@ const Toolbar = ({
     {!!onSave && (
       <ModalPrompt
         onSubmit={onSave}
-        modalMessage="To save your design, you must give it a name. What would you like to name your design?"
+        message="To save your design, you must give it a name. What would you like to name your design?"
       >
         {modal => (
-          <P isLight onClick={modal.actions.open}>
+          <P className="testing_save" isLight onClick={modal.actions.open}>
             <Icon icon="save" /> Save
           </P>
         )}
@@ -58,7 +58,7 @@ const Toolbar = ({
       <Icon icon="share" /> Share
     </P>
     {!!onAutofill && (
-      <P isLight onClick={onAutofill}>
+      <P className="testing_autofill" isLight onClick={onAutofill}>
         <Icon icon="magic" /> Autofill
       </P>
     )}

@@ -20,7 +20,10 @@ const modalAnimation = keyframes`
   }
 `;
 
-const StyledModal = styled.div`
+/**
+ * Styling for the modal window itself
+ */
+export const StyledModal = styled.div`
   position: fixed;
   top: 50px;
   left: 50%;
@@ -52,6 +55,9 @@ const backdropAnimation = keyframes`
   }
 `;
 
+/**
+ * Styling for the modal's backdrop
+ */
 const ModalBackdrop = styled.div`
   position: fixed;
   width: 100%;
@@ -65,13 +71,35 @@ const ModalBackdrop = styled.div`
   animation: ${backdropAnimation} 0.6s;
 `;
 
+/**
+ * Modal prompt prompts the user for a single string value and has submit and cancel buttons.
+ */
 class ModalPrompt extends React.Component {
   static propTypes = {
+    /**
+     * Triggered when the prompt has been submitted. Is provided the user-provided string value as
+     * the first parameter.
+     */
     onSubmit: PropTypes.func.isRequired,
+    /**
+     * Triggerd when the cancel button is pressed, or when the backdrop is clicked on.
+     */
     onCancel: PropTypes.func,
-    modalMessage: PropTypes.string.isRequired,
+    /**
+     * A message to pose to the user to guide them on what value should be entered.
+     */
+    message: PropTypes.string.isRequired,
+    /**
+     * The text to display on the submit button.
+     */
     submitText: PropTypes.string,
+    /**
+     * The text to display on the cancel button.
+     */
     cancelText: PropTypes.string,
+    /**
+     * A function that renders content that can trigger the modal.
+     */
     children: PropTypes.func.isRequired
   };
 
@@ -82,10 +110,21 @@ class ModalPrompt extends React.Component {
   };
 
   state = {
+    /**
+     * Is the modal currently open?
+     */
     isOpen: false,
+    /**
+     * What is the user provided value?
+     */
     value: ""
   };
 
+  /**
+   * Handles the submission event by calling onSubmit with the value and closing/resetting the
+   * modal. This does not call onSubmit if the value is empty.
+   * @param  {Object} event A DOM submit event
+   */
   handleSubmit = event => {
     event.preventDefault();
     if (!this.state.value) {
@@ -95,11 +134,18 @@ class ModalPrompt extends React.Component {
     this.setState({ isOpen: false, value: "" });
   };
 
+  /**
+   * Handles the cancelation by closing/resetting the modal and triggering onCancel.
+   */
   handleCancel = () => {
     this.setState({ isOpen: false, value: "" });
     this.props.onCancel();
   };
 
+  /**
+   * Handles a change in the provided value by updating state.
+   * @param  {Object} event A DOM change event
+   */
   handleValueChange = event => {
     this.setState({ value: event.target.value });
   };
@@ -118,11 +164,15 @@ class ModalPrompt extends React.Component {
         {this.props.children(data)}
         {this.state.isOpen && (
           <BodyPortal>
-            <ModalBackdrop onClick={this.handleCancel} />
-            <StyledModal>
-              <form onSubmit={this.handleSubmit}>
-                <Label>{this.props.modalMessage}</Label>
+            <ModalBackdrop
+              onClick={this.handleCancel}
+              className="testing_backdrop"
+            />
+            <StyledModal className="testing_modal">
+              <form onSubmit={this.handleSubmit} className="testing_submit">
+                <Label>{this.props.message}</Label>
                 <Input
+                  className="testing_prompt-value"
                   value={this.state.value}
                   onChange={this.handleValueChange}
                 />
@@ -130,7 +180,11 @@ class ModalPrompt extends React.Component {
                   <Button type="submit" isPrimary>
                     {this.props.submitText}
                   </Button>{" "}
-                  <Button type="button" onClick={this.handleCancel}>
+                  <Button
+                    type="button"
+                    className="testing_cancel"
+                    onClick={this.handleCancel}
+                  >
                     {this.props.cancelText}
                   </Button>
                 </div>

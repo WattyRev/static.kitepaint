@@ -97,6 +97,10 @@ export const GET_MANUFACTURERS = createAsyncAction(
   }
 );
 
+/**
+ * Triggers the creation of a new design based on the provided data.
+ * @param {Object} designData
+ */
 export const CREATE_DESIGN = createAsyncAction("CREATE_DESIGN", designData => {
   return KitePaintApi.createDesign(designData);
 });

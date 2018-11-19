@@ -95,3 +95,16 @@ exports[`CreateNew renders 3`] = `
   </styled.div>
 </div>
 `;
+
+exports[`CreateNew renders 4`] = `
+<div>
+  <Toolbar
+    onAutofill={[Function]}
+    onBackgroundChange={[Function]}
+    onHideOutlines={[Function]}
+    onReset={[Function]}
+    onSave={[Function]}
+    onShare={[Function]}
+  />
+</div>
+`;
