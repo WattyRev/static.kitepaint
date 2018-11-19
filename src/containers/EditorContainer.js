@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { fromJS } from "immutable";
+import { connect } from "react-redux";
+import { CREATE_DESIGN } from "../redux/actions";
 import productShape from "../models/product";
-import { softCompareStrings } from "../utils";
+import { softCompareStrings, makeCancelable } from "../utils";
 
 const appliedColorsShape = PropTypes.objectOf(
   PropTypes.shape({
@@ -16,16 +18,16 @@ const productAppliedColorsShape = PropTypes.objectOf(appliedColorsShape);
 export { appliedColorsShape, productAppliedColorsShape };
 
 /**
- * Manages the overall state of the editor.
+ * Manages the overall state of the editor. And provides a means to save changes.
  */
-class EditorContainer extends React.Component {
+export class EditorContainer extends React.Component {
   static propTypes = {
     /**
      * The product being edited
      */
     product: productShape.isRequired,
     /**
-     * The default color (name) to be selected. Will default to the first color on the product =
+     * The default color (name) to be selected. Will default to the first color on the product
      * otherwise.
      */
     defaultColor: PropTypes.string,
@@ -37,7 +39,11 @@ class EditorContainer extends React.Component {
     /**
      * A function that renders content
      */
-    children: PropTypes.func.isRequired
+    children: PropTypes.func.isRequired,
+    /**
+     * A function called when we want to save the design. Provided by Redux.
+     */
+    onSave: PropTypes.func.isRequired
   };
 
   constructor(props, ...rest) {
@@ -86,6 +92,19 @@ class EditorContainer extends React.Component {
       appliedColors: {}
     };
   }
+
+  /*
+   * Cancels any pending promises before being unmounted.
+   */
+  componentWillUnmount() {
+    this.cancelablePromises.forEach(promise => promise.cancel());
+  }
+
+  /**
+   * An array of promises that may need to be cancelled when the component is unmounted
+   */
+  cancelablePromises = [];
+
   /**
    * Handles when a different color is selected by updating state.
    * @param  {String} colorName The name of the newly selected color
@@ -127,6 +146,63 @@ class EditorContainer extends React.Component {
   };
 
   /**
+   * Generates the design variations based on the product variations and the applied colors.
+   * @return {Object[]} Each object contains name, primary, and svg.
+   */
+  generateDesignVariations = () => {
+    const appliedColors = this.state.appliedColors;
+    const productVariations = this.props.product.variations;
+
+    // Build each variation
+    return productVariations.map((variation, index) => {
+      // Render the blank variation from the product in memory
+      const render = new window.DOMParser().parseFromString(
+        variation.svg,
+        "text/xml"
+      );
+      const colorMap = appliedColors[variation.name] || {};
+
+      // Apply each color to the rendered variation
+      Object.keys(colorMap).forEach(id => {
+        const color = colorMap[id].color;
+        const panel = render.querySelector(`[data-id="${id}"]`);
+        panel.setAttribute("fill", color);
+      });
+
+      // Get the new SVG string from the render.
+      const svg = render.querySelector("svg").outerHTML;
+
+      // Return the variation
+      return {
+        name: variation.name,
+        primary: !index,
+        svg
+      };
+    });
+  };
+
+  /**
+   * Handles save by parsing data and submitting a request to create a new design. Redirects to that
+   * design's edit page when successful.
+   * @param  {Object} data must contain name and user(id)
+   */
+  handleSave = data => {
+    const { name, user } = data;
+    const design = {
+      name,
+      user,
+      product: this.props.product.id,
+      variations: this.generateDesignVariations()
+    };
+    const promise = makeCancelable(this.props.onSave(design));
+    promise.promise.then(response => {
+      const designId = response.data.id;
+      window.location.replace(`/edit/${designId}`);
+    });
+    this.cancelablePromises.push(promise);
+  };
+
+  /**
    * Gets the applied colors for the current variation
    */
   getCurrentVariationColors = () => {
@@ -139,7 +215,8 @@ class EditorContainer extends React.Component {
       actions: {
         selectColor: this.handleColorSelection,
         selectVariation: this.handleVariationSelection,
-        applyColor: this.handleColorApplied
+        applyColor: this.handleColorApplied,
+        save: this.handleSave
       },
       props: {
         currentColor: this.state.currentColor,
@@ -152,4 +229,13 @@ class EditorContainer extends React.Component {
   }
 }
 
-export default EditorContainer;
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = {
+  onSave: CREATE_DESIGN
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditorContainer);

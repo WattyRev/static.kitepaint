@@ -81,4 +81,21 @@ describe("Redux actions", () => {
       expect(localStorage.getItem("isRecognizedUser")).toEqual("true");
     });
   });
+  describe("CREATE_DESIGN", () => {
+    beforeEach(() => {
+      KitePaintApi.createDesign.mockResolvedValue();
+    });
+    it("should call KitePaintApi.createDesign with the provided data", () => {
+      expect.assertions(2);
+      dispatchAsyncAction(Actions.CREATE_DESIGN, [
+        {
+          foo: "bar"
+        }
+      ]).catch(() => {});
+      expect(KitePaintApi.createDesign).toHaveBeenCalled();
+      expect(KitePaintApi.createDesign.mock.calls[0][0]).toEqual({
+        foo: "bar"
+      });
+    });
+  });
 });

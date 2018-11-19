@@ -10,7 +10,7 @@ exports[`CreateNew renders 1`] = `
 
 exports[`CreateNew renders 2`] = `
 <div>
-  <EditorContainer
+  <Connect(EditorContainer)
     product={
       Object {
         "colors": Array [
@@ -37,13 +37,15 @@ exports[`CreateNew renders 2`] = `
     }
   >
     <Component />
-  </EditorContainer>
+  </Connect(EditorContainer)>
 </div>
 `;
 
 exports[`CreateNew renders 3`] = `
 <div>
-  <Toolbar />
+  <Connect(UserContainer)>
+    <Component />
+  </Connect(UserContainer)>
   <styled.div>
     <Sidebar
       appliedColors={Object {}}
@@ -91,5 +93,18 @@ exports[`CreateNew renders 3`] = `
       svg=""
     />
   </styled.div>
+</div>
+`;
+
+exports[`CreateNew renders 4`] = `
+<div>
+  <Toolbar
+    onAutofill={[Function]}
+    onBackgroundChange={[Function]}
+    onHideOutlines={[Function]}
+    onReset={[Function]}
+    onSave={[Function]}
+    onShare={[Function]}
+  />
 </div>
 `;

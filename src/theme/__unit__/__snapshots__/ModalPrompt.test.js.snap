@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModelPrompt renders 1`] = `
+<Fragment>
+  <div
+    className="target"
+    onClick={[Function]}
+  />
+</Fragment>
+`;

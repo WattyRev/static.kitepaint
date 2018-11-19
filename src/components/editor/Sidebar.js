@@ -19,6 +19,7 @@ export const StyleWrapper = styled.div`
   flex-shrink: 0;
   background: ${props => props.theme.colors.grayDarker};
   box-shadow: 0 0 2px 2px ${props => props.theme.colors.black};
+  position: relative;
 `;
 
 /**

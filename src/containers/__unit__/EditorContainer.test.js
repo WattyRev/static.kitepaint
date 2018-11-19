@@ -1,14 +1,22 @@
 import React from "react";
 import { mount } from "enzyme";
 import { getMockProduct } from "../../models/product";
-import EditorContainer from "../EditorContainer";
+import { EditorContainer } from "../EditorContainer";
 
 describe("EditorContainer", () => {
   let defaultProps;
+  let originalReplace = window.location.replace;
   beforeEach(() => {
     defaultProps = {
-      product: getMockProduct()
+      product: getMockProduct(),
+      onSave: jest.fn().mockResolvedValue({
+        data: {}
+      })
     };
+    window.location.replace = jest.fn();
+  });
+  afterEach(() => {
+    window.location.replace = originalReplace;
   });
   it("renders", () => {
     expect.assertions(1);
@@ -232,6 +240,102 @@ describe("EditorContainer", () => {
         name: "black",
         color: "#000000"
       }
+    });
+  });
+  it("generates and saves a new design", () => {
+    expect.assertions(2);
+
+    // Create some mock variations
+    defaultProps.product.variations = [
+      {
+        name: "Standard",
+        svg: `
+          <svg viewBox="0 0 1963.2 651.1">
+              <polygon data-id="p1" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+              <polygon data-id="p2" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+            </svg>
+        `
+      },
+      {
+        name: "Vented",
+        svg: `
+          <svg viewBox="0 0 1963.2 651.1">
+              <polygon data-id="p1" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+              <polygon data-id="p2" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+            </svg>
+        `
+      }
+    ];
+    const wrapper = mount(
+      <EditorContainer {...defaultProps}>
+        {data => (
+          <div
+            className="target"
+            onClick={() =>
+              data.actions.save({
+                name: "boogers",
+                user: "123"
+              })
+            }
+          />
+        )}
+      </EditorContainer>
+    );
+
+    // Set state to behave as if we have added colors to the variations
+    wrapper.instance().setState({
+      appliedColors: {
+        Standard: {
+          p1: {
+            name: "black",
+            color: "#000000"
+          },
+          p2: {
+            name: "red",
+            color: "#ff0000"
+          }
+        },
+        Vented: {
+          p1: {
+            name: "red",
+            color: "#ff0000"
+          },
+          p2: {
+            name: "black",
+            color: "#000000"
+          }
+        }
+      }
+    });
+
+    // Click to save the design
+    wrapper.find(".target").simulate("click");
+
+    expect(defaultProps.onSave).toHaveBeenCalled();
+    expect(defaultProps.onSave.mock.calls[0][0]).toEqual({
+      name: "boogers",
+      user: "123",
+      product: "abc",
+      variations: [
+        {
+          name: "Standard",
+          primary: true,
+          svg: `
+            <svg viewBox="0 0 1963.2 651.1">
+              <polygon data-id="p1" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+              <polygon data-id="p2" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+            </svg>`.trim()
+        },
+        {
+          name: "Vented",
+          primary: false,
+          svg: `
+            <svg viewBox="0 0 1963.2 651.1">
+              <polygon data-id="p1" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+              <polygon data-id="p2" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+            </svg>`.trim()
+        }
+      ]
     });
   });
 });

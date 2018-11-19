@@ -11,6 +11,7 @@ import H3 from "./H3";
 import Icon from "./Icon";
 import Input from "./Input";
 import Label from "./Label";
+import ModalPrompt from "./ModalPrompt";
 import P from "./P";
 import Text from "./Text";
 import Tooltip from "./Tooltip";
@@ -30,6 +31,7 @@ export {
   Icon,
   Input,
   Label,
+  ModalPrompt,
   P,
   Text,
   Tooltip

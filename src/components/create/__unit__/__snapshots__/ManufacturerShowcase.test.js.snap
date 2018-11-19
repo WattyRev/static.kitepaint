@@ -67,7 +67,7 @@ exports[`ManufacturerShowcase StyleWrapper renders 1`] = `
         "$$typeof": Symbol(react.forward_ref),
         "attrs": undefined,
         "componentStyle": ComponentStyle {
-          "componentId": "sc-jzJRlG",
+          "componentId": "sc-kAzzGY",
           "isStatic": false,
           "lastClassName": "c0",
           "rules": Array [
@@ -86,7 +86,7 @@ exports[`ManufacturerShowcase StyleWrapper renders 1`] = `
         },
         "displayName": "styled.div",
         "render": [Function],
-        "styledComponentId": "sc-jzJRlG",
+        "styledComponentId": "sc-kAzzGY",
         "target": "div",
         "toString": [Function],
         "warnTooManyClasses": [Function],

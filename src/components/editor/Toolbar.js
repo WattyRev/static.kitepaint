@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { P, Icon } from "../../theme";
+import PropTypes from "prop-types";
+import { P, Icon, ModalPrompt } from "../../theme";
 
 /**
  * Overall styling for the toolbar
@@ -11,6 +12,7 @@ export const StyleWrapper = styled.div`
   padding: 0 8px;
   box-shadow: 0 0 2px 2px ${props => props.theme.colors.black};
   position: relative;
+  z-index: 2;
 
   > p {
     padding: 8px;
@@ -31,27 +33,54 @@ export const StyleWrapper = styled.div`
 /**
  * The toolbar displayed at the top of the editor to provide various actions.
  */
-const Toolbar = () => (
+const Toolbar = ({
+  onSave,
+  onShare,
+  onAutofill,
+  onReset,
+  onHideOutlines,
+  onBackgroundChange
+}) => (
   <StyleWrapper>
-    <P isLight>
-      <Icon icon="save" /> Save
-    </P>
-    <P isLight>
+    {!!onSave && (
+      <ModalPrompt
+        onSubmit={onSave}
+        message="To save your design, you must give it a name. What would you like to name your design?"
+      >
+        {modal => (
+          <P className="testing_save" isLight onClick={modal.actions.open}>
+            <Icon icon="save" /> Save
+          </P>
+        )}
+      </ModalPrompt>
+    )}
+    <P isLight onClick={onShare}>
       <Icon icon="share" /> Share
     </P>
-    <P isLight>
-      <Icon icon="magic" /> Autofill
-    </P>
-    <P isLight>
+    {!!onAutofill && (
+      <P className="testing_autofill" isLight onClick={onAutofill}>
+        <Icon icon="magic" /> Autofill
+      </P>
+    )}
+    <P isLight onClick={onReset}>
       <Icon icon="eraser" /> Reset
     </P>
-    <P isLight>
+    <P isLight onClick={onHideOutlines}>
       <Icon icon="eye-slash" /> Hide Outlines
     </P>
-    <P isLight>
+    <P isLight onClick={onBackgroundChange}>
       <Icon icon="image" /> Background
     </P>
   </StyleWrapper>
 );
+
+Toolbar.propTypes = {
+  onSave: PropTypes.func,
+  onShare: PropTypes.func.isRequired,
+  onAutofill: PropTypes.func,
+  onReset: PropTypes.func.isRequired,
+  onHideOutlines: PropTypes.func.isRequired,
+  onBackgroundChange: PropTypes.func.isRequired
+};
 
 export default Toolbar;

@@ -2,6 +2,7 @@ import React from "react";
 import { shallow } from "enzyme";
 import ProductContainer from "../../../containers/ProductContainer";
 import EditorContainer from "../../../containers/EditorContainer";
+import UserContainer from "../../../containers/UserContainer";
 import { getMockProduct } from "../../../models/product";
 import { getMockManufacturer } from "../../../models/manufacturer";
 import CreateNew from "../CreateNew";
@@ -18,10 +19,11 @@ describe("CreateNew", () => {
     };
   });
   it("renders", () => {
-    expect.assertions(3);
+    expect.assertions(4);
     const wrapper = shallow(<CreateNew {...defaultProps} />);
     expect(wrapper).toMatchSnapshot();
 
+    // Drill in to product container
     const productData = {
       props: {
         product: getMockProduct(),
@@ -33,11 +35,13 @@ describe("CreateNew", () => {
     );
     expect(productContainerWrapper).toMatchSnapshot();
 
+    // Drill in to editor container
     const editorData = {
       actions: {
         selectVariation: jest.fn(),
         selectColor: jest.fn(),
-        applyColor: jest.fn()
+        applyColor: jest.fn(),
+        save: jest.fn()
       },
       props: {
         currentColor: {
@@ -59,5 +63,19 @@ describe("CreateNew", () => {
       </div>
     );
     expect(editorContainerWrapper).toMatchSnapshot();
+
+    // Drill in to user container
+    const userData = {
+      props: {
+        isLoggedIn: true,
+        id: "123"
+      }
+    };
+    const userContainerWrapper = shallow(
+      <div>
+        {editorContainerWrapper.find(UserContainer).prop("children")(userData)}
+      </div>
+    );
+    expect(userContainerWrapper).toMatchSnapshot();
   });
 });
