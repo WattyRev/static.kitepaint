@@ -7,6 +7,7 @@ export const StyleWrapper = styled.div`
   border-top: 1px solid ${props => props.theme.colors.grayDark}
   padding: 8px;
   background: ${props => props.theme.colors.grayDarker}
+  position: relative;
 `;
 
 /**

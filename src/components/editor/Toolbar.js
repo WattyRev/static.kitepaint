@@ -11,6 +11,7 @@ export const StyleWrapper = styled.div`
   padding: 0 8px;
   box-shadow: 0 0 2px 2px ${props => props.theme.colors.black};
   position: relative;
+  z-index: 2;
 
   > p {
     padding: 8px;

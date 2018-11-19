@@ -52,7 +52,7 @@ const CreateNew = ({ match }) => (
                 currentColor={editorData.props.currentColor.name}
               />
               {productData.props.product.notes &&
-                productData.props.product.notes.length && (
+                !!productData.props.product.notes.length && (
                   <div className="product-notes">
                     <H3 isLight>Notes:</H3>
                     <ul>
