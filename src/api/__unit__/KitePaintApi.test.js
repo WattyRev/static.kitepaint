@@ -483,7 +483,8 @@ describe("KitePaintApi", () => {
           {
             id: "123",
             variations: "[]",
-            colors: "[]"
+            colors: "[]",
+            notes: '[""]'
           }
         ]
       });
@@ -493,7 +494,8 @@ describe("KitePaintApi", () => {
             {
               id: "123",
               variations: [],
-              colors: []
+              colors: [],
+              notes: []
             }
           ]
         });

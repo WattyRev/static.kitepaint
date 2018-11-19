@@ -12,6 +12,7 @@ import Icon from "./Icon";
 import Input from "./Input";
 import Label from "./Label";
 import P from "./P";
+import Text from "./Text";
 import Tooltip from "./Tooltip";
 
 const Theme = { colors, patterns };
@@ -30,5 +31,6 @@ export {
   Input,
   Label,
   P,
+  Text,
   Tooltip
 };

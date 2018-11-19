@@ -3,6 +3,7 @@ body {
   padding: 0;
 }
 
-.mesh {
+.mesh,
+[fill="venting"] {
   fill: rgba(50, 50, 50, 0.5);
 }

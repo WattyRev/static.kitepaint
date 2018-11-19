@@ -336,6 +336,7 @@ export class KitePaintApi {
     response.data = response.data.map(product => {
       product.variations = JSON.parse(product.variations);
       product.colors = JSON.parse(product.colors);
+      product.notes = JSON.parse(product.notes).filter(note => !!note);
       return product;
     });
 
