@@ -2,6 +2,7 @@
 
 exports[`EditorContainer renders 1`] = `
 <EditorContainer
+  onSave={[MockFunction]}
   product={
     Object {
       "colors": Array [

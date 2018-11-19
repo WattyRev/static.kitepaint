@@ -1,13 +1,14 @@
 import React from "react";
 import { mount } from "enzyme";
 import { getMockProduct } from "../../models/product";
-import EditorContainer from "../EditorContainer";
+import { EditorContainer } from "../EditorContainer";
 
 describe("EditorContainer", () => {
   let defaultProps;
   beforeEach(() => {
     defaultProps = {
-      product: getMockProduct()
+      product: getMockProduct(),
+      onSave: jest.fn()
     };
   });
   it("renders", () => {

@@ -12,9 +12,18 @@ describe("Toolbar", () => {
     });
   });
 
+  let defaultProps;
+  beforeEach(() => {
+    defaultProps = {
+      onShare: jest.fn(),
+      onReset: jest.fn(),
+      onHideOutlines: jest.fn(),
+      onBackgroundChange: jest.fn()
+    };
+  });
   it("renders", () => {
     expect.assertions(1);
-    const wrapper = shallow(<Toolbar />);
+    const wrapper = shallow(<Toolbar {...defaultProps} />);
     expect(wrapper).toMatchSnapshot();
   });
 });

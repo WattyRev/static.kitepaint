@@ -10,7 +10,7 @@ exports[`CreateNew renders 1`] = `
 
 exports[`CreateNew renders 2`] = `
 <div>
-  <EditorContainer
+  <Connect(EditorContainer)
     product={
       Object {
         "colors": Array [
@@ -37,13 +37,15 @@ exports[`CreateNew renders 2`] = `
     }
   >
     <Component />
-  </EditorContainer>
+  </Connect(EditorContainer)>
 </div>
 `;
 
 exports[`CreateNew renders 3`] = `
 <div>
-  <Toolbar />
+  <Connect(UserContainer)>
+    <Component />
+  </Connect(UserContainer)>
   <styled.div>
     <Sidebar
       appliedColors={Object {}}

@@ -18,7 +18,7 @@ const productAppliedColorsShape = PropTypes.objectOf(appliedColorsShape);
 export { appliedColorsShape, productAppliedColorsShape };
 
 /**
- * Manages the overall state of the editor.
+ * Manages the overall state of the editor. And provides a means to save changes.
  */
 export class EditorContainer extends React.Component {
   static propTypes = {
@@ -27,7 +27,7 @@ export class EditorContainer extends React.Component {
      */
     product: productShape.isRequired,
     /**
-     * The default color (name) to be selected. Will default to the first color on the product =
+     * The default color (name) to be selected. Will default to the first color on the product
      * otherwise.
      */
     defaultColor: PropTypes.string,
@@ -40,7 +40,9 @@ export class EditorContainer extends React.Component {
      * A function that renders content
      */
     children: PropTypes.func.isRequired,
-
+    /**
+     * A function called when we want to save the design. Provided by Redux.
+     */
     onSave: PropTypes.func.isRequired
   };
 
@@ -91,9 +93,17 @@ export class EditorContainer extends React.Component {
     };
   }
 
+  /*
+   * Cancels any pending promises before being unmounted.
+   */
   componentWillUnmount() {
     this.cancelablePromises.forEach(promise => promise.cancel());
   }
+
+  /**
+   * An array of promises that may need to be cancelled when the component is unmounted
+   */
+  cancelablePromises = [];
 
   /**
    * Handles when a different color is selected by updating state.
@@ -135,21 +145,34 @@ export class EditorContainer extends React.Component {
     });
   };
 
+  /**
+   * Generates the design variations based on the product variations and the applied colors.
+   * @return {Object[]} Each object contains name, primary, and svg.
+   */
   generateDesignVariations = () => {
     const appliedColors = this.state.appliedColors;
     const productVariations = this.props.product.variations;
+
+    // Build each variation
     return productVariations.map((variation, index) => {
+      // Render the blank variation from the product in memory
       const render = new window.DOMParser().parseFromString(
         variation.svg,
         "text/xml"
       );
       const colorMap = appliedColors[variation.name] || {};
+
+      // Apply each color to the rendered variation
       Object.keys(colorMap).forEach(id => {
         const color = colorMap[id].color;
         const panel = render.querySelector(`[data-id="${id}"]`);
         panel.setAttribute("fill", color);
       });
+
+      // Get the new SVG string from the render.
       const svg = render.querySelector("svg").outerHTML;
+
+      // Return the variation
       return {
         name: variation.name,
         primary: !index,
@@ -158,6 +181,11 @@ export class EditorContainer extends React.Component {
     });
   };
 
+  /**
+   * Handles save by parsing data and submitting a request to create a new design. Redirects to that
+   * design's edit page when successful.
+   * @param  {Object} data must contain name and user(id)
+   */
   handleSave = data => {
     const { name, user } = data;
     const design = {
@@ -175,8 +203,6 @@ export class EditorContainer extends React.Component {
     });
     this.cancelablePromises.push(promise);
   };
-
-  cancelablePromises = [];
 
   /**
    * Gets the applied colors for the current variation

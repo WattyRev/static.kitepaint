@@ -4,29 +4,7 @@ exports[`Toolbar renders 1`] = `
 <styled.div>
   <P
     isLight={true}
-  >
-    <FontAwesomeIcon
-      border={false}
-      className=""
-      fixedWidth={false}
-      flip={null}
-      icon="save"
-      inverse={false}
-      listItem={false}
-      mask={null}
-      pull={null}
-      pulse={false}
-      rotation={null}
-      size={null}
-      spin={false}
-      symbol={false}
-      title=""
-      transform={null}
-    />
-     Save
-  </P>
-  <P
-    isLight={true}
+    onClick={[MockFunction]}
   >
     <FontAwesomeIcon
       border={false}
@@ -50,29 +28,7 @@ exports[`Toolbar renders 1`] = `
   </P>
   <P
     isLight={true}
-  >
-    <FontAwesomeIcon
-      border={false}
-      className=""
-      fixedWidth={false}
-      flip={null}
-      icon="magic"
-      inverse={false}
-      listItem={false}
-      mask={null}
-      pull={null}
-      pulse={false}
-      rotation={null}
-      size={null}
-      spin={false}
-      symbol={false}
-      title=""
-      transform={null}
-    />
-     Autofill
-  </P>
-  <P
-    isLight={true}
+    onClick={[MockFunction]}
   >
     <FontAwesomeIcon
       border={false}
@@ -96,6 +52,7 @@ exports[`Toolbar renders 1`] = `
   </P>
   <P
     isLight={true}
+    onClick={[MockFunction]}
   >
     <FontAwesomeIcon
       border={false}
@@ -119,6 +76,7 @@ exports[`Toolbar renders 1`] = `
   </P>
   <P
     isLight={true}
+    onClick={[MockFunction]}
   >
     <FontAwesomeIcon
       border={false}
