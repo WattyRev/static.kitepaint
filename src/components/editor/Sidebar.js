@@ -5,7 +5,7 @@ import manufacturerShape from "../../models/manufacturer";
 import productShape from "../../models/product";
 import designShape from "../../models/design";
 import { productAppliedColorsShape } from "../../containers/EditorContainer";
-import { BlockListItem, Icon } from "../../theme";
+import { BlockListItem, Icon, FillToBottom } from "../../theme";
 import ManufacturerLogo from "../ManufacturerLogo";
 import ColorTile from "./ColorTile";
 import ColorableSvg from "./ColorableSvg";
@@ -139,18 +139,20 @@ const Sidebar = ({
     <ListHeading isLight>
       <Icon icon="palette" /> Colors
     </ListHeading>
-    {product.colors.map(color => (
-      <ListItem
-        className="testing_color"
-        isLight
-        hasAction
-        key={color.name}
-        isActive={color.name === selectedColor}
-        onClick={() => onColorSelect(color.name)}
-      >
-        <ColorTile color={color.color} /> {color.name}
-      </ListItem>
-    ))}
+    <FillToBottom offset={35}>
+      {product.colors.map(color => (
+        <ListItem
+          className="testing_color"
+          isLight
+          hasAction
+          key={color.name}
+          isActive={color.name === selectedColor}
+          onClick={() => onColorSelect(color.name)}
+        >
+          <ColorTile color={color.color} /> {color.name}
+        </ListItem>
+      ))}
+    </FillToBottom>
   </StyleWrapper>
 );
 

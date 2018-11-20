@@ -64,33 +64,39 @@ exports[`Sidebar renders 1`] = `
     />
      Colors
   </Styled(styled.div)>
-  <Styled(styled.div)
-    className="testing_color"
-    hasAction={true}
-    isActive={true}
-    isLight={true}
-    key="red"
-    onClick={[Function]}
+  <FillToBottom
+    minHeight={0}
+    offset={35}
+    strict={false}
   >
-    <styled.div
-      color="#ff0000"
-    />
-     
-    red
-  </Styled(styled.div)>
-  <Styled(styled.div)
-    className="testing_color"
-    hasAction={true}
-    isActive={false}
-    isLight={true}
-    key="black"
-    onClick={[Function]}
-  >
-    <styled.div
-      color="#000000"
-    />
-     
-    black
-  </Styled(styled.div)>
+    <Styled(styled.div)
+      className="testing_color"
+      hasAction={true}
+      isActive={true}
+      isLight={true}
+      key="red"
+      onClick={[Function]}
+    >
+      <styled.div
+        color="#ff0000"
+      />
+       
+      red
+    </Styled(styled.div)>
+    <Styled(styled.div)
+      className="testing_color"
+      hasAction={true}
+      isActive={false}
+      isLight={true}
+      key="black"
+      onClick={[Function]}
+    >
+      <styled.div
+        color="#000000"
+      />
+       
+      black
+    </Styled(styled.div)>
+  </FillToBottom>
 </styled.div>
 `;
