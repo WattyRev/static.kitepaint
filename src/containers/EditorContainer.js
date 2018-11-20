@@ -210,18 +210,37 @@ export class EditorContainer extends React.Component {
     return this.state.appliedColors[currentVariationName] || {};
   };
 
+  /**
+   * Handles auto fill by merging the colors applied to the current variation on top of the colors
+   * applied to every other variation.
+   */
+  handleAutofill = () => {
+    const currentColors = this.getCurrentVariationColors();
+    const previousAppliedColors = this.state.appliedColors;
+    const variations = this.props.product.variations;
+    const appliedColors = variations.reduce((accumulated, variation) => {
+      accumulated[variation.name] = {
+        ...(previousAppliedColors[variation.name] || {}),
+        ...currentColors
+      };
+      return accumulated;
+    }, {});
+    this.setState({ appliedColors });
+  };
+
   render() {
     const data = {
       actions: {
-        selectColor: this.handleColorSelection,
-        selectVariation: this.handleVariationSelection,
         applyColor: this.handleColorApplied,
-        save: this.handleSave
+        autofill: this.handleAutofill,
+        save: this.handleSave,
+        selectColor: this.handleColorSelection,
+        selectVariation: this.handleVariationSelection
       },
       props: {
+        appliedColors: this.state.appliedColors,
         currentColor: this.state.currentColor,
         currentVariation: this.state.currentVariation,
-        appliedColors: this.state.appliedColors,
         currentVariationColors: this.getCurrentVariationColors()
       }
     };

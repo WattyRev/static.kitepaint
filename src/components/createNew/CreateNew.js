@@ -48,7 +48,7 @@ const CreateNew = ({ match }) => (
                       : null
                   }
                   onShare={() => {}}
-                  onAutofill={() => {}}
+                  onAutofill={editorData.actions.autofill}
                   onReset={() => {}}
                   onHideOutlines={() => {}}
                   onBackgroundChange={() => {}}
