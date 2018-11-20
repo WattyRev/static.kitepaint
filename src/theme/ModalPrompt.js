@@ -120,6 +120,13 @@ class ModalPrompt extends React.Component {
     value: ""
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    // Auto focus the input when the modal opens
+    if (!prevState.isOpen && this.state.isOpen && this.promptInput) {
+      this.promptInput.focus();
+    }
+  }
+
   /**
    * Handles the submission event by calling onSubmit with the value and closing/resetting the
    * modal. This does not call onSubmit if the value is empty.
@@ -172,6 +179,7 @@ class ModalPrompt extends React.Component {
               <form onSubmit={this.handleSubmit} className="testing_submit">
                 <Label>{this.props.message}</Label>
                 <Input
+                  ref={input => (this.promptInput = input)}
                   className="testing_prompt-value"
                   value={this.state.value}
                   onChange={this.handleValueChange}
