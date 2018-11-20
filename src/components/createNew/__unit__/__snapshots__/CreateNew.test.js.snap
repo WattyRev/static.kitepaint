@@ -99,7 +99,6 @@ exports[`CreateNew renders 3`] = `
 exports[`CreateNew renders 4`] = `
 <div>
   <Toolbar
-    onAutofill={[Function]}
     onBackgroundChange={[Function]}
     onHideOutlines={[Function]}
     onReset={[Function]}

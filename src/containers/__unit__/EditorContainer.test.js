@@ -338,4 +338,158 @@ describe("EditorContainer", () => {
       ]
     });
   });
+  describe("autofill", () => {
+    let wrapper;
+    beforeEach(() => {
+      defaultProps.product.variations = [
+        {
+          name: "Standard",
+          svg: ""
+        },
+        {
+          name: "Vented",
+          svg: ""
+        }
+      ];
+      wrapper = mount(
+        <EditorContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div className="output">
+                {JSON.stringify(data.props.appliedColors)}
+              </div>
+              <div
+                className="select-vented"
+                onClick={() => data.actions.selectVariation("Vented")}
+              />
+              <div className="autofill" onClick={data.actions.autofill} />
+            </React.Fragment>
+          )}
+        </EditorContainer>
+      );
+      wrapper.instance().setState({
+        appliedColors: {
+          Standard: {
+            p1: {
+              name: "black",
+              color: "#000000"
+            },
+            p2: {
+              name: "red",
+              color: "#ff0000"
+            },
+            p3: {
+              name: "green",
+              color: "#00ff00"
+            }
+          },
+          Vented: {
+            p1: {
+              name: "red",
+              color: "#ff0000"
+            },
+            p2: {
+              name: "black",
+              color: "#000000"
+            }
+          }
+        }
+      });
+    });
+
+    it("autofills the vented variation based on the standard variation", () => {
+      wrapper.find(".autofill").simulate("click");
+      expect(JSON.parse(wrapper.find(".output").text())).toEqual({
+        Standard: {
+          p1: {
+            name: "black",
+            color: "#000000"
+          },
+          p2: {
+            name: "red",
+            color: "#ff0000"
+          },
+          p3: {
+            name: "green",
+            color: "#00ff00"
+          }
+        },
+        Vented: {
+          p1: {
+            name: "black",
+            color: "#000000"
+          },
+          p2: {
+            name: "red",
+            color: "#ff0000"
+          },
+          p3: {
+            name: "green",
+            color: "#00ff00"
+          }
+        }
+      });
+    });
+
+    it("autofills the standard variation based on the vented variation", () => {
+      expect.assertions(1);
+      wrapper.find(".select-vented").simulate("click");
+      wrapper.find(".autofill").simulate("click");
+      expect(JSON.parse(wrapper.find(".output").text())).toEqual({
+        Standard: {
+          p1: {
+            name: "red",
+            color: "#ff0000"
+          },
+          p2: {
+            name: "black",
+            color: "#000000"
+          },
+          p3: {
+            name: "green",
+            color: "#00ff00"
+          }
+        },
+        Vented: {
+          p1: {
+            name: "red",
+            color: "#ff0000"
+          },
+          p2: {
+            name: "black",
+            color: "#000000"
+          }
+        }
+      });
+    });
+
+    it("autofills the vented variation even if it had no colors yet", () => {
+      expect.assertions(1);
+      wrapper.instance().setState({
+        appliedColors: {
+          Standard: {
+            p1: {
+              name: "black",
+              color: "#000000"
+            }
+          }
+        }
+      });
+      wrapper.find(".autofill").simulate("click");
+      expect(JSON.parse(wrapper.find(".output").text())).toEqual({
+        Standard: {
+          p1: {
+            name: "black",
+            color: "#000000"
+          }
+        },
+        Vented: {
+          p1: {
+            name: "black",
+            color: "#000000"
+          }
+        }
+      });
+    });
+  });
 });
