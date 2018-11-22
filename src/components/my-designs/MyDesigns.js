@@ -11,7 +11,8 @@ const StyleWrapper = styled.div`
 `;
 
 /**
- * A coordinating component for the Home page.
+ * A coordinating component for the My Designs page.
+ * The page is intended to allow users to see and manage their designs
  */
 const MyDesigns = () => (
   <StyleWrapper>

@@ -389,6 +389,24 @@ describe("KitePaintApi", () => {
         "/designs.php?filter%5Bactive%5D=1&return%5B0%5D=id&return%5B1%5D=created&return%5B2%5D=updated&return%5B3%5D=name&return%5B4%5D=product&return%5B5%5D=user&return%5B6%5D=variations&return%5B7%5D=status&order%5B0%5D=id&order%5B1%5D=DESC&limit=5"
       );
     });
+    it("includes the user filter if provided", () => {
+      expect.assertions(1);
+      Api.getDesigns({
+        userId: "user-id"
+      }).catch(() => {});
+      expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual(
+        expect.stringContaining("filter%5Buser%5D=user-id")
+      );
+    });
+    it("excludes the limit if limit is set to null", () => {
+      expect.assertions(1);
+      Api.getDesigns({
+        limit: null
+      }).catch(() => {});
+      expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual(
+        expect.not.stringContaining("limit")
+      );
+    });
     it("does not make identical requests when they have been cached", () => {
       expect.assertions(1);
       Api.getDesigns().catch(() => {});

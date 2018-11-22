@@ -10,17 +10,44 @@ import designShape from "../models/design";
 import productShape from "../models/product";
 import manufacturerShape from "../models/manufacturer";
 
+/**
+ * Provides access to designs created by the current user.
+ */
 export class UserDesignsContainer extends React.Component {
   static propTypes = {
+    /**
+     * A function that triggers the retieval of the user's designs. Provided by Redux.
+     */
     onFetchDesigns: PropTypes.func.isRequired,
+    /**
+     * A function that triggers the retrieval of products. Provided by Redux.
+     */
     onFetchProducts: PropTypes.func.isRequired,
+    /**
+     * A function that triggers the retireval of manufacturers. Provided by Redux.
+     */
     onFetchManufacturers: PropTypes.func.isRequired,
+    /**
+     * The designs created by the current user. Provided by Redux.
+     */
     designs: PropTypes.arrayOf(designShape).isRequired,
+    /**
+     * All of the products, indexed by ID. Provided by Redux.
+     */
     products: PropTypes.objectOf(productShape).isRequired,
+    /**
+     * All the manufacturers, indexed by ID. Provided by Redux.
+     */
     manufacturers: PropTypes.objectOf(manufacturerShape).isRequired,
+    /**
+     * The current user. Provided by Redux.
+     */
     user: PropTypes.shape({
       id: PropTypes.string.isRequired
     }),
+    /**
+     * A function that renders content.
+     */
     children: PropTypes.func.isRequired
   };
 
@@ -58,6 +85,8 @@ const mapDispatchToProps = {
   onFetchManufacturers: GET_MANUFACTURERS
 };
 
+// We need the user prop to be provided in order to get the designs, so wrap the container once
+// to get the designs, and again to get the user.
 const withDesigns = connect(
   mapStateToProps,
   mapDispatchToProps

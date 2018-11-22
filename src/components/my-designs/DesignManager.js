@@ -7,7 +7,7 @@ import manufacturerShape from "../../models/manufacturer";
 import { H2, P, Button, Input, Label, Icon, Tile } from "../../theme";
 import Svg from "../Svg";
 
-const StyleWrapper = styled(Tile)`
+export const StyleWrapper = styled(Tile)`
   > div {
     padding: 8px;
   }
@@ -30,7 +30,7 @@ const DesignManager = ({ design, product, manufacturer }) => (
       <H2>{design.name}</H2>
       {product && (
         <P>
-          <strong>
+          <strong className="testing_product-info">
             {product.name}
             {manufacturer && ` by ${manufacturer.name}`}
           </strong>
@@ -53,6 +53,7 @@ const DesignManager = ({ design, product, manufacturer }) => (
         <React.Fragment>
           <Label>Public URL</Label>
           <Input
+            className="testing_public-url"
             readOnly
             value={`${window.location.origin}/view/${design.id}`}
           />

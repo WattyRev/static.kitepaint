@@ -10,7 +10,7 @@ const sizes = {
   xl: 64
 };
 
-const StyledSpacer = styled.div`
+export const StyledSpacer = styled.div`
   margin-top: ${props => (props.top ? sizes[props.top] : 0)}px;
   margin-bottom: ${props => (props.bottom ? sizes[props.bottom] : 0)}px;
   margin-left: ${props => (props.left ? sizes[props.left] : 0)}px;
