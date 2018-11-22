@@ -1,5 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
+import { getMockDesign } from "../../models/design";
 import { RecentDesignsContainer } from "../RecentDesignsContainer";
 
 describe("RecentDesignsContainer", () => {
@@ -30,14 +31,9 @@ describe("RecentDesignsContainer", () => {
   });
   it("provides the designs in the render", () => {
     expect.assertions(1);
-    props.designs = [
-      {
-        id: "123",
-        created: "10/01/01",
-        name: "my-design",
-        variations: []
-      }
-    ];
+    const design = getMockDesign();
+    design.name = "my-design";
+    props.designs = [design];
     const wrapper = shallow(
       <RecentDesignsContainer {...props}>
         {data => (

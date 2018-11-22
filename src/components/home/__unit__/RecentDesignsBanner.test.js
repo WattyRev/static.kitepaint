@@ -1,25 +1,13 @@
 import React from "react";
 import { shallow } from "enzyme";
+import { getMockDesign } from "../../../models/design";
 import RecentDesignsBanner from "../RecentDesignsBanner";
 
 describe("RecentDesignsBanner", () => {
   let props;
   beforeEach(() => {
     props = {
-      designs: [
-        {
-          name: "abc",
-          id: "123",
-          created: "10/01/01",
-          variations: [
-            {
-              name: "v1",
-              svg: '<div class="totally-svg">Pretty Design</div>',
-              primary: true
-            }
-          ]
-        }
-      ]
+      designs: [getMockDesign()]
     };
   });
   it("renders", () => {

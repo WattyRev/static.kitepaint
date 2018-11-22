@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { getMockProduct } from "./product";
 
 /**
  * A design is a user-created entity. It represetns a saved design of a particular product.
@@ -36,15 +37,18 @@ export const designStatuses = {
  * @type {Object}
  */
 const getMockDesign = () => ({
-  id: "abc",
+  id: "design-1",
   created: "01/01/2018",
+  updated: "01/02/2018",
   name: "picasso",
+  product: getMockProduct().id,
   variations: [
     {
       name: "Standard",
       svg: "<div>picasso standard</div>",
       primary: true
     }
-  ]
+  ],
+  status: designStatuses.PRIVATE
 });
 export { getMockDesign };

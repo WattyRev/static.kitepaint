@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { appliedColorsShape } from "../../containers/EditorContainer";
-import Svg from "../Svg";
 
 /**
  * Renders the provided SVG and uses the colorMap to apply a fill color to verious elements
@@ -41,7 +40,12 @@ class ColorableSvg extends React.Component {
   };
 
   render() {
-    return <Svg ref={node => (this.node = node)} svg={this.props.svg} />;
+    return (
+      <div
+        ref={node => (this.node = node)}
+        dangerouslySetInnerHTML={{ __html: this.props.svg }}
+      />
+    );
   }
 }
 

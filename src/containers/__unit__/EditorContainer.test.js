@@ -315,7 +315,7 @@ describe("EditorContainer", () => {
     expect(defaultProps.onSave.mock.calls[0][0]).toEqual({
       name: "boogers",
       user: "123",
-      product: "abc",
+      product: defaultProps.product.id,
       variations: [
         {
           name: "Standard",

@@ -10,23 +10,19 @@ exports[`RecentDesignsBanner renders 1`] = `
   >
     <Link
       className="design-wrapper"
-      key="123"
+      key="design-1"
       replace={false}
-      to="/view/123"
+      to="/view/design-1"
     >
-      <div
+      <Svg
         className="design-preview"
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "<div class=\\"totally-svg\\">Pretty Design</div>",
-          }
-        }
+        svg="<div>picasso standard</div>"
       />
       <P
         className="design-name"
         isLight={true}
       >
-        abc
+        picasso
       </P>
     </Link>
   </div>
