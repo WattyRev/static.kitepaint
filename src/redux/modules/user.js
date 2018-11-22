@@ -6,7 +6,7 @@ export const defaultState = fromJS({
   actcode: null,
   firstName: null,
   id: null,
-  isCheckingLogin: false,
+  isCheckingLogin: true,
   isLoggedIn: false,
   isLoggingIn: false,
   isRecognizedUser: localStorage.getItem("isRecognizedUser") === "true",

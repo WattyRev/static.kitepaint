@@ -63,3 +63,7 @@ export const getManufacturerByProductId = (state, productId) => {
   }
   return manufacturer.toJS();
 };
+
+export const getManufacturersWithIndex = state => {
+  return state.get("manufacturers").toJS();
+};

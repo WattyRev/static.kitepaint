@@ -382,7 +382,7 @@ describe("KitePaintApi", () => {
     it("adopts the provided filters", () => {
       expect.assertions(1);
       Api.getDesigns({
-        isPublic: false,
+        publicOnly: false,
         limit: 5
       }).catch(() => {});
       expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual(

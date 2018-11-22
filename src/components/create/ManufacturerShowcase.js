@@ -2,17 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import manufacturerShape from "../../models/manufacturer";
-import { H3, A, P } from "../../theme";
+import { H3, A, P, Tile } from "../../theme";
 import ManufacturerLogo from "../ManufacturerLogo";
 
 /**
  * A general wrapper for the showcase. Gives it the border and the light background
  */
-export const StyleWrapper = styled.div`
-  background: ${props => props.theme.colors.blueLighter};
-  border: 1px solid ${props => props.theme.colors.gray};
-  margin: 8px 16px;
-  border-radius: 4px;
+export const StyleWrapper = styled(Tile)`
   padding: 8px;
 `;
 

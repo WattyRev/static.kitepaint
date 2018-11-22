@@ -209,9 +209,10 @@ export class KitePaintApi {
    * @return {Promise}
    */
   async getDesigns(filter = {}, useCache = true) {
-    // Define the default filtes and merge them with the user provided filters
+    // Define the default filters and merge them with the user provided filters
     const filterDefaults = {
-      isPublic: true,
+      userId: null,
+      publicOnly: true,
       limit: 50
     };
     const filterWithDefaults = Object.assign({}, filterDefaults, filter);
@@ -221,12 +222,26 @@ export class KitePaintApi {
       filter: {
         active: 1
       },
-      return: ["id", "created", "name", "variations"],
-      limit: filterWithDefaults.limit,
+      return: [
+        "id",
+        "created",
+        "updated",
+        "name",
+        "product",
+        "user",
+        "variations",
+        "status"
+      ],
       order: ["id", "DESC"]
     };
-    if (filterWithDefaults.isPublic) {
+    if (filterWithDefaults.limit) {
+      requestData.limit = filterWithDefaults.limit;
+    }
+    if (filterWithDefaults.publicOnly) {
       requestData.filter.status = 2;
+    }
+    if (filterWithDefaults.userId) {
+      requestData.filter.user = filterWithDefaults.userId;
     }
 
     // Convert the request data to query params using Qs. This is done because providing nested

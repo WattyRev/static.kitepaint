@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import productShape from "../../models/product";
 import { H3 } from "../../theme";
+import Svg from "../Svg";
 
 /**
  * Provides styling for the showcase
@@ -63,10 +64,10 @@ const ProductShowcase = ({ product }) => (
   <StyleWrapper as={Link} to={`/create/${product.id}`}>
     <H3 className="product-heading">{product.name}</H3>
     {product.variations.map(variation => (
-      <div
+      <Svg
         className={`preview count-${product.variations.length}`}
         key={variation.name}
-        dangerouslySetInnerHTML={{ __html: variation.svg }}
+        svg={variation.svg}
       />
     ))}
   </StyleWrapper>
