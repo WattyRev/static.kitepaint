@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { TypographyStyles } from "./Text";
 
 const StyleWrapper = styled.div`
   position: relative;
@@ -11,13 +12,41 @@ const StyleWrapper = styled.div`
  */
 export const StyledDropdown = styled.div`
   position: absolute;
-  top: 100%;
+  top: calc(100% + 4px);
   right: 0;
   background: ${props => props.theme.colors.white};
   border-radius: 4px;
-  border-top-right-radius: 0;
-  border: 1px solid ${props => props.theme.colors.silver};
+  border: 1px solid ${props => props.theme.colors.gray};
   text-align: right;
+  box-shadow: 0px 2px 2px -1px ${props => props.theme.colors.grayDarker};
+  overflow: hidden;
+`;
+
+/**
+ * A component for a styled dropdown item.
+ */
+export const Item = styled.a`
+  ${TypographyStyles};
+  display: block;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 4px 8px;
+  font-size: 14px;
+  color: ${props => props.theme.colors.black};
+  transition: 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    background: ${props => props.theme.colors.silver};
+  }
+`;
+
+/**
+ * A component for a styled spacer to separate dropdown items.
+ */
+export const Spacer = styled.div`
+  border-bottom: 1px solid ${props => props.theme.colors.gray};
+  margin: 4px 0;
 `;
 
 /**
@@ -100,6 +129,10 @@ class Dropdown extends React.Component {
       },
       props: {
         isOpen: this.state.isOpen
+      },
+      components: {
+        Item,
+        Spacer
       }
     };
     return (

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import UserContainer from "../../containers/UserContainer";
-import { A, BlockListItem, H2, Icon, Dropdown } from "../../theme";
+import { A, H2, Icon, Dropdown } from "../../theme";
 import { TypographyStyles } from "../../theme/Text";
 
 export const StyleWrapper = styled.div`
@@ -92,18 +92,26 @@ const Header = () => (
               className="testing_account-dropdown"
               dropdownContent={accountDropdown => (
                 <React.Fragment>
-                  <BlockListItem>
-                    <A
-                      as={Link}
-                      to="/account"
-                      onClick={accountDropdown.actions.closeDropdown}
-                    >
-                      Manage Account
-                    </A>
-                  </BlockListItem>
-                  <BlockListItem>
-                    <A onClick={userData.actions.logOut}>Sign Out</A>
-                  </BlockListItem>
+                  <accountDropdown.components.Item
+                    as={Link}
+                    to="/account"
+                    onClick={accountDropdown.actions.closeDropdown}
+                  >
+                    Manage Account
+                  </accountDropdown.components.Item>
+                  <accountDropdown.components.Item
+                    as={Link}
+                    to="/my-designs"
+                    onClick={accountDropdown.actions.closeDropdown}
+                  >
+                    My Designs
+                  </accountDropdown.components.Item>
+                  <accountDropdown.components.Spacer />
+                  <accountDropdown.components.Item
+                    onClick={userData.actions.logOut}
+                  >
+                    Sign Out
+                  </accountDropdown.components.Item>
                 </React.Fragment>
               )}
             >

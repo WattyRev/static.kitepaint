@@ -10,6 +10,7 @@ import Designs from "./designs";
 import Edit from "./edit";
 import ErrorPage from "./ErrorPage";
 import Home from "./home";
+import MyDesigns from "./my-designs";
 import View from "./view";
 
 /**
@@ -26,6 +27,7 @@ const App = () => (
       <Route exact path="/create/:productId" component={CreateNew} />
       <Route exact path="/designs" component={Designs} />
       <Route exact path="/edit/:designId" component={Edit} />
+      <Route exact path="/my-designs" component={MyDesigns} />
       <Route exact path="/view/:designId" component={View} />
       <Route component={ErrorPage} />
     </Switch>
