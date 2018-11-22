@@ -21,6 +21,18 @@ export default handleActions(
   defaultState
 );
 
+const sortNewestToOldest = (designA, designB) => {
+  const aId = designA.get("id");
+  const bId = designB.get("id");
+  if (aId > bId) {
+    return -1;
+  }
+  if (aId < bId) {
+    return 1;
+  }
+  return 0;
+};
+
 /**
  * Get the 6 most recent designs.
  * @param  {Map} state
@@ -29,18 +41,17 @@ export default handleActions(
 export const getRecentDesigns = state => {
   const designs = state.get("designs");
   return designs
-    .sort((designA, designB) => {
-      const aId = designA.get("id");
-      const bId = designB.get("id");
-      if (aId > bId) {
-        return -1;
-      }
-      if (aId < bId) {
-        return 1;
-      }
-      return 0;
-    })
+    .sort(sortNewestToOldest)
     .toList()
     .toJS()
     .slice(0, 6);
+};
+
+export const getDesignsByUser = (state, userId) => {
+  const designs = state.get("designs");
+  return designs
+    .filter(design => design.get("user") === userId)
+    .sort(sortNewestToOldest)
+    .toList()
+    .toJS();
 };

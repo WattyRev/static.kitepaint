@@ -23,8 +23,8 @@ exports[`CreateNew renders 2`] = `
             "name": "black",
           },
         ],
-        "id": "abc",
-        "manufacturer": "abc",
+        "id": "product-1",
+        "manufacturer": "manufacturer-1",
         "name": "Krazy Kite",
         "url": "http://krazykites.com/krazy-kite",
         "variations": Array [
@@ -51,7 +51,7 @@ exports[`CreateNew renders 3`] = `
       appliedColors={Object {}}
       manufacturer={
         Object {
-          "id": "abc",
+          "id": "manufacturer-1",
           "logo": "abc.jpg",
           "name": "Krazy Kites",
           "website": "http://krazykites.com",
@@ -71,8 +71,8 @@ exports[`CreateNew renders 3`] = `
               "name": "black",
             },
           ],
-          "id": "abc",
-          "manufacturer": "abc",
+          "id": "product-1",
+          "manufacturer": "manufacturer-1",
           "name": "Krazy Kite",
           "url": "http://krazykites.com/krazy-kite",
           "variations": Array [

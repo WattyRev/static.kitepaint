@@ -17,7 +17,7 @@ export default manufacturerState;
  * @type {Object}
  */
 const getMockManufacturer = () => ({
-  id: "abc",
+  id: "manufacturer-1",
   name: "Krazy Kites",
   logo: "abc.jpg",
   website: "http://krazykites.com"

@@ -14,7 +14,9 @@ import Input from "./Input";
 import Label from "./Label";
 import ModalPrompt from "./ModalPrompt";
 import P from "./P";
+import Spacer from "./Spacer";
 import Text from "./Text";
+import Tile from "./Tile";
 import Tooltip from "./Tooltip";
 
 const Theme = { colors, patterns };
@@ -35,6 +37,8 @@ export {
   Label,
   ModalPrompt,
   P,
+  Spacer,
+  Tile,
   Text,
   Tooltip
 };

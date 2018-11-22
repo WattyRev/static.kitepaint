@@ -49,3 +49,7 @@ export const getProductById = (state, id) => {
   }
   return product.toJS();
 };
+
+export const getProductsWithIndex = state => {
+  return state.get("products").toJS();
+};

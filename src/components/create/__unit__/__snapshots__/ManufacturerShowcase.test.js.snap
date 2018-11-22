@@ -2,14 +2,13 @@
 
 exports[`ManufacturerShowcase StyleWrapper renders 1`] = `
 .c0 {
-  background: #f0fbff;
+  background: #FFFFFF;
   border: 1px solid #AAAAAA;
-  margin: 8px 16px;
   border-radius: 4px;
   padding: 8px;
 }
 
-<styled.div
+<Styled(styled.div)
   theme={
     Object {
       "colors": Object {
@@ -67,7 +66,7 @@ exports[`ManufacturerShowcase StyleWrapper renders 1`] = `
         "$$typeof": Symbol(react.forward_ref),
         "attrs": undefined,
         "componentStyle": ComponentStyle {
-          "componentId": "sc-chPdSV",
+          "componentId": "sc-dxgOiQ",
           "isStatic": false,
           "lastClassName": "c0",
           "rules": Array [
@@ -78,15 +77,16 @@ exports[`ManufacturerShowcase StyleWrapper renders 1`] = `
   border: 1px solid ",
             [Function],
             ";
-  margin: 8px 16px;
   border-radius: 4px;
+",
+            "
   padding: 8px;
 ",
           ],
         },
-        "displayName": "styled.div",
+        "displayName": "Styled(styled.div)",
         "render": [Function],
-        "styledComponentId": "sc-chPdSV",
+        "styledComponentId": "sc-dxgOiQ",
         "target": "div",
         "toString": [Function],
         "warnTooManyClasses": [Function],
@@ -149,11 +149,11 @@ exports[`ManufacturerShowcase StyleWrapper renders 1`] = `
       className="c0"
     />
   </StyledComponent>
-</styled.div>
+</Styled(styled.div)>
 `;
 
 exports[`ManufacturerShowcase renders 1`] = `
-<styled.div>
+<Styled(styled.div)>
   <styled.div>
     <styled.div
       src="/logos/abc.jpg"
@@ -177,5 +177,5 @@ exports[`ManufacturerShowcase renders 1`] = `
   <div>
     Children!
   </div>
-</styled.div>
+</Styled(styled.div)>
 `;

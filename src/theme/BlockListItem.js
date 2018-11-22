@@ -3,6 +3,7 @@ import { TypographyStyles } from "./Text";
 
 const BlockListItem = styled.div`
   ${TypographyStyles};
+  display: block;
   border-bottom: 1px solid
     ${props =>
       props.isLight ? props.theme.colors.grayDark : props.theme.colors.gray};
@@ -11,10 +12,7 @@ const BlockListItem = styled.div`
   white-space: nowrap;
   padding: 8px;
   text-decoration: none;
-
-  &:last-child {
-    border-bottom: 0;
-  }
+  transition: 0.2s background;
 `;
 
 export default BlockListItem;

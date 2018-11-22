@@ -1,17 +1,27 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import Theme from "../../theme";
-import Dropdown, { StyledDropdown } from "../Dropdown";
+import Dropdown, { StyledDropdown, Item, Spacer } from "../Dropdown";
 
 describe("Dropdown", () => {
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = shallow(
+    shallow(
       <Dropdown dropdownContent={() => <div>test</div>}>
         {() => <div>test2</div>}
       </Dropdown>
     );
-    expect(wrapper).toMatchSnapshot();
+  });
+  it("renders when using the provided components", () => {
+    shallow(
+      <Dropdown dropdownContent={() => <div>test</div>}>
+        {data => (
+          <React.Fragment>
+            <data.components.Item>Item</data.components.Item>
+            <data.components.Spacer />
+          </React.Fragment>
+        )}
+      </Dropdown>
+    );
   });
   it("renders the dropdown content when openDropdown is triggered", () => {
     expect.assertions(2);
@@ -78,6 +88,19 @@ describe("Dropdown", () => {
   describe("StyledDropdown", () => {
     it("renders", () => {
       const wrapper = mount(<StyledDropdown theme={Theme} />);
+      expect(wrapper.find("div")).toHaveLength(1);
+    });
+  });
+
+  describe("Item", () => {
+    it("renders", () => {
+      const wrapper = mount(<Item theme={Theme} />);
+      expect(wrapper.find("a")).toHaveLength(1);
+    });
+  });
+  describe("Spacer", () => {
+    it("renders", () => {
+      const wrapper = mount(<Spacer theme={Theme} />);
       expect(wrapper.find("div")).toHaveLength(1);
     });
   });

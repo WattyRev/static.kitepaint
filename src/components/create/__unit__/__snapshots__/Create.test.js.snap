@@ -20,48 +20,52 @@ exports[`Create renders 1`] = `
 
 exports[`Create renders 2`] = `
 <div>
-  <ManufacturerShowcase
-    key="abc"
-    manufacturer={
-      Object {
-        "id": "abc",
-        "logo": "abc.jpg",
-        "name": "Krazy Kites",
-        "website": "http://krazykites.com",
-      }
-    }
+  <Spacer
+    bottom="md"
+    key="manufacturer-1"
   >
-    <div
-      className="products-wrapper"
-    >
-      <ProductShowcase
-        key="abc"
-        product={
-          Object {
-            "colors": Array [
-              Object {
-                "color": "#ff0000",
-                "name": "red",
-              },
-              Object {
-                "color": "#000000",
-                "name": "black",
-              },
-            ],
-            "id": "abc",
-            "manufacturer": "abc",
-            "name": "Krazy Kite",
-            "url": "http://krazykites.com/krazy-kite",
-            "variations": Array [
-              Object {
-                "name": "Standard",
-                "svg": "<div>Kool Kite</div>",
-              },
-            ],
-          }
+    <ManufacturerShowcase
+      manufacturer={
+        Object {
+          "id": "manufacturer-1",
+          "logo": "abc.jpg",
+          "name": "Krazy Kites",
+          "website": "http://krazykites.com",
         }
-      />
-    </div>
-  </ManufacturerShowcase>
+      }
+    >
+      <div
+        className="products-wrapper"
+      >
+        <ProductShowcase
+          key="product-1"
+          product={
+            Object {
+              "colors": Array [
+                Object {
+                  "color": "#ff0000",
+                  "name": "red",
+                },
+                Object {
+                  "color": "#000000",
+                  "name": "black",
+                },
+              ],
+              "id": "product-1",
+              "manufacturer": "manufacturer-1",
+              "name": "Krazy Kite",
+              "url": "http://krazykites.com/krazy-kite",
+              "variations": Array [
+                Object {
+                  "name": "Standard",
+                  "svg": "<div>Kool Kite</div>",
+                },
+              ],
+            }
+          }
+        />
+      </div>
+    </ManufacturerShowcase>
+  </Spacer>
 </div>
 `;

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import designShape from "../../models/design";
 import { H2, Button, P } from "../../theme";
+import Svg from "../Svg";
 
 const StyleWrapper = styled.div`
   padding: 16px;
@@ -64,12 +65,9 @@ const RecentDesignsBanner = ({ designs }) => (
             className="design-wrapper"
             to={`/view/${design.id}`}
           >
-            <div
+            <Svg
               className="design-preview"
-              dangerouslySetInnerHTML={{
-                __html: design.variations.find(variation => variation.primary)
-                  .svg
-              }}
+              svg={design.variations.find(variation => variation.primary).svg}
             />
             <P isLight className="design-name">
               {design.name}

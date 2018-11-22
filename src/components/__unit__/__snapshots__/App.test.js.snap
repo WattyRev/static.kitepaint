@@ -42,6 +42,11 @@ exports[`renders without crashing 1`] = `
     <Route
       component={[Function]}
       exact={true}
+      path="/my-designs"
+    />
+    <Route
+      component={[Function]}
+      exact={true}
       path="/view/:designId"
     />
     <Route

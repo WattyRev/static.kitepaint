@@ -11,7 +11,14 @@ export class UserContainer extends React.Component {
   static propTypes = {
     children: PropTypes.func.isRequired,
     isRecognizedUser: PropTypes.bool,
-    user: PropTypes.object.isRequired,
+    user: PropTypes.shape({
+      firstName: PropTypes.string,
+      id: PropTypes.string,
+      isLoggedIn: PropTypes.bool,
+      isLoggingIn: PropTypes.bool,
+      lastName: PropTypes.string,
+      username: PropTypes.string
+    }),
     onLogOut: PropTypes.func.isRequired,
     onSetRecognition: PropTypes.func.isRequired
   };

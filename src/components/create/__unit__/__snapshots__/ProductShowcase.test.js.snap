@@ -134,7 +134,7 @@ exports[`ProductShowcase StyleWrapper renders 1`] = `
         "$$typeof": Symbol(react.forward_ref),
         "attrs": undefined,
         "componentStyle": ComponentStyle {
-          "componentId": "sc-kAzzGY",
+          "componentId": "sc-kpOJdX",
           "isStatic": false,
           "lastClassName": "c0",
           "rules": Array [
@@ -198,7 +198,7 @@ exports[`ProductShowcase StyleWrapper renders 1`] = `
         },
         "displayName": "styled.div",
         "render": [Function],
-        "styledComponentId": "sc-kAzzGY",
+        "styledComponentId": "sc-kpOJdX",
         "target": "div",
         "toString": [Function],
         "warnTooManyClasses": [Function],
@@ -267,21 +267,17 @@ exports[`ProductShowcase StyleWrapper renders 1`] = `
 exports[`ProductShowcase renders 1`] = `
 <styled.div
   as={[Function]}
-  to="/create/abc"
+  to="/create/product-1"
 >
   <Styled(H3)
     className="product-heading"
   >
     Krazy Kite
   </Styled(H3)>
-  <div
+  <Svg
     className="preview count-1"
-    dangerouslySetInnerHTML={
-      Object {
-        "__html": "<div>Kool Kite</div>",
-      }
-    }
     key="Standard"
+    svg="<div>Kool Kite</div>"
   />
 </styled.div>
 `;

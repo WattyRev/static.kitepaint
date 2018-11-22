@@ -31,7 +31,7 @@ export default productShape;
  * @type {Object}
  */
 const getMockProduct = () => ({
-  id: "abc",
+  id: "product-1",
   name: "Krazy Kite",
   manufacturer: getMockManufacturer().id,
   url: "http://krazykites.com/krazy-kite",
