@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { H1, P, Spacer } from "../../theme";
+import { H1, P, Spacer, PageLoader } from "../../theme";
 import ProductsContainer from "../../containers/ProductsContainer";
 import ManufacturerShowcase from "./ManufacturerShowcase";
 import ProductShowcase from "./ProductShowcase";
@@ -34,20 +34,24 @@ const Create = () => (
     <ProductsContainer>
       {productsData => (
         <React.Fragment>
-          {productsData.props.manufacturers.map(manufacturer => (
-            <Spacer key={manufacturer.id} bottom="md">
-              <ManufacturerShowcase manufacturer={manufacturer}>
-                <div className="products-wrapper">
-                  {productsData.props.products[manufacturer.id] &&
-                    productsData.props.products[manufacturer.id].map(
-                      product => (
-                        <ProductShowcase product={product} key={product.id} />
-                      )
-                    )}
-                </div>
-              </ManufacturerShowcase>
-            </Spacer>
-          ))}
+          {productsData.props.isLoading ? (
+            <PageLoader />
+          ) : (
+            productsData.props.manufacturers.map(manufacturer => (
+              <Spacer key={manufacturer.id} bottom="md">
+                <ManufacturerShowcase manufacturer={manufacturer}>
+                  <div className="products-wrapper">
+                    {productsData.props.products[manufacturer.id] &&
+                      productsData.props.products[manufacturer.id].map(
+                        product => (
+                          <ProductShowcase product={product} key={product.id} />
+                        )
+                      )}
+                  </div>
+                </ManufacturerShowcase>
+              </Spacer>
+            ))
+          )}
         </React.Fragment>
       )}
     </ProductsContainer>

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import designShape from "../models/design";
 import { getRecentDesigns } from "../redux/modules/designs";
 import { GET_DESIGNS } from "../redux/actions";
+import { makeCancelable } from "../utils";
 
 /**
  * Provides information and actions about/for Designs.
@@ -25,17 +26,33 @@ export class RecentDesignsContainer extends React.Component {
     getDesigns: PropTypes.func.isRequired
   };
 
+  state = {
+    isLoading: true
+  };
+
   componentDidMount() {
     // Get the designs, but limit the request to 6 since we don't need to show many.
-    this.props.getDesigns({
-      limit: 6
-    });
+    const designRequest = makeCancelable(
+      this.props.getDesigns({
+        limit: 6
+      })
+    );
+    this.cancelablePromises.push(designRequest);
+    designRequest.promise
+      .then(() => this.setState({ isLoading: false }))
+      .catch(() => this.setState({ isLoading: false }));
   }
+
+  componentWillUnmount() {
+    this.cancelablePromises.forEach(cancelable => cancelable.cancel());
+  }
+
+  cancelablePromises = [];
 
   render() {
     return this.props.children({
-      actions: {},
       props: {
+        isLoading: this.state.isLoading,
         designs: this.props.designs
       }
     });

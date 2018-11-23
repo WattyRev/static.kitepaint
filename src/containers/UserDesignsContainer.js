@@ -9,6 +9,7 @@ import { GET_DESIGNS, GET_PRODUCTS, GET_MANUFACTURERS } from "../redux/actions";
 import designShape from "../models/design";
 import productShape from "../models/product";
 import manufacturerShape from "../models/manufacturer";
+import { makeCancelable } from "../utils";
 
 /**
  * Provides access to designs created by the current user.
@@ -51,19 +52,53 @@ export class UserDesignsContainer extends React.Component {
     children: PropTypes.func.isRequired
   };
 
+  state = {
+    isLoading: true
+  };
+
   componentDidMount() {
-    this.props.onFetchDesigns({
-      userId: this.props.user.id,
-      limit: null,
-      publicOnly: false
-    });
-    this.props.onFetchProducts();
-    this.props.onFetchManufacturers();
+    const designRequest = makeCancelable(
+      this.props.onFetchDesigns({
+        userId: this.props.user.id,
+        limit: null,
+        publicOnly: false
+      })
+    );
+    const productRequest = makeCancelable(this.props.onFetchProducts());
+    const manufacturerRequest = makeCancelable(
+      this.props.onFetchManufacturers()
+    );
+    this.cancelablePromises.push(designRequest);
+    this.cancelablePromises.push(productRequest);
+    this.cancelablePromises.push(manufacturerRequest);
+
+    Promise.all([
+      designRequest.promise,
+      productRequest.promise,
+      manufacturerRequest.promise
+    ])
+      .then(() => {
+        this.setState({
+          isLoading: false
+        });
+      })
+      .catch(() => {
+        this.setState({
+          isLoading: false
+        });
+      });
   }
+
+  componentWillUnmount() {
+    this.cancelablePromises.forEach(cancelable => cancelable.cancel());
+  }
+
+  cancelablePromises = [];
 
   render() {
     return this.props.children({
       props: {
+        isLoading: this.state.isLoading,
         designs: this.props.designs,
         products: this.props.products,
         manufacturers: this.props.manufacturers

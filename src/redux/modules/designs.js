@@ -1,5 +1,6 @@
 import { handleActions } from "redux-actions";
 import { fromJS } from "immutable";
+import { designStatuses } from "../../models/design";
 import { GET_DESIGNS } from "../actions";
 
 export const defaultState = fromJS({});
@@ -41,6 +42,7 @@ const sortNewestToOldest = (designA, designB) => {
 export const getRecentDesigns = state => {
   const designs = state.get("designs");
   return designs
+    .filter(design => design.get("status") === designStatuses.PUBLIC)
     .sort(sortNewestToOldest)
     .toList()
     .toJS()

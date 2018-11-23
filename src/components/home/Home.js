@@ -1,6 +1,7 @@
 import React from "react";
 import UserContainer from "../../containers/UserContainer";
 import RecentDesignsContainer from "../../containers/RecentDesignsContainer";
+import { Loading, Spacer } from "../../theme";
 import AccountForm from "../AccountForm";
 import CTABanner from "./CTABanner";
 import AccountBanner from "./AccountBanner";
@@ -26,9 +27,15 @@ const Home = () => (
       }
     </UserContainer>
     <RecentDesignsContainer>
-      {designsData => (
-        <RecentDesignsBanner designs={designsData.props.designs} />
-      )}
+      {designsData =>
+        designsData.props.isLoading ? (
+          <Spacer top="xl" bottom="xl">
+            <Loading />
+          </Spacer>
+        ) : (
+          <RecentDesignsBanner designs={designsData.props.designs} />
+        )
+      }
     </RecentDesignsContainer>
   </React.Fragment>
 );

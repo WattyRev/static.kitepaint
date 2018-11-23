@@ -6,6 +6,7 @@ import { getManufacturers } from "../redux/modules/manufacturers";
 import { GET_PRODUCTS, GET_MANUFACTURERS } from "../redux/actions";
 import productShape from "../models/product";
 import manufacturerShape from "../models/manufacturer";
+import { makeCancelable } from "../utils";
 
 /**
  * Provides information and actions about/for Designs.
@@ -37,14 +38,38 @@ export class ProductsContainer extends React.Component {
     getManufacturers: PropTypes.func.isRequired
   };
 
+  state = {
+    isLoading: true
+  };
+
   componentDidMount() {
-    this.props.getProducts();
-    this.props.getManufacturers();
+    const productRequest = makeCancelable(this.props.getProducts());
+    const manufacturerRequest = makeCancelable(this.props.getManufacturers());
+    this.cancelablePromises.push(productRequest);
+    this.cancelablePromises.push(manufacturerRequest);
+    Promise.all([productRequest.promise, manufacturerRequest.promise])
+      .then(() => {
+        this.setState({
+          isLoading: false
+        });
+      })
+      .catch(() => {
+        this.setState({
+          isLoading: false
+        });
+      });
   }
+
+  componentWillUnmount() {
+    this.cancelablePromises.forEach(cancelable => cancelable.cancel());
+  }
+
+  cancelablePromises = [];
 
   render() {
     return this.props.children({
       props: {
+        isLoading: this.state.isLoading,
         products: this.props.products || {},
         manufacturers: this.props.manufacturers || []
       }

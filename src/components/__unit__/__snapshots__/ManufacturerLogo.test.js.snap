@@ -74,7 +74,7 @@ exports[`ManufacturerLogo renders 1`] = `
         "$$typeof": Symbol(react.forward_ref),
         "attrs": undefined,
         "componentStyle": ComponentStyle {
-          "componentId": "sc-kpOJdX",
+          "componentId": "sc-ckVGcZ",
           "isStatic": false,
           "lastClassName": "c0",
           "rules": Array [
@@ -108,7 +108,7 @@ exports[`ManufacturerLogo renders 1`] = `
         },
         "displayName": "styled.div",
         "render": [Function],
-        "styledComponentId": "sc-kpOJdX",
+        "styledComponentId": "sc-ckVGcZ",
         "target": "div",
         "toString": [Function],
         "warnTooManyClasses": [Function],

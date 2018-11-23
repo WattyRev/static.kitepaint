@@ -12,8 +12,10 @@ import H3 from "./H3";
 import Icon from "./Icon";
 import Input from "./Input";
 import Label from "./Label";
+import Loading from "./Loading";
 import ModalPrompt from "./ModalPrompt";
 import P from "./P";
+import PageLoader from "./PageLoader";
 import Spacer from "./Spacer";
 import Text from "./Text";
 import Tile from "./Tile";
@@ -35,8 +37,10 @@ export {
   Icon,
   Input,
   Label,
+  Loading,
   ModalPrompt,
   P,
+  PageLoader,
   Spacer,
   Tile,
   Text,
