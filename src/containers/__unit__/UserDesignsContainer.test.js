@@ -49,7 +49,7 @@ describe("UserDesignsContainer", () => {
     expect(defaultProps.onFetchProducts).toHaveBeenCalled();
     expect(defaultProps.onFetchManufacturers).toHaveBeenCalled();
   });
-  it("provides the designs, products, and manufacturers to its children", () => {
+  it("provides the expected props to its children", () => {
     expect.assertions(1);
     defaultProps.designs = [getMockDesign()];
     defaultProps.products = {
@@ -65,6 +65,7 @@ describe("UserDesignsContainer", () => {
     );
     const data = JSON.parse(wrapper.find(".target").text());
     expect(Object.keys(data.props)).toEqual([
+      "isLoading",
       "designs",
       "products",
       "manufacturers"

@@ -6,6 +6,7 @@ import { getManufacturerByProductId } from "../redux/modules/manufacturers";
 import { GET_PRODUCTS, GET_MANUFACTURERS } from "../redux/actions";
 import productShape from "../models/product";
 import manufacturerShape from "../models/manufacturer";
+import { makeCancelable } from "../utils";
 
 /**
  * Provides information about a specific product.
@@ -35,28 +36,43 @@ export class ProductContainer extends React.Component {
     /**
      * A function that returns the content to be rendered.
      */
-    children: PropTypes.func.isRequired,
-    /**
-     * Content that can be rendered while the component is loading.
-     */
-    loadingRender: PropTypes.node
+    children: PropTypes.func.isRequired
+  };
+
+  state = {
+    isLoading: true
   };
 
   componentDidMount() {
-    if (!this.props.product) {
-      this.props.onRequestProduct();
-    }
-    if (!this.props.manufacturer) {
-      this.props.onRequestManufacturer();
-    }
+    const productRequest = makeCancelable(this.props.onRequestProduct());
+    const manufacturerRequest = makeCancelable(
+      this.props.onRequestManufacturer()
+    );
+    this.cancelablePromises.push(productRequest);
+    this.cancelablePromises.push(manufacturerRequest);
+    Promise.all([productRequest.promise, manufacturerRequest.promise])
+      .then(() => {
+        this.setState({
+          isLoading: false
+        });
+      })
+      .catch(() => {
+        this.setState({
+          isLoading: false
+        });
+      });
   }
 
+  componentWillUnmount() {
+    this.cancelablePromises.forEach(cancelable => cancelable.cancel());
+  }
+
+  cancelablePromises = [];
+
   render() {
-    if (!this.props.product || !this.props.manufacturer) {
-      return this.props.loadingRender || null;
-    }
     return this.props.children({
       props: {
+        isLoading: this.state.isLoading,
         product: this.props.product,
         manufacturer: this.props.manufacturer
       }

@@ -7,6 +7,7 @@ import Theme from "../theme";
 import { CHECK_LOGIN } from "../redux/actions";
 import { getCheckingLogin } from "../redux/modules/user";
 import { setupFontAwesome } from "../theme/Icon";
+import { PageLoader } from "../theme";
 import App from "../components/App";
 
 setupFontAwesome();
@@ -25,7 +26,7 @@ export class AppContainer extends React.Component {
 
   render() {
     if (this.props.isCheckingLogin) {
-      return "";
+      return <PageLoader />;
     }
     return (
       <BrowserRouter>

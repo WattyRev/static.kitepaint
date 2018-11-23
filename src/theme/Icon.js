@@ -14,6 +14,7 @@ import {
   faSave,
   faShare,
   faSignOutAlt,
+  faSpinner,
   faUndo,
   faTrash
 } from "@fortawesome/free-solid-svg-icons";
@@ -35,6 +36,7 @@ export function setupFontAwesome() {
     faSave,
     faShare,
     faSignOutAlt,
+    faSpinner,
     faUndo,
     faTrash
   );

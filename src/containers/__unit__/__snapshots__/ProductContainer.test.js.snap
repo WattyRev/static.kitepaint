@@ -29,5 +29,9 @@ exports[`ProductContainer renders 1`] = `
     }
   }
   productId="abc"
-/>
+>
+  <div>
+    test
+  </div>
+</ProductContainer>
 `;

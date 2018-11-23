@@ -4,7 +4,7 @@ import styled from "styled-components";
 import ProductContainer from "../../containers/ProductContainer";
 import EditorContainer from "../../containers/EditorContainer";
 import UserContainer from "../../containers/UserContainer";
-import { Text, H3 } from "../../theme";
+import { Text, H3, PageLoader } from "../../theme";
 import Toolbar from "../editor/Toolbar";
 import Sidebar from "../editor/Sidebar";
 import Canvas from "../editor/Canvas";
@@ -31,67 +31,71 @@ const PageLayout = styled.div`
  */
 const CreateNew = ({ match }) => (
   <ProductContainer productId={match.params.productId}>
-    {productData => (
-      <EditorContainer product={productData.props.product}>
-        {editorData => (
-          <React.Fragment>
-            <UserContainer>
-              {userData => (
-                <Toolbar
-                  onSave={
-                    userData.props.isLoggedIn
-                      ? name =>
-                          editorData.actions.save({
-                            name,
-                            user: userData.props.id
-                          })
-                      : null
-                  }
-                  onShare={() => {}}
-                  onAutofill={editorData.actions.autofill}
-                  onReset={() => {}}
-                  onHideOutlines={() => {}}
-                  onBackgroundChange={() => {}}
-                />
-              )}
-            </UserContainer>
-            <PageLayout>
-              <Sidebar
-                product={productData.props.product}
-                manufacturer={productData.props.manufacturer}
-                selectedVariation={editorData.props.currentVariation.name}
-                selectedColor={editorData.props.currentColor.name}
-                onColorSelect={editorData.actions.selectColor}
-                onVariationSelect={editorData.actions.selectVariation}
-                appliedColors={editorData.props.appliedColors}
-              />
-              <Canvas
-                colorMap={editorData.props.currentVariationColors}
-                svg={editorData.props.currentVariation.svg}
-                onClick={editorData.actions.applyColor}
-                currentColor={editorData.props.currentColor.name}
-              />
-              {productData.props.product.notes &&
-                !!productData.props.product.notes.length && (
-                  <div className="product-notes">
-                    <H3 isLight>Notes:</H3>
-                    <ul>
-                      {productData.props.product.notes.map(
-                        (note, index) =>
-                          note.trim() && (
-                            <Text isLight as="li" key={note + index}>
-                              {note}
-                            </Text>
-                          )
-                      )}
-                    </ul>
-                  </div>
+    {productData =>
+      productData.props.isLoading ? (
+        <PageLoader />
+      ) : (
+        <EditorContainer product={productData.props.product}>
+          {editorData => (
+            <React.Fragment>
+              <UserContainer>
+                {userData => (
+                  <Toolbar
+                    onSave={
+                      userData.props.isLoggedIn
+                        ? name =>
+                            editorData.actions.save({
+                              name,
+                              user: userData.props.id
+                            })
+                        : null
+                    }
+                    onShare={() => {}}
+                    onAutofill={editorData.actions.autofill}
+                    onReset={() => {}}
+                    onHideOutlines={() => {}}
+                    onBackgroundChange={() => {}}
+                  />
                 )}
-            </PageLayout>
-          </React.Fragment>
-        )}
-      </EditorContainer>
-    )}
+              </UserContainer>
+              <PageLayout>
+                <Sidebar
+                  product={productData.props.product}
+                  manufacturer={productData.props.manufacturer}
+                  selectedVariation={editorData.props.currentVariation.name}
+                  selectedColor={editorData.props.currentColor.name}
+                  onColorSelect={editorData.actions.selectColor}
+                  onVariationSelect={editorData.actions.selectVariation}
+                  appliedColors={editorData.props.appliedColors}
+                />
+                <Canvas
+                  colorMap={editorData.props.currentVariationColors}
+                  svg={editorData.props.currentVariation.svg}
+                  onClick={editorData.actions.applyColor}
+                  currentColor={editorData.props.currentColor.name}
+                />
+                {productData.props.product.notes &&
+                  !!productData.props.product.notes.length && (
+                    <div className="product-notes">
+                      <H3 isLight>Notes:</H3>
+                      <ul>
+                        {productData.props.product.notes.map(
+                          (note, index) =>
+                            note.trim() && (
+                              <Text isLight as="li" key={note + index}>
+                                {note}
+                              </Text>
+                            )
+                        )}
+                      </ul>
+                    </div>
+                  )}
+              </PageLayout>
+            </React.Fragment>
+          )}
+        </EditorContainer>
+      )
+    }
   </ProductContainer>
 );
 

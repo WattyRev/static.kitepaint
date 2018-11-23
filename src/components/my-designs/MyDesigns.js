@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import UserDesignsContainer from "../../containers/UserDesignsContainer";
-import { H1, Spacer } from "../../theme";
+import { H1, Spacer, PageLoader } from "../../theme";
 import DesignManager from "./DesignManager";
 
 const StyleWrapper = styled.div`
@@ -20,21 +20,25 @@ const MyDesigns = () => (
     <Spacer bottom="md" />
     <UserDesignsContainer>
       {userDesigns =>
-        userDesigns.props.designs.map(design => {
-          const product = userDesigns.props.products[design.product];
-          const manufacturer = product
-            ? userDesigns.props.manufacturers[product.manufacturer]
-            : null;
-          return (
-            <Spacer key={design.id} bottom="md">
-              <DesignManager
-                design={design}
-                product={product}
-                manufacturer={manufacturer}
-              />
-            </Spacer>
-          );
-        })
+        userDesigns.props.isLoading ? (
+          <PageLoader />
+        ) : (
+          userDesigns.props.designs.map(design => {
+            const product = userDesigns.props.products[design.product];
+            const manufacturer = product
+              ? userDesigns.props.manufacturers[product.manufacturer]
+              : null;
+            return (
+              <Spacer key={design.id} bottom="md">
+                <DesignManager
+                  design={design}
+                  product={product}
+                  manufacturer={manufacturer}
+                />
+              </Spacer>
+            );
+          })
+        )
       }
     </UserDesignsContainer>
   </StyleWrapper>

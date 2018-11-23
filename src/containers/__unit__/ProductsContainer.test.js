@@ -17,14 +17,12 @@ describe("ProductsContainer", () => {
     };
   });
   it("renders with the expected data", () => {
-    expect.assertions(2);
+    expect.assertions(1);
     const render = jest.fn(() => <div>Test</div>);
-    const wrapper = shallow(
-      <ProductsContainer {...defaultProps}>{render}</ProductsContainer>
-    );
-    expect(wrapper).toMatchSnapshot();
+    shallow(<ProductsContainer {...defaultProps}>{render}</ProductsContainer>);
     expect(render.mock.calls[0][0]).toEqual({
       props: {
+        isLoading: true,
         products: defaultProps.products,
         manufacturers: defaultProps.manufacturers
       }

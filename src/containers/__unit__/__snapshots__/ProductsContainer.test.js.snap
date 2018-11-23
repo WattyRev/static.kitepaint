@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`ProductsContainer renders with the expected data 1`] = `
-<div>
-  Test
-</div>
-`;
