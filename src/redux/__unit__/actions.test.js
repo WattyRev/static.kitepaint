@@ -2,7 +2,7 @@ import * as Actions from "../actions";
 import KitePaintApi from "../../api/KitePaintApi";
 jest.mock("../../api/KitePaintApi");
 
-function dispatchAsyncAction(action, params = []) {
+function dispatchAsyncAction(action, ...params) {
   return action(...params)(() => {});
 }
 
@@ -23,7 +23,7 @@ describe("Redux actions", () => {
     });
     it("should call KitePaintApi.logIn with the params", () => {
       expect.assertions(2);
-      dispatchAsyncAction(Actions.LOG_IN, ["frank", "securepass"]).catch(
+      dispatchAsyncAction(Actions.LOG_IN, "frank", "securepass").catch(
         () => {}
       );
       expect(KitePaintApi.logIn.mock.calls).toHaveLength(1);
@@ -46,7 +46,7 @@ describe("Redux actions", () => {
     });
     it("should call KitePaintApi.register with the params", () => {
       expect.assertions(2);
-      dispatchAsyncAction(Actions.REGISTER, [{ foo: "bar" }]).catch(() => {});
+      dispatchAsyncAction(Actions.REGISTER, { foo: "bar" }).catch(() => {});
       expect(KitePaintApi.register.mock.calls).toHaveLength(1);
       expect(KitePaintApi.register.mock.calls[0][0]).toEqual({ foo: "bar" });
     });
@@ -57,10 +57,11 @@ describe("Redux actions", () => {
     });
     it("should call KitePaintApi.resetPassword with the params", () => {
       expect.assertions(2);
-      dispatchAsyncAction(Actions.RESET_PASSWORD, [
+      dispatchAsyncAction(
+        Actions.RESET_PASSWORD,
         "frank",
         "frank@yahoo.com"
-      ]).catch(() => {});
+      ).catch(() => {});
       expect(KitePaintApi.resetPassword.mock.calls).toHaveLength(1);
       expect(KitePaintApi.resetPassword.mock.calls[0]).toEqual([
         "frank",
@@ -87,15 +88,36 @@ describe("Redux actions", () => {
     });
     it("should call KitePaintApi.createDesign with the provided data", () => {
       expect.assertions(2);
-      dispatchAsyncAction(Actions.CREATE_DESIGN, [
-        {
-          foo: "bar"
-        }
-      ]).catch(() => {});
+      dispatchAsyncAction(Actions.CREATE_DESIGN, {
+        foo: "bar"
+      }).catch(() => {});
       expect(KitePaintApi.createDesign).toHaveBeenCalled();
       expect(KitePaintApi.createDesign.mock.calls[0][0]).toEqual({
         foo: "bar"
       });
+    });
+  });
+  describe("DELETE_DESIGN", () => {
+    beforeEach(() => {
+      KitePaintApi.deleteDesign.mockResolvedValue();
+    });
+    it("should call KitePaintApi.createDesign with the provided data", () => {
+      expect.assertions(2);
+      dispatchAsyncAction(Actions.DELETE_DESIGN, "abc").catch(() => {});
+      expect(KitePaintApi.deleteDesign).toHaveBeenCalled();
+      expect(KitePaintApi.deleteDesign.mock.calls[0][0]).toEqual("abc");
+    });
+    it("should resolve with the deleted design id", () => {
+      expect.assertions(1);
+      return dispatchAsyncAction(Actions.DELETE_DESIGN, "abc").then(
+        response => {
+          expect(response).toEqual({
+            data: {
+              id: "abc"
+            }
+          });
+        }
+      );
     });
   });
 });

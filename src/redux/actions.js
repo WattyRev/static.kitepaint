@@ -105,6 +105,10 @@ export const CREATE_DESIGN = createAsyncAction("CREATE_DESIGN", designData => {
   return KitePaintApi.createDesign(designData);
 });
 
+/**
+ * Triggers the deletion of a design. Resolves with the ID of the deleted design.
+ * @param {String} designId
+ */
 export const DELETE_DESIGN = createAsyncAction("DELETE_DESIGN", designId => {
   return KitePaintApi.deleteDesign(designId).then(() => ({
     data: {

@@ -1,7 +1,7 @@
 import { fromJS } from "immutable";
 import { designStatuses } from "../../../models/design";
 import Reducer, { defaultState, getRecentDesigns } from "../designs";
-import { GET_DESIGNS } from "../../actions";
+import { GET_DESIGNS, DELETE_DESIGN } from "../../actions";
 
 describe("Designs redux module", () => {
   describe("reducer", () => {
@@ -23,6 +23,20 @@ describe("Designs redux module", () => {
           id: "123",
           name: "foo"
         });
+      });
+    });
+    describe("DELETE_DESIGN.RECEIVED", () => {
+      it("removes the deleted design from the state", () => {
+        expect.assertions(1);
+        const response = Reducer(defaultState.set("abc", { foo: "bar" }), {
+          type: DELETE_DESIGN.RECEIVED,
+          payload: {
+            data: {
+              id: "abc"
+            }
+          }
+        });
+        expect(response.get("abc")).toBeFalsy();
       });
     });
   });
