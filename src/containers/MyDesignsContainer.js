@@ -5,7 +5,12 @@ import { getUser } from "../redux/modules/user";
 import { getDesignsByUser } from "../redux/modules/designs";
 import { getProductsWithIndex } from "../redux/modules/products";
 import { getManufacturersWithIndex } from "../redux/modules/manufacturers";
-import { GET_DESIGNS, GET_PRODUCTS, GET_MANUFACTURERS } from "../redux/actions";
+import {
+  GET_DESIGNS,
+  GET_PRODUCTS,
+  GET_MANUFACTURERS,
+  DELETE_DESIGN
+} from "../redux/actions";
 import designShape from "../models/design";
 import productShape from "../models/product";
 import manufacturerShape from "../models/manufacturer";
@@ -14,8 +19,12 @@ import { makeCancelable } from "../utils";
 /**
  * Provides access to designs created by the current user.
  */
-export class UserDesignsContainer extends React.Component {
+export class MyDesignsContainer extends React.Component {
   static propTypes = {
+    /**
+     * A function that is called when the user requests to delete a design.
+     */
+    onDeleteDesign: PropTypes.func.isRequired,
     /**
      * A function that triggers the retieval of the user's designs. Provided by Redux.
      */
@@ -97,6 +106,9 @@ export class UserDesignsContainer extends React.Component {
 
   render() {
     return this.props.children({
+      actions: {
+        deleteDesign: this.props.onDeleteDesign
+      },
       props: {
         isLoading: this.state.isLoading,
         designs: this.props.designs,
@@ -115,6 +127,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = {
+  onDeleteDesign: DELETE_DESIGN,
   onFetchDesigns: GET_DESIGNS,
   onFetchProducts: GET_PRODUCTS,
   onFetchManufacturers: GET_MANUFACTURERS
@@ -125,7 +138,7 @@ const mapDispatchToProps = {
 const withDesigns = connect(
   mapStateToProps,
   mapDispatchToProps
-)(UserDesignsContainer);
+)(MyDesignsContainer);
 
 export default connect(state => ({
   user: getUser(state)

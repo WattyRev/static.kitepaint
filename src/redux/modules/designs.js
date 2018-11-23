@@ -1,7 +1,7 @@
 import { handleActions } from "redux-actions";
 import { fromJS } from "immutable";
 import { designStatuses } from "../../models/design";
-import { GET_DESIGNS } from "../actions";
+import { GET_DESIGNS, DELETE_DESIGN } from "../actions";
 
 export const defaultState = fromJS({});
 
@@ -17,6 +17,11 @@ export default handleActions(
         return accumulated;
       }, {});
       return state.merge(designsById);
+    },
+    [DELETE_DESIGN.RECEIVED]: (state, action) => {
+      const { data } = action.payload;
+      const deletedId = data.id;
+      return state.delete(deletedId);
     }
   },
   defaultState

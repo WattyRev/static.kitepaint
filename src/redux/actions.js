@@ -104,3 +104,11 @@ export const GET_MANUFACTURERS = createAsyncAction(
 export const CREATE_DESIGN = createAsyncAction("CREATE_DESIGN", designData => {
   return KitePaintApi.createDesign(designData);
 });
+
+export const DELETE_DESIGN = createAsyncAction("DELETE_DESIGN", designId => {
+  return KitePaintApi.deleteDesign(designId).then(() => ({
+    data: {
+      id: designId
+    }
+  }));
+});

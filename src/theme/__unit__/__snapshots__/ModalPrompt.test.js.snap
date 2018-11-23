@@ -1,10 +1,50 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ModelPrompt renders 1`] = `
-<Fragment>
+<Modal
+  isOpen={false}
+  modalContent={
+    <ForwardRef
+      className="testing_modal"
+    >
+      <form
+        className="testing_submit"
+        onSubmit={[Function]}
+      >
+        <ForwardRef>
+          Do the thing.
+        </ForwardRef>
+        <ForwardRef
+          className="testing_prompt-value"
+          onChange={[Function]}
+          value=""
+        />
+        <div
+          className="buttons"
+        >
+          <Button
+            isPrimary={true}
+            type="submit"
+          >
+            Submit
+          </Button>
+           
+          <Button
+            className="testing_cancel"
+            onClick={[Function]}
+            type="button"
+          >
+            Cancel
+          </Button>
+        </div>
+      </form>
+    </ForwardRef>
+  }
+  onBackdropClick={[Function]}
+>
   <div
     className="target"
     onClick={[Function]}
   />
-</Fragment>
+</Modal>
 `;

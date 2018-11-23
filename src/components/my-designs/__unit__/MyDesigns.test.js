@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import UserDesignsContainer from "../../../containers/UserDesignsContainer";
+import MyDesignsContainer from "../../../containers/MyDesignsContainer";
 import { getMockDesign } from "../../../models/design";
 import { getMockProduct } from "../../../models/product";
 import { getMockManufacturer } from "../../../models/manufacturer";
@@ -11,7 +11,7 @@ describe("MyDesigns", () => {
   it("renders", () => {
     shallow(<MyDesigns />);
   });
-  describe("UserDesignsContainer content", () => {
+  describe("MyDesignsContainer content", () => {
     let mockDesignsData;
     beforeEach(() => {
       const design = Object.assign(getMockDesign(), { product: "product-1" });
@@ -47,7 +47,7 @@ describe("MyDesigns", () => {
       const myDesignsWrapper = shallow(<MyDesigns />);
       shallow(
         <div>
-          {myDesignsWrapper.find(UserDesignsContainer).prop("children")(
+          {myDesignsWrapper.find(MyDesignsContainer).prop("children")(
             mockDesignsData
           )}
         </div>
@@ -58,7 +58,7 @@ describe("MyDesigns", () => {
       const myDesignsWrapper = shallow(<MyDesigns />);
       const wrapper = shallow(
         <div>
-          {myDesignsWrapper.find(UserDesignsContainer).prop("children")(
+          {myDesignsWrapper.find(MyDesignsContainer).prop("children")(
             mockDesignsData
           )}
         </div>
@@ -76,7 +76,7 @@ describe("MyDesigns", () => {
       const myDesignsWrapper = shallow(<MyDesigns />);
       const wrapper = shallow(
         <div>
-          {myDesignsWrapper.find(UserDesignsContainer).prop("children")(
+          {myDesignsWrapper.find(MyDesignsContainer).prop("children")(
             mockDesignsData
           )}
         </div>
@@ -92,7 +92,7 @@ describe("MyDesigns", () => {
       const myDesignsWrapper = shallow(<MyDesigns />);
       const wrapper = shallow(
         <div>
-          {myDesignsWrapper.find(UserDesignsContainer).prop("children")(
+          {myDesignsWrapper.find(MyDesignsContainer).prop("children")(
             mockDesignsData
           )}
         </div>

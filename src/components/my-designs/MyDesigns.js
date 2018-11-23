@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import UserDesignsContainer from "../../containers/UserDesignsContainer";
+import MyDesignsContainer from "../../containers/MyDesignsContainer";
 import { H1, Spacer, PageLoader } from "../../theme";
 import DesignManager from "./DesignManager";
 
@@ -18,7 +18,7 @@ const MyDesigns = () => (
   <StyleWrapper>
     <H1>My Designs</H1>
     <Spacer bottom="md" />
-    <UserDesignsContainer>
+    <MyDesignsContainer>
       {userDesigns =>
         userDesigns.props.isLoading ? (
           <PageLoader />
@@ -31,6 +31,7 @@ const MyDesigns = () => (
             return (
               <Spacer key={design.id} bottom="md">
                 <DesignManager
+                  onDelete={() => userDesigns.actions.deleteDesign(design.id)}
                   design={design}
                   product={product}
                   manufacturer={manufacturer}
@@ -40,7 +41,7 @@ const MyDesigns = () => (
           })
         )
       }
-    </UserDesignsContainer>
+    </MyDesignsContainer>
   </StyleWrapper>
 );
 

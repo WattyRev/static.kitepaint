@@ -16,7 +16,8 @@ describe("DesignManager", () => {
   let defaultProps;
   beforeEach(() => {
     defaultProps = {
-      design: getMockDesign()
+      design: getMockDesign(),
+      onDelete: jest.fn()
     };
   });
   it("renders", () => {

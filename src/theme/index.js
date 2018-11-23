@@ -13,6 +13,8 @@ import Icon from "./Icon";
 import Input from "./Input";
 import Label from "./Label";
 import Loading from "./Loading";
+import Modal from "./Modal";
+import ModalConfirm from "./ModalConfirm";
 import ModalPrompt from "./ModalPrompt";
 import P from "./P";
 import PageLoader from "./PageLoader";
@@ -38,6 +40,8 @@ export {
   Input,
   Label,
   Loading,
+  Modal,
+  ModalConfirm,
   ModalPrompt,
   P,
   PageLoader,

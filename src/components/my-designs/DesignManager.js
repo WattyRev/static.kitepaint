@@ -1,10 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import designShape, { designStatuses } from "../../models/design";
 import productShape from "../../models/product";
 import manufacturerShape from "../../models/manufacturer";
-import { H2, P, Button, Input, Label, Icon, Tile } from "../../theme";
+import {
+  H2,
+  P,
+  Button,
+  Input,
+  Label,
+  Icon,
+  Tile,
+  ModalConfirm
+} from "../../theme";
 import Svg from "../Svg";
 
 export const StyleWrapper = styled(Tile)`
@@ -24,7 +34,10 @@ export const StyleWrapper = styled(Tile)`
   }
 `;
 
-const DesignManager = ({ design, product, manufacturer }) => (
+/**
+ * Provides a UI for managing a user's design.
+ */
+const DesignManager = ({ design, product, manufacturer, onDelete }) => (
   <StyleWrapper>
     <div>
       <H2>{design.name}</H2>
@@ -68,15 +81,27 @@ const DesignManager = ({ design, product, manufacturer }) => (
       <Button>
         <Icon icon="share" /> Share
       </Button>{" "}
-      <Button>
-        <Icon icon="trash" /> Delete
-      </Button>
+      <ModalConfirm
+        onConfirm={() => onDelete()}
+        confirmText="Yes"
+        cancelText="No"
+        message={`Are you sure you want to delete ${
+          design.name
+        }? This cannot be undone.`}
+      >
+        {modal => (
+          <Button onClick={modal.actions.open}>
+            <Icon icon="trash" /> Delete
+          </Button>
+        )}
+      </ModalConfirm>
     </div>
   </StyleWrapper>
 );
 
 DesignManager.propTypes = {
   design: designShape.isRequired,
+  onDelete: PropTypes.func.isRequired,
   product: productShape,
   manufacturer: manufacturerShape
 };
