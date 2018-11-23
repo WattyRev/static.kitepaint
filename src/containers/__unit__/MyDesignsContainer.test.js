@@ -3,12 +3,13 @@ import { shallow } from "enzyme";
 import { getMockDesign } from "../../models/design";
 import { getMockProduct } from "../../models/product";
 import { getMockManufacturer } from "../../models/manufacturer";
-import { UserDesignsContainer } from "../UserDesignsContainer";
+import { MyDesignsContainer } from "../MyDesignsContainer";
 
-describe("UserDesignsContainer", () => {
+describe("MyDesignsContainer", () => {
   let defaultProps;
   beforeEach(() => {
     defaultProps = {
+      onDeleteDesign: jest.fn(),
       onFetchDesigns: jest.fn(),
       onFetchProducts: jest.fn(),
       onFetchManufacturers: jest.fn(),
@@ -22,17 +23,17 @@ describe("UserDesignsContainer", () => {
   });
   it("renders", () => {
     shallow(
-      <UserDesignsContainer {...defaultProps}>
+      <MyDesignsContainer {...defaultProps}>
         {() => <div className="target">hello!</div>}
-      </UserDesignsContainer>
+      </MyDesignsContainer>
     );
   });
   it("fetches designs", () => {
     expect.assertions(2);
     shallow(
-      <UserDesignsContainer {...defaultProps}>
+      <MyDesignsContainer {...defaultProps}>
         {() => <div className="target">hello!</div>}
-      </UserDesignsContainer>
+      </MyDesignsContainer>
     );
     expect(defaultProps.onFetchDesigns).toHaveBeenCalled();
     expect(defaultProps.onFetchDesigns.mock.calls[0][0].userId).toEqual(
@@ -42,9 +43,9 @@ describe("UserDesignsContainer", () => {
   it("fetches producgts and manufacturers", () => {
     expect.assertions(2);
     shallow(
-      <UserDesignsContainer {...defaultProps}>
+      <MyDesignsContainer {...defaultProps}>
         {() => <div className="target">hello!</div>}
-      </UserDesignsContainer>
+      </MyDesignsContainer>
     );
     expect(defaultProps.onFetchProducts).toHaveBeenCalled();
     expect(defaultProps.onFetchManufacturers).toHaveBeenCalled();
@@ -59,9 +60,9 @@ describe("UserDesignsContainer", () => {
       [getMockManufacturer().id]: getMockManufacturer()
     };
     const wrapper = shallow(
-      <UserDesignsContainer {...defaultProps}>
+      <MyDesignsContainer {...defaultProps}>
         {data => <div className="target">{JSON.stringify(data)}</div>}
-      </UserDesignsContainer>
+      </MyDesignsContainer>
     );
     const data = JSON.parse(wrapper.find(".target").text());
     expect(Object.keys(data.props)).toEqual([
