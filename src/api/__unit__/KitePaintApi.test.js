@@ -368,20 +368,79 @@ describe("KitePaintApi", () => {
     });
   });
 
-  describe("#getDesigns", () => {
-    beforeEach(() => {
-      Api._getDesignsCache = [];
-    });
-    it("makes the relevant request", () => {
+  describe("#getUser", () => {
+    it("makes the relevant request", async () => {
       expect.assertions(1);
-      Api.getDesigns().catch(() => {});
+      await Api.getUser("abc").catch(() => {});
+      expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual(
+        "/users.php?filter%5Bloginid%5D=abc&return%5B0%5D=username&return%5B1%5D=loginid"
+      );
+    });
+    it("does not make identical requests when they have been cached", async () => {
+      expect.assertions(1);
+      await Api.getUser("abc").catch(() => {});
+      await Api.getUser("abc").catch(() => {});
+      expect(Api.axiosInstance.get.mock.calls).toHaveLength(1);
+    });
+    it("does make identical requests when caching is disabled", async () => {
+      expect.assertions(1);
+      await Api.getUser("abc", false).catch(() => {});
+      await Api.getUser("abc", false).catch(() => {});
+      expect(Api.axiosInstance.get.mock.calls).toHaveLength(2);
+    });
+    it("rejects if the request fails", () => {
+      expect.assertions(1);
+      Api.axiosInstance.get.mockRejectedValue();
+      return Api.getUser("abc").catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("rejects if the request returns with no data", () => {
+      expect.assertions(1);
+      Api.axiosInstance.get.mockResolvedValue({});
+      return Api.getUser("abc").catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("rejects if the request returns with an empty list", () => {
+      expect.assertions(1);
+      Api.axiosInstance.get.mockResolvedValue({
+        data: []
+      });
+      return Api.getUser("abc").catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("resolves with the data", () => {
+      expect.assertions(1);
+      Api.axiosInstance.get.mockResolvedValue({
+        data: [
+          {
+            id: "123"
+          }
+        ]
+      });
+      return Api.getUser("abc").then(response => {
+        expect(response).toEqual({
+          data: {
+            id: "123"
+          }
+        });
+      });
+    });
+  });
+
+  describe("#getDesigns", () => {
+    it("makes the relevant request", async () => {
+      expect.assertions(1);
+      await Api.getDesigns().catch(() => {});
       expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual(
         "/designs.php?filter%5Bactive%5D=1&filter%5Bstatus%5D=2&return%5B0%5D=id&return%5B1%5D=created&return%5B2%5D=updated&return%5B3%5D=name&return%5B4%5D=product&return%5B5%5D=user&return%5B6%5D=variations&return%5B7%5D=status&order%5B0%5D=id&order%5B1%5D=DESC&limit=50"
       );
     });
-    it("adopts the provided filters", () => {
+    it("adopts the provided filters", async () => {
       expect.assertions(1);
-      Api.getDesigns({
+      await Api.getDesigns({
         publicOnly: false,
         limit: 5
       }).catch(() => {});
@@ -389,34 +448,34 @@ describe("KitePaintApi", () => {
         "/designs.php?filter%5Bactive%5D=1&return%5B0%5D=id&return%5B1%5D=created&return%5B2%5D=updated&return%5B3%5D=name&return%5B4%5D=product&return%5B5%5D=user&return%5B6%5D=variations&return%5B7%5D=status&order%5B0%5D=id&order%5B1%5D=DESC&limit=5"
       );
     });
-    it("includes the user filter if provided", () => {
+    it("includes the user filter if provided", async () => {
       expect.assertions(1);
-      Api.getDesigns({
+      await Api.getDesigns({
         userId: "user-id"
       }).catch(() => {});
       expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual(
         expect.stringContaining("filter%5Buser%5D=user-id")
       );
     });
-    it("excludes the limit if limit is set to null", () => {
+    it("excludes the limit if limit is set to null", async () => {
       expect.assertions(1);
-      Api.getDesigns({
+      await Api.getDesigns({
         limit: null
       }).catch(() => {});
       expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual(
         expect.not.stringContaining("limit")
       );
     });
-    it("does not make identical requests when they have been cached", () => {
+    it("does not make identical requests when they have been cached", async () => {
       expect.assertions(1);
-      Api.getDesigns().catch(() => {});
-      Api.getDesigns().catch(() => {});
+      await Api.getDesigns().catch(() => {});
+      await Api.getDesigns().catch(() => {});
       expect(Api.axiosInstance.get.mock.calls).toHaveLength(1);
     });
-    it("does make identical requests when caching is disabled", () => {
+    it("does make identical requests when caching is disabled", async () => {
       expect.assertions(1);
-      Api.getDesigns({}, false).catch(() => {});
-      Api.getDesigns({}, false).catch(() => {});
+      await Api.getDesigns({}, false).catch(() => {});
+      await Api.getDesigns({}, false).catch(() => {});
       expect(Api.axiosInstance.get.mock.calls).toHaveLength(2);
     });
     it("rejects if the request fails", () => {
@@ -456,28 +515,92 @@ describe("KitePaintApi", () => {
     });
   });
 
-  describe("#getProducts", () => {
-    beforeEach(() => {
-      Api._getProductsCache = [];
-    });
-    it("makes the relevant request", () => {
+  describe("#getDesign", () => {
+    it("makes the relevant request", async () => {
       expect.assertions(2);
-      Api.getProducts().catch(() => {});
+      await Api.getDesign("abc").catch(() => {});
+      expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual("/designs.php");
+      expect(Api.axiosInstance.get.mock.calls[0][1]).toEqual({
+        params: {
+          id: "abc"
+        }
+      });
+    });
+    it("does not make identical requests when they have been cached", async () => {
+      expect.assertions(1);
+      await Api.getDesign("abc").catch(() => {});
+      await Api.getDesign("abc").catch(() => {});
+      expect(Api.axiosInstance.get.mock.calls).toHaveLength(1);
+    });
+    it("does make identical requests when caching is disabled", async () => {
+      expect.assertions(1);
+      await Api.getDesign("abc", false).catch(() => {});
+      await Api.getDesign("abc", false).catch(() => {});
+      expect(Api.axiosInstance.get.mock.calls).toHaveLength(2);
+    });
+    it("rejects if the request fails", () => {
+      expect.assertions(1);
+      Api.axiosInstance.get.mockRejectedValue();
+      return Api.getDesign("abc").catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("rejects if the request returns with no data", () => {
+      expect.assertions(1);
+      Api.axiosInstance.get.mockResolvedValue({});
+      return Api.getDesign("abc").catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("rejects if the request returns with an empty list", () => {
+      expect.assertions(1);
+      Api.axiosInstance.get.mockResolvedValue({
+        data: []
+      });
+      return Api.getDesign("abc").catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("resolves with the data", () => {
+      expect.assertions(1);
+      Api.axiosInstance.get.mockResolvedValue({
+        data: [
+          {
+            id: "123",
+            variations: "[]"
+          }
+        ]
+      });
+      return Api.getDesign("123").then(response => {
+        expect(response).toEqual({
+          data: {
+            id: "123",
+            variations: []
+          }
+        });
+      });
+    });
+  });
+
+  describe("#getProducts", () => {
+    it("makes the relevant request", async () => {
+      expect.assertions(2);
+      await Api.getProducts().catch(() => {});
       expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual("/products.php");
       expect(Api.axiosInstance.get.mock.calls[0][1]).toEqual({
         params: { activated: 1 }
       });
     });
-    it("does not make identical requests when they have been cached", () => {
+    it("does not make identical requests when they have been cached", async () => {
       expect.assertions(1);
-      Api.getProducts().catch(() => {});
-      Api.getProducts().catch(() => {});
+      await Api.getProducts().catch(() => {});
+      await Api.getProducts().catch(() => {});
       expect(Api.axiosInstance.get.mock.calls).toHaveLength(1);
     });
-    it("does make identical requests when caching is disabled", () => {
+    it("does make identical requests when caching is disabled", async () => {
       expect.assertions(1);
-      Api.getProducts(false).catch(() => {});
-      Api.getProducts(false).catch(() => {});
+      await Api.getProducts(false).catch(() => {});
+      await Api.getProducts(false).catch(() => {});
       expect(Api.axiosInstance.get.mock.calls).toHaveLength(2);
     });
     it("rejects if the request fails", () => {
@@ -522,12 +645,9 @@ describe("KitePaintApi", () => {
   });
 
   describe("#getManufacturers", () => {
-    beforeEach(() => {
-      Api._getManufacturersCache = [];
-    });
-    it("makes the relevant request", () => {
+    it("makes the relevant request", async () => {
       expect.assertions(2);
-      Api.getManufacturers().catch(() => {});
+      await Api.getManufacturers().catch(() => {});
       expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual(
         "/manufacturers.php"
       );
@@ -535,16 +655,16 @@ describe("KitePaintApi", () => {
         params: { activated: 1 }
       });
     });
-    it("does not make identical requests when they have been cached", () => {
+    it("does not make identical requests when they have been cached", async () => {
       expect.assertions(1);
-      Api.getManufacturers().catch(() => {});
-      Api.getManufacturers().catch(() => {});
+      await Api.getManufacturers().catch(() => {});
+      await Api.getManufacturers().catch(() => {});
       expect(Api.axiosInstance.get.mock.calls).toHaveLength(1);
     });
-    it("does make identical requests when caching is disabled", () => {
+    it("does make identical requests when caching is disabled", async () => {
       expect.assertions(1);
-      Api.getManufacturers(false).catch(() => {});
-      Api.getManufacturers(false).catch(() => {});
+      await Api.getManufacturers(false).catch(() => {});
+      await Api.getManufacturers(false).catch(() => {});
       expect(Api.axiosInstance.get.mock.calls).toHaveLength(2);
     });
     it("rejects if the request fails", () => {

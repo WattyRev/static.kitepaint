@@ -20,7 +20,7 @@ export const StyleWrapper = styled.div`
     transform: translateY(-50%);
 
     *[data-id] {
-      cursor: pointer;
+      cursor: ${props => (props.isReadOnly ? "default" : "pointer")};
     }
   }
 `;
@@ -45,16 +45,25 @@ class Canvas extends React.Component {
      * Called when a colorable panel or group is clicked. Is provided with the data-id value as the
      * first parameter.
      */
-    onClick: PropTypes.func.isRequired,
+    onClick: PropTypes.func,
     /**
      * The currently selected color. This is needed to prevent triggering onClick when a panel/group
      * with data-whitelist is clicked and the current color is not in that whitelist.
      */
-    currentColor: PropTypes.string.isRequired,
+    currentColor: PropTypes.string,
     /**
      * A map of colors currently applied to the svg
      */
-    colorMap: appliedColorsShape.isRequired
+    colorMap: appliedColorsShape,
+    /**
+     * Indicates that the canvas is read-only. Will not fire onClick events.
+     */
+    isReadOnly: PropTypes.bool
+  };
+  static defaultProps = {
+    onClick: () => {},
+    colorMap: {},
+    currentColor: ""
   };
 
   /**
@@ -122,7 +131,10 @@ class Canvas extends React.Component {
 
   render() {
     return (
-      <StyleWrapper onClick={this.handleClick}>
+      <StyleWrapper
+        onClick={this.props.isReadOnly ? () => {} : this.handleClick}
+        isReadOnly={this.props.isReadOnly}
+      >
         <ColorableSvg svg={this.props.svg} colorMap={this.props.colorMap} />
       </StyleWrapper>
     );

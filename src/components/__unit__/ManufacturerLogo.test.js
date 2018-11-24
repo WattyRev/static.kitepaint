@@ -5,9 +5,7 @@ import ManufacturerLogo from "../ManufacturerLogo";
 
 describe("ManufacturerLogo", () => {
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = mount(<ManufacturerLogo theme={Theme} />);
-    expect(wrapper).toMatchSnapshot();
+    mount(<ManufacturerLogo theme={Theme} />);
   });
   it("uses the src as the background-image", () => {
     const wrapper = mount(

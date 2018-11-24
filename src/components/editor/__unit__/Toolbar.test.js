@@ -18,16 +18,13 @@ describe("Toolbar", () => {
   beforeEach(() => {
     defaultProps = {
       onShare: jest.fn(),
-      onReset: jest.fn(),
       onHideOutlines: jest.fn(),
       onBackgroundChange: jest.fn()
     };
     setupFontAwesome();
   });
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = shallow(<Toolbar {...defaultProps} />);
-    expect(wrapper).toMatchSnapshot();
+    shallow(<Toolbar {...defaultProps} />);
   });
 
   it("does not display the save button is no onSave is provided", () => {
@@ -69,5 +66,25 @@ describe("Toolbar", () => {
       </ThemeProvider>
     );
     expect(wrapper.find("P.testing_autofill")).toHaveLength(1);
+  });
+  it("does not display the reset button if no onReset is provided", () => {
+    expect.assertions(1);
+    defaultProps.onReset = null;
+    const wrapper = mount(
+      <ThemeProvider theme={Theme}>
+        <Toolbar {...defaultProps} />
+      </ThemeProvider>
+    );
+    expect(wrapper.find("P.testing_reset")).toHaveLength(0);
+  });
+  it("displays the reset button if onReset is provided", () => {
+    expect.assertions(1);
+    defaultProps.onReset = jest.fn();
+    const wrapper = mount(
+      <ThemeProvider theme={Theme}>
+        <Toolbar {...defaultProps} />
+      </ThemeProvider>
+    );
+    expect(wrapper.find("P.testing_reset")).toHaveLength(1);
   });
 });

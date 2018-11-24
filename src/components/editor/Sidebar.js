@@ -1,70 +1,14 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import PropTypes from "prop-types";
 import manufacturerShape from "../../models/manufacturer";
 import productShape from "../../models/product";
 import designShape from "../../models/design";
 import { productAppliedColorsShape } from "../../containers/EditorContainer";
-import { BlockListItem, Icon, FillToBottom } from "../../theme";
+import { Icon, FillToBottom, Sidebar as SidebarUI } from "../../theme";
 import ManufacturerLogo from "../ManufacturerLogo";
 import ColorTile from "./ColorTile";
 import ColorableSvg from "./ColorableSvg";
-
-/**
- * An overall wrapper for the sidebar
- */
-export const StyleWrapper = styled.div`
-  width: 175px;
-  display: block;
-  flex-shrink: 0;
-  background: ${props => props.theme.colors.grayDarker};
-  box-shadow: 0 0 2px 2px ${props => props.theme.colors.black};
-  position: relative;
-`;
-
-/**
- * An individual, possibly selectable, item that appreas in the sidebar.
- */
-export const ListItem = styled(BlockListItem)`
-  display: flex;
-  align-items: center;
-  cursor: ${props => (props.hasAction ? "pointer" : "default")};
-  transition: 0.3s background;
-  position: relative;
-
-  &:after {
-    content: "";
-    display: block;
-    position: absolute;
-    height: 100%;
-    width: ${props => (props.isActive ? 8 : 0)}px;
-    background: ${props => props.theme.colors.silver};
-    top: 0;
-    right: 0;
-    transition: 0.3s width;
-  }
-  ${props =>
-    props.hasAction
-      ? css`
-          &:hover {
-            background: ${props.theme.colors.black};
-          }
-        `
-      : null};
-
-  > * {
-    margin: 0 4px;
-  }
-`;
-
-/**
- * A heading that can appear above a group of ListItems.
- */
-const ListHeading = styled(BlockListItem)`
-  padding: 16px 8px 2px;
-  font-weight: bold;
-  font-size: 12px;
-`;
 
 /**
  * A styled preview of a variation's svg
@@ -93,67 +37,71 @@ const Sidebar = ({
   onColorSelect,
   onVariationSelect
 }) => (
-  <StyleWrapper>
-    <ListItem
-      className="testing_manufacturer"
-      isLight
-      as={product.url || manufacturer.website ? "a" : "div"}
-      href={product.url || manufacturer.website}
-      target="_blank"
-      hasAction={!!(product.url || manufacturer.website)}
-    >
-      <ManufacturerLogo
-        size={32}
-        noMargin
-        src={`/logos/${manufacturer.logo}`}
-      />
-      <div>
-        {product.name}
-        <br />
-        <small>by {manufacturer.name}</small>
-      </div>
-    </ListItem>
-    {design && (
-      <ListHeading className="testing_design" isLight>
-        {design.name}
-      </ListHeading>
-    )}
-    {product.variations.map(variation => (
-      <ListItem
-        className="testing_variation"
-        isLight
-        hasAction
-        isActive={variation.name === selectedVariation}
-        key={variation.name}
-        onClick={() => onVariationSelect(variation.name)}
-      >
-        <VariationPreview>
-          <ColorableSvg
-            svg={variation.svg}
-            colorMap={appliedColors[variation.name] || {}}
-          />
-        </VariationPreview>{" "}
-        {variation.name}
-      </ListItem>
-    ))}
-    <ListHeading isLight>
-      <Icon icon="palette" /> Colors
-    </ListHeading>
-    <FillToBottom offset={35}>
-      {product.colors.map(color => (
-        <ListItem
-          className="testing_color"
+  <SidebarUI>
+    {sidebar => (
+      <React.Fragment>
+        <sidebar.components.Item
+          className="testing_manufacturer"
           isLight
-          hasAction
-          key={color.name}
-          isActive={color.name === selectedColor}
-          onClick={() => onColorSelect(color.name)}
+          as={product.url || manufacturer.website ? "a" : "div"}
+          href={product.url || manufacturer.website}
+          target="_blank"
+          hasAction={!!(product.url || manufacturer.website)}
         >
-          <ColorTile color={color.color} /> {color.name}
-        </ListItem>
-      ))}
-    </FillToBottom>
-  </StyleWrapper>
+          <ManufacturerLogo
+            size={32}
+            noMargin
+            src={`/logos/${manufacturer.logo}`}
+          />
+          <div>
+            {product.name}
+            <br />
+            <small>by {manufacturer.name}</small>
+          </div>
+        </sidebar.components.Item>
+        {design && (
+          <sidebar.components.Heading className="testing_design" isLight>
+            {design.name}
+          </sidebar.components.Heading>
+        )}
+        {product.variations.map(variation => (
+          <sidebar.components.Item
+            className="testing_variation"
+            isLight
+            hasAction
+            isActive={variation.name === selectedVariation}
+            key={variation.name}
+            onClick={() => onVariationSelect(variation.name)}
+          >
+            <VariationPreview>
+              <ColorableSvg
+                svg={variation.svg}
+                colorMap={appliedColors[variation.name] || {}}
+              />
+            </VariationPreview>{" "}
+            {variation.name}
+          </sidebar.components.Item>
+        ))}
+        <sidebar.components.Heading isLight>
+          <Icon icon="palette" /> Colors
+        </sidebar.components.Heading>
+        <FillToBottom offset={35}>
+          {product.colors.map(color => (
+            <sidebar.components.Item
+              className="testing_color"
+              isLight
+              hasAction
+              key={color.name}
+              isActive={color.name === selectedColor}
+              onClick={() => onColorSelect(color.name)}
+            >
+              <ColorTile color={color.color} /> {color.name}
+            </sidebar.components.Item>
+          ))}
+        </FillToBottom>
+      </React.Fragment>
+    )}
+  </SidebarUI>
 );
 
 Sidebar.propTypes = {

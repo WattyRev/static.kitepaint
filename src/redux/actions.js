@@ -72,6 +72,14 @@ export const GET_DESIGNS = createAsyncAction(
 );
 
 /**
+ * Retrieves a design with the given ID.
+ * @param {String} id
+ */
+export const GET_DESIGN = createAsyncAction("GET_DESIGN", id => {
+  return KitePaintApi.getDesign(id);
+});
+
+/**
  * Retrieves designs from the KitePaintApi
  * @param {Object} [filters={}]
  * @param {Boolean} [useCache=true] If true, the request will be cached, and subsequent duplicate
@@ -96,6 +104,14 @@ export const GET_MANUFACTURERS = createAsyncAction(
     return KitePaintApi.getManufacturers(useCache);
   }
 );
+
+/**
+ * Retrieves a user by ID
+ * @param {String} userId
+ */
+export const GET_USER = createAsyncAction("GET_USER", userId => {
+  return KitePaintApi.getUser(userId);
+});
 
 /**
  * Triggers the creation of a new design based on the provided data.

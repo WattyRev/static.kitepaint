@@ -12,9 +12,7 @@ describe("ProductShowcase", () => {
     };
   });
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = shallow(<ProductShowcase {...defaultProps} />);
-    expect(wrapper).toMatchSnapshot();
+    shallow(<ProductShowcase {...defaultProps} />);
   });
   describe("StyleWrapper", () => {
     it("renders", () => {

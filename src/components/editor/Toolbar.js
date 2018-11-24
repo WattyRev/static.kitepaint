@@ -62,9 +62,11 @@ const Toolbar = ({
         <Icon icon="magic" /> Autofill
       </P>
     )}
-    <P isLight onClick={onReset}>
-      <Icon icon="eraser" /> Reset
-    </P>
+    {!!onReset && (
+      <P className="testing_reset" isLight onClick={onReset}>
+        <Icon icon="eraser" /> Reset
+      </P>
+    )}
     <P isLight onClick={onHideOutlines}>
       <Icon icon="eye-slash" /> Hide Outlines
     </P>
@@ -78,7 +80,7 @@ Toolbar.propTypes = {
   onSave: PropTypes.func,
   onShare: PropTypes.func.isRequired,
   onAutofill: PropTypes.func,
-  onReset: PropTypes.func.isRequired,
+  onReset: PropTypes.func,
   onHideOutlines: PropTypes.func.isRequired,
   onBackgroundChange: PropTypes.func.isRequired
 };
