@@ -421,6 +421,13 @@ export class KitePaintApi {
     }
 
     response.data = response.data[0];
+
+    if (response.data.active === "0") {
+      return new Promise((resolve, reject) =>
+        reject(`Design ${id} has been deleted.`)
+      );
+    }
+
     response.data.variations = JSON.parse(response.data.variations);
     return response;
   }
@@ -554,6 +561,11 @@ export class KitePaintApi {
     return response;
   }
 
+  /**
+   * Update an existing design
+   * @param  {Object}  designData
+   * @return {Promise}
+   */
   async updateDesign(designData) {
     const data = Object.assign({}, designData);
     if (data.variations) {

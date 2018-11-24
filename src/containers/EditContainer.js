@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { getUser } from "../redux/modules/user";
 import { getDesignById } from "../redux/modules/designs";
 import { getProductById } from "../redux/modules/products";
 import { getManufacturerByProductId } from "../redux/modules/manufacturers";
@@ -19,6 +20,9 @@ export class EditContainer extends React.Component {
      * The ID of the design to get information about.
      */
     designId: PropTypes.string.isRequired,
+    /**
+     * The design being edited
+     */
     design: designShape,
     /**
      * The product. Provided by redux.
@@ -28,6 +32,12 @@ export class EditContainer extends React.Component {
      * The manufactuer of the product. Provided by redux.
      */
     manufacturer: manufacturerShape,
+    /**
+     * The currently logged in user
+     */
+    user: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    }),
     /**
      * A function to request the design be fetched. Provided by redux.
      */
@@ -85,9 +95,11 @@ export class EditContainer extends React.Component {
   cancelablePromises = [];
 
   render() {
+    const userMatchesDesign =
+      this.props.design && this.props.design.user === this.props.user.id;
     return this.props.children({
       props: {
-        design: this.props.design,
+        design: userMatchesDesign ? this.props.design : null,
         isLoading: this.state.isLoading,
         product: this.props.product,
         manufacturer: this.props.manufacturer
@@ -97,6 +109,7 @@ export class EditContainer extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
+  user: getUser(state),
   product: getProductById(state, props.design && props.design.product),
   manufacturer: getManufacturerByProductId(
     state,

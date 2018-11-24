@@ -8,6 +8,7 @@ import { Text, H3, PageLoader } from "../../theme";
 import Toolbar from "../editor/Toolbar";
 import Sidebar from "../editor/Sidebar";
 import Canvas from "../editor/Canvas";
+import ErrorPage from "../ErrorPage";
 
 const PageLayout = styled.div`
   display: flex;
@@ -31,10 +32,14 @@ const PageLayout = styled.div`
  */
 const Edit = ({ match }) => (
   <EditContainer designId={match.params.designId}>
-    {editData =>
-      editData.props.isLoading ? (
-        <PageLoader />
-      ) : (
+    {editData => {
+      if (editData.props.isLoading) {
+        return <PageLoader />;
+      }
+      if (!editData.props.design) {
+        return <ErrorPage />;
+      }
+      return (
         <EditorContainer
           design={editData.props.design}
           product={editData.props.product}
@@ -96,8 +101,8 @@ const Edit = ({ match }) => (
             </React.Fragment>
           )}
         </EditorContainer>
-      )
-    }
+      );
+    }}
   </EditContainer>
 );
 
