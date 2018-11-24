@@ -48,8 +48,23 @@ export class KitePaintApi {
    */
   axiosInstance = null;
 
+  /**
+   * A cache of request details. Each cacheable API should have a section in _cache that contains
+   * an array of cache entries. Each cache entry should have a cacheTime and a value.
+   */
   _cache = {};
 
+  /**
+   * Make a request cacheable by calling _cacheable before making the request.
+   * _cacheable caches requests, not responses. It is expected that the cached data already exists
+   * in the Redux store. _cacheable just prevents making excessive API calls for data that we
+   * already have.
+   *
+   * @param  {String} name The name of the request being made
+   * @param  {String} [identifier="cache"] Some identifier to compare to future requests.
+   * @param  {*}  [defaultData=[]] The data to return with if the request is cached.
+   * @return {Promise} Resolves with the defaultData if cached, or { continue: true } if not cached.
+   */
   _cacheable(name, identifier = "cache", defaultData = []) {
     // Retrieve the relevant cache entry
     if (!this._cache[name]) {
@@ -261,7 +276,7 @@ export class KitePaintApi {
     const requestString = Qs.stringify(requestData);
 
     if (useCache) {
-      const cache = await this._cacheable("getUser", requestString);
+      const cache = await this._cacheable("getUser", requestString, {});
       if (!cache.continue) {
         return cache;
       }
@@ -377,9 +392,17 @@ export class KitePaintApi {
   /**
    * Retrieves the design with the specified id
    * @param  {String}  id
+   * @param {Boolean} [useCache=true] If true, the request will be cached, and subsequent duplicate
+   * requests will not be made within 10 minutes.
    * @return {Promise} resolves with the retrieved design
    */
-  async getDesign(id) {
+  async getDesign(id, useCache = true) {
+    if (useCache) {
+      const cache = await this._cacheable("getDesign", id, {});
+      if (!cache.continue) {
+        return cache;
+      }
+    }
     const response = await this.axiosInstance.get("/designs.php", {
       params: {
         id

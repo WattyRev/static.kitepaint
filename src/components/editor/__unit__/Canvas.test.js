@@ -6,19 +6,26 @@ import Canvas, { StyleWrapper } from "../Canvas";
 describe("Canvas", () => {
   describe("StyleWrapper", () => {
     it("renders", () => {
-      expect.assertions(1);
+      mount(<StyleWrapper theme={Theme} />);
+    });
+    it("gives cursor: pointer to items with data-id attribute", () => {
       const wrapper = mount(<StyleWrapper theme={Theme} />);
-      expect(wrapper.find("div")).toHaveLength(1);
+      expect(wrapper).toHaveStyleRule("cursor", "pointer", {
+        modifier: "svg *[data-id]"
+      });
+    });
+    it("gives cursor: default to items with data-id attribute if isReadOnly is true", () => {
+      const wrapper = mount(<StyleWrapper theme={Theme} isReadOnly />);
+      expect(wrapper).toHaveStyleRule("cursor", "default", {
+        modifier: "svg *[data-id]"
+      });
     });
   });
 
   let defaultProps;
   beforeEach(() => {
     defaultProps = {
-      svg: '<div class="testing_target">test</div>',
-      onClick: jest.fn(),
-      currentColor: "Orange",
-      colorMap: {}
+      svg: '<div class="testing_target">test</div>'
     };
   });
   it("renders", () => {
@@ -40,6 +47,10 @@ describe("Canvas", () => {
         parentElement: parent
       };
     }
+    beforeEach(() => {
+      defaultProps.onClick = jest.fn();
+      defaultProps.currentColor = "orange";
+    });
     it("triggers onClick if the clicked element has data-id and no data-whitelist", () => {
       expect.assertions(2);
       const subject = new Canvas(defaultProps);

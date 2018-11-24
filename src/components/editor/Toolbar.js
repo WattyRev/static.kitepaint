@@ -63,7 +63,7 @@ const Toolbar = ({
       </P>
     )}
     {!!onReset && (
-      <P isLight onClick={onReset}>
+      <P className="testing_reset" isLight onClick={onReset}>
         <Icon icon="eraser" /> Reset
       </P>
     )}

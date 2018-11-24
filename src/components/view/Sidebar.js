@@ -42,7 +42,6 @@ const Sidebar = ({
         {product &&
           manufacturer && (
             <sidebar.components.Item
-              className="testing_manufacturer"
               isLight
               as={product.url || manufacturer.website ? "a" : "div"}
               href={product.url || manufacturer.website}
@@ -54,20 +53,21 @@ const Sidebar = ({
                 noMargin
                 src={`/logos/${manufacturer.logo}`}
               />
-              <div>
-                {product.name}
-                <br />
+              <div className="testing_manufacturer">
+                {product.name} <br />
                 <small>by {manufacturer.name}</small>
               </div>
             </sidebar.components.Item>
           )}
-        {design && (
-          <sidebar.components.Heading className="testing_design" isLight>
-            {design.name}
-            <br />
-            designed by {user.username}
-          </sidebar.components.Heading>
-        )}
+        <sidebar.components.Heading className="testing_design" isLight>
+          {design.name}{" "}
+          {user && (
+            <React.Fragment>
+              <br />
+              designed by {user.username}
+            </React.Fragment>
+          )}
+        </sidebar.components.Heading>
         {design.variations.map(variation => (
           <sidebar.components.Item
             className="testing_variation"
@@ -111,11 +111,17 @@ Sidebar.propTypes = {
    * The pre-existing design that is being edited, if any
    */
   design: designShape.isRequired,
+  /**
+   * The user that created the design.
+   */
   user: userShape,
   /**
    * The name of the variation that is currently selected
    */
   selectedVariation: PropTypes.string.isRequired,
+  /**
+   * The colors that are used in the current variation.
+   */
   usedColors: PropTypes.objectOf(
     PropTypes.arrayOf(
       PropTypes.shape({

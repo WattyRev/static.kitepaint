@@ -263,21 +263,3 @@ exports[`ProductShowcase StyleWrapper renders 1`] = `
   </StyledComponent>
 </styled.div>
 `;
-
-exports[`ProductShowcase renders 1`] = `
-<styled.div
-  as={[Function]}
-  to="/create/product-1"
->
-  <Styled(H3)
-    className="product-heading"
-  >
-    Krazy Kite
-  </Styled(H3)>
-  <Svg
-    className="preview count-1"
-    key="Standard"
-    svg="<div>Kool Kite</div>"
-  />
-</styled.div>
-`;

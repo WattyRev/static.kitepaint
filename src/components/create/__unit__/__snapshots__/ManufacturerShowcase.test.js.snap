@@ -151,31 +151,3 @@ exports[`ManufacturerShowcase StyleWrapper renders 1`] = `
   </StyledComponent>
 </Styled(styled.div)>
 `;
-
-exports[`ManufacturerShowcase renders 1`] = `
-<Styled(styled.div)>
-  <styled.div>
-    <styled.div
-      src="/logos/abc.jpg"
-    />
-    <div>
-      <Styled(H3)>
-        Krazy Kites
-      </Styled(H3)>
-      <P
-        className="testing_website"
-      >
-        <styled.a
-          href="http://krazykites.com"
-          target="_blank"
-        >
-          http://krazykites.com
-        </styled.a>
-      </P>
-    </div>
-  </styled.div>
-  <div>
-    Children!
-  </div>
-</Styled(styled.div)>
-`;

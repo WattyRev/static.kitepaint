@@ -12,13 +12,11 @@ describe("ManufacturerShowcase", () => {
     };
   });
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = shallow(
+    shallow(
       <ManufacturerShowcase {...mockProps}>
         <div>Children!</div>
       </ManufacturerShowcase>
     );
-    expect(wrapper).toMatchSnapshot();
   });
   it("renders the website if provided", () => {
     expect.assertions(1);
