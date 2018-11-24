@@ -61,6 +61,7 @@ export class EditContainer extends React.Component {
   };
 
   componentDidMount() {
+    // Requesting data used on the edit page
     const productRequest = makeCancelable(this.props.onRequestProduct());
     const manufacturerRequest = makeCancelable(
       this.props.onRequestManufacturer()
@@ -95,6 +96,7 @@ export class EditContainer extends React.Component {
   cancelablePromises = [];
 
   render() {
+    // If the design was not made by the current user, don't provide it.
     const userMatchesDesign =
       this.props.design && this.props.design.user === this.props.user.id;
     return this.props.children({
@@ -102,7 +104,8 @@ export class EditContainer extends React.Component {
         design: userMatchesDesign ? this.props.design : null,
         isLoading: this.state.isLoading,
         product: this.props.product,
-        manufacturer: this.props.manufacturer
+        manufacturer: this.props.manufacturer,
+        user: this.props.user
       }
     });
   }

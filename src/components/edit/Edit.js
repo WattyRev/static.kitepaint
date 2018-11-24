@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import EditContainer from "../../containers/EditContainer";
 import EditorContainer from "../../containers/EditorContainer";
-import UserContainer from "../../containers/UserContainer";
 import { Text, H3, PageLoader } from "../../theme";
 import Toolbar from "../editor/Toolbar";
 import Sidebar from "../editor/Sidebar";
@@ -46,24 +45,20 @@ const Edit = ({ match }) => (
         >
           {editorData => (
             <React.Fragment>
-              <UserContainer>
-                {userData => (
-                  <Toolbar
-                    onUpdate={editorData.actions.update}
-                    onSave={name =>
-                      editorData.actions.save({
-                        name,
-                        user: userData.props.id
-                      })
-                    }
-                    onShare={() => {}}
-                    onAutofill={editorData.actions.autofill}
-                    onReset={() => {}}
-                    onHideOutlines={() => {}}
-                    onBackgroundChange={() => {}}
-                  />
-                )}
-              </UserContainer>
+              <Toolbar
+                onUpdate={editorData.actions.update}
+                onSave={name =>
+                  editorData.actions.save({
+                    name,
+                    user: editData.props.user.id
+                  })
+                }
+                onShare={() => {}}
+                onAutofill={editorData.actions.autofill}
+                onReset={() => {}}
+                onHideOutlines={() => {}}
+                onBackgroundChange={() => {}}
+              />
               <PageLayout>
                 <Sidebar
                   design={editData.props.design}

@@ -5,7 +5,8 @@ import { GET_MANUFACTURERS } from "../../actions";
 import Reducer, {
   defaultState,
   getManufacturers,
-  getManufacturerByProductId
+  getManufacturerByProductId,
+  getManufacturersWithIndex
 } from "../manufacturers";
 
 describe("Manufacturers redux module", () => {
@@ -101,6 +102,34 @@ describe("Manufacturers redux module", () => {
         });
         const response = getManufacturerByProductId(mockState, "abc");
         expect(response).toEqual(mockManufacturer);
+      });
+    });
+    describe("getManufacturersWithIndex", () => {
+      it("returns the manufacturers indexed by id", () => {
+        expect.assertions(1);
+        let state = fromJS({
+          manufacturers: {
+            abc: {
+              id: "abc",
+              foo: "bar"
+            },
+            def: {
+              id: "def",
+              foo: "far"
+            }
+          }
+        });
+        const response = getManufacturersWithIndex(state);
+        expect(response).toEqual({
+          abc: {
+            id: "abc",
+            foo: "bar"
+          },
+          def: {
+            id: "def",
+            foo: "far"
+          }
+        });
       });
     });
   });

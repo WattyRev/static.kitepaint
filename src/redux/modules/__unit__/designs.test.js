@@ -6,7 +6,12 @@ import Reducer, {
   getDesignsByUser,
   getDesignById
 } from "../designs";
-import { GET_DESIGNS, GET_DESIGN, DELETE_DESIGN } from "../../actions";
+import {
+  GET_DESIGNS,
+  GET_DESIGN,
+  DELETE_DESIGN,
+  UPDATE_DESIGN
+} from "../../actions";
 
 describe("Designs redux module", () => {
   describe("reducer", () => {
@@ -60,6 +65,33 @@ describe("Designs redux module", () => {
           }
         });
         expect(response.get("abc")).toBeFalsy();
+      });
+    });
+    describe("UPDATE_DESIGN.RECEIVED", () => {
+      it("updates the relevant design", () => {
+        expect.assertions(1);
+        let state = fromJS({
+          abc: {
+            foo: "bar",
+            bar: "foo"
+          }
+        });
+        const response = Reducer(state, {
+          type: UPDATE_DESIGN.RECEIVED,
+          payload: {
+            data: {
+              id: "abc",
+              foo: "far"
+            }
+          }
+        });
+        expect(response.toJS()).toEqual({
+          abc: {
+            id: "abc",
+            foo: "far",
+            bar: "foo"
+          }
+        });
       });
     });
   });

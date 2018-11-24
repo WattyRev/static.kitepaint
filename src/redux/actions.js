@@ -85,12 +85,9 @@ export const GET_DESIGN = createAsyncAction("GET_DESIGN", id => {
  * @param {Boolean} [useCache=true] If true, the request will be cached, and subsequent duplicate
  * requests will not be made within 10 minutes.
  */
-export const GET_PRODUCTS = createAsyncAction(
-  "GET_PRODUCTS",
-  (filters, useCache) => {
-    return KitePaintApi.getProducts(useCache);
-  }
-);
+export const GET_PRODUCTS = createAsyncAction("GET_PRODUCTS", useCache => {
+  return KitePaintApi.getProducts(useCache);
+});
 
 /**
  * Retrieves designs from the KitePaintApi
@@ -100,7 +97,7 @@ export const GET_PRODUCTS = createAsyncAction(
  */
 export const GET_MANUFACTURERS = createAsyncAction(
   "GET_MANUFACTURERS",
-  (filters, useCache) => {
+  useCache => {
     return KitePaintApi.getManufacturers(useCache);
   }
 );
