@@ -1,7 +1,7 @@
 import { handleActions } from "redux-actions";
 import { fromJS } from "immutable";
 import { designStatuses } from "../../models/design";
-import { GET_DESIGNS, DELETE_DESIGN } from "../actions";
+import { GET_DESIGNS, GET_DESIGN, DELETE_DESIGN } from "../actions";
 
 export const defaultState = fromJS({});
 
@@ -17,6 +17,12 @@ export default handleActions(
         return accumulated;
       }, {});
       return state.merge(designsById);
+    },
+    [GET_DESIGN.RECEIVED]: (state, action) => {
+      const { data } = action.payload;
+      return state.merge({
+        [data.id]: data
+      });
     },
     [DELETE_DESIGN.RECEIVED]: (state, action) => {
       const { data } = action.payload;
@@ -54,6 +60,12 @@ export const getRecentDesigns = state => {
     .slice(0, 6);
 };
 
+/**
+ * Get designs created by the specified user
+ * @param  {Map} state
+ * @param  {Object[]} userId The ID of the user
+ * @return {Object[]}
+ */
 export const getDesignsByUser = (state, userId) => {
   const designs = state.get("designs");
   return designs
@@ -61,4 +73,15 @@ export const getDesignsByUser = (state, userId) => {
     .sort(sortNewestToOldest)
     .toList()
     .toJS();
+};
+
+/**
+ * Get a design by ID
+ * @param  {Map} state
+ * @param  {String} id The ID of the design to retrieve
+ * @return {Object} The design
+ */
+export const getDesignById = (state, id) => {
+  const design = state.getIn(["designs", id]);
+  return design ? design.toJS() : null;
 };

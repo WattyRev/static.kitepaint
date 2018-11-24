@@ -50,6 +50,11 @@ export const getProductById = (state, id) => {
   return product.toJS();
 };
 
+/**
+ * Gets all products indexed by ID
+ * @param  {Map} state
+ * @return {Object}
+ */
 export const getProductsWithIndex = state => {
   return state.get("products").toJS();
 };

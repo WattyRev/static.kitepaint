@@ -48,6 +48,48 @@ export class KitePaintApi {
    */
   axiosInstance = null;
 
+  _cache = {};
+
+  _cacheable(name, identifier = "cache", defaultData = []) {
+    // Retrieve the relevant cache entry
+    if (!this._cache[name]) {
+      this._cache[name] = [];
+    }
+    const relevantCacheGroup = this._cache[name];
+    let relevantIndex;
+    const relevantCache = relevantCacheGroup.find((cache, index) => {
+      if (cache.value === identifier) {
+        relevantIndex = index;
+        return true;
+      }
+      return false;
+    });
+
+    // Evaluat the cache
+    if (relevantCache) {
+      const cacheDuration = 10 * 60 * 1000; // 10 minutes
+      const currentTime = new Date().getTime();
+
+      if (relevantCache.cacheTime + cacheDuration >= currentTime) {
+        // Cache is not expired, so resolve.
+        return Promise.resolve({
+          data: defaultData
+        });
+      } else {
+        // Remove expired cache
+        relevantCacheGroup.splice(relevantIndex, 1);
+      }
+    }
+
+    // Allow the requst to be made, but store a record in cache.
+    relevantCacheGroup.push({
+      cacheTime: new Date().getTime(),
+      value: identifier
+    });
+
+    return Promise.resolve({ continue: true });
+  }
+
   /**
    * Check if the user is already logged in based on session data.
    * @return {Promise}
@@ -195,6 +237,58 @@ export class KitePaintApi {
   }
 
   /**
+   * A cache for getUser requests to prevent making the same request repeatedlu.
+   * @private
+   */
+  _getUserCache = [];
+
+  /**
+   * Retrieves a user by ID
+   * @param  {String}  id
+   * @return {Promise} Resolves with the retrieved user
+   */
+  async getUser(id, useCache = true) {
+    // Build the request data to be sent to the server as query params
+    const requestData = {
+      filter: {
+        loginid: id
+      },
+      return: ["username", "loginid"]
+    };
+
+    // Convert the request data to query params using Qs. This is done because providing nested
+    // parms to Axios's params config prop doesn't work correctly.
+    const requestString = Qs.stringify(requestData);
+
+    if (useCache) {
+      const cache = await this._cacheable("getUser", requestString);
+      if (!cache.continue) {
+        return cache;
+      }
+    }
+
+    // Make the request
+    const response = await this.axiosInstance.get(
+      `/users.php?${requestString}`
+    );
+
+    // Handle invalid responses
+    if (!response.data || !response.data.length) {
+      return new Promise((resolve, reject) =>
+        reject(
+          response.data
+            ? response.data.message
+            : `The request for user ${id} was unsuccessful`
+        )
+      );
+    }
+
+    response.data = response.data[0];
+
+    return response;
+  }
+
+  /**
    * A cache for getDesigns requests to prevent making the same request repeatedly.
    * @type {Array}
    * @private
@@ -250,25 +344,10 @@ export class KitePaintApi {
 
     // Look for cached values if useCache is true
     if (useCache) {
-      const relevantCache = this._getDesignsCache.find(
-        cache => cache.value === requestString
-      );
-      if (relevantCache) {
-        const cacheDuration = 10 * 60 * 1000; // 10 minutes
-        const currentTime = new Date().getTime();
-        if (relevantCache.cacheTime + cacheDuration >= currentTime) {
-          return new Promise(resolve =>
-            resolve({
-              data: []
-            })
-          );
-        }
+      const cache = await this._cacheable("getDesign", requestString);
+      if (!cache.continue) {
+        return cache;
       }
-
-      this._getDesignsCache.push({
-        cacheTime: new Date().getTime(),
-        value: requestString
-      });
     }
 
     // Make the request
@@ -296,6 +375,34 @@ export class KitePaintApi {
   }
 
   /**
+   * Retrieves the design with the specified id
+   * @param  {String}  id
+   * @return {Promise} resolves with the retrieved design
+   */
+  async getDesign(id) {
+    const response = await this.axiosInstance.get("/designs.php", {
+      params: {
+        id
+      }
+    });
+
+    // Handle invalid responses
+    if (!response.data || !response.data.length) {
+      return new Promise((resolve, reject) =>
+        reject(
+          response.data
+            ? response.data.message
+            : `The request for design ${id} was unsuccessful`
+        )
+      );
+    }
+
+    response.data = response.data[0];
+    response.data.variations = JSON.parse(response.data.variations);
+    return response;
+  }
+
+  /**
    * A cache for getProducts to prevent making the same request repeatedly.
    * @type {Array}
    * @private
@@ -311,23 +418,10 @@ export class KitePaintApi {
   async getProducts(useCache = true) {
     // Look for cached values if useCache is true
     if (useCache) {
-      const relevantCache = this._getProductsCache[0];
-
-      if (relevantCache) {
-        const cacheDuration = 10 * 60 * 1000; // 10 minutes
-        const currentTime = new Date().getTime();
-        if (relevantCache.cacheTime + cacheDuration >= currentTime) {
-          return new Promise(resolve =>
-            resolve({
-              data: []
-            })
-          );
-        }
+      const cache = await this._cacheable("getProducts");
+      if (!cache.continue) {
+        return cache;
       }
-
-      this._getProductsCache.push({
-        cacheTime: new Date().getTime()
-      });
     }
 
     // Make the request
@@ -374,23 +468,10 @@ export class KitePaintApi {
   async getManufacturers(useCache = true) {
     // Look for cached values if useCache is true
     if (useCache) {
-      const relevantCache = this._getManufacturersCache[0];
-
-      if (relevantCache) {
-        const cacheDuration = 10 * 60 * 1000; // 10 minutes
-        const currentTime = new Date().getTime();
-        if (relevantCache.cacheTime + cacheDuration >= currentTime) {
-          return new Promise(resolve =>
-            resolve({
-              data: []
-            })
-          );
-        }
+      const cache = await this._cacheable("getManufacturers");
+      if (!cache.continue) {
+        return cache;
       }
-
-      this._getManufacturersCache.push({
-        cacheTime: new Date().getTime()
-      });
     }
 
     // Make the request

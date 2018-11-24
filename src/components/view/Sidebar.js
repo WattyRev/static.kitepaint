@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 import manufacturerShape from "../../models/manufacturer";
 import productShape from "../../models/product";
 import designShape from "../../models/design";
-import { productAppliedColorsShape } from "../../containers/EditorContainer";
+import userShape from "../../models/user";
+import ColorTile from "../editor/ColorTile";
 import { Icon, FillToBottom, Sidebar as SidebarUI } from "../../theme";
 import ManufacturerLogo from "../ManufacturerLogo";
-import ColorTile from "./ColorTile";
-import ColorableSvg from "./ColorableSvg";
+import Svg from "../Svg";
 
 /**
  * A styled preview of a variation's svg
@@ -28,43 +28,47 @@ const VariationPreview = styled.div`
  * The sidebar displayed when editing/creating a new design
  */
 const Sidebar = ({
-  appliedColors,
   manufacturer,
   product,
   design,
   selectedVariation,
-  selectedColor,
-  onColorSelect,
-  onVariationSelect
+  onVariationSelect,
+  user,
+  usedColors
 }) => (
   <SidebarUI>
     {sidebar => (
       <React.Fragment>
-        <sidebar.components.Item
-          className="testing_manufacturer"
-          isLight
-          as={product.url || manufacturer.website ? "a" : "div"}
-          href={product.url || manufacturer.website}
-          target="_blank"
-          hasAction={!!(product.url || manufacturer.website)}
-        >
-          <ManufacturerLogo
-            size={32}
-            noMargin
-            src={`/logos/${manufacturer.logo}`}
-          />
-          <div>
-            {product.name}
-            <br />
-            <small>by {manufacturer.name}</small>
-          </div>
-        </sidebar.components.Item>
+        {product &&
+          manufacturer && (
+            <sidebar.components.Item
+              className="testing_manufacturer"
+              isLight
+              as={product.url || manufacturer.website ? "a" : "div"}
+              href={product.url || manufacturer.website}
+              target="_blank"
+              hasAction={!!(product.url || manufacturer.website)}
+            >
+              <ManufacturerLogo
+                size={32}
+                noMargin
+                src={`/logos/${manufacturer.logo}`}
+              />
+              <div>
+                {product.name}
+                <br />
+                <small>by {manufacturer.name}</small>
+              </div>
+            </sidebar.components.Item>
+          )}
         {design && (
           <sidebar.components.Heading className="testing_design" isLight>
             {design.name}
+            <br />
+            designed by {user.username}
           </sidebar.components.Heading>
         )}
-        {product.variations.map(variation => (
+        {design.variations.map(variation => (
           <sidebar.components.Item
             className="testing_variation"
             isLight
@@ -74,28 +78,18 @@ const Sidebar = ({
             onClick={() => onVariationSelect(variation.name)}
           >
             <VariationPreview>
-              <ColorableSvg
-                svg={variation.svg}
-                colorMap={appliedColors[variation.name] || {}}
-              />
+              <Svg svg={variation.svg} />
             </VariationPreview>{" "}
             {variation.name}
           </sidebar.components.Item>
         ))}
         <sidebar.components.Heading isLight>
-          <Icon icon="palette" /> Colors
+          <Icon icon="palette" /> Colors Used
         </sidebar.components.Heading>
         <FillToBottom offset={35}>
-          {product.colors.map(color => (
-            <sidebar.components.Item
-              className="testing_color"
-              isLight
-              hasAction
-              key={color.name}
-              isActive={color.name === selectedColor}
-              onClick={() => onColorSelect(color.name)}
-            >
-              <ColorTile color={color.color} /> {color.name}
+          {usedColors[selectedVariation].map(color => (
+            <sidebar.components.Item isLight key={color.color}>
+              <ColorTile color={color.color} /> {color.name || color.color}
             </sidebar.components.Item>
           ))}
         </FillToBottom>
@@ -105,32 +99,31 @@ const Sidebar = ({
 );
 
 Sidebar.propTypes = {
-  appliedColors: productAppliedColorsShape.isRequired,
   /**
    * The manufacturer that creates the product being edited.
    */
-  manufacturer: manufacturerShape.isRequired,
+  manufacturer: manufacturerShape,
   /**
    * The produt that is being edited
    */
-  product: productShape.isRequired,
+  product: productShape,
   /**
    * The pre-existing design that is being edited, if any
    */
-  design: designShape,
+  design: designShape.isRequired,
+  user: userShape,
   /**
    * The name of the variation that is currently selected
    */
   selectedVariation: PropTypes.string.isRequired,
-  /**
-   * The name of the color that is currently selected
-   */
-  selectedColor: PropTypes.string.isRequired,
-  /**
-   * Called when a color is selected.
-   * Is provided with the color name as the first parameter.
-   */
-  onColorSelect: PropTypes.func.isRequired,
+  usedColors: PropTypes.objectOf(
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        color: PropTypes.string.isRequired
+      }).isRequired
+    ).isRequired
+  ).isRequired,
   /**
    * Called when a variation is selected.
    * Is provided with the variation name as the first parameter.

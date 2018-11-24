@@ -1,60 +1,14 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import { getMockManufacturer } from "../../../models/manufacturer";
 import { getMockProduct } from "../../../models/product";
 import { getMockDesign } from "../../../models/design";
-import Theme from "../../../theme";
-import Sidebar, { StyleWrapper, ListItem } from "../Sidebar";
+import { Sidebar as SidebarUI } from "../../../theme";
+import Sidebar from "../Sidebar";
 
 describe("Sidebar", () => {
-  describe("StyleWrapper", () => {
-    it("renders", () => {
-      expect.assertions(1);
-      const wrapper = mount(<StyleWrapper theme={Theme} />);
-      expect(wrapper.find("div")).toHaveLength(1);
-    });
-  });
-  describe("ListItem", () => {
-    it("renders", () => {
-      expect.assertions(1);
-      const wrapper = mount(<ListItem theme={Theme} />);
-      expect(wrapper.find("div")).toHaveLength(1);
-    });
-    it("uses cursor:default by default", () => {
-      const wrapper = mount(<ListItem theme={Theme} />);
-      expect(wrapper).toHaveStyleRule("cursor", "default");
-    });
-    it("uses cursor: pointer if the hasAction prop is provided", () => {
-      const wrapper = mount(<ListItem theme={Theme} hasAction />);
-      expect(wrapper).toHaveStyleRule("cursor", "pointer");
-    });
-    it("has a :after with 0 width by default", () => {
-      const wrapper = mount(<ListItem theme={Theme} />);
-      expect(wrapper).toHaveStyleRule("width", "0px", {
-        modifier: ":after"
-      });
-    });
-    it("has a :after with 8px width when isActive is provided", () => {
-      const wrapper = mount(<ListItem theme={Theme} isActive />);
-      expect(wrapper).toHaveStyleRule("width", "8px", {
-        modifier: ":after"
-      });
-    });
-    it("has no hover styles by default", () => {
-      const wrapper = mount(<ListItem theme={Theme} />);
-      expect(wrapper).not.toHaveStyleRule("background", "#111111", {
-        modifier: ":hover"
-      });
-    });
-    it("has hover styles if hasAction is provided", () => {
-      const wrapper = mount(<ListItem theme={Theme} hasAction />);
-      expect(wrapper).toHaveStyleRule("background", "#111111", {
-        modifier: ":hover"
-      });
-    });
-  });
-
   let defaultProps;
+  let sidebarUIData;
   beforeEach(() => {
     defaultProps = {
       appliedColors: {},
@@ -65,18 +19,31 @@ describe("Sidebar", () => {
       onColorSelect: jest.fn(),
       onVariationSelect: jest.fn()
     };
+
+    sidebarUIData = {
+      components: {
+        Item: ({ children }) => children,
+        Heading: ({ children }) => children
+      }
+    };
   });
   it("renders", () => {
-    expect.assertions(1);
     const wrapper = shallow(<Sidebar {...defaultProps} />);
-    expect(wrapper).toMatchSnapshot();
+    shallow(
+      <div>{wrapper.find(SidebarUI).prop("children")(sidebarUIData)}</div>
+    );
   });
   it("makes the manufacturer list item a link if the product has a url", () => {
     expect.assertions(2);
     defaultProps.product.url = "http://zombo.com";
     const wrapper = shallow(<Sidebar {...defaultProps} />);
-    expect(wrapper.find(".testing_manufacturer").prop("as")).toEqual("a");
-    expect(wrapper.find(".testing_manufacturer").prop("href")).toEqual(
+    const sidebarContent = shallow(
+      <div>{wrapper.find(SidebarUI).prop("children")(sidebarUIData)}</div>
+    );
+    expect(sidebarContent.find(".testing_manufacturer").prop("as")).toEqual(
+      "a"
+    );
+    expect(sidebarContent.find(".testing_manufacturer").prop("href")).toEqual(
       "http://zombo.com"
     );
   });
@@ -85,8 +52,13 @@ describe("Sidebar", () => {
     defaultProps.product.url = null;
     defaultProps.manufacturer.website = "http://albinoblacksheep.com";
     const wrapper = shallow(<Sidebar {...defaultProps} />);
-    expect(wrapper.find(".testing_manufacturer").prop("as")).toEqual("a");
-    expect(wrapper.find(".testing_manufacturer").prop("href")).toEqual(
+    const sidebarContent = shallow(
+      <div>{wrapper.find(SidebarUI).prop("children")(sidebarUIData)}</div>
+    );
+    expect(sidebarContent.find(".testing_manufacturer").prop("as")).toEqual(
+      "a"
+    );
+    expect(sidebarContent.find(".testing_manufacturer").prop("href")).toEqual(
       "http://albinoblacksheep.com"
     );
   });
@@ -95,21 +67,37 @@ describe("Sidebar", () => {
     defaultProps.product.url = null;
     defaultProps.manufacturer.website = null;
     const wrapper = shallow(<Sidebar {...defaultProps} />);
-    expect(wrapper.find(".testing_manufacturer").prop("as")).toEqual("div");
+    const sidebarContent = shallow(
+      <div>{wrapper.find(SidebarUI).prop("children")(sidebarUIData)}</div>
+    );
+    expect(sidebarContent.find(".testing_manufacturer").prop("as")).toEqual(
+      "div"
+    );
   });
   it("displays a heading with the design name if there is a design", () => {
     expect.assertions(2);
     defaultProps.design = getMockDesign();
     defaultProps.design.name = "Boogers";
     const wrapper = shallow(<Sidebar {...defaultProps} />);
-    expect(wrapper.find(".testing_design")).toHaveLength(1);
-    expect(wrapper.find(".testing_design").text()).toEqual("Boogers");
+    const sidebarContent = shallow(
+      <div>{wrapper.find(SidebarUI).prop("children")(sidebarUIData)}</div>
+    );
+    expect(sidebarContent.find(".testing_design")).toHaveLength(1);
+    expect(
+      sidebarContent
+        .find(".testing_design")
+        .prop("children")
+        .trim()
+    ).toEqual("Boogers");
   });
   it("does not display a heading with the design name if there is no design", () => {
     expect.assertions(1);
     defaultProps.design = null;
     const wrapper = shallow(<Sidebar {...defaultProps} />);
-    expect(wrapper.find(".testing_design")).toHaveLength(0);
+    const sidebarContent = shallow(
+      <div>{wrapper.find(SidebarUI).prop("children")(sidebarUIData)}</div>
+    );
+    expect(sidebarContent.find(".testing_design")).toHaveLength(0);
   });
   it("triggers onVariationSelect when a variation is selected", () => {
     expect.assertions(2);
@@ -124,7 +112,10 @@ describe("Sidebar", () => {
       }
     ];
     const wrapper = shallow(<Sidebar {...defaultProps} />);
-    wrapper
+    const sidebarContent = shallow(
+      <div>{wrapper.find(SidebarUI).prop("children")(sidebarUIData)}</div>
+    );
+    sidebarContent
       .find(".testing_variation")
       .at(1)
       .simulate("click");
@@ -144,7 +135,10 @@ describe("Sidebar", () => {
       }
     ];
     const wrapper = shallow(<Sidebar {...defaultProps} />);
-    wrapper
+    const sidebarContent = shallow(
+      <div>{wrapper.find(SidebarUI).prop("children")(sidebarUIData)}</div>
+    );
+    sidebarContent
       .find(".testing_color")
       .at(1)
       .simulate("click");

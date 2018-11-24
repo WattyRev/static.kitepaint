@@ -134,7 +134,7 @@ exports[`ProductShowcase StyleWrapper renders 1`] = `
         "$$typeof": Symbol(react.forward_ref),
         "attrs": undefined,
         "componentStyle": ComponentStyle {
-          "componentId": "sc-eNQAEJ",
+          "componentId": "sc-kkGfuU",
           "isStatic": false,
           "lastClassName": "c0",
           "rules": Array [
@@ -198,7 +198,7 @@ exports[`ProductShowcase StyleWrapper renders 1`] = `
         },
         "displayName": "styled.div",
         "render": [Function],
-        "styledComponentId": "sc-eNQAEJ",
+        "styledComponentId": "sc-kkGfuU",
         "target": "div",
         "toString": [Function],
         "warnTooManyClasses": [Function],

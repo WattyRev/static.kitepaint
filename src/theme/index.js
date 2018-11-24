@@ -18,6 +18,7 @@ import ModalConfirm from "./ModalConfirm";
 import ModalPrompt from "./ModalPrompt";
 import P from "./P";
 import PageLoader from "./PageLoader";
+import Sidebar from "./Sidebar";
 import Spacer from "./Spacer";
 import Text from "./Text";
 import Tile from "./Tile";
@@ -45,6 +46,7 @@ export {
   ModalPrompt,
   P,
   PageLoader,
+  Sidebar,
   Spacer,
   Tile,
   Text,

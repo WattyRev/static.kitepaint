@@ -3,9 +3,17 @@ import { shallow } from "enzyme";
 import View from "../View";
 
 describe("View", () => {
+  let defaultProps;
+  beforeEach(() => {
+    defaultProps = {
+      match: {
+        params: {
+          designId: "abc"
+        }
+      }
+    };
+  });
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = shallow(<View />);
-    expect(wrapper).toMatchSnapshot();
+    shallow(<View {...defaultProps} />);
   });
 });

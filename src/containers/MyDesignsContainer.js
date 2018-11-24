@@ -120,7 +120,6 @@ export class MyDesignsContainer extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  user: getUser(state),
   designs: getDesignsByUser(state, props.user && props.user.id),
   products: getProductsWithIndex(state),
   manufacturers: getManufacturersWithIndex(state)
@@ -135,11 +134,11 @@ const mapDispatchToProps = {
 
 // We need the user prop to be provided in order to get the designs, so wrap the container once
 // to get the designs, and again to get the user.
-const withDesigns = connect(
+const withoutUser = connect(
   mapStateToProps,
   mapDispatchToProps
 )(MyDesignsContainer);
 
 export default connect(state => ({
   user: getUser(state)
-}))(withDesigns);
+}))(withoutUser);
