@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ProductContainer renders 1`] = `
-<ProductContainer
+exports[`CreateNewContainer renders 1`] = `
+<CreateNewContainer
   onRequestManufacturer={
     [MockFunction] {
       "calls": Array [
@@ -33,5 +33,5 @@ exports[`ProductContainer renders 1`] = `
   <div>
     test
   </div>
-</ProductContainer>
+</CreateNewContainer>
 `;

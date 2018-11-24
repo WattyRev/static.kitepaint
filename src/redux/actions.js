@@ -122,6 +122,14 @@ export const CREATE_DESIGN = createAsyncAction("CREATE_DESIGN", designData => {
 });
 
 /**
+ * Triggers the update of an existing design using the provided data.
+ * @param {Object} designData
+ */
+export const UPDATE_DESIGN = createAsyncAction("UPDATE_DESIGN", designData => {
+  return KitePaintApi.updateDesign(designData);
+});
+
+/**
  * Triggers the deletion of a design. Resolves with the ID of the deleted design.
  * @param {String} designId
  */

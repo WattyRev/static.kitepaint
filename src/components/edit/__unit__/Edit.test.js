@@ -3,9 +3,17 @@ import { shallow } from "enzyme";
 import Edit from "../Edit";
 
 describe("Edit", () => {
+  let defaultProps;
+  beforeEach(() => {
+    defaultProps = {
+      match: {
+        params: {
+          designId: "abc"
+        }
+      }
+    };
+  });
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = shallow(<Edit />);
-    expect(wrapper).toMatchSnapshot();
+    shallow(<Edit {...defaultProps} />);
   });
 });

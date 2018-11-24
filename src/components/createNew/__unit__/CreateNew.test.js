@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import ProductContainer from "../../../containers/ProductContainer";
+import CreateNewContainer from "../../../containers/CreateNewContainer";
 import EditorContainer from "../../../containers/EditorContainer";
 import UserContainer from "../../../containers/UserContainer";
 import { getMockProduct } from "../../../models/product";
@@ -30,10 +30,12 @@ describe("CreateNew", () => {
         manufacturer: getMockManufacturer()
       }
     };
-    const productContainerWrapper = shallow(
-      <div>{wrapper.find(ProductContainer).prop("children")(productData)}</div>
+    const CreateNewContainerWrapper = shallow(
+      <div>
+        {wrapper.find(CreateNewContainer).prop("children")(productData)}
+      </div>
     );
-    expect(productContainerWrapper).toMatchSnapshot();
+    expect(CreateNewContainerWrapper).toMatchSnapshot();
 
     // Drill in to editor container
     const editorData = {
@@ -57,7 +59,7 @@ describe("CreateNew", () => {
     };
     const editorContainerWrapper = shallow(
       <div>
-        {productContainerWrapper.find(EditorContainer).prop("children")(
+        {CreateNewContainerWrapper.find(EditorContainer).prop("children")(
           editorData
         )}
       </div>

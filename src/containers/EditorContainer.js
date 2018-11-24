@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { fromJS } from "immutable";
 import { connect } from "react-redux";
-import { CREATE_DESIGN } from "../redux/actions";
+import { CREATE_DESIGN, UPDATE_DESIGN } from "../redux/actions";
+import designShape from "../models/design";
 import productShape from "../models/product";
 import { softCompareStrings, makeCancelable } from "../utils";
 
@@ -32,6 +33,10 @@ export class EditorContainer extends React.Component {
      */
     defaultColor: PropTypes.string,
     /**
+     * An existing design being edited.
+     */
+    design: designShape,
+    /**
      * The default variation (name) to be selected. Will default to the first variation on the
      * product otherwise.
      */
@@ -43,8 +48,40 @@ export class EditorContainer extends React.Component {
     /**
      * A function called when we want to save the design. Provided by Redux.
      */
-    onSave: PropTypes.func.isRequired
+    onSave: PropTypes.func.isRequired,
+    /**
+     * A function called when we want to update a design. Provided by Redux.
+     */
+    onUpdate: PropTypes.func.isRequired
   };
+
+  _generateAppliedColors() {
+    if (!this.props.design) {
+      return {};
+    }
+    const colors = this.props.product.colors;
+    return this.props.design.variations.reduce((accumulated, variation) => {
+      const { svg, name } = variation;
+      const render = new window.DOMParser().parseFromString(svg, "text/xml");
+      const panels = render.querySelectorAll("[data-id]");
+      const appliedColors = {};
+      for (let i = 0; i < panels.length; i++) {
+        const panel = panels[i];
+        const color = panel.getAttribute("fill");
+        const colorMatch = colors.find(storedColor =>
+          softCompareStrings(storedColor.color, color)
+        );
+        const colorName = colorMatch ? colorMatch.name : color;
+        appliedColors[panel.getAttribute("data-id")] = {
+          color,
+          name: colorName
+        };
+      }
+
+      accumulated[name] = appliedColors;
+      return accumulated;
+    }, {});
+  }
 
   constructor(props, ...rest) {
     super(props, ...rest);
@@ -89,7 +126,7 @@ export class EditorContainer extends React.Component {
        * }
        * @type {Object}
        */
-      appliedColors: {}
+      appliedColors: this._generateAppliedColors()
     };
   }
 
@@ -202,6 +239,14 @@ export class EditorContainer extends React.Component {
     this.cancelablePromises.push(promise);
   };
 
+  handleUpdate = () => {
+    const design = {
+      id: this.props.design.id,
+      variations: this.generateDesignVariations()
+    };
+    this.props.onUpdate(design);
+  };
+
   /**
    * Gets the applied colors for the current variation
    */
@@ -235,7 +280,8 @@ export class EditorContainer extends React.Component {
         autofill: this.handleAutofill,
         save: this.handleSave,
         selectColor: this.handleColorSelection,
-        selectVariation: this.handleVariationSelection
+        selectVariation: this.handleVariationSelection,
+        update: this.handleUpdate
       },
       props: {
         appliedColors: this.state.appliedColors,
@@ -251,7 +297,8 @@ export class EditorContainer extends React.Component {
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {
-  onSave: CREATE_DESIGN
+  onSave: CREATE_DESIGN,
+  onUpdate: UPDATE_DESIGN
 };
 
 export default connect(

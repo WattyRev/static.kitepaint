@@ -2,9 +2,9 @@ import React from "react";
 import { mount } from "enzyme";
 import { getMockProduct } from "../../models/product";
 import { getMockManufacturer } from "../../models/manufacturer";
-import { ProductContainer } from "../ProductContainer";
+import { CreateNewContainer } from "../CreateNewContainer";
 
-describe("ProductContainer", () => {
+describe("CreateNewContainer", () => {
   let defaultProps;
   beforeEach(() => {
     defaultProps = {
@@ -16,27 +16,27 @@ describe("ProductContainer", () => {
   it("renders", () => {
     expect.assertions(1);
     const wrapper = mount(
-      <ProductContainer {...defaultProps}>
+      <CreateNewContainer {...defaultProps}>
         {() => <div>test</div>}
-      </ProductContainer>
+      </CreateNewContainer>
     );
     expect(wrapper).toMatchSnapshot();
   });
   it("requests for products to be fetched if no product was provided", () => {
     expect.assertions(1);
     mount(
-      <ProductContainer {...defaultProps}>
+      <CreateNewContainer {...defaultProps}>
         {() => <div>test</div>}
-      </ProductContainer>
+      </CreateNewContainer>
     );
     expect(defaultProps.onRequestProduct).toHaveBeenCalled();
   });
   it("requests for manufacturers to be fetched if no manufacturer was provided", () => {
     expect.assertions(1);
     mount(
-      <ProductContainer {...defaultProps}>
+      <CreateNewContainer {...defaultProps}>
         {() => <div>test</div>}
-      </ProductContainer>
+      </CreateNewContainer>
     );
     expect(defaultProps.onRequestManufacturer).toHaveBeenCalled();
   });
@@ -45,13 +45,13 @@ describe("ProductContainer", () => {
     defaultProps.manufacturer = getMockManufacturer();
     defaultProps.product = getMockProduct();
     const wrapper = mount(
-      <ProductContainer {...defaultProps}>
+      <CreateNewContainer {...defaultProps}>
         {data => (
           <div className="content">
             {data.props.product.name} by {data.props.manufacturer.name}
           </div>
         )}
-      </ProductContainer>
+      </CreateNewContainer>
     );
     expect(wrapper.find(".loading")).toHaveLength(0);
     expect(wrapper.find(".content")).toHaveLength(1);

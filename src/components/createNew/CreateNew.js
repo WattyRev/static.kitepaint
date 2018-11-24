@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import ProductContainer from "../../containers/ProductContainer";
+import CreateNewContainer from "../../containers/CreateNewContainer";
 import EditorContainer from "../../containers/EditorContainer";
 import UserContainer from "../../containers/UserContainer";
 import { Text, H3, PageLoader } from "../../theme";
@@ -30,7 +30,7 @@ const PageLayout = styled.div`
  * design based on that product.
  */
 const CreateNew = ({ match }) => (
-  <ProductContainer productId={match.params.productId}>
+  <CreateNewContainer productId={match.params.productId}>
     {productData =>
       productData.props.isLoading ? (
         <PageLoader />
@@ -96,7 +96,7 @@ const CreateNew = ({ match }) => (
         </EditorContainer>
       )
     }
-  </ProductContainer>
+  </CreateNewContainer>
 );
 
 CreateNew.propTypes = {

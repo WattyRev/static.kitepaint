@@ -11,7 +11,8 @@ describe("EditorContainer", () => {
       product: getMockProduct(),
       onSave: jest.fn().mockResolvedValue({
         data: {}
-      })
+      }),
+      onUpdate: jest.fn()
     };
     window.location.replace = jest.fn();
   });
@@ -19,13 +20,11 @@ describe("EditorContainer", () => {
     window.location.replace = originalReplace;
   });
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = mount(
+    mount(
       <EditorContainer {...defaultProps}>
         {() => <div>test</div>}
       </EditorContainer>
     );
-    expect(wrapper).toMatchSnapshot();
   });
   it("sets the current color as the first color in the product", () => {
     expect.assertions(1);

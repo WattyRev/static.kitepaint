@@ -11,7 +11,7 @@ import { makeCancelable } from "../utils";
 /**
  * Provides information about a specific product.
  */
-export class ProductContainer extends React.Component {
+export class CreateNewContainer extends React.Component {
   static propTypes = {
     /**
      * The ID of the product to get information about.
@@ -93,4 +93,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProductContainer);
+)(CreateNewContainer);
