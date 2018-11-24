@@ -14,6 +14,9 @@ const PageLayout = styled.div`
   position: relative;
 `;
 
+/**
+ * A coordinating component that builds the View page.
+ */
 const View = ({ match }) => (
   <ViewContainer designId={match.params.designId}>
     {designData => {
@@ -49,6 +52,9 @@ const View = ({ match }) => (
 );
 
 View.propTypes = {
+  /**
+   * Provided by react-router.
+   */
   match: PropTypes.shape({
     params: PropTypes.shape({
       designId: PropTypes.string.isRequired

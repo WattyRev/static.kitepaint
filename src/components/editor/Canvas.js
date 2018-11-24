@@ -55,6 +55,9 @@ class Canvas extends React.Component {
      * A map of colors currently applied to the svg
      */
     colorMap: appliedColorsShape,
+    /**
+     * Indicates that the canvas is read-only. Will not fire onClick events.
+     */
     isReadOnly: PropTypes.bool
   };
   static defaultProps = {
