@@ -96,10 +96,18 @@ class ModalPrompt extends React.Component {
           <StyleWrapper>
             <P>{this.props.message}</P>
             <div className="buttons">
-              <Button isPrimary onClick={this.handleConfirm}>
+              <Button
+                className="testing_confirm"
+                isPrimary
+                onClick={this.handleConfirm}
+              >
                 {this.props.confirmText}
               </Button>{" "}
-              <Button type="button" onClick={this.handleCancel}>
+              <Button
+                className="testing_cancel"
+                type="button"
+                onClick={this.handleCancel}
+              >
                 {this.props.cancelText}
               </Button>
             </div>

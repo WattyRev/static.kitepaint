@@ -17,6 +17,9 @@ export const StyleWrapper = styled.div`
 
 /**
  * An individual, possibly selectable, item that appreas in the sidebar.
+ *
+ * @param {Boolean} hasAction indicates that the item is actionable. Adds a hover state
+ * @param {Boolean} isActive indicates that the item is active.
  */
 export const Item = styled(BlockListItem)`
   display: flex;

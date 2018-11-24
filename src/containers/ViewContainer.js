@@ -17,23 +17,50 @@ import manufacturerShape from "../models/manufacturer";
 import userShape from "../models/user";
 import { softCompareStrings, makeCancelable } from "../utils";
 
+/**
+ * A container that provides data management for the View page.
+ */
 export class ViewContainer extends React.Component {
   static propTypes = {
+    /**
+     * A function that triggers the retrieval of a specific design. Provided by Redux.
+     */
     onFetchDesign: PropTypes.func.isRequired,
     /**
      * A function that triggers the retrieval of products. Provided by Redux.
      */
     onFetchProducts: PropTypes.func.isRequired,
     /**
-     * A function that triggers the retireval of manufacturers. Provided by Redux.
+     * A function that triggers the retrieval of manufacturers. Provided by Redux.
      */
     onFetchManufacturers: PropTypes.func.isRequired,
+    /**
+     * A function that triggers the retrieval of a specific user. Provided by Redux.
+     */
     onFetchUser: PropTypes.func.isRequired,
+    /**
+     * The design being viewed. Provided by Redux.
+     */
     design: designShape,
+    /**
+     * The ID of the design that is being viewed.
+     */
     designId: PropTypes.string.isRequired,
+    /**
+     * The product related to the design. Provided by Redux.
+     */
     product: productShape,
+    /**
+     * The manufacturer related to the design. Provided by Redux.
+     */
     manufacturer: manufacturerShape,
+    /**
+     * The user that created the design. Provided by Redux.
+     */
     user: userShape,
+    /**
+     * A function that renders content.
+     */
     children: PropTypes.func.isRequired
   };
 
@@ -63,7 +90,7 @@ export class ViewContainer extends React.Component {
     newState.usedColors = variations.reduce((accumulated, variation) => {
       const svg = variation.svg;
       const fillRegex = /\sfill=".{4,7}"/g;
-      const matches = svg.match(fillRegex);
+      const matches = svg.match(fillRegex) || [];
 
       // Loop through the found colors and match them to the product colors, if possible, with no
       // duplicates
@@ -76,7 +103,9 @@ export class ViewContainer extends React.Component {
           return accumulatedColors;
         }
 
-        const color = productColors.find(color => color.color === colorValue);
+        const color = productColors.find(color =>
+          softCompareStrings(color.color, colorValue)
+        );
         if (color) {
           accumulatedColors.push(color);
           return accumulatedColors;
