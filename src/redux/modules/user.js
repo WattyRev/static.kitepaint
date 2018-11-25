@@ -84,11 +84,10 @@ export default handleActions(
 export const getUser = state => {
   const user = state.get("user");
   return {
-    firstName: user.get("firstName"),
+    email: user.get("email"),
     id: user.get("id"),
     isLoggedIn: user.get("isLoggedIn"),
     isLoggingIn: user.get("isLoggingIn"),
-    lastName: user.get("lastName"),
     username: user.get("username")
   };
 };

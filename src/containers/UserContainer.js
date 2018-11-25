@@ -9,17 +9,31 @@ import { SET_RECOGNIZED_USER, LOG_OUT } from "../redux/actions";
  */
 export class UserContainer extends React.Component {
   static propTypes = {
+    /**
+     * A function that renders content
+     */
     children: PropTypes.func.isRequired,
+    /**
+     * Is the current user recognized as one with an account? Provided by redux.
+     */
     isRecognizedUser: PropTypes.bool,
+    /**
+     * Details about the current user. Provided by redux.
+     */
     user: PropTypes.shape({
-      firstName: PropTypes.string,
+      email: PropTypes.string,
       id: PropTypes.string,
       isLoggedIn: PropTypes.bool,
       isLoggingIn: PropTypes.bool,
-      lastName: PropTypes.string,
       username: PropTypes.string
     }),
+    /**
+     * A function called to log out the current user. Provided by Redux.
+     */
     onLogOut: PropTypes.func.isRequired,
+    /**
+     * A function called to indicate if the user is recognized or not. Provided by Redux.
+     */
     onSetRecognition: PropTypes.func.isRequired
   };
 
@@ -32,26 +46,18 @@ export class UserContainer extends React.Component {
   };
 
   render() {
-    const {
-      firstName,
-      id,
-      isLoggedIn,
-      isLoggingIn,
-      lastName,
-      username
-    } = this.props.user;
+    const { email, id, isLoggedIn, isLoggingIn, username } = this.props.user;
     return this.props.children({
       actions: {
         logOut: this.props.onLogOut,
         toggleRecognition: this.toggleRecognition
       },
       props: {
-        firstName,
+        email,
         id,
         isLoggedIn,
         isLoggingIn,
         isRecognizedUser: this.props.isRecognizedUser,
-        lastName,
         username
       }
     });
