@@ -35,6 +35,7 @@ export const StyleWrapper = styled.div`
  */
 const Toolbar = ({
   onSave,
+  onUpdate,
   onShare,
   onAutofill,
   onReset,
@@ -42,6 +43,11 @@ const Toolbar = ({
   onBackgroundChange
 }) => (
   <StyleWrapper>
+    {!!onUpdate && (
+      <P className="testing_update" isLight onClick={onUpdate}>
+        <Icon icon="save" /> Save
+      </P>
+    )}
     {!!onSave && (
       <ModalPrompt
         onSubmit={onSave}
@@ -49,7 +55,7 @@ const Toolbar = ({
       >
         {modal => (
           <P className="testing_save" isLight onClick={modal.actions.open}>
-            <Icon icon="save" /> Save
+            <Icon icon="save" /> {onUpdate ? "Save As" : "Save"}
           </P>
         )}
       </ModalPrompt>
@@ -77,6 +83,7 @@ const Toolbar = ({
 );
 
 Toolbar.propTypes = {
+  onUpdate: PropTypes.func,
   onSave: PropTypes.func,
   onShare: PropTypes.func.isRequired,
   onAutofill: PropTypes.func,

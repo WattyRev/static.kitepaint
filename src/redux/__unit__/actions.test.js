@@ -82,6 +82,72 @@ describe("Redux actions", () => {
       expect(localStorage.getItem("isRecognizedUser")).toEqual("true");
     });
   });
+  describe("GET_DESIGNS", () => {
+    beforeEach(() => {
+      KitePaintApi.getDesigns.mockResolvedValue();
+    });
+    it("should call KitePaintApi.getDesigns with the provided data", () => {
+      expect.assertions(2);
+      dispatchAsyncAction(
+        Actions.GET_DESIGNS,
+        {
+          foo: "bar"
+        },
+        true
+      ).catch(() => {});
+      expect(KitePaintApi.getDesigns).toHaveBeenCalled();
+      expect(KitePaintApi.getDesigns.mock.calls[0]).toEqual([
+        {
+          foo: "bar"
+        },
+        true
+      ]);
+    });
+  });
+  describe("GET_DESIGN", () => {
+    beforeEach(() => {
+      KitePaintApi.getDesign.mockResolvedValue();
+    });
+    it("should call KitePaintApi.getDesign with the provided data", () => {
+      expect.assertions(2);
+      dispatchAsyncAction(Actions.GET_DESIGN, "abc").catch(() => {});
+      expect(KitePaintApi.getDesign).toHaveBeenCalled();
+      expect(KitePaintApi.getDesign.mock.calls[0][0]).toEqual("abc");
+    });
+  });
+  describe("GET_PRODUCTS", () => {
+    beforeEach(() => {
+      KitePaintApi.getProducts.mockResolvedValue();
+    });
+    it("should call KitePaintApi.getProducts with the provided data", () => {
+      expect.assertions(2);
+      dispatchAsyncAction(Actions.GET_PRODUCTS, true).catch(() => {});
+      expect(KitePaintApi.getProducts).toHaveBeenCalled();
+      expect(KitePaintApi.getProducts.mock.calls[0][0]).toEqual(true);
+    });
+  });
+  describe("GET_MANUFACTURERS", () => {
+    beforeEach(() => {
+      KitePaintApi.getManufacturers.mockResolvedValue();
+    });
+    it("should call KitePaintApi.getManufacturers with the provided data", () => {
+      expect.assertions(2);
+      dispatchAsyncAction(Actions.GET_MANUFACTURERS, true).catch(() => {});
+      expect(KitePaintApi.getManufacturers).toHaveBeenCalled();
+      expect(KitePaintApi.getManufacturers.mock.calls[0][0]).toEqual(true);
+    });
+  });
+  describe("GET_USER", () => {
+    beforeEach(() => {
+      KitePaintApi.getUser.mockResolvedValue();
+    });
+    it("should call KitePaintApi.getUser with the provided data", () => {
+      expect.assertions(2);
+      dispatchAsyncAction(Actions.GET_USER, "abc").catch(() => {});
+      expect(KitePaintApi.getUser).toHaveBeenCalled();
+      expect(KitePaintApi.getUser.mock.calls[0][0]).toEqual("abc");
+    });
+  });
   describe("CREATE_DESIGN", () => {
     beforeEach(() => {
       KitePaintApi.createDesign.mockResolvedValue();
@@ -93,6 +159,21 @@ describe("Redux actions", () => {
       }).catch(() => {});
       expect(KitePaintApi.createDesign).toHaveBeenCalled();
       expect(KitePaintApi.createDesign.mock.calls[0][0]).toEqual({
+        foo: "bar"
+      });
+    });
+  });
+  describe("UPDATE_DESIGN", () => {
+    beforeEach(() => {
+      KitePaintApi.updateDesign.mockResolvedValue();
+    });
+    it("should call KitePaintApi.updateDesign with the provided data", () => {
+      expect.assertions(2);
+      dispatchAsyncAction(Actions.UPDATE_DESIGN, {
+        foo: "bar"
+      }).catch(() => {});
+      expect(KitePaintApi.updateDesign).toHaveBeenCalled();
+      expect(KitePaintApi.updateDesign.mock.calls[0][0]).toEqual({
         foo: "bar"
       });
     });

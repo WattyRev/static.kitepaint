@@ -64,6 +64,11 @@ export const getManufacturerByProductId = (state, productId) => {
   return manufacturer.toJS();
 };
 
+/**
+ * Gets the stored manufacturers indexed by idea
+ * @param  {Map} state
+ * @return {Object}
+ */
 export const getManufacturersWithIndex = state => {
   return state.get("manufacturers").toJS();
 };

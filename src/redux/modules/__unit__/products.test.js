@@ -3,7 +3,8 @@ import { GET_PRODUCTS } from "../../actions";
 import Reducer, {
   defaultState,
   getProductsGrouped,
-  getProductById
+  getProductById,
+  getProductsWithIndex
 } from "../products";
 
 describe("Products redux module", () => {
@@ -127,6 +128,34 @@ describe("Products redux module", () => {
           id: "234",
           name: "abc",
           foo: "bar"
+        });
+      });
+    });
+    describe("getProductsWithIndex", () => {
+      it("retrieves the products indexed by id", () => {
+        expect.assertions(1);
+        const state = fromJS({
+          products: {
+            abc: {
+              id: "abc",
+              foo: "bar"
+            },
+            def: {
+              id: "def",
+              foo: "far"
+            }
+          }
+        });
+        const response = getProductsWithIndex(state);
+        expect(response).toEqual({
+          abc: {
+            id: "abc",
+            foo: "bar"
+          },
+          def: {
+            id: "def",
+            foo: "far"
+          }
         });
       });
     });

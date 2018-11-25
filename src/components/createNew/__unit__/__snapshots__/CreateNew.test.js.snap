@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CreateNew renders 1`] = `
-<Connect(ProductContainer)
+<Connect(CreateNewContainer)
   productId="abc"
 >
   <Component />
-</Connect(ProductContainer)>
+</Connect(CreateNewContainer)>
 `;
 
 exports[`CreateNew renders 2`] = `
