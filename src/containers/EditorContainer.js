@@ -55,6 +55,11 @@ export class EditorContainer extends React.Component {
     onUpdate: PropTypes.func.isRequired
   };
 
+  /**
+   * Parses the variations from the provided design in order to determine what colors have been
+   * applied.
+   * @return {Object}
+   */
   _generateAppliedColors() {
     if (!this.props.design) {
       return {};
@@ -239,6 +244,9 @@ export class EditorContainer extends React.Component {
     this.cancelablePromises.push(promise);
   };
 
+  /**
+   * Handles update by parsing data and submitting a request to update the design.
+   */
   handleUpdate = () => {
     const design = {
       id: this.props.design.id,
