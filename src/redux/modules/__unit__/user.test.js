@@ -146,21 +146,19 @@ describe("User redux module", () => {
         expect.assertions(1);
         const state = fromJS({
           user: defaultState.merge({
-            firstName: "frank",
+            email: "test@test.com",
             id: "def",
             isLoggedIn: true,
             isLoggingIn: false,
-            lastName: "sinatra",
             username: "frankieboi"
           })
         });
         const response = getUser(state);
         expect(response).toEqual({
-          firstName: "frank",
+          email: "test@test.com",
           id: "def",
           isLoggedIn: true,
           isLoggingIn: false,
-          lastName: "sinatra",
           username: "frankieboi"
         });
       });

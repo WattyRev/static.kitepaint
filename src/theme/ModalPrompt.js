@@ -49,12 +49,17 @@ class ModalPrompt extends React.Component {
     /**
      * A function that renders content that can trigger the modal.
      */
-    children: PropTypes.func.isRequired
+    children: PropTypes.func.isRequired,
+    /**
+     * The value for the type attribute on the input.
+     */
+    inputType: PropTypes.oneOf(["text", "number", "password", "email"])
   };
 
   static defaultProps = {
     submitText: "Submit",
     cancelText: "Cancel",
+    inputType: "text",
     onCancel: () => {}
   };
 
@@ -124,6 +129,7 @@ class ModalPrompt extends React.Component {
             <form onSubmit={this.handleSubmit} className="testing_submit">
               <Label>{this.props.message}</Label>
               <Input
+                type={this.props.inputType}
                 ref={input => (this.promptInput = input)}
                 className="testing_prompt-value"
                 value={this.state.value}

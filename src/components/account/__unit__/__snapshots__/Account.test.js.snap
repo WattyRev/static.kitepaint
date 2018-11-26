@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Account renders 1`] = `
-<div>
-  Account
-</div>
+<styled.div>
+  <Connect(AccountContainer)>
+    <Component />
+  </Connect(AccountContainer)>
+</styled.div>
 `;

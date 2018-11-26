@@ -46,6 +46,42 @@ export const RESET_PASSWORD = createAsyncAction(
 );
 
 /**
+ * Changes the email address for the user's account
+ * @param  {String}  userId The user's id
+ * @param  {String}  email The user's new email address
+ * @return {Promise}
+ */
+export const CHANGE_EMAIL = createAsyncAction(
+  "CHANGE_EMAIL",
+  (userId, email) => {
+    return KitePaintApi.changeEmail(userId, email);
+  }
+);
+
+/**
+ * Changes the user's password
+ * @param  {Onbject}  data Must contain string values: username, currentPassword,
+ * newPassword, and confirmNewPassword
+ * @return {Promise}
+ */
+export const CHANGE_PASSWORD = createAsyncAction("CHANGE_PASSWORD", data => {
+  return KitePaintApi.changePassword(data);
+});
+
+/**
+ * Triggers deletion of the specified account
+ * @param  {String}  id       The account's ID
+ * @param  {String}  password The account's password
+ * @return {Promise}
+ */
+export const DELETE_ACCOUNT = createAsyncAction(
+  "DELETE_ACCOUNT",
+  (id, password) => {
+    return KitePaintApi.deleteAccount(id, password);
+  }
+);
+
+/**
  * Set the isRecognizedUser local storage variable.
  * This indicates if the user is recognized as someone who has a registered account.
  * @param {Boolean} newValue

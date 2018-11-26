@@ -17,6 +17,7 @@ exports[`ModelPrompt renders 1`] = `
         <ForwardRef
           className="testing_prompt-value"
           onChange={[Function]}
+          type="text"
           value=""
         />
         <div

@@ -13,6 +13,7 @@ const H1 = ({ children, ...props }) => (
   </Text>
 );
 const StyledH1 = styled(H1)`
-  font-size: 2em;
+  font-size: 32px;
+  line-height: 32px;
 `;
 export default StyledH1;

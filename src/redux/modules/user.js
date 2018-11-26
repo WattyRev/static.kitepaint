@@ -1,6 +1,13 @@
 import { handleActions } from "redux-actions";
 import { fromJS } from "immutable";
-import { SET_RECOGNIZED_USER, LOG_IN, CHECK_LOGIN, LOG_OUT } from "../actions";
+import {
+  SET_RECOGNIZED_USER,
+  LOG_IN,
+  CHECK_LOGIN,
+  LOG_OUT,
+  CHANGE_EMAIL,
+  DELETE_ACCOUNT
+} from "../actions";
 
 export const defaultState = fromJS({
   actcode: null,
@@ -62,6 +69,20 @@ export default handleActions(
       return state.set("isLoggingIn", false);
     },
     [LOG_OUT.RECEIVED]: state => {
+      return state.merge({
+        actcode: null,
+        email: null,
+        firstName: null,
+        id: null,
+        isLoggedIn: false,
+        lastName: null,
+        username: null
+      });
+    },
+    [CHANGE_EMAIL.RECEIVED]: (state, action) => {
+      return state.set("email", action.payload.data.email);
+    },
+    [DELETE_ACCOUNT.RECEIVED]: state => {
       return state.merge({
         actcode: null,
         email: null,

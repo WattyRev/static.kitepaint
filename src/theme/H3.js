@@ -13,6 +13,7 @@ const H3 = ({ children, ...props }) => (
   </Text>
 );
 const StyledH3 = styled(H3)`
-  font-size: 1.17em;
+  font-size: 18px;
+  line-height: 24px;
 `;
 export default StyledH3;

@@ -1,7 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { makeCancelable } from "../utils";
 import { getUser } from "../redux/modules/user";
+import {
+  CHANGE_EMAIL,
+  CHANGE_PASSWORD,
+  DELETE_ACCOUNT
+} from "../redux/actions";
 
 export class AccountContainer extends React.Component {
   static propTypes = {
@@ -18,26 +24,36 @@ export class AccountContainer extends React.Component {
       isLoggedIn: PropTypes.bool,
       isLoggingIn: PropTypes.bool,
       username: PropTypes.string
-    })
+    }),
+    /**
+     * Called when a change of password is requested. Provided by redux.
+     */
+    onEmailChange: PropTypes.func.isRequired,
+    /**
+     * Called when a change of email is requested. Provided by redux.
+     */
+    onPasswordChange: PropTypes.func.isRequired,
+    /**
+     * Called when account deletion is requested. Provided by redux.
+     */
+    onDeleteAccount: PropTypes.func.isRequired
   };
 
   state = {
     confirmNewPassword: "",
     currentPassword: "",
+    deleteError: null,
     editingEmail: false,
     editingPassword: false,
     email: "",
-    newPassword: ""
+    emailError: null,
+    newPassword: "",
+    passwordError: null
   };
-
-  static getDerivedStateFromProps(props) {
-    return {
-      email: props.user.email
-    };
-  }
 
   handleToggleEditEmail = () => {
     this.setState({
+      emailError: null,
       editingEmail: !this.state.editingEmail,
       email: this.props.user.email
     });
@@ -48,33 +64,99 @@ export class AccountContainer extends React.Component {
       editingPassword: !this.state.editingPassword,
       confirmNewPassword: "",
       currentPassword: "",
-      newPassword: ""
+      newPassword: "",
+      passwordError: null
     });
   };
 
   handleEmailChange = email => {
     this.setState({
+      emailError: null,
       email
     });
   };
 
   handleCurrentPasswordChange = currentPassword => {
     this.setState({
-      currentPassword
+      currentPassword,
+      passwordError: null
     });
   };
 
   handleNewPasswordChange = newPassword => {
     this.setState({
-      newPassword
+      newPassword,
+      passwordError: null
     });
   };
 
   handleConfirmNewPasswordChange = confirmNewPassword => {
     this.setState({
-      confirmNewPassword
+      confirmNewPassword,
+      passwordError: null
     });
   };
+
+  handleSubmitEmail = event => {
+    event.preventDefault();
+    const request = makeCancelable(
+      this.props.onEmailChange(this.props.user.id, this.state.email)
+    );
+    this._requests.push(request);
+    request.promise
+      .then(() => {
+        this.setState({
+          editingEmail: false
+        });
+      })
+      .catch(message => {
+        this.setState({
+          emailError: message
+        });
+      });
+  };
+
+  handleSubmitPassword = event => {
+    event.preventDefault();
+    const request = makeCancelable(
+      this.props.onPasswordChange({
+        username: this.props.user.username,
+        currentPassword: this.state.currentPassword,
+        newPassword: this.state.newPassword,
+        confirmNewPassword: this.state.confirmNewPassword
+      })
+    );
+    this._requests.push(request);
+    request.promise
+      .then(() => {
+        this.setState({
+          editingPassword: false
+        });
+      })
+      .catch(message => {
+        this.setState({
+          passwordError: message
+        });
+      });
+  };
+
+  handleDeleteAccount = password => {
+    const request = makeCancelable(
+      this.props.onDeleteAccount(this.props.user.id, password)
+    );
+    this._requests.push(request);
+    request.promise.catch(message => {
+      this.setState({
+        deleteError: message
+      });
+    });
+  };
+
+  _requests = [];
+
+  componentWillUnmount() {
+    this._requests.forEach(request => request.cancel());
+  }
 
   render() {
     return this.props.children({
@@ -85,17 +167,23 @@ export class AccountContainer extends React.Component {
         changeConfirmNewPassword: this.handleConfirmNewPasswordChange,
         toggleEditEmail: this.handleToggleEditEmail,
         toggleEditPassword: this.handleToggleEditPassword,
-        updateAccount: () => {},
-        deleteAccount: () => {}
+        submitEmail: this.handleSubmitEmail,
+        submitPassword: this.handleSubmitPassword,
+        deleteAccount: this.handleDeleteAccount
       },
       props: {
-        email: this.state.email,
-        currentPassword: this.state.currentPassword,
-        newPassword: this.state.newPassword,
         confirmNewPassword: this.state.confirmNewPassword,
-        user: this.props.user,
+        currentPassword: this.state.currentPassword,
+        deleteError: this.state.deleteError,
         editingEmail: this.state.editingEmail,
-        editingPassword: this.state.editingPassword
+        editingPassword: this.state.editingPassword,
+        email: this.state.editingEmail
+          ? this.state.email
+          : this.props.user.email,
+        emailError: this.state.emailError,
+        newPassword: this.state.newPassword,
+        passwordError: this.state.passwordError,
+        user: this.props.user
       }
     });
   }
@@ -105,12 +193,13 @@ const mapStateToProps = state => ({
   user: getUser(state)
 });
 
-// const mapDispatchToProps = {
-//   onLogOut: LOG_OUT,
-//   onSetRecognition: SET_RECOGNIZED_USER
-// };
+const mapDispatchToProps = {
+  onEmailChange: CHANGE_EMAIL,
+  onPasswordChange: CHANGE_PASSWORD,
+  onDeleteAccount: DELETE_ACCOUNT
+};
 
 export default connect(
-  mapStateToProps
-  // mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(AccountContainer);
