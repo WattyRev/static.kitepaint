@@ -9,6 +9,9 @@ import {
   DELETE_ACCOUNT
 } from "../redux/actions";
 
+/**
+ * A container that gets and manages data for the Account page.Z
+ */
 export class AccountContainer extends React.Component {
   static propTypes = {
     /**
@@ -40,17 +43,56 @@ export class AccountContainer extends React.Component {
   };
 
   state = {
+    /**
+     * The value for the confirm new password field.
+     * @type {String}
+     */
     confirmNewPassword: "",
+    /**
+     * The value for the current password field.
+     * @type {String}
+     */
     currentPassword: "",
+    /**
+     * An error message explaining an error that occurred while deleting the acount.
+     * @type {String}
+     */
     deleteError: null,
+    /**
+     * Is the user currently editing the email?
+     * @type {Boolean}
+     */
     editingEmail: false,
+    /**
+     * Is the user currently editing the password?
+     * @type {Boolean}
+     */
     editingPassword: false,
+    /**
+     * The value for the email field.
+     * @type {String}
+     */
     email: "",
+    /**
+     * An error message explaining an error that occurred while updating the email address.
+     * @type {String}
+     */
     emailError: null,
+    /**
+     * The value of the new password field.
+     * @type {String}
+     */
     newPassword: "",
+    /**
+     * An error message explaining an error that occurred while updating the password.
+     * @type {String}
+     */
     passwordError: null
   };
 
+  /**
+   * Toggles the value of editingEmail while resetting some other values.
+   */
   handleToggleEditEmail = () => {
     this.setState({
       emailError: null,
@@ -59,6 +101,9 @@ export class AccountContainer extends React.Component {
     });
   };
 
+  /**
+   * Toggles the value of editingPassword while resetting some other values.
+   */
   handleToggleEditPassword = () => {
     this.setState({
       editingPassword: !this.state.editingPassword,
@@ -69,6 +114,10 @@ export class AccountContainer extends React.Component {
     });
   };
 
+  /**
+   * Handles a change to the email input
+   * @param  {String} email The newly typed email
+   */
   handleEmailChange = email => {
     this.setState({
       emailError: null,
@@ -76,6 +125,10 @@ export class AccountContainer extends React.Component {
     });
   };
 
+  /**
+   * Handles a change to the current password input
+   * @param  {String} currentPassword
+   */
   handleCurrentPasswordChange = currentPassword => {
     this.setState({
       currentPassword,
@@ -83,6 +136,10 @@ export class AccountContainer extends React.Component {
     });
   };
 
+  /**
+   * Handles a change to the new password input
+   * @param  {String} newPassword
+   */
   handleNewPasswordChange = newPassword => {
     this.setState({
       newPassword,
@@ -90,6 +147,10 @@ export class AccountContainer extends React.Component {
     });
   };
 
+  /**
+   * Handles a change to the confirm new password input
+   * @param  {String} confirmNewPassword
+   */
   handleConfirmNewPasswordChange = confirmNewPassword => {
     this.setState({
       confirmNewPassword,
@@ -97,6 +158,10 @@ export class AccountContainer extends React.Component {
     });
   };
 
+  /**
+   * Submits the user provided email to change the email on the current account
+   * @param  {Object} event A form onSubmit DOM event
+   */
   handleSubmitEmail = event => {
     event.preventDefault();
     const request = makeCancelable(
@@ -116,6 +181,10 @@ export class AccountContainer extends React.Component {
       });
   };
 
+  /**
+   * Submits the new password information to update the password for the current account.
+   * @param  {Object} event A form onSubmit DOM event
+   */
   handleSubmitPassword = event => {
     event.preventDefault();
     const request = makeCancelable(
@@ -140,6 +209,10 @@ export class AccountContainer extends React.Component {
       });
   };
 
+  /**
+   * Triggers deletion of the current account using the provided password.
+   * @param  {String} password
+   */
   handleDeleteAccount = password => {
     const request = makeCancelable(
       this.props.onDeleteAccount(this.props.user.id, password)
@@ -152,6 +225,10 @@ export class AccountContainer extends React.Component {
     });
   };
 
+  /**
+   * An array of cancelable promises to be canceled when the component unmounts
+   * @type {Array}
+   */
   _requests = [];
 
   componentWillUnmount() {

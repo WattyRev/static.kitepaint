@@ -27,6 +27,9 @@ const StyleWrapper = styled.div`
   }
 `;
 
+/**
+ * A coordinating component that builds up the Account page.
+ */
 const Account = () => (
   <StyleWrapper>
     <AccountContainer>
