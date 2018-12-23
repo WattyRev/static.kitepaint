@@ -125,9 +125,6 @@ app.controller("DesignsController", [
 
         scope.get_product_names = function() {
             var content = {
-                filter: {
-                    activated: 1
-                },
                 return: ["id", "name", "url", "manufacturer"]
             };
             $.ajax({
