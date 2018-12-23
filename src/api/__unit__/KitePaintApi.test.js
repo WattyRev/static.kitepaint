@@ -940,7 +940,7 @@ describe("KitePaintApi", () => {
       Api.axiosInstance.post.mockReturnValue(
         new Promise((resolve, reject) => reject())
       );
-      Api.createDesign({
+      return Api.createDesign({
         name: "test",
         user: "1",
         product: "2",
@@ -954,7 +954,7 @@ describe("KitePaintApi", () => {
       Api.axiosInstance.post.mockReturnValue(
         new Promise(resolve => resolve({}))
       );
-      Api.createDesign({
+      return Api.createDesign({
         name: "test",
         user: "1",
         product: "2",
@@ -975,7 +975,7 @@ describe("KitePaintApi", () => {
           })
         )
       );
-      Api.createDesign({
+      return Api.createDesign({
         name: "test",
         user: "1",
         product: "2",
@@ -993,7 +993,7 @@ describe("KitePaintApi", () => {
           })
         )
       );
-      Api.createDesign({
+      return Api.createDesign({
         name: "test",
         user: "1",
         product: "2",
@@ -1041,7 +1041,7 @@ describe("KitePaintApi", () => {
       Api.axiosInstance.post.mockReturnValue(
         new Promise((resolve, reject) => reject())
       );
-      Api.deleteDesign("abc").catch(() => {
+      return Api.deleteDesign("abc").catch(() => {
         expect(true).toEqual(true);
       });
     });
@@ -1050,7 +1050,7 @@ describe("KitePaintApi", () => {
       Api.axiosInstance.post.mockReturnValue(
         new Promise(resolve => resolve({}))
       );
-      Api.deleteDesign("abc").catch(() => {
+      return Api.deleteDesign("abc").catch(() => {
         expect(true).toEqual(true);
       });
     });
@@ -1065,7 +1065,7 @@ describe("KitePaintApi", () => {
           })
         )
       );
-      Api.deleteDesign("abc").catch(() => {
+      return Api.deleteDesign("abc").catch(() => {
         expect(true).toEqual(true);
       });
     });

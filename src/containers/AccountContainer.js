@@ -27,7 +27,7 @@ export class AccountContainer extends React.Component {
       isLoggedIn: PropTypes.bool,
       isLoggingIn: PropTypes.bool,
       username: PropTypes.string
-    }),
+    }).isRequired,
     /**
      * Called when a change of password is requested. Provided by redux.
      */
@@ -168,7 +168,7 @@ export class AccountContainer extends React.Component {
       this.props.onEmailChange(this.props.user.id, this.state.email)
     );
     this._requests.push(request);
-    request.promise
+    return request.promise
       .then(() => {
         this.setState({
           editingEmail: false
@@ -196,7 +196,7 @@ export class AccountContainer extends React.Component {
       })
     );
     this._requests.push(request);
-    request.promise
+    return request.promise
       .then(() => {
         this.setState({
           editingPassword: false
@@ -218,7 +218,7 @@ export class AccountContainer extends React.Component {
       this.props.onDeleteAccount(this.props.user.id, password)
     );
     this._requests.push(request);
-    request.promise.catch(message => {
+    return request.promise.catch(message => {
       this.setState({
         deleteError: message
       });
