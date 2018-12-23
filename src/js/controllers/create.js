@@ -24,7 +24,7 @@ app.controller("CreateController", [
             scope.loading = true;
             $.ajax({
                 type: "GET",
-                url: app.apiDomain + "products.php?activated=1",
+                url: app.apiDomain + "products.php",
                 dataType: "json",
                 success: function(data) {
                     $.each(data, function(i, product) {
