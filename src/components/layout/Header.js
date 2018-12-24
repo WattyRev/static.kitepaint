@@ -94,17 +94,17 @@ const Header = () => (
                 <React.Fragment>
                   <accountDropdown.components.Item
                     as={Link}
-                    to="/account"
-                    onClick={accountDropdown.actions.closeDropdown}
-                  >
-                    Manage Account
-                  </accountDropdown.components.Item>
-                  <accountDropdown.components.Item
-                    as={Link}
                     to="/my-designs"
                     onClick={accountDropdown.actions.closeDropdown}
                   >
                     My Designs
+                  </accountDropdown.components.Item>
+                  <accountDropdown.components.Item
+                    as={Link}
+                    to="/account"
+                    onClick={accountDropdown.actions.closeDropdown}
+                  >
+                    Manage Account
                   </accountDropdown.components.Item>
                   <accountDropdown.components.Spacer />
                   <accountDropdown.components.Item

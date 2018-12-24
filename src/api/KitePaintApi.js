@@ -252,6 +252,100 @@ export class KitePaintApi {
   }
 
   /**
+   * Changes the email address for the user's account
+   * @param  {String}  userId The user's id
+   * @param  {String}  newEmail The user's new email address
+   * @return {Promise}
+   */
+  async changeEmail(userId, newEmail) {
+    // Build the form data
+    const bodyFormData = new FormData();
+    bodyFormData.append("id", userId);
+    bodyFormData.append("email", newEmail);
+
+    // Make the request
+    const response = await this.axiosInstance.post(
+      "/change_email.php",
+      bodyFormData
+    );
+
+    if (!response.data || !response.data.changed) {
+      return new Promise((resolve, reject) =>
+        reject(
+          response.data
+            ? response.data.message
+            : "Could not change the email address."
+        )
+      );
+    }
+
+    response.data.email = newEmail;
+    return response;
+  }
+
+  /**
+   * Changes the user's password
+   * @param  {Onbject}  data Must contain string values: username, currentPassword,
+   * newPassword, and confirmNewPassword
+   * @return {Promise}
+   */
+  async changePassword(data) {
+    const { username, currentPassword, newPassword, confirmNewPassword } = data;
+    // Build the form data
+    const bodyFormData = new FormData();
+    bodyFormData.append("username", username);
+    bodyFormData.append("oldpassword", currentPassword);
+    bodyFormData.append("password2", confirmNewPassword);
+    bodyFormData.append("password", newPassword);
+
+    // Make the request
+    const response = await this.axiosInstance.post(
+      "/changepassword.php",
+      bodyFormData
+    );
+
+    if (!response.data || !response.data.changed) {
+      return new Promise((resolve, reject) =>
+        reject(
+          response.data
+            ? response.data.message
+            : "Could not change the password."
+        )
+      );
+    }
+
+    return response;
+  }
+
+  /**
+   * Triggers deletion of the specified account
+   * @param  {String}  id       The account's ID
+   * @param  {String}  password The account's password
+   * @return {Promise}
+   */
+  async deleteAccount(id, password) {
+    // Build the form data
+    const bodyFormData = new FormData();
+    bodyFormData.append("id", id);
+    bodyFormData.append("password", password);
+
+    // Make the request
+    const response = await this.axiosInstance.post(
+      "/delete_account.php",
+      bodyFormData
+    );
+
+    if (!response.data || !response.data.changed) {
+      return new Promise((resolve, reject) =>
+        reject(
+          response.data ? response.data.message : "Could not delete account."
+        )
+      );
+    }
+    return response;
+  }
+
+  /**
    * A cache for getUser requests to prevent making the same request repeatedlu.
    * @private
    */

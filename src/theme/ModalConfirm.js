@@ -97,8 +97,8 @@ class ModalPrompt extends React.Component {
             <P>{this.props.message}</P>
             <div className="buttons">
               <Button
-                className="testing_confirm"
                 isPrimary
+                className="testing_confirm"
                 onClick={this.handleConfirm}
               >
                 {this.props.confirmText}

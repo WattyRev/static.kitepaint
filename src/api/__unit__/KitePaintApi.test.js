@@ -368,6 +368,219 @@ describe("KitePaintApi", () => {
     });
   });
 
+  describe("#changeEmail", () => {
+    it("should make the correct request with the provided data", () => {
+      expect.assertions(3);
+      Api.changeEmail("stuff", "things@poop.com").catch(() => {});
+      expect(Api.axiosInstance.post.mock.calls).toHaveLength(1);
+      const postCall = Api.axiosInstance.post.mock.calls[0];
+      expect(postCall[0]).toEqual("/change_email.php");
+      expect(getObjectFromFormData(postCall[1])).toEqual({
+        id: "stuff",
+        email: "things@poop.com"
+      });
+    });
+    it("should reject if the api call fails", () => {
+      expect.assertions(1);
+      Api.axiosInstance.post.mockReturnValue(
+        new Promise((resolve, reject) => reject({}))
+      );
+      return Api.changeEmail("stuff", "things@poop.com").catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("should reject if the api returns no data", () => {
+      expect.assertions(1);
+      Api.axiosInstance.post.mockReturnValue(
+        new Promise(resolve => resolve({}))
+      );
+      return Api.changeEmail("stuff", "things@poop.com").catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("should reject if the api indicates that the email was not changed", () => {
+      expect.assertions(1);
+      Api.axiosInstance.post.mockReturnValue(
+        new Promise(resolve =>
+          resolve({
+            data: {
+              changed: false
+            }
+          })
+        )
+      );
+      return Api.changeEmail("stuff", "things@poop.com").catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("should resolve if the response is appropriate", () => {
+      expect.assertions(1);
+      Api.axiosInstance.post.mockReturnValue(
+        new Promise(resolve =>
+          resolve({
+            data: {
+              changed: true
+            }
+          })
+        )
+      );
+      return Api.changeEmail("stuff", "things@poop.com").then(() => {
+        expect(true).toEqual(true);
+      });
+    });
+  });
+
+  describe("#changePassword", () => {
+    it("should make the correct request with the provided data", () => {
+      expect.assertions(3);
+      Api.changePassword({
+        username: "fuckface",
+        currentPassword: "1fukf4c3s",
+        newPassword: "abc123",
+        confirmNewPassword: "abc123"
+      }).catch(() => {});
+      expect(Api.axiosInstance.post.mock.calls).toHaveLength(1);
+      const postCall = Api.axiosInstance.post.mock.calls[0];
+      expect(postCall[0]).toEqual("/changepassword.php");
+      expect(getObjectFromFormData(postCall[1])).toEqual({
+        username: "fuckface",
+        oldpassword: "1fukf4c3s",
+        password2: "abc123",
+        password: "abc123"
+      });
+    });
+    it("should reject if the api call fails", () => {
+      expect.assertions(1);
+      Api.axiosInstance.post.mockReturnValue(
+        new Promise((resolve, reject) => reject({}))
+      );
+      return Api.changePassword({
+        username: "fuckface",
+        currentPassword: "1fukf4c3s",
+        newPassword: "abc123",
+        confirmNewPassword: "abc123"
+      }).catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("should reject if the api returns no data", () => {
+      expect.assertions(1);
+      Api.axiosInstance.post.mockReturnValue(
+        new Promise(resolve => resolve({}))
+      );
+      return Api.changePassword({
+        username: "fuckface",
+        currentPassword: "1fukf4c3s",
+        newPassword: "abc123",
+        confirmNewPassword: "abc123"
+      }).catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("should reject if the api indicates that the email was not changed", () => {
+      expect.assertions(1);
+      Api.axiosInstance.post.mockReturnValue(
+        new Promise(resolve =>
+          resolve({
+            data: {
+              changed: false
+            }
+          })
+        )
+      );
+      return Api.changePassword({
+        username: "fuckface",
+        currentPassword: "1fukf4c3s",
+        newPassword: "abc123",
+        confirmNewPassword: "abc123"
+      }).catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("should resolve if the response is appropriate", () => {
+      expect.assertions(1);
+      Api.axiosInstance.post.mockReturnValue(
+        new Promise(resolve =>
+          resolve({
+            data: {
+              changed: true
+            }
+          })
+        )
+      );
+      return Api.changePassword({
+        username: "fuckface",
+        currentPassword: "1fukf4c3s",
+        newPassword: "abc123",
+        confirmNewPassword: "abc123"
+      }).then(() => {
+        expect(true).toEqual(true);
+      });
+    });
+  });
+
+  describe("#deleteAccount", () => {
+    it("should make the correct request with the provided data", () => {
+      expect.assertions(3);
+      Api.deleteAccount("my-id", "my-password").catch(() => {});
+      expect(Api.axiosInstance.post.mock.calls).toHaveLength(1);
+      const postCall = Api.axiosInstance.post.mock.calls[0];
+      expect(postCall[0]).toEqual("/delete_account.php");
+      expect(getObjectFromFormData(postCall[1])).toEqual({
+        id: "my-id",
+        password: "my-password"
+      });
+    });
+    it("should reject if the api call fails", () => {
+      expect.assertions(1);
+      Api.axiosInstance.post.mockReturnValue(
+        new Promise((resolve, reject) => reject({}))
+      );
+      return Api.deleteAccount("my-id", "my-password").catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("should reject if the api returns no data", () => {
+      expect.assertions(1);
+      Api.axiosInstance.post.mockReturnValue(
+        new Promise(resolve => resolve({}))
+      );
+      return Api.deleteAccount("my-id", "my-password").catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("should reject if the api indicates that the email was not changed", () => {
+      expect.assertions(1);
+      Api.axiosInstance.post.mockReturnValue(
+        new Promise(resolve =>
+          resolve({
+            data: {
+              changed: false
+            }
+          })
+        )
+      );
+      return Api.deleteAccount("my-id", "my-password").catch(() => {
+        expect(true).toEqual(true);
+      });
+    });
+    it("should resolve if the response is appropriate", () => {
+      expect.assertions(1);
+      Api.axiosInstance.post.mockReturnValue(
+        new Promise(resolve =>
+          resolve({
+            data: {
+              changed: true
+            }
+          })
+        )
+      );
+      return Api.deleteAccount("my-id", "my-password").then(() => {
+        expect(true).toEqual(true);
+      });
+    });
+  });
+
   describe("#getUser", () => {
     it("makes the relevant request", async () => {
       expect.assertions(1);
@@ -727,7 +940,7 @@ describe("KitePaintApi", () => {
       Api.axiosInstance.post.mockReturnValue(
         new Promise((resolve, reject) => reject())
       );
-      Api.createDesign({
+      return Api.createDesign({
         name: "test",
         user: "1",
         product: "2",
@@ -741,7 +954,7 @@ describe("KitePaintApi", () => {
       Api.axiosInstance.post.mockReturnValue(
         new Promise(resolve => resolve({}))
       );
-      Api.createDesign({
+      return Api.createDesign({
         name: "test",
         user: "1",
         product: "2",
@@ -762,7 +975,7 @@ describe("KitePaintApi", () => {
           })
         )
       );
-      Api.createDesign({
+      return Api.createDesign({
         name: "test",
         user: "1",
         product: "2",
@@ -780,7 +993,7 @@ describe("KitePaintApi", () => {
           })
         )
       );
-      Api.createDesign({
+      return Api.createDesign({
         name: "test",
         user: "1",
         product: "2",
@@ -828,7 +1041,7 @@ describe("KitePaintApi", () => {
       Api.axiosInstance.post.mockReturnValue(
         new Promise((resolve, reject) => reject())
       );
-      Api.deleteDesign("abc").catch(() => {
+      return Api.deleteDesign("abc").catch(() => {
         expect(true).toEqual(true);
       });
     });
@@ -837,7 +1050,7 @@ describe("KitePaintApi", () => {
       Api.axiosInstance.post.mockReturnValue(
         new Promise(resolve => resolve({}))
       );
-      Api.deleteDesign("abc").catch(() => {
+      return Api.deleteDesign("abc").catch(() => {
         expect(true).toEqual(true);
       });
     });
@@ -852,7 +1065,7 @@ describe("KitePaintApi", () => {
           })
         )
       );
-      Api.deleteDesign("abc").catch(() => {
+      return Api.deleteDesign("abc").catch(() => {
         expect(true).toEqual(true);
       });
     });

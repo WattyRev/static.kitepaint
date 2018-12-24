@@ -49,8 +49,8 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ isPrimary, isBlock, children, ...props }) => {
-  const classes = [];
+const Button = ({ isPrimary, isBlock, children, className, ...props }) => {
+  const classes = className ? [className] : [];
   if (isPrimary) {
     classes.push("is-primary");
   }

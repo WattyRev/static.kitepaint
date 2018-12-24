@@ -8,11 +8,10 @@ describe("UserContainer", () => {
     props = {
       isRecognizedUser: false,
       user: {
-        firstName: "frank",
+        email: "shit@fuck.com",
         id: "abc",
         isLoggedIn: true,
         isLoggingIn: false,
-        lastName: "sinatra",
         username: "frankyboi"
       },
       onLogOut: jest.fn(),
@@ -36,11 +35,10 @@ describe("UserContainer", () => {
     mount(<UserContainer {...props}>{children}</UserContainer>);
     const providedProps = children.mock.calls[0][0].props;
     expect(providedProps).toEqual({
-      firstName: "frank",
+      email: "shit@fuck.com",
       id: "abc",
       isLoggedIn: true,
       isLoggingIn: false,
-      lastName: "sinatra",
       username: "frankyboi",
       isRecognizedUser: false
     });

@@ -10,6 +10,7 @@ export const TypographyStyles = css`
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 16px;
 `;
 const StyledText = styled.p`
   margin: 0;
