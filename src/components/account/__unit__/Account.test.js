@@ -6,21 +6,40 @@ import { ModalPrompt } from "../../../theme";
 import Account from "../Account";
 
 describe("Account", () => {
+  let accountData;
+  beforeEach(() => {
+    accountData = {
+      actions: {
+        changeEmail: jest.fn(),
+        changeCurrentPassword: jest.fn(),
+        changeNewPassword: jest.fn(),
+        changeConfirmNewPassword: jest.fn(),
+        toggleEditEmail: jest.fn(),
+        toggleEditPassword: jest.fn(),
+        submitEmail: jest.fn(),
+        submitPassword: jest.fn(),
+        deleteAccount: jest.fn()
+      },
+      props: {
+        confirmNewPassword: "",
+        currentPassword: "",
+        deleteError: "",
+        editingEmail: false,
+        editingPassword: false,
+        email: "",
+        emailError: "",
+        newPassword: "",
+        passwordError: "",
+        user: {
+          id: "abc-user"
+        }
+      }
+    };
+  });
   it("renders", () => {
     const wrapper = shallow(<Account />);
     const accountContent = shallow(
-      <div>
-        {wrapper.find(AccountContainer).prop("children")({
-          actions: {
-            deleteAccount: jest.fn()
-          },
-          props: {
-            user: {
-              id: "abc-user"
-            }
-          }
-        })}
-      </div>
+      <div>{wrapper.find(AccountContainer).prop("children")(accountData)}</div>
     );
     shallow(
       <div>
@@ -33,18 +52,10 @@ describe("Account", () => {
     );
   });
   it("redirects to the home page when we have no logged in user", () => {
+    accountData.props.user = {};
     const wrapper = shallow(<Account />);
     const accountContent = shallow(
-      <div>
-        {wrapper.find(AccountContainer).prop("children")({
-          actions: {
-            deleteAccount: jest.fn()
-          },
-          props: {
-            user: {}
-          }
-        })}
-      </div>
+      <div>{wrapper.find(AccountContainer).prop("children")(accountData)}</div>
     );
     expect(accountContent.find(Redirect)).toHaveLength(1);
   });

@@ -160,10 +160,8 @@ export class AccountContainer extends React.Component {
 
   /**
    * Submits the user provided email to change the email on the current account
-   * @param  {Object} event A form onSubmit DOM event
    */
-  handleSubmitEmail = event => {
-    event.preventDefault();
+  handleSubmitEmail = () => {
     const request = makeCancelable(
       this.props.onEmailChange(this.props.user.id, this.state.email)
     );
@@ -183,10 +181,8 @@ export class AccountContainer extends React.Component {
 
   /**
    * Submits the new password information to update the password for the current account.
-   * @param  {Object} event A form onSubmit DOM event
    */
-  handleSubmitPassword = event => {
-    event.preventDefault();
+  handleSubmitPassword = () => {
     const request = makeCancelable(
       this.props.onPasswordChange({
         username: this.props.user.username,
