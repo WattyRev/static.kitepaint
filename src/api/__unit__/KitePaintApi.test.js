@@ -230,10 +230,10 @@ describe("KitePaintApi", () => {
     });
   });
 
-  describe("#register", () => {
+  describe("#createAccount", () => {
     it("makes the correct request with the provided data", () => {
       expect.assertions(2);
-      Api.register({
+      Api.createAccount({
         a: "b",
         foo: "bar"
       }).catch(() => {});
@@ -249,7 +249,7 @@ describe("KitePaintApi", () => {
       Api.axiosInstance.post.mockReturnValue(
         new Promise((resolve, reject) => reject())
       );
-      return Api.register({
+      return Api.createAccount({
         a: "b",
         foo: "bar"
       }).catch(() => {
@@ -261,7 +261,7 @@ describe("KitePaintApi", () => {
       Api.axiosInstance.post.mockReturnValue(
         new Promise(resolve => resolve({}))
       );
-      return Api.register({
+      return Api.createAccount({
         a: "b",
         foo: "bar"
       }).catch(() => {
@@ -279,7 +279,7 @@ describe("KitePaintApi", () => {
           })
         )
       );
-      return Api.register({
+      return Api.createAccount({
         a: "b",
         foo: "bar"
       }).catch(() => {
@@ -297,7 +297,7 @@ describe("KitePaintApi", () => {
           })
         )
       );
-      return Api.register({
+      return Api.createAccount({
         a: "b",
         foo: "bar"
       }).then(() => {

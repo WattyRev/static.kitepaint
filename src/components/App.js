@@ -4,6 +4,7 @@ import Header from "./layout/Header";
 import Footer from "./layout/Footer";
 import About from "./about";
 import Account from "./account";
+import Activate from "./activate";
 import Create from "./create";
 import CreateNew from "./createNew";
 import Designs from "./designs";
@@ -23,6 +24,11 @@ const App = () => (
       <Route exact path="/" component={Home} />
       <Route exact path="/about" component={About} />
       <Route exact path="/account" component={Account} />
+      <Route
+        exact
+        path="/activate/:userId/:activationCode"
+        component={Activate}
+      />
       <Route exact path="/create" component={Create} />
       <Route exact path="/create/:productId" component={CreateNew} />
       <Route exact path="/designs" component={Designs} />

@@ -40,15 +40,19 @@ describe("Redux actions", () => {
       expect(KitePaintApi.logOut.mock.calls).toHaveLength(1);
     });
   });
-  describe("REGISTER", () => {
+  describe("CREATE_ACCOUNT", () => {
     beforeEach(() => {
-      KitePaintApi.register.mockResolvedValue();
+      KitePaintApi.createAccount.mockResolvedValue();
     });
-    it("should call KitePaintApi.register with the params", () => {
+    it("should call KitePaintApi.createAccount with the params", () => {
       expect.assertions(2);
-      dispatchAsyncAction(Actions.REGISTER, { foo: "bar" }).catch(() => {});
-      expect(KitePaintApi.register.mock.calls).toHaveLength(1);
-      expect(KitePaintApi.register.mock.calls[0][0]).toEqual({ foo: "bar" });
+      dispatchAsyncAction(Actions.CREATE_ACCOUNT, { foo: "bar" }).catch(
+        () => {}
+      );
+      expect(KitePaintApi.createAccount.mock.calls).toHaveLength(1);
+      expect(KitePaintApi.createAccount.mock.calls[0][0]).toEqual({
+        foo: "bar"
+      });
     });
   });
   describe("RESET_PASSWORD", () => {

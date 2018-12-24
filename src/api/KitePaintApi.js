@@ -1,5 +1,20 @@
 import axios from "axios";
-import Qs from "qs";
+import changeEmail from "./kitePaint/changeEmail";
+import changePassword from "./kitePaint/changePassword";
+import checkLoginStatus from "./kitePaint/checkLoginStatus";
+import createAccount from "./kitePaint/createAccount";
+import createDesign from "./kitePaint/createDesign";
+import deleteAccount from "./kitePaint/deleteAccount";
+import deleteDesign from "./kitePaint/deleteDesign";
+import getDesign from "./kitePaint/getDesign";
+import getDesigns from "./kitePaint/getDesigns";
+import getManufacturers from "./kitePaint/getManufacturers";
+import getProducts from "./kitePaint/getProducts";
+import getUser from "./kitePaint/getUser";
+import logIn from "./kitePaint/logIn";
+import logOut from "./kitePaint/logOut";
+import resetPassword from "./kitePaint/resetPassword";
+import updateDesign from "./kitePaint/updateDesign";
 
 /**
  * Determine the correct domain to communicate with based on the current applicaiton domain.
@@ -110,44 +125,7 @@ export class KitePaintApi {
    * @return {Promise}
    */
   async checkLoginStatus() {
-    // Get the user data from session storage
-    const sessionData = sessionStorage.getItem("user");
-    let parsedSessionData;
-    try {
-      parsedSessionData = JSON.parse(sessionData);
-    } catch {
-      parsedSessionData = false;
-    }
-
-    // If we had no user data, reject.
-    if (!parsedSessionData) {
-      return new Promise((resolve, reject) =>
-        reject({
-          data: "No session data was found. The user is not logged in."
-        })
-      );
-    }
-
-    // Build the form data
-    const bodyFormData = new FormData();
-    Object.keys(parsedSessionData).forEach(key =>
-      bodyFormData.append(key, parsedSessionData[key])
-    );
-    bodyFormData.append("update_login", true);
-
-    // Make the request
-    const response = await this.axiosInstance.post("/index.php", bodyFormData);
-
-    // If the response has no data or indicates that the user is not logged in, reject.
-    if (!response.data || !response.data.logged_in) {
-      return new Promise((resolve, reject) => reject(response));
-    }
-
-    // Store the user data in session storage
-    sessionStorage.setItem("user", JSON.stringify(response.data));
-
-    // Return the response
-    return response;
+    return checkLoginStatus.call(this);
   }
 
   /**
@@ -156,40 +134,16 @@ export class KitePaintApi {
    * @param  {String}  password
    * @return {Promise}
    */
-  async logIn(username, password) {
-    // Build the form data
-    const bodyFormData = new FormData();
-    bodyFormData.append("username", username);
-    bodyFormData.append("password", password);
-
-    // Make the request
-    const response = await this.axiosInstance.post("/index.php", bodyFormData);
-
-    // If the response has no data or indicates that the user is not logged in, reject.
-    if (!response.data || !response.data.logged_in) {
-      return new Promise((resolve, reject) =>
-        reject(
-          response.data
-            ? response.data.message
-            : "The log in request was unsuccessful"
-        )
-      );
-    }
-
-    // Store the user data in session storage
-    sessionStorage.setItem("user", JSON.stringify(response.data));
-
-    // Return the response
-    return response;
+  logIn(username, password) {
+    return logIn.call(this, username, password);
   }
 
   /**
    * Logs out the user and destroys their session.
    * @return {Promise}
    */
-  async logOut() {
-    await this.axiosInstance.post("/logout.php");
-    sessionStorage.removeItem("user");
+  logOut() {
+    return logOut.call(this);
   }
 
   /**
@@ -197,28 +151,8 @@ export class KitePaintApi {
    * @param  {Object}  data Must contain `{username, email, password, password2}`
    * @return {Promise}
    */
-  async register(data) {
-    // Build the form data
-    const bodyFormData = new FormData();
-    Object.keys(data).forEach(key => bodyFormData.append(key, data[key]));
-
-    // Make the request
-    const response = await this.axiosInstance.post(
-      "/register.php",
-      bodyFormData
-    );
-
-    // If there's no data, or if the data returns with registered as false, reject.
-    if (!response.data || !response.data.registered) {
-      return new Promise((resolve, reject) =>
-        reject(
-          response.data
-            ? response.data.message
-            : "The registration request was unsuccessful"
-        )
-      );
-    }
-    return response;
+  createAccount(data) {
+    return createAccount.call(this, data);
   }
 
   /**
@@ -227,28 +161,8 @@ export class KitePaintApi {
    * @param  {String} email The email address that is on the user's account.
    * @return {Promise}
    */
-  async resetPassword(username, email) {
-    // Build the form data
-    const bodyFormData = new FormData();
-    bodyFormData.append("username", username);
-    bodyFormData.append("email", email);
-
-    // Make the request
-    const response = await this.axiosInstance.post(
-      "/lostpassword.php",
-      bodyFormData
-    );
-    // If there's no data, or if the data returns with reset as false, reject.
-    if (!response.data || !response.data.reset) {
-      return new Promise((resolve, reject) =>
-        reject(
-          response.data
-            ? response.data.message
-            : "The reset password request was unsuccessful."
-        )
-      );
-    }
-    return response;
+  resetPassword(username, email) {
+    return resetPassword.call(this, username, email);
   }
 
   /**
@@ -257,30 +171,8 @@ export class KitePaintApi {
    * @param  {String}  newEmail The user's new email address
    * @return {Promise}
    */
-  async changeEmail(userId, newEmail) {
-    // Build the form data
-    const bodyFormData = new FormData();
-    bodyFormData.append("id", userId);
-    bodyFormData.append("email", newEmail);
-
-    // Make the request
-    const response = await this.axiosInstance.post(
-      "/change_email.php",
-      bodyFormData
-    );
-
-    if (!response.data || !response.data.changed) {
-      return new Promise((resolve, reject) =>
-        reject(
-          response.data
-            ? response.data.message
-            : "Could not change the email address."
-        )
-      );
-    }
-
-    response.data.email = newEmail;
-    return response;
+  changeEmail(userId, newEmail) {
+    return changeEmail.call(this, userId, newEmail);
   }
 
   /**
@@ -289,32 +181,8 @@ export class KitePaintApi {
    * newPassword, and confirmNewPassword
    * @return {Promise}
    */
-  async changePassword(data) {
-    const { username, currentPassword, newPassword, confirmNewPassword } = data;
-    // Build the form data
-    const bodyFormData = new FormData();
-    bodyFormData.append("username", username);
-    bodyFormData.append("oldpassword", currentPassword);
-    bodyFormData.append("password2", confirmNewPassword);
-    bodyFormData.append("password", newPassword);
-
-    // Make the request
-    const response = await this.axiosInstance.post(
-      "/changepassword.php",
-      bodyFormData
-    );
-
-    if (!response.data || !response.data.changed) {
-      return new Promise((resolve, reject) =>
-        reject(
-          response.data
-            ? response.data.message
-            : "Could not change the password."
-        )
-      );
-    }
-
-    return response;
+  changePassword(data) {
+    return changePassword.call(this, data);
   }
 
   /**
@@ -323,26 +191,8 @@ export class KitePaintApi {
    * @param  {String}  password The account's password
    * @return {Promise}
    */
-  async deleteAccount(id, password) {
-    // Build the form data
-    const bodyFormData = new FormData();
-    bodyFormData.append("id", id);
-    bodyFormData.append("password", password);
-
-    // Make the request
-    const response = await this.axiosInstance.post(
-      "/delete_account.php",
-      bodyFormData
-    );
-
-    if (!response.data || !response.data.changed) {
-      return new Promise((resolve, reject) =>
-        reject(
-          response.data ? response.data.message : "Could not delete account."
-        )
-      );
-    }
-    return response;
+  deleteAccount(id, password) {
+    return deleteAccount.call(this, id, password);
   }
 
   /**
@@ -356,45 +206,8 @@ export class KitePaintApi {
    * @param  {String}  id
    * @return {Promise} Resolves with the retrieved user
    */
-  async getUser(id, useCache = true) {
-    // Build the request data to be sent to the server as query params
-    const requestData = {
-      filter: {
-        loginid: id
-      },
-      return: ["username", "loginid"]
-    };
-
-    // Convert the request data to query params using Qs. This is done because providing nested
-    // parms to Axios's params config prop doesn't work correctly.
-    const requestString = Qs.stringify(requestData);
-
-    if (useCache) {
-      const cache = await this._cacheable("getUser", requestString, {});
-      if (!cache.continue) {
-        return cache;
-      }
-    }
-
-    // Make the request
-    const response = await this.axiosInstance.get(
-      `/users.php?${requestString}`
-    );
-
-    // Handle invalid responses
-    if (!response.data || !response.data.length) {
-      return new Promise((resolve, reject) =>
-        reject(
-          response.data
-            ? response.data.message
-            : `The request for user ${id} was unsuccessful`
-        )
-      );
-    }
-
-    response.data = response.data[0];
-
-    return response;
+  getUser(id, useCache = true) {
+    return getUser.call(this, id, useCache);
   }
 
   /**
@@ -411,76 +224,8 @@ export class KitePaintApi {
    * requests will not be made within 10 minutes.
    * @return {Promise}
    */
-  async getDesigns(filter = {}, useCache = true) {
-    // Define the default filters and merge them with the user provided filters
-    const filterDefaults = {
-      userId: null,
-      publicOnly: true,
-      limit: 50
-    };
-    const filterWithDefaults = Object.assign({}, filterDefaults, filter);
-
-    // Build the request data to be sent to the server as query params
-    const requestData = {
-      filter: {
-        active: 1
-      },
-      return: [
-        "id",
-        "created",
-        "updated",
-        "name",
-        "product",
-        "user",
-        "variations",
-        "status"
-      ],
-      order: ["id", "DESC"]
-    };
-    if (filterWithDefaults.limit) {
-      requestData.limit = filterWithDefaults.limit;
-    }
-    if (filterWithDefaults.publicOnly) {
-      requestData.filter.status = 2;
-    }
-    if (filterWithDefaults.userId) {
-      requestData.filter.user = filterWithDefaults.userId;
-    }
-
-    // Convert the request data to query params using Qs. This is done because providing nested
-    // parms to Axios's params config prop doesn't work correctly.
-    const requestString = Qs.stringify(requestData);
-
-    // Look for cached values if useCache is true
-    if (useCache) {
-      const cache = await this._cacheable("getDesign", requestString);
-      if (!cache.continue) {
-        return cache;
-      }
-    }
-
-    // Make the request
-    const response = await this.axiosInstance.get(
-      `/designs.php?${requestString}`
-    );
-
-    // Handle invalid responses
-    if (!response.data) {
-      return new Promise((resolve, reject) =>
-        reject(
-          response.data
-            ? response.data.message
-            : "The request for designs was unsuccessful"
-        )
-      );
-    }
-
-    response.data = response.data.map(design => {
-      design.variations = JSON.parse(design.variations);
-      return design;
-    });
-
-    return response;
+  getDesigns(filter = {}, useCache = true) {
+    return getDesigns.call(this, filter, useCache);
   }
 
   /**
@@ -490,40 +235,8 @@ export class KitePaintApi {
    * requests will not be made within 10 minutes.
    * @return {Promise} resolves with the retrieved design
    */
-  async getDesign(id, useCache = true) {
-    if (useCache) {
-      const cache = await this._cacheable("getDesign", id, {});
-      if (!cache.continue) {
-        return cache;
-      }
-    }
-    const response = await this.axiosInstance.get("/designs.php", {
-      params: {
-        id
-      }
-    });
-
-    // Handle invalid responses
-    if (!response.data || !response.data.length) {
-      return new Promise((resolve, reject) =>
-        reject(
-          response.data
-            ? response.data.message
-            : `The request for design ${id} was unsuccessful`
-        )
-      );
-    }
-
-    response.data = response.data[0];
-
-    if (response.data.active === "0") {
-      return new Promise((resolve, reject) =>
-        reject(`Design ${id} has been deleted.`)
-      );
-    }
-
-    response.data.variations = JSON.parse(response.data.variations);
-    return response;
+  getDesign(id, useCache = true) {
+    return getDesign.call(this, id, useCache);
   }
 
   /**
@@ -539,41 +252,8 @@ export class KitePaintApi {
    * requests will not be made within 10 minutes.
    * @return {Promise}
    */
-  async getProducts(useCache = true) {
-    // Look for cached values if useCache is true
-    if (useCache) {
-      const cache = await this._cacheable("getProducts");
-      if (!cache.continue) {
-        return cache;
-      }
-    }
-
-    // Make the request
-    const response = await this.axiosInstance.get(`/products.php`, {
-      params: {
-        activated: 1
-      }
-    });
-
-    // Handle invalid responses
-    if (!response.data) {
-      return new Promise((resolve, reject) =>
-        reject(
-          response.data
-            ? response.data.message
-            : "The request for products was unsuccessful"
-        )
-      );
-    }
-
-    response.data = response.data.map(product => {
-      product.variations = JSON.parse(product.variations);
-      product.colors = JSON.parse(product.colors);
-      product.notes = JSON.parse(product.notes).filter(note => !!note);
-      return product;
-    });
-
-    return response;
+  getProducts(useCache = true) {
+    return getProducts.call(this, useCache);
   }
 
   /**
@@ -589,34 +269,8 @@ export class KitePaintApi {
    * requests will not be made within 10 minutes.
    * @return {Promise}
    */
-  async getManufacturers(useCache = true) {
-    // Look for cached values if useCache is true
-    if (useCache) {
-      const cache = await this._cacheable("getManufacturers");
-      if (!cache.continue) {
-        return cache;
-      }
-    }
-
-    // Make the request
-    const response = await this.axiosInstance.get(`/manufacturers.php`, {
-      params: {
-        activated: 1
-      }
-    });
-
-    // Handle invalid responses
-    if (!response.data) {
-      return new Promise((resolve, reject) =>
-        reject(
-          response.data
-            ? response.data.message
-            : "The request for manufacturers was unsuccessful"
-        )
-      );
-    }
-
-    return response;
+  getManufacturers(useCache = true) {
+    return getManufacturers.call(this, useCache);
   }
 
   /**
@@ -624,35 +278,8 @@ export class KitePaintApi {
    * @param  {Object}  designData Should contain name, user, product, and variations
    * @return {Promise} Resolves with an object that contains an id property of the new design.
    */
-  async createDesign(designData) {
-    const defaults = {
-      status: 0,
-      new: 1
-    };
-    const data = Object.assign(defaults, designData);
-
-    // Stringify the variations since that's what the API handles for now.
-    data.variations = JSON.stringify(data.variations);
-    const bodyFormData = new FormData();
-    Object.keys(data).forEach(key => bodyFormData.append(key, data[key]));
-
-    const response = await this.axiosInstance.post(
-      "/designs.php",
-      bodyFormData
-    );
-
-    // The server should respond with valid: true and with the id of the newly created design.
-    if (!response.data || !response.data.id || !response.data.valid) {
-      return new Promise((resolve, reject) =>
-        reject(
-          response.data
-            ? response.data.message
-            : "The design could not be saved"
-        )
-      );
-    }
-
-    return response;
+  createDesign(designData) {
+    return createDesign.call(this, designData);
   }
 
   /**
@@ -660,35 +287,8 @@ export class KitePaintApi {
    * @param  {Object}  designData
    * @return {Promise}
    */
-  async updateDesign(designData) {
-    const data = Object.assign({}, designData);
-    if (data.variations) {
-      // Stringify the variations since that's what the API handles for now.
-      data.variations = JSON.stringify(data.variations);
-    }
-
-    const bodyFormData = new FormData();
-    Object.keys(data).forEach(key => bodyFormData.append(key, data[key]));
-
-    const response = await this.axiosInstance.post(
-      "/designs.php",
-      bodyFormData
-    );
-
-    // The server should respond with valid: true.
-    if (!response.data || !response.data.valid) {
-      return new Promise((resolve, reject) =>
-        reject(
-          response.data
-            ? response.data.message
-            : "The design could not be updated"
-        )
-      );
-    }
-
-    return {
-      data: designData
-    };
+  updateDesign(designData) {
+    return updateDesign.call(this, designData);
   }
 
   /**
@@ -696,31 +296,8 @@ export class KitePaintApi {
    * @param  {String}  designId
    * @return {Promise}
    */
-  async deleteDesign(designId) {
-    const data = {
-      delete: true,
-      id: designId
-    };
-    const bodyFormData = new FormData();
-    Object.keys(data).forEach(key => bodyFormData.append(key, data[key]));
-
-    const response = await this.axiosInstance.post(
-      "/designs.php",
-      bodyFormData
-    );
-
-    // The server should respond with valid: true and with the id of the newly created design.
-    if (!response.data || !response.data.valid) {
-      return new Promise((resolve, reject) =>
-        reject(
-          response.data
-            ? response.data.message
-            : "The design could not be deleted"
-        )
-      );
-    }
-
-    return response;
+  deleteDesign(designId) {
+    return deleteDesign.call(this, designId);
   }
 }
 
