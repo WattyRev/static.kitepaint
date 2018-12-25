@@ -1,4 +1,5 @@
 import axios from "axios";
+import activateAccount from "./kitePaint/activateAccount";
 import changeEmail from "./kitePaint/changeEmail";
 import changePassword from "./kitePaint/changePassword";
 import checkLoginStatus from "./kitePaint/checkLoginStatus";
@@ -121,10 +122,23 @@ export class KitePaintApi {
   }
 
   /**
+   * Activates a new account. When registering a new account, an email
+   * is sent to the user with a link to confirm their email address,
+   * activating their account.
+   * @param  {String} userId The ID of the user
+   * @param  {String} activationCode The activation code included in
+   * the email confirmation email
+   * @return {Promise}
+   */
+  activateAccount(userId, activationCode) {
+    return activateAccount.call(this, userId, activationCode);
+  }
+
+  /**
    * Check if the user is already logged in based on session data.
    * @return {Promise}
    */
-  async checkLoginStatus() {
+  checkLoginStatus() {
     return checkLoginStatus.call(this);
   }
 
