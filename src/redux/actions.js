@@ -29,8 +29,8 @@ export const LOG_OUT = createAsyncAction("LOG_OUT", () => {
  * Register for a new KitePaint account.
  * @param {Object} data Must contain {username, email, password, password2}
  */
-export const REGISTER = createAsyncAction("REGISTER", data => {
-  return KitePaintApi.register(data);
+export const CREATE_ACCOUNT = createAsyncAction("CREATE_ACCOUNT", data => {
+  return KitePaintApi.createAccount(data);
 });
 
 /**

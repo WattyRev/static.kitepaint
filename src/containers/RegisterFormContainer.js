@@ -2,7 +2,7 @@ import React from "react";
 import RegisterForm from "../components/RegisterForm";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { REGISTER } from "../redux/actions";
+import { CREATE_ACCOUNT } from "../redux/actions";
 
 export class RegisterFormContainer extends React.Component {
   static propTypes = {
@@ -157,7 +157,7 @@ export class RegisterFormContainer extends React.Component {
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {
-  onSubmit: REGISTER
+  onSubmit: CREATE_ACCOUNT
 };
 
 export default connect(

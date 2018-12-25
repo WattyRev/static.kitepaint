@@ -40,6 +40,51 @@ describe("KitePaintApi", () => {
     };
   });
 
+  describe("#activateAccount", () => {
+    it("should send the procided data to the correct API", () => {
+      expect.assertions(2);
+      Api.activateAccount("abc", "def");
+      expect(Api.axiosInstance.post).toHaveBeenCalled();
+      expect(Api.axiosInstance.post.mock.calls[0][0]).toEqual("/activate.php");
+    });
+    it("should reject if the API returns no data", () => {
+      expect.assertions(1);
+      return Api.activateAccount("abc", "def").catch(message => {
+        expect(message).toEqual("Could not activate the account");
+      });
+    });
+    it("should reject if the API returns that the activation was unsuccessful", () => {
+      expect.assertions(1);
+      Api.axiosInstance.post.mockResolvedValue({
+        data: {
+          activated: false,
+          message: "it dont work"
+        }
+      });
+      return Api.activateAccount("abc", "def").catch(message => {
+        expect(message).toEqual("it dont work");
+      });
+    });
+    it("should reject if the API call fails", () => {
+      expect.assertions(1);
+      Api.axiosInstance.post.mockRejectedValue("boogers");
+      return Api.activateAccount("abc", "def").catch(message => {
+        expect(message).toEqual("boogers");
+      });
+    });
+    it("should resolve if the call is successful", () => {
+      expect.assertions(1);
+      Api.axiosInstance.post.mockResolvedValue({
+        data: {
+          activated: true
+        }
+      });
+      return Api.activateAccount("abc", "def").then(response => {
+        expect(response.data.activated).toEqual(true);
+      });
+    });
+  });
+
   describe("#checkLoginStatus", () => {
     beforeEach(() => {
       sessionStorage.setItem(
@@ -230,10 +275,10 @@ describe("KitePaintApi", () => {
     });
   });
 
-  describe("#register", () => {
+  describe("#createAccount", () => {
     it("makes the correct request with the provided data", () => {
       expect.assertions(2);
-      Api.register({
+      Api.createAccount({
         a: "b",
         foo: "bar"
       }).catch(() => {});
@@ -249,7 +294,7 @@ describe("KitePaintApi", () => {
       Api.axiosInstance.post.mockReturnValue(
         new Promise((resolve, reject) => reject())
       );
-      return Api.register({
+      return Api.createAccount({
         a: "b",
         foo: "bar"
       }).catch(() => {
@@ -261,7 +306,7 @@ describe("KitePaintApi", () => {
       Api.axiosInstance.post.mockReturnValue(
         new Promise(resolve => resolve({}))
       );
-      return Api.register({
+      return Api.createAccount({
         a: "b",
         foo: "bar"
       }).catch(() => {
@@ -279,7 +324,7 @@ describe("KitePaintApi", () => {
           })
         )
       );
-      return Api.register({
+      return Api.createAccount({
         a: "b",
         foo: "bar"
       }).catch(() => {
@@ -297,7 +342,7 @@ describe("KitePaintApi", () => {
           })
         )
       );
-      return Api.register({
+      return Api.createAccount({
         a: "b",
         foo: "bar"
       }).then(() => {
