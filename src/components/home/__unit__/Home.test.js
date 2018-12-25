@@ -36,7 +36,9 @@ describe("Home", () => {
     // Test the content inside RecentDesignsContainer
     const recentDesignsData = {
       props: {
-        designs: []
+        designs: [],
+        manufacturers: {},
+        products: {}
       }
     };
     const recentDesignsWrapper = shallow(

@@ -2,8 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import designShape from "../models/design";
+import productShape from "../models/product";
+import manufacturerShape from "../models/manufacturer";
 import { getRecentDesigns } from "../redux/modules/designs";
-import { GET_DESIGNS } from "../redux/actions";
+import { getProductsWithIndex } from "../redux/modules/products";
+import { getManufacturersWithIndex } from "../redux/modules/manufacturers";
+import { GET_DESIGNS, GET_PRODUCTS, GET_MANUFACTURERS } from "../redux/actions";
 import { makeCancelable } from "../utils";
 
 /**
@@ -19,11 +23,15 @@ export class RecentDesignsContainer extends React.Component {
      * A list of designs
      */
     designs: PropTypes.arrayOf(designShape).isRequired,
+    manufacturers: PropTypes.objectOf(manufacturerShape).isRequired,
+    products: PropTypes.objectOf(productShape).isRequired,
     /**
      * A function to trigger the retreival of the designs. This should update the redux state,
      * causing designs to be provided through redux.
      */
-    getDesigns: PropTypes.func.isRequired
+    getDesigns: PropTypes.func.isRequired,
+    getProducts: PropTypes.func.isRequired,
+    getManufacturers: PropTypes.func.isRequired
   };
 
   state = {
@@ -37,10 +45,24 @@ export class RecentDesignsContainer extends React.Component {
         limit: 6
       })
     );
+    const productsRequest = makeCancelable(this.props.getProducts());
+    const manufacturersRequest = makeCancelable(this.props.getManufacturers());
     this.cancelablePromises.push(designRequest);
-    designRequest.promise
+    this.cancelablePromises.push(productsRequest);
+    this.cancelablePromises.push(manufacturersRequest);
+
+    Promise.all([
+      designRequest.promise,
+      productsRequest.promise,
+      manufacturersRequest.promise
+    ])
       .then(() => this.setState({ isLoading: false }))
-      .catch(() => this.setState({ isLoading: false }));
+      .catch(response => {
+        if (response && response.isCanceled) {
+          return;
+        }
+        this.setState({ isLoading: false });
+      });
   }
 
   componentWillUnmount() {
@@ -53,18 +75,24 @@ export class RecentDesignsContainer extends React.Component {
     return this.props.children({
       props: {
         isLoading: this.state.isLoading,
-        designs: this.props.designs
+        designs: this.props.designs,
+        products: this.props.products,
+        manufacturers: this.props.manufacturers
       }
     });
   }
 }
 
 const mapStateToProps = state => ({
-  designs: getRecentDesigns(state, 6)
+  designs: getRecentDesigns(state, 6),
+  products: getProductsWithIndex(state),
+  manufacturers: getManufacturersWithIndex(state)
 });
 
 const mapDispatchToProps = {
-  getDesigns: GET_DESIGNS
+  getDesigns: GET_DESIGNS,
+  getProducts: GET_PRODUCTS,
+  getManufacturers: GET_MANUFACTURERS
 };
 
 export default connect(

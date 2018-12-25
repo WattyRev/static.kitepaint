@@ -28,8 +28,22 @@ exports[`Home renders 2`] = `
 
 exports[`Home renders 3`] = `
 <div>
-  <RecentDesignsBanner
+  <Styled(H2)>
+    Recent Designs
+  </Styled(H2)>
+  <RecentDesigns
+    cta={
+      <Button
+        as={[Function]}
+        isBlock={true}
+        to="/designs"
+      >
+        See All Designs
+      </Button>
+    }
     designs={Array []}
+    manufacturers={Object {}}
+    products={Object {}}
   />
 </div>
 `;

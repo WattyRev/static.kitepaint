@@ -104,14 +104,17 @@ class DesignsContainerData extends React.Component {
    */
   _fetchDesigns = (setLoading = true) => {
     if (setLoading) {
-      this.setState("isLoading", true);
+      this.setState({ isLoading: true });
     }
     const request = makeCancelable(
-      this.props.onFetchDesigns({
-        limit: `${this.props.loadedCount}, ${this.props.loadedCount +
-          PAGE_SIZE}`,
-        publicOnly: true
-      })
+      this.props.onFetchDesigns(
+        {
+          limit: `${this.props.loadedCount}, ${this.props.loadedCount +
+            PAGE_SIZE}`,
+          publicOnly: true
+        },
+        false // dont cache this request
+      )
     );
     request.promise.then(response => {
       // Get the number of items returned
