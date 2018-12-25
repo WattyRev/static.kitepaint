@@ -60,7 +60,7 @@ export class RecentDesignsContainer extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  designs: getRecentDesigns(state)
+  designs: getRecentDesigns(state, 6)
 });
 
 const mapDispatchToProps = {
