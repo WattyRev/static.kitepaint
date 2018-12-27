@@ -15,7 +15,7 @@ const PAGE_SIZE = 50;
 /**
  * Manages pagination for the DesignsContainer
  */
-export class DesignsContainerCounter extends React.Component {
+export class Counter extends React.Component {
   static propTypes = {
     children: PropTypes.func.isRequired
   };
@@ -47,7 +47,7 @@ export class DesignsContainerCounter extends React.Component {
   }
 }
 
-class DesignsContainerData extends React.Component {
+export class Data extends React.Component {
   static propTypes = {
     /** Indicates how many items should be loaded for sake of pagination. Provided as a prop so it can be provided in mapDispatchToProps. */
     loadedCount: PropTypes.number.isRequired,
@@ -116,24 +116,26 @@ class DesignsContainerData extends React.Component {
         false // dont cache this request
       )
     );
-    request.promise.then(response => {
-      // Get the number of items returned
-      const count = response.data.length;
+    request.promise
+      .then(response => {
+        // Get the number of items returned
+        const count = response.data.length;
 
-      this.setState({
-        // The API will return all of the items so far. If it
-        // returned fewer than the previous count + the page size,
-        // then there are no more items to retrieve.
-        hasMore: count >= this.props.loadedCount + PAGE_SIZE
-      });
-      this.props.onChangeLoadedCount(count);
-
-      if (setLoading) {
         this.setState({
-          isLoading: false
+          // The API will return all of the items so far. If it
+          // returned fewer than the previous count + the page size,
+          // then there are no more items to retrieve.
+          hasMore: count >= this.props.loadedCount + PAGE_SIZE
         });
-      }
-    });
+        this.props.onChangeLoadedCount(count);
+
+        if (setLoading) {
+          this.setState({
+            isLoading: false
+          });
+        }
+      })
+      .catch(() => {});
     this.cancelablePromises.push(request);
     return request.promise;
   };
@@ -159,8 +161,8 @@ class DesignsContainerData extends React.Component {
           isLoading: false
         });
       })
-      .catch(response => {
-        if (response.isCanceled) {
+      .catch(responses => {
+        if (responses[0].isCanceled) {
           return;
         }
         this.setState({
@@ -203,25 +205,25 @@ const mapDispatchToProps = {
   onFetchManufacturers: GET_MANUFACTURERS
 };
 
-const DesignsContainerDataConnected = connect(
+const DataConnected = connect(
   mapStateToProps,
   mapDispatchToProps
-)(DesignsContainerData);
+)(Data);
 
 /**
  * Retrieves and manages public designs with pagination
  */
 const DesignsContainer = ({ children }) => (
-  <DesignsContainerCounter>
+  <Counter>
     {counter => (
-      <DesignsContainerDataConnected
+      <DataConnected
         loadedCount={counter.props.count}
         onChangeLoadedCount={counter.actions.updateCount}
       >
         {data => children(data)}
-      </DesignsContainerDataConnected>
+      </DataConnected>
     )}
-  </DesignsContainerCounter>
+  </Counter>
 );
 
 DesignsContainer.propTypes = {
