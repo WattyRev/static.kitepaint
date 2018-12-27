@@ -2,9 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import designShape from "../../models/design";
-import { H2, Button, P } from "../../theme";
-import Svg from "../Svg";
+import designShape from "../models/design";
+import productShape from "../models/product";
+import manufacturerShape from "../models/manufacturer";
+import { P } from "../theme";
+import Svg from "./Svg";
+import ManufacturerLogo from "./ManufacturerLogo";
 
 const StyleWrapper = styled.div`
   padding: 16px;
@@ -17,7 +20,10 @@ const StyleWrapper = styled.div`
     width:200px
     height: 200px;
     flex-shrink: 0;
-    padding: 16px 0;
+    margin: 8px;
+    border: 1px solid ${props => props.theme.colors.gray};
+    border-radius: 4px;
+    ${props => props.theme.patterns.transparencyBackground};
 
     > svg {
       position: relative;
@@ -25,40 +31,39 @@ const StyleWrapper = styled.div`
       transform: translateY(-50%) rotate(45deg);
     }
   }
-  > .see-all-wrapper {
+  > .cta {
     max-width: 400px;
     margin: 0 auto;
   }
   .design-name {
     position: absolute;
-    top: 10%;
+    bottom: 10%;
     left: 0;
     padding: 4px;
     background: rgba(0,0,0,.8);
-    transform: translateX(-110%);
     transition: .5s transform;
   }
   .design-wrapper {
     position: relative;
     overflow: hidden;
     cursor: pointer;
-
-    &:hover {
-      .design-name {
-        transform: translateX(0);
-      }
-    }
+  }
+  .logo {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 `;
 
 /**
  * The banner displaying the recently created public designs.
  */
-const RecentDesignsBanner = ({ designs }) => (
+const RecentDesigns = ({ designs, products, manufacturers, cta }) => (
   <StyleWrapper>
-    <H2>Recent Designs</H2>
     <div className="designs">
       {designs.map(design => {
+        const product = products[design.product];
+        const manufacturer = manufacturers[product.manufacturer];
         return (
           <Link
             key={design.id}
@@ -72,23 +77,28 @@ const RecentDesignsBanner = ({ designs }) => (
             <P isLight className="design-name">
               {design.name}
             </P>
+            <ManufacturerLogo
+              className="logo"
+              src={`/logos/${manufacturer.logo}`}
+              noMargin
+              size={45}
+            />
           </Link>
         );
       })}
     </div>
-    <div className="see-all-wrapper">
-      <Button isBlock as={Link} to="/designs">
-        See All Designs
-      </Button>
-    </div>
+    {cta && <div className="cta">{cta}</div>}
   </StyleWrapper>
 );
 
-RecentDesignsBanner.propTypes = {
+RecentDesigns.propTypes = {
   /**
    * The designs to be displayed
    */
-  designs: PropTypes.arrayOf(designShape).isRequired
+  designs: PropTypes.arrayOf(designShape).isRequired,
+  manufacturers: PropTypes.objectOf(manufacturerShape).isRequired,
+  products: PropTypes.objectOf(productShape).isRequired,
+  cta: PropTypes.node
 };
 
-export default RecentDesignsBanner;
+export default RecentDesigns;

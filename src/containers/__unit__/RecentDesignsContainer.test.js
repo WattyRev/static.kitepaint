@@ -8,7 +8,11 @@ describe("RecentDesignsContainer", () => {
   beforeEach(() => {
     props = {
       designs: [],
-      getDesigns: jest.fn()
+      manufacturers: {},
+      products: {},
+      getDesigns: jest.fn(),
+      getManufacturers: jest.fn(),
+      getProducts: jest.fn()
     };
   });
   it("renders", () => {

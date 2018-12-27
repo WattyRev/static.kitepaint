@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import UserContainer from "../../containers/UserContainer";
 import RecentDesignsContainer from "../../containers/RecentDesignsContainer";
-import { Loading, Spacer } from "../../theme";
+import { H2, Loading, Spacer, Button } from "../../theme";
 import AccountForm from "../AccountForm";
 import CTABanner from "./CTABanner";
 import AccountBanner from "./AccountBanner";
-import RecentDesignsBanner from "./RecentDesignsBanner";
+import RecentDesigns from "../RecentDesigns";
 
 /**
  * A coordinating component for the Home page.
@@ -33,7 +34,19 @@ const Home = () => (
             <Loading />
           </Spacer>
         ) : (
-          <RecentDesignsBanner designs={designsData.props.designs} />
+          <React.Fragment>
+            <H2>Recent Designs</H2>
+            <RecentDesigns
+              designs={designsData.props.designs}
+              products={designsData.props.products}
+              manufacturers={designsData.props.manufacturers}
+              cta={
+                <Button isBlock as={Link} to="/designs">
+                  See All Designs
+                </Button>
+              }
+            />
+          </React.Fragment>
         )
       }
     </RecentDesignsContainer>

@@ -57,18 +57,19 @@ const sortNewestToOldest = (designA, designB) => {
 };
 
 /**
- * Get the 6 most recent designs.
+ * Get the x most recent designs.
  * @param  {Map} state
+ * @param {Number} count The number of designs to retrieve
  * @return {Object[]} an array of designs
  */
-export const getRecentDesigns = state => {
+export const getRecentDesigns = (state, count) => {
   const designs = state.get("designs");
   return designs
     .filter(design => design.get("status") === designStatuses.PUBLIC)
     .sort(sortNewestToOldest)
     .toList()
     .toJS()
-    .slice(0, 6);
+    .slice(0, count);
 };
 
 /**

@@ -148,7 +148,7 @@ describe("Designs redux module", () => {
             }
           }
         });
-        const response = getRecentDesigns(mockState);
+        const response = getRecentDesigns(mockState, 6);
         expect(response.map(item => item.id)).toEqual([
           "984",
           "891",
