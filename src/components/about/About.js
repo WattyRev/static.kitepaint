@@ -17,8 +17,7 @@ const About = () => (
       with full stack development. At the time, I built it using AngularJS, but
       I started rebuilding the front end in React in 2018. This site is an
       experiment and a learning experience. While I am experimenting with these
-      technologies, I figured that I might as well make something useful, and
-      maybe even a little profitable.
+      technologies, I figured that I might as well make something useful.
     </P>
     <Spacer bottom="sm" />
     <P>
