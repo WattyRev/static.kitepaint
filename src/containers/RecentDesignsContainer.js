@@ -23,14 +23,18 @@ export class RecentDesignsContainer extends React.Component {
      * A list of designs
      */
     designs: PropTypes.arrayOf(designShape).isRequired,
+    /** The manufacturers indexed by id */
     manufacturers: PropTypes.objectOf(manufacturerShape).isRequired,
+    /** The products indexed by id */
     products: PropTypes.objectOf(productShape).isRequired,
     /**
-     * A function to trigger the retreival of the designs. This should update the redux state,
+     * A function to trigger the retrieval of the designs. This should update the redux state,
      * causing designs to be provided through redux.
      */
     getDesigns: PropTypes.func.isRequired,
+    /** A function to trigger the retrieval of all products */
     getProducts: PropTypes.func.isRequired,
+    /** A funciton to trigger the retrieval of all manufacturers */
     getManufacturers: PropTypes.func.isRequired
   };
 
