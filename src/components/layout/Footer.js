@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { isEmbedded } from "../../utils/embed";
 import { A, P } from "../../theme";
 
 export const StyleWrapper = styled.div`
@@ -16,10 +17,21 @@ export const StyleWrapper = styled.div`
 const Footer = props => (
   <StyleWrapper {...props}>
     <P isLight>
-      &copy; {new Date().getFullYear()}{" "}
-      <A href="http://wattydev.com" target="_blank">
-        Spencer Watson
-      </A>
+      {isEmbedded ? (
+        <React.Fragment>
+          Powered by{" "}
+          <A href="http://kitepaint.com" target="_blank">
+            KitePaint
+          </A>
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          &copy; {new Date().getFullYear()}{" "}
+          <A href="http://wattydev.com" target="_blank">
+            Spencer Watson
+          </A>
+        </React.Fragment>
+      )}
     </P>
   </StyleWrapper>
 );

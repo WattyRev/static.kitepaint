@@ -13,7 +13,7 @@ describe("#getDesigns", () => {
     expect.assertions(1);
     await Api.getDesigns().catch(() => {});
     expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual(
-      "/designs.php?filter%5Bactive%5D=1&filter%5Bstatus%5D=2&return%5B0%5D=id&return%5B1%5D=created&return%5B2%5D=updated&return%5B3%5D=name&return%5B4%5D=product&return%5B5%5D=user&return%5B6%5D=variations&return%5B7%5D=status&order%5B0%5D=id&order%5B1%5D=DESC&limit=50"
+      "/designs.php?filter%5Bactive%5D=1&filter%5Bstatus%5D=2&order%5B0%5D=id&order%5B1%5D=DESC&limit=50"
     );
   });
   it("adopts the provided filters", async () => {
@@ -23,7 +23,7 @@ describe("#getDesigns", () => {
       limit: 5
     }).catch(() => {});
     expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual(
-      "/designs.php?filter%5Bactive%5D=1&return%5B0%5D=id&return%5B1%5D=created&return%5B2%5D=updated&return%5B3%5D=name&return%5B4%5D=product&return%5B5%5D=user&return%5B6%5D=variations&return%5B7%5D=status&order%5B0%5D=id&order%5B1%5D=DESC&limit=5"
+      "/designs.php?filter%5Bactive%5D=1&order%5B0%5D=id&order%5B1%5D=DESC&limit=5"
     );
   });
   it("includes the user filter if provided", async () => {

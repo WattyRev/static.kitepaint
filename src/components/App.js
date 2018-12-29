@@ -1,7 +1,9 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import { isEmbedded } from "../utils/embed";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
+import RestrictedRoute from "./RestrictedRoute";
 import About from "./about";
 import Account from "./account";
 import Activate from "./activate";
@@ -19,21 +21,21 @@ import View from "./view";
  */
 const App = () => (
   <React.Fragment>
-    <Header />
+    {!isEmbedded && <Header />}
     <Switch>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/about" component={About} />
-      <Route exact path="/account" component={Account} />
-      <Route
+      <RestrictedRoute exact path="/" component={Home} />
+      <RestrictedRoute exact path="/about" component={About} />
+      <RestrictedRoute exact path="/account" component={Account} />
+      <RestrictedRoute
         exact
         path="/activate/:userId/:activationCode"
         component={Activate}
       />
-      <Route exact path="/create" component={Create} />
+      <RestrictedRoute exact path="/create" component={Create} />
       <Route exact path="/create/:productId" component={CreateNew} />
-      <Route exact path="/designs" component={Designs} />
-      <Route exact path="/edit/:designId" component={Edit} />
-      <Route exact path="/my-designs" component={MyDesigns} />
+      <RestrictedRoute exact path="/designs" component={Designs} />
+      <RestrictedRoute exact path="/edit/:designId" component={Edit} />
+      <RestrictedRoute exact path="/my-designs" component={MyDesigns} />
       <Route exact path="/view/:designId" component={View} />
       <Route component={ErrorPage} />
     </Switch>
