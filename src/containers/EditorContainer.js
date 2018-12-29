@@ -73,14 +73,16 @@ export class EditorContainer extends React.Component {
       for (let i = 0; i < panels.length; i++) {
         const panel = panels[i];
         const color = panel.getAttribute("fill");
-        const colorMatch = colors.find(storedColor =>
-          softCompareStrings(storedColor.color, color)
-        );
-        const colorName = colorMatch ? colorMatch.name : color;
-        appliedColors[panel.getAttribute("data-id")] = {
-          color,
-          name: colorName
-        };
+        if (color) {
+          const colorMatch = colors.find(storedColor =>
+            softCompareStrings(storedColor.color, color)
+          );
+          const colorName = colorMatch ? colorMatch.name : color;
+          appliedColors[panel.getAttribute("data-id")] = {
+            color,
+            name: colorName
+          };
+        }
       }
 
       accumulated[name] = appliedColors;

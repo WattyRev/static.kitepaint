@@ -14,11 +14,7 @@ export default async function getProducts(useCache = true) {
   }
 
   // Make the request
-  const response = await this.axiosInstance.get(`/products.php`, {
-    params: {
-      activated: 1
-    }
-  });
+  const response = await this.axiosInstance.get(`/products.php`);
 
   // Handle invalid responses
   if (!response.data) {

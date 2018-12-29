@@ -1,5 +1,5 @@
 import { fromJS } from "immutable";
-import { designStatuses } from "../../../models/design";
+import Status from "../../../models/status";
 import Reducer, {
   defaultState,
   getRecentDesigns,
@@ -104,47 +104,66 @@ describe("Designs redux module", () => {
             "123": {
               id: "123",
               name: "test1",
-              status: designStatuses.PUBLIC
-            },
-            "234": {
-              id: "234",
-              name: "test1",
-              status: designStatuses.PUBLIC
-            },
-            "100": {
-              id: "100",
-              name: "test1",
-              status: designStatuses.PUBLIC
-            },
-            "984": {
-              id: "984",
-              name: "test1",
-              status: designStatuses.PUBLIC
-            },
-            "546": {
-              id: "546",
-              name: "test1",
-              status: designStatuses.PUBLIC
-            },
-            "456": {
-              id: "456",
-              name: "test1",
-              status: designStatuses.PUBLIC
-            },
-            "891": {
-              id: "891",
-              name: "test1",
-              status: designStatuses.PUBLIC
+              status: Status.PUBLIC,
+              productStatus: Status.PUBLIC
             },
             "103": {
               id: "103",
               name: "test1",
-              status: designStatuses.UNLISTED
+              status: Status.UNLISTED
             },
             "107": {
               id: "107",
               name: "test1",
-              status: designStatuses.PRIVATE
+              status: Status.PRIVATE
+            },
+            "345": {
+              id: "345",
+              name: "test1",
+              status: Status.PUBLIC,
+              productStatus: Status.UNLISTED
+            },
+            "567": {
+              id: "567",
+              name: "test1",
+              status: Status.PUBLIC,
+              productStatus: Status.PRIVATE
+            },
+            "234": {
+              id: "234",
+              name: "test1",
+              status: Status.PUBLIC,
+              productStatus: Status.PUBLIC
+            },
+            "100": {
+              id: "100",
+              name: "test1",
+              status: Status.PUBLIC,
+              productStatus: Status.PUBLIC
+            },
+            "984": {
+              id: "984",
+              name: "test1",
+              status: Status.PUBLIC,
+              productStatus: Status.PUBLIC
+            },
+            "546": {
+              id: "546",
+              name: "test1",
+              status: Status.PUBLIC,
+              productStatus: Status.PUBLIC
+            },
+            "456": {
+              id: "456",
+              name: "test1",
+              status: Status.PUBLIC,
+              productStatus: Status.PUBLIC
+            },
+            "891": {
+              id: "891",
+              name: "test1",
+              status: Status.PUBLIC,
+              productStatus: Status.PUBLIC
             }
           }
         });
@@ -168,25 +187,25 @@ describe("Designs redux module", () => {
               id: "123",
               name: "test1",
               user: "abc",
-              status: designStatuses.PUBLIC
+              status: Status.PUBLIC
             },
             "234": {
               id: "234",
               name: "test1",
               user: "def",
-              status: designStatuses.PUBLIC
+              status: Status.PUBLIC
             },
             "103": {
               id: "103",
               name: "test1",
               user: "abc",
-              status: designStatuses.UNLISTED
+              status: Status.UNLISTED
             },
             "107": {
               id: "107",
               name: "test1",
               user: "abc",
-              status: designStatuses.PRIVATE
+              status: Status.PRIVATE
             }
           }
         });
@@ -203,25 +222,25 @@ describe("Designs redux module", () => {
               id: "123",
               name: "test1",
               user: "abc",
-              status: designStatuses.PUBLIC
+              status: Status.PUBLIC
             },
             "234": {
               id: "234",
               name: "test1",
               user: "def",
-              status: designStatuses.PUBLIC
+              status: Status.PUBLIC
             },
             "103": {
               id: "103",
               name: "test1",
               user: "abc",
-              status: designStatuses.UNLISTED
+              status: Status.UNLISTED
             },
             "107": {
               id: "107",
               name: "test1",
               user: "abc",
-              status: designStatuses.PRIVATE
+              status: Status.PRIVATE
             }
           }
         });
@@ -230,7 +249,7 @@ describe("Designs redux module", () => {
           id: "234",
           name: "test1",
           user: "def",
-          status: designStatuses.PUBLIC
+          status: Status.PUBLIC
         });
       });
     });

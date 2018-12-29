@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { getMockManufacturer } from "./manufacturer";
+import Status, { statusProp } from "./status";
 
 /**
  * A product is a kite that can be customized to create a design.
@@ -9,6 +10,7 @@ const productShape = PropTypes.shape({
   name: PropTypes.string.isRequired,
   notes: PropTypes.arrayOf(PropTypes.string),
   manufacturer: PropTypes.string.isRequired,
+  status: statusProp.isRequired,
   url: PropTypes.string,
   colors: PropTypes.arrayOf(
     PropTypes.shape({
@@ -50,7 +52,8 @@ const getMockProduct = () => ({
       name: "Standard",
       svg: "<div>Kool Kite</div>"
     }
-  ]
+  ],
+  status: Status.PUBLIC
 });
 
 export { getMockProduct };

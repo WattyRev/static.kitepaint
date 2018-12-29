@@ -1,5 +1,6 @@
 import { handleActions } from "redux-actions";
 import { fromJS } from "immutable";
+import Status from "../../models/status";
 import { GET_PRODUCTS } from "../actions";
 
 export const defaultState = fromJS({});
@@ -22,14 +23,15 @@ export default handleActions(
 );
 
 /**
- * Gets all the products stored in redux
+ * Gets all the public products stored in redux
  * @param  {Map} state
  * @param {String} groupBy A value to group the products by
  * @return {Object} Arrays of products indexed by the grouping value
  */
-export const getProductsGrouped = (state, groupBy) => {
+export const getPublicProductsGrouped = (state, groupBy) => {
   const products = state.get("products");
   return products
+    .filter(product => product.get("status") === Status.PUBLIC)
     .toList()
     .groupBy(product => product.get(groupBy))
     .toJS();

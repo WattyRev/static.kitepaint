@@ -1,8 +1,9 @@
 import { fromJS } from "immutable";
+import Status from "../../../models/status";
 import { GET_PRODUCTS } from "../../actions";
 import Reducer, {
   defaultState,
-  getProductsGrouped,
+  getPublicProductsGrouped,
   getProductById,
   getProductsWithIndex
 } from "../products";
@@ -31,7 +32,7 @@ describe("Products redux module", () => {
     });
   });
   describe("selectors", () => {
-    describe("getProductsGrouped", () => {
+    describe("getPublicProductsGrouped", () => {
       it("returns all of the products grouped by the provided attribute", () => {
         expect.assertions(1);
         const mockState = fromJS({
@@ -39,39 +40,57 @@ describe("Products redux module", () => {
             "123": {
               id: "123",
               name: "def",
-              foo: "bar"
+              foo: "bar",
+              status: Status.UNLISTED
             },
             "234": {
               id: "234",
               name: "abc",
-              foo: "bar"
+              foo: "bar",
+              status: Status.PRIVATE
             },
             "456": {
               id: "456",
               name: "gfd",
-              foo: "far"
+              foo: "bar",
+              status: Status.PUBLIC
+            },
+            "567": {
+              id: "567",
+              name: "gfd",
+              foo: "far",
+              status: Status.PUBLIC
+            },
+            "678": {
+              id: "678",
+              name: "gfd",
+              foo: "far",
+              status: Status.PUBLIC
             }
           }
         });
-        const response = getProductsGrouped(mockState, "foo");
+        const response = getPublicProductsGrouped(mockState, "foo");
         expect(response).toEqual({
           bar: [
             {
-              id: "123",
-              name: "def",
-              foo: "bar"
-            },
-            {
-              id: "234",
-              name: "abc",
-              foo: "bar"
+              id: "456",
+              name: "gfd",
+              foo: "bar",
+              status: Status.PUBLIC
             }
           ],
           far: [
             {
-              id: "456",
+              id: "567",
               name: "gfd",
-              foo: "far"
+              foo: "far",
+              status: Status.PUBLIC
+            },
+            {
+              id: "678",
+              name: "gfd",
+              foo: "far",
+              status: Status.PUBLIC
             }
           ]
         });

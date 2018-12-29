@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getProductsGrouped } from "../redux/modules/products";
+import { getPublicProductsGrouped } from "../redux/modules/products";
 import { getManufacturers } from "../redux/modules/manufacturers";
 import { GET_PRODUCTS, GET_MANUFACTURERS } from "../redux/actions";
 import productShape from "../models/product";
@@ -78,7 +78,7 @@ export class ProductsContainer extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  products: getProductsGrouped(state, "manufacturer"),
+  products: getPublicProductsGrouped(state, "manufacturer"),
   manufacturers: getManufacturers(state)
 });
 

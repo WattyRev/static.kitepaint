@@ -58,38 +58,43 @@ const StyleWrapper = styled.div`
 /**
  * The banner displaying the recently created public designs.
  */
-const RecentDesigns = ({ designs, products, manufacturers, cta }) => (
-  <StyleWrapper>
-    <div className="designs">
-      {designs.map(design => {
-        const product = products[design.product];
-        const manufacturer = manufacturers[product.manufacturer];
-        return (
-          <Link
-            key={design.id}
-            className="design-wrapper"
-            to={`/view/${design.id}`}
-          >
-            <Svg
-              className="design-preview"
-              svg={design.variations.find(variation => variation.primary).svg}
-            />
-            <P isLight className="design-name">
-              {design.name}
-            </P>
-            <ManufacturerLogo
-              className="logo"
-              src={`/logos/${manufacturer.logo}`}
-              noMargin
-              size={45}
-            />
-          </Link>
-        );
-      })}
-    </div>
-    {cta && <div className="cta">{cta}</div>}
-  </StyleWrapper>
-);
+const RecentDesigns = ({ designs, products, manufacturers, cta }) => {
+  if (!products || !manufacturers) {
+    return null;
+  }
+  return (
+    <StyleWrapper>
+      <div className="designs">
+        {designs.map(design => {
+          const product = products[design.product];
+          const manufacturer = manufacturers[product.manufacturer];
+          return (
+            <Link
+              key={design.id}
+              className="design-wrapper"
+              to={`/view/${design.id}`}
+            >
+              <Svg
+                className="design-preview"
+                svg={design.variations.find(variation => variation.primary).svg}
+              />
+              <P isLight className="design-name">
+                {design.name}
+              </P>
+              <ManufacturerLogo
+                className="logo"
+                src={`/logos/${manufacturer.logo}`}
+                noMargin
+                size={45}
+              />
+            </Link>
+          );
+        })}
+      </div>
+      {cta && <div className="cta">{cta}</div>}
+    </StyleWrapper>
+  );
+};
 
 RecentDesigns.propTypes = {
   /**

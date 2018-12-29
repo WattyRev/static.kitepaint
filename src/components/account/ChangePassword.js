@@ -43,7 +43,7 @@ const ChangePassword = ({
     </Label>
     {editing ? (
       <React.Fragment>
-        <Label for="current-password">Current Password</Label>
+        <Label htmlFor="current-password">Current Password</Label>
         <Input
           id="current-password"
           type="password"
@@ -51,7 +51,7 @@ const ChangePassword = ({
           onChange={e => onChangeCurrentPassword(e.target.value)}
           required
         />
-        <Label for="new-password">
+        <Label htmlFor="new-password">
           New Password{" "}
           <Tooltip>
             Passwords may be between 6-15 characters.
@@ -66,7 +66,7 @@ const ChangePassword = ({
           onChange={e => onChangeNewPassword(e.target.value)}
           required
         />
-        <Label for="confirm-password">Confirm New Password</Label>
+        <Label htmlFor="confirm-password">Confirm New Password</Label>
         <Input
           id="confirm-password"
           type="password"
