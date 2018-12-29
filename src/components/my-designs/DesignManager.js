@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import designShape, { designStatuses } from "../../models/design";
+import Status from "../../models/status";
+import designShape from "../../models/design";
 import productShape from "../../models/product";
 import manufacturerShape from "../../models/manufacturer";
 import {
@@ -58,20 +59,21 @@ const DesignManager = ({ design, product, manufacturer, onDelete }) => (
     <div>
       <P>
         Created: {design.created} | Last Modified: {design.updated} | Visiblity:{" "}
-        {designStatuses[design.status]}
+        {design.status > design.productStatus
+          ? Status[design.productStatus]
+          : Status[design.status]}
       </P>
-      {[designStatuses.PUBLIC, designStatuses.UNLISTED].includes(
-        design.status
-      ) && (
-        <React.Fragment>
-          <Label>Public URL</Label>
-          <Input
-            className="testing_public-url"
-            readOnly
-            value={`${window.location.origin}/view/${design.id}`}
-          />
-        </React.Fragment>
-      )}
+      {[Status.PUBLIC, Status.UNLISTED].includes(design.status) &&
+        [Status.PUBLIC, Status.UNLISTED].includes(design.productStatus) && (
+          <React.Fragment>
+            <Label>Public URL</Label>
+            <Input
+              className="testing_public-url"
+              readOnly
+              value={`${window.location.origin}/view/${design.id}`}
+            />
+          </React.Fragment>
+        )}
       <Button as={Link} to={`view/${design.id}`}>
         <Icon icon="eye" /> View
       </Button>{" "}

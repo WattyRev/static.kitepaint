@@ -1,8 +1,9 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import theme from "../../../theme";
+import Status from "../../../models/status";
 import { getMockProduct } from "../../../models/product";
-import { getMockDesign, designStatuses } from "../../../models/design";
+import { getMockDesign } from "../../../models/design";
 import { getMockManufacturer } from "../../../models/manufacturer";
 import DesignManager, { StyleWrapper } from "../DesignManager";
 
@@ -73,7 +74,7 @@ describe("DesignManager", () => {
   });
   it("displays the public url if the design is public", () => {
     expect.assertions(1);
-    defaultProps.design.status = designStatuses.PUBLIC;
+    defaultProps.design.status = Status.PUBLIC;
 
     const wrapper = shallow(<DesignManager {...defaultProps} />);
 
@@ -81,7 +82,7 @@ describe("DesignManager", () => {
   });
   it("displays the public url if the design is unlisted", () => {
     expect.assertions(1);
-    defaultProps.design.status = designStatuses.UNLISTED;
+    defaultProps.design.status = Status.UNLISTED;
 
     const wrapper = shallow(<DesignManager {...defaultProps} />);
 
@@ -89,7 +90,7 @@ describe("DesignManager", () => {
   });
   it("does not display the public url if the design is private", () => {
     expect.assertions(1);
-    defaultProps.design.status = designStatuses.PRIVATE;
+    defaultProps.design.status = Status.PRIVATE;
 
     const wrapper = shallow(<DesignManager {...defaultProps} />);
 

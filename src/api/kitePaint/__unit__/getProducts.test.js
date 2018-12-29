@@ -10,12 +10,9 @@ describe("#getProducts", () => {
     };
   });
   it("makes the relevant request", async () => {
-    expect.assertions(2);
+    expect.assertions(1);
     await Api.getProducts().catch(() => {});
     expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual("/products.php");
-    expect(Api.axiosInstance.get.mock.calls[0][1]).toEqual({
-      params: { activated: 1 }
-    });
   });
   it("does not make identical requests when they have been cached", async () => {
     expect.assertions(1);

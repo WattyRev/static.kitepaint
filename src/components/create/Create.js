@@ -37,20 +37,23 @@ const Create = () => (
           {productsData.props.isLoading ? (
             <PageLoader />
           ) : (
-            productsData.props.manufacturers.map(manufacturer => (
-              <Spacer key={manufacturer.id} bottom="md">
-                <ManufacturerShowcase manufacturer={manufacturer}>
-                  <div className="products-wrapper">
-                    {productsData.props.products[manufacturer.id] &&
-                      productsData.props.products[manufacturer.id].map(
-                        product => (
-                          <ProductShowcase product={product} key={product.id} />
-                        )
-                      )}
-                  </div>
-                </ManufacturerShowcase>
-              </Spacer>
-            ))
+            productsData.props.manufacturers.map(manufacturer => {
+              const products = productsData.props.products[manufacturer.id];
+              if (!products || !products.length) {
+                return null;
+              }
+              return (
+                <Spacer key={manufacturer.id} bottom="md">
+                  <ManufacturerShowcase manufacturer={manufacturer}>
+                    <div className="products-wrapper">
+                      {products.map(product => (
+                        <ProductShowcase product={product} key={product.id} />
+                      ))}
+                    </div>
+                  </ManufacturerShowcase>
+                </Spacer>
+              );
+            })
           )}
         </React.Fragment>
       )}

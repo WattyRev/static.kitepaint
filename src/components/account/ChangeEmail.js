@@ -24,7 +24,7 @@ const ChangeEmail = ({
       onSubmit();
     }}
   >
-    <Label for="email-input">
+    <Label htmlFor="email-input">
       Email Address (
       <A onClick={onToggleEdit}>{editing ? "Cancel" : "Change"}</A>)
     </Label>
