@@ -26,6 +26,7 @@ exports[`CreateNew renders 2`] = `
         "id": "product-1",
         "manufacturer": "manufacturer-1",
         "name": "Krazy Kite",
+        "status": "2",
         "url": "http://krazykites.com/krazy-kite",
         "variations": Array [
           Object {
@@ -74,6 +75,7 @@ exports[`CreateNew renders 3`] = `
           "id": "product-1",
           "manufacturer": "manufacturer-1",
           "name": "Krazy Kite",
+          "status": "2",
           "url": "http://krazykites.com/krazy-kite",
           "variations": Array [
             Object {
