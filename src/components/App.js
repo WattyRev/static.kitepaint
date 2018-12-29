@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import { isEmbedded } from "../constants/embed";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
+import EmbeddedCss from "./EmbeddedCss";
 import RestrictedRoute from "./RestrictedRoute";
 import About from "./about";
 import Account from "./account";
@@ -22,6 +23,7 @@ import View from "./view";
  */
 const App = ({ _isEmbedded }) => (
   <React.Fragment>
+    <EmbeddedCss />
     {!_isEmbedded && <Header />}
     <Switch>
       <RestrictedRoute exact path="/" component={Home} />

@@ -1,4 +1,5 @@
+import getQueryParams from "./getQueryParams";
 import makeCancelable from "./makeCancelable";
 import softCompareStrings from "./softCompareStrings";
 
-export { makeCancelable, softCompareStrings };
+export { getQueryParams, makeCancelable, softCompareStrings };

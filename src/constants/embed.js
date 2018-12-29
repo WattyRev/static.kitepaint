@@ -1,3 +1,5 @@
+import { getQueryParams } from "../utils";
+
 // Determines if the application is currently embedded
 function inIframe() {
   try {
@@ -8,3 +10,4 @@ function inIframe() {
 }
 
 export const isEmbedded = inIframe();
+export const externalCss = getQueryParams().css;
