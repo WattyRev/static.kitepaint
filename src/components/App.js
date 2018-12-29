@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Route, Switch } from "react-router-dom";
 import { isEmbedded } from "../constants/embed";
 import Header from "./layout/Header";
@@ -19,9 +20,9 @@ import View from "./view";
 /**
  * The entry for the app. The router will go here.
  */
-const App = () => (
+const App = ({ _isEmbedded }) => (
   <React.Fragment>
-    {!isEmbedded && <Header />}
+    {!_isEmbedded && <Header />}
     <Switch>
       <RestrictedRoute exact path="/" component={Home} />
       <RestrictedRoute exact path="/about" component={About} />
@@ -42,5 +43,13 @@ const App = () => (
     <Footer />
   </React.Fragment>
 );
+
+App.defaultProps = {
+  _isEmbedded: isEmbedded
+};
+
+App.propTypes = {
+  _isEmbedded: PropTypes.bool
+};
 
 export default App;

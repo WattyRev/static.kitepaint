@@ -5,26 +5,31 @@ exports[`renders without crashing 1`] = `
   <Header />
   <Switch>
     <RestrictedRoute
+      _isEmbedded={false}
       component={[Function]}
       exact={true}
       path="/"
     />
     <RestrictedRoute
+      _isEmbedded={false}
       component={[Function]}
       exact={true}
       path="/about"
     />
     <RestrictedRoute
+      _isEmbedded={false}
       component={[Function]}
       exact={true}
       path="/account"
     />
     <RestrictedRoute
+      _isEmbedded={false}
       component={[Function]}
       exact={true}
       path="/activate/:userId/:activationCode"
     />
     <RestrictedRoute
+      _isEmbedded={false}
       component={[Function]}
       exact={true}
       path="/create"
@@ -35,6 +40,7 @@ exports[`renders without crashing 1`] = `
       path="/create/:productId"
     />
     <RestrictedRoute
+      _isEmbedded={false}
       component={[Function]}
       exact={true}
       path="/designs"
@@ -45,6 +51,7 @@ exports[`renders without crashing 1`] = `
       path="/edit/:designId"
     />
     <RestrictedRoute
+      _isEmbedded={false}
       component={[Function]}
       exact={true}
       path="/my-designs"
