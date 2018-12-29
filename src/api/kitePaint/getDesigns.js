@@ -21,16 +21,6 @@ export default async function getDesigns(filter = {}, useCache = true) {
     filter: {
       active: 1
     },
-    return: [
-      "id",
-      "created",
-      "updated",
-      "name",
-      "product",
-      "user",
-      "variations",
-      "status"
-    ],
     order: ["id", "DESC"]
   };
   if (filterWithDefaults.limit) {

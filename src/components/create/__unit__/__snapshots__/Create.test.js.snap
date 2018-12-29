@@ -51,6 +51,7 @@ exports[`Create renders 2`] = `
                   "name": "black",
                 },
               ],
+              "embed": "krazykites.com",
               "id": "product-1",
               "manufacturer": "manufacturer-1",
               "name": "Krazy Kite",

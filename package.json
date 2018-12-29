@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"npm run start:react\" \"npm run start:embed\"",
+    "start:react": "react-scripts start",
+    "start:embed": "nodemon ./embed/server.js localhost 3001",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:debug": "node --inspect-brk /node_modules/.bin/jest --runInBand",
@@ -69,6 +71,8 @@
     ]
   },
   "devDependencies": {
+    "concurrently": "^4.1.0",
+    "connect": "^3.6.6",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
     "eslint-config-prettier": "^3.1.0",
@@ -78,6 +82,8 @@
     "jest-environment-enzyme": "^7.0.1",
     "jest-enzyme": "^7.0.1",
     "jest-styled-components": "^6.3.0",
-    "lint-staged": "^7.3.0"
+    "lint-staged": "^7.3.0",
+    "nodemon": "^1.18.9",
+    "serve-static": "^1.13.2"
   }
 }

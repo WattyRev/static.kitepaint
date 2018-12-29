@@ -54,7 +54,9 @@ exports[`AppContainer renders 1`] = `
       }
     }
   >
-    <App />
+    <App
+      _isEmbedded={false}
+    />
   </ThemeProvider>
 </BrowserRouter>
 `;

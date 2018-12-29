@@ -7,6 +7,7 @@ import Status, { statusProp } from "./status";
  */
 const productShape = PropTypes.shape({
   id: PropTypes.string.isRequired,
+  embed: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   notes: PropTypes.arrayOf(PropTypes.string),
   manufacturer: PropTypes.string.isRequired,
@@ -34,6 +35,7 @@ export default productShape;
  */
 const getMockProduct = () => ({
   id: "product-1",
+  embed: "krazykites.com",
   name: "Krazy Kite",
   manufacturer: getMockManufacturer().id,
   url: "http://krazykites.com/krazy-kite",

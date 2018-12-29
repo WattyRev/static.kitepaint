@@ -41,15 +41,14 @@ const CreateNew = ({ match }) => (
               <UserContainer>
                 {userData => (
                   <Toolbar
-                    onSave={
-                      userData.props.isLoggedIn
-                        ? name =>
-                            editorData.actions.save({
-                              name,
-                              user: userData.props.id
-                            })
-                        : null
-                    }
+                    onSave={name => {
+                      editorData.actions.save({
+                        name,
+                        user: userData.props.isLoggedIn
+                          ? userData.props.id
+                          : "0"
+                      });
+                    }}
                     onShare={() => {}}
                     onAutofill={editorData.actions.autofill}
                     onReset={() => {}}

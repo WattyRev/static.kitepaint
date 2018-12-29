@@ -15,6 +15,8 @@ import designShape from "../models/design";
 import productShape from "../models/product";
 import manufacturerShape from "../models/manufacturer";
 import userShape from "../models/user";
+import { isEmbedded } from "../constants/embed";
+import ErrorPage from "../components/ErrorPage";
 import { softCompareStrings, makeCancelable } from "../utils";
 
 /**
@@ -96,8 +98,8 @@ export class ViewContainer extends React.Component {
       // duplicates
       const colors = matches.reduce((accumulatedColors, match) => {
         const colorValue = match.split('"')[1];
-        const alreadyFound = accumulatedColors.find(
-          color => color.color === colorValue
+        const alreadyFound = accumulatedColors.find(color =>
+          softCompareStrings(color.color, colorValue)
         );
         if (alreadyFound) {
           return accumulatedColors;
@@ -174,6 +176,20 @@ export class ViewContainer extends React.Component {
   };
 
   render() {
+    if (isEmbedded && this.props.product) {
+      const embedWhiteList = [
+        "localhost",
+        ...this.props.product.embed.split(",")
+      ].map(entry => entry.trim());
+      if (!embedWhiteList.includes(window.location.hostname)) {
+        return (
+          <ErrorPage
+            errorCode={401}
+            errorMessage="Embedding of this page is not permitted."
+          />
+        );
+      }
+    }
     return this.props.children({
       actions: {
         selectVariation: this.handleVariationSelection
