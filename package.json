@@ -5,7 +5,7 @@
   "scripts": {
     "start": "concurrently \"npm run start:react\" \"npm run start:embed\"",
     "start:react": "react-scripts start",
-    "start:embed": "nodemon ./embed/server.js localhost 8080",
+    "start:embed": "nodemon ./embed/server.js localhost 3001",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:debug": "node --inspect-brk /node_modules/.bin/jest --runInBand",

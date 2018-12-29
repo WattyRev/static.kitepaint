@@ -1,7 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import { isEmbedded } from "../utils/embed";
-import { H1, Spacer } from "../theme";
+import { isEmbedded } from "../constants/embed";
+import ErrorPage from "./ErrorPage";
 
 /**
  * A route that cannot be accessed when embedding.
@@ -9,9 +9,10 @@ import { H1, Spacer } from "../theme";
 const RestrictedRoute = props => {
   if (isEmbedded) {
     return (
-      <Spacer top="md" bottom="md" left="md" right="md">
-        <H1>Embedding of this page is not permitted</H1>
-      </Spacer>
+      <ErrorPage
+        errorCode={401}
+        errorMessage="Embedding of this page is not permitted."
+      />
     );
   }
   return <Route {...props} />;

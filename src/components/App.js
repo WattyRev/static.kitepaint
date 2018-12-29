@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import { isEmbedded } from "../utils/embed";
+import { isEmbedded } from "../constants/embed";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
 import RestrictedRoute from "./RestrictedRoute";
@@ -34,7 +34,7 @@ const App = () => (
       <RestrictedRoute exact path="/create" component={Create} />
       <Route exact path="/create/:productId" component={CreateNew} />
       <RestrictedRoute exact path="/designs" component={Designs} />
-      <RestrictedRoute exact path="/edit/:designId" component={Edit} />
+      <Route exact path="/edit/:designId" component={Edit} />
       <RestrictedRoute exact path="/my-designs" component={MyDesigns} />
       <Route exact path="/view/:designId" component={View} />
       <Route component={ErrorPage} />

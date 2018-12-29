@@ -4,27 +4,27 @@ exports[`renders without crashing 1`] = `
 <Fragment>
   <Header />
   <Switch>
-    <Route
+    <RestrictedRoute
       component={[Function]}
       exact={true}
       path="/"
     />
-    <Route
+    <RestrictedRoute
       component={[Function]}
       exact={true}
       path="/about"
     />
-    <Route
+    <RestrictedRoute
       component={[Function]}
       exact={true}
       path="/account"
     />
-    <Route
+    <RestrictedRoute
       component={[Function]}
       exact={true}
       path="/activate/:userId/:activationCode"
     />
-    <Route
+    <RestrictedRoute
       component={[Function]}
       exact={true}
       path="/create"
@@ -34,7 +34,7 @@ exports[`renders without crashing 1`] = `
       exact={true}
       path="/create/:productId"
     />
-    <Route
+    <RestrictedRoute
       component={[Function]}
       exact={true}
       path="/designs"
@@ -44,7 +44,7 @@ exports[`renders without crashing 1`] = `
       exact={true}
       path="/edit/:designId"
     />
-    <Route
+    <RestrictedRoute
       component={[Function]}
       exact={true}
       path="/my-designs"

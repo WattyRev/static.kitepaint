@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { CREATE_DESIGN, UPDATE_DESIGN } from "../redux/actions";
 import designShape from "../models/design";
 import productShape from "../models/product";
+import { isEmbedded } from "../constants/embed";
+import ErrorPage from "../components/ErrorPage";
 import { softCompareStrings, makeCancelable } from "../utils";
 
 const appliedColorsShape = PropTypes.objectOf(
@@ -241,7 +243,12 @@ export class EditorContainer extends React.Component {
     const promise = makeCancelable(this.props.onSave(design));
     promise.promise.then(response => {
       const designId = response.data.id;
-      window.location.replace(`/edit/${designId}`);
+      if (data.user === "0") {
+        // If the design was created anonymously, go to the view page
+        window.location.replace(`/view/${designId}`);
+      } else {
+        window.location.replace(`/edit/${designId}`);
+      }
     });
     this.cancelablePromises.push(promise);
   };
@@ -284,6 +291,20 @@ export class EditorContainer extends React.Component {
   };
 
   render() {
+    if (isEmbedded && this.props.product) {
+      const embedWhiteList = [
+        "localhost",
+        ...this.props.product.embed.split(",")
+      ].map(entry => entry.trim());
+      if (!embedWhiteList.includes(window.location.hostname)) {
+        return (
+          <ErrorPage
+            errorCode={401}
+            errorMessage="Embedding of this page is not permitted."
+          />
+        );
+      }
+    }
     const data = {
       actions: {
         applyColor: this.handleColorApplied,

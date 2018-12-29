@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { isEmbedded } from "../../utils/embed";
+import { isEmbedded } from "../../constants/embed";
 import { A, P } from "../../theme";
 
 export const StyleWrapper = styled.div`
