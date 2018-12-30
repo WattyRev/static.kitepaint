@@ -64,8 +64,8 @@ const DesignManager = ({ design, product, manufacturer, onDelete }) => (
           ? Status[design.productStatus]
           : Status[design.status]}
       </P>
-      {[Status.PUBLIC, Status.UNLISTED].includes(design.status) &&
-        [Status.PUBLIC, Status.UNLISTED].includes(design.productStatus) && (
+      {design.status !== Status.PRIVATE &&
+        design.productStatus !== Status.PRIVATE && (
           <React.Fragment>
             <Label>Public URL</Label>
             <Input
@@ -75,9 +75,12 @@ const DesignManager = ({ design, product, manufacturer, onDelete }) => (
             />
           </React.Fragment>
         )}
-      <Button as={Link} to={`view/${design.id}`}>
-        <Icon icon="eye" /> View
-      </Button>{" "}
+      {design.status !== Status.PRIVATE &&
+        design.productStatus !== Status.PRIVATE && (
+          <Button as={Link} to={`view/${design.id}`}>
+            <Icon icon="eye" /> View
+          </Button>
+        )}{" "}
       <Button as={Link} to={`edit/${design.id}`}>
         <Icon icon="edit" /> Edit
       </Button>{" "}
