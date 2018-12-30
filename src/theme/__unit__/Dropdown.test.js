@@ -23,12 +23,12 @@ describe("Dropdown", () => {
       </Dropdown>
     );
   });
-  it("renders the dropdown content when openDropdown is triggered", () => {
+  it("renders the dropdown content when open is triggered", () => {
     expect.assertions(2);
     const wrapper = shallow(
       <Dropdown dropdownContent={() => <div className="target">test</div>}>
         {data => (
-          <div className="click-open" onClick={data.actions.openDropdown}>
+          <div className="click-open" onClick={data.actions.open}>
             test2
           </div>
         )}
@@ -38,16 +38,16 @@ describe("Dropdown", () => {
     wrapper.find(".click-open").simulate("click");
     expect(wrapper.find(".target")).toHaveLength(1);
   });
-  it("removes the dropdown content when closeDropdown is triggered", () => {
+  it("removes the dropdown content when close is triggered", () => {
     expect.assertions(2);
     const wrapper = shallow(
       <Dropdown dropdownContent={() => <div className="target">test</div>}>
         {data => (
           <React.Fragment>
-            <div className="click-open" onClick={data.actions.openDropdown}>
+            <div className="click-open" onClick={data.actions.open}>
               test2
             </div>
-            <div className="click-close" onClick={data.actions.closeDropdown}>
+            <div className="click-close" onClick={data.actions.close}>
               test3
             </div>
           </React.Fragment>
@@ -66,14 +66,14 @@ describe("Dropdown", () => {
         dropdownContent={data => (
           <React.Fragment>
             <div className="target">test</div>
-            <div className="click-close" onClick={data.actions.closeDropdown}>
+            <div className="click-close" onClick={data.actions.close}>
               test3
             </div>
           </React.Fragment>
         )}
       >
         {data => (
-          <div className="click-open" onClick={data.actions.openDropdown}>
+          <div className="click-open" onClick={data.actions.open}>
             test2
           </div>
         )}
@@ -87,21 +87,18 @@ describe("Dropdown", () => {
 
   describe("StyledDropdown", () => {
     it("renders", () => {
-      const wrapper = mount(<StyledDropdown theme={Theme} />);
-      expect(wrapper.find("div")).toHaveLength(1);
+      mount(<StyledDropdown theme={Theme} />);
     });
   });
 
   describe("Item", () => {
     it("renders", () => {
-      const wrapper = mount(<Item theme={Theme} />);
-      expect(wrapper.find("a")).toHaveLength(1);
+      mount(<Item theme={Theme} />);
     });
   });
   describe("Spacer", () => {
     it("renders", () => {
-      const wrapper = mount(<Spacer theme={Theme} />);
-      expect(wrapper.find("div")).toHaveLength(1);
+      mount(<Spacer theme={Theme} />);
     });
   });
 });

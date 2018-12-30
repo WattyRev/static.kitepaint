@@ -13,6 +13,7 @@ describe("MyDesignsContainer", () => {
       onFetchDesigns: jest.fn(),
       onFetchProducts: jest.fn(),
       onFetchManufacturers: jest.fn(),
+      onUpdateDesign: jest.fn(),
       designs: [],
       products: {},
       manufacturers: {},

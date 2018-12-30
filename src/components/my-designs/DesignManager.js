@@ -6,9 +6,18 @@ import Status from "../../models/status";
 import designShape from "../../models/design";
 import productShape from "../../models/product";
 import manufacturerShape from "../../models/manufacturer";
-import { H2, P, Button, Icon, Tile, ModalConfirm } from "../../theme";
+import {
+  H2,
+  P,
+  Button,
+  Icon,
+  Tile,
+  ModalConfirm,
+  TextButton
+} from "../../theme";
 import ShareModal from "../ShareModal";
 import Svg from "../Svg";
+import StatusDropdown from "../StatusDropdown";
 
 export const StyleWrapper = styled(Tile)`
   > div {
@@ -30,7 +39,13 @@ export const StyleWrapper = styled(Tile)`
 /**
  * Provides a UI for managing a user's design.
  */
-const DesignManager = ({ design, product, manufacturer, onDelete }) => (
+const DesignManager = ({
+  design,
+  product,
+  manufacturer,
+  onDelete,
+  onChangeStatus
+}) => (
   <StyleWrapper>
     <div>
       <H2>{design.name}</H2>
@@ -51,9 +66,16 @@ const DesignManager = ({ design, product, manufacturer, onDelete }) => (
     <div>
       <P>
         Created: {design.created} | Last Modified: {design.updated} | Visiblity:{" "}
-        {design.status > design.productStatus
-          ? Status[design.productStatus]
-          : Status[design.status]}
+        <StatusDropdown design={design} onChange={onChangeStatus}>
+          {dropdown => (
+            <TextButton
+              disabled={dropdown.props.isPending}
+              onClick={!dropdown.props.isPending ? dropdown.actions.open : null}
+            >
+              {dropdown.props.currentStatus} <Icon icon="angle-down" />
+            </TextButton>
+          )}
+        </StatusDropdown>
       </P>
       {design.status !== Status.PRIVATE &&
         design.productStatus !== Status.PRIVATE && (
@@ -91,6 +113,7 @@ const DesignManager = ({ design, product, manufacturer, onDelete }) => (
 
 DesignManager.propTypes = {
   design: designShape.isRequired,
+  onChangeStatus: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   product: productShape,
   manufacturer: manufacturerShape

@@ -9,7 +9,8 @@ import {
   GET_DESIGNS,
   GET_PRODUCTS,
   GET_MANUFACTURERS,
-  DELETE_DESIGN
+  DELETE_DESIGN,
+  UPDATE_DESIGN
 } from "../redux/actions";
 import designShape from "../models/design";
 import productShape from "../models/product";
@@ -25,6 +26,8 @@ export class MyDesignsContainer extends React.Component {
      * A function that is called when the user requests to delete a design.
      */
     onDeleteDesign: PropTypes.func.isRequired,
+    /** A function called when the user makes a change to the design */
+    onUpdateDesign: PropTypes.func.isRequired,
     /**
      * A function that triggers the retieval of the user's designs. Provided by Redux.
      */
@@ -104,10 +107,21 @@ export class MyDesignsContainer extends React.Component {
 
   cancelablePromises = [];
 
+  handleStatusChange = (designId, newStatus) => {
+    const data = {
+      id: designId,
+      status: newStatus
+    };
+    const request = makeCancelable(this.props.onUpdateDesign(data));
+    this.cancelablePromises.push(request);
+    return request.promise;
+  };
+
   render() {
     return this.props.children({
       actions: {
-        deleteDesign: this.props.onDeleteDesign
+        deleteDesign: this.props.onDeleteDesign,
+        changeStatus: this.handleStatusChange
       },
       props: {
         isLoading: this.state.isLoading,
@@ -129,7 +143,8 @@ const mapDispatchToProps = {
   onDeleteDesign: DELETE_DESIGN,
   onFetchDesigns: GET_DESIGNS,
   onFetchProducts: GET_PRODUCTS,
-  onFetchManufacturers: GET_MANUFACTURERS
+  onFetchManufacturers: GET_MANUFACTURERS,
+  onUpdateDesign: UPDATE_DESIGN
 };
 
 // We need the user prop to be provided in order to get the designs, so wrap the container once

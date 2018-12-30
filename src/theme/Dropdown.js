@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { TypographyStyles } from "./Text";
 
-const StyleWrapper = styled.div`
+const StyleWrapper = styled.span`
   position: relative;
 `;
 
 /**
  * Applies styles to the dropdown itself
  */
-export const StyledDropdown = styled.div`
+export const StyledDropdown = styled.span`
   position: absolute;
   top: calc(100% + 4px);
   right: 0;
@@ -32,13 +32,16 @@ export const Item = styled.a`
   white-space: nowrap;
   padding: 4px 8px;
   font-size: 14px;
-  color: ${props => props.theme.colors.black};
+  color: ${props =>
+    props.disabled ? props.theme.colors.gray : props.theme.colors.black};
   transition: 0.2s;
-  cursor: pointer;
+  cursor: ${props => (props.disabled ? "default" : "pointer")};
 
-  &:hover {
-    background: ${props => props.theme.colors.silver};
-  }
+  ${props =>
+    !props.disabled &&
+    `&:hover {
+      background: ${props.theme.colors.silver};
+    }`};
 `;
 
 /**
@@ -56,9 +59,9 @@ export const Spacer = styled.div`
  * Example:
  * ```
  * <Dropdown
- *   dropdownContent={dropdownData => <a onClick={dropdownData.actions.closeDropdown}>Close</a>}
+ *   dropdownContent={dropdownData => <a onClick={dropdownData.actions.close}>Close</a>}
  * >
- *   {dropdownData => <a onClick={dropdownData.actions.openDropdown}>Open</a>}
+ *   {dropdownData => <a onClick={dropdownData.actions.open}>Open</a>}
  * </Dropdown>
  * ```
  */
@@ -85,28 +88,28 @@ class Dropdown extends React.Component {
    * This enables the dropdown to automatically close when clicking outside of it.
    * @param {Object} event A DOM click event
    */
-  autoCloseDropdown = event => {
+  autoClose = event => {
     if (!this.state.isOpen) {
       return;
     }
     if (this.node.contains(event.target)) {
       return;
     }
-    this.closeDropdown();
+    this.close();
   };
 
   componentDidMount() {
-    document.addEventListener("click", this.autoCloseDropdown);
+    document.addEventListener("click", this.autoClose);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("click", this.autoCloseDropdown);
+    document.removeEventListener("click", this.autoClose);
   }
 
   /**
    * Opens the dropdown
    */
-  openDropdown = () => {
+  open = () => {
     this.setState({
       isOpen: true
     });
@@ -115,7 +118,7 @@ class Dropdown extends React.Component {
   /**
    * Closes the dropdown
    */
-  closeDropdown = () => {
+  close = () => {
     this.setState({
       isOpen: false
     });
@@ -124,8 +127,8 @@ class Dropdown extends React.Component {
   render() {
     const renderData = {
       actions: {
-        openDropdown: this.openDropdown,
-        closeDropdown: this.closeDropdown
+        open: this.open,
+        close: this.close
       },
       props: {
         isOpen: this.state.isOpen

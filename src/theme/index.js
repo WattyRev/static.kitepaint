@@ -22,6 +22,7 @@ import PageLoader from "./PageLoader";
 import Sidebar from "./Sidebar";
 import Spacer from "./Spacer";
 import Text from "./Text";
+import TextButton from "./TextButton";
 import Tile from "./Tile";
 import Tooltip from "./Tooltip";
 
@@ -50,7 +51,8 @@ export {
   PageLoader,
   Sidebar,
   Spacer,
-  Tile,
   Text,
+  TextButton,
+  Tile,
   Tooltip
 };

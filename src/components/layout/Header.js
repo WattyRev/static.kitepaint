@@ -95,14 +95,14 @@ const Header = () => (
                   <accountDropdown.components.Item
                     as={Link}
                     to="/my-designs"
-                    onClick={accountDropdown.actions.closeDropdown}
+                    onClick={accountDropdown.actions.close}
                   >
                     My Designs
                   </accountDropdown.components.Item>
                   <accountDropdown.components.Item
                     as={Link}
                     to="/account"
-                    onClick={accountDropdown.actions.closeDropdown}
+                    onClick={accountDropdown.actions.close}
                   >
                     Manage Account
                   </accountDropdown.components.Item>
@@ -119,8 +119,8 @@ const Header = () => (
                 <NavLink
                   onClick={
                     accountDropdown.props.isOpen
-                      ? accountDropdown.actions.closeDropdown
-                      : accountDropdown.actions.openDropdown
+                      ? accountDropdown.actions.close
+                      : accountDropdown.actions.open
                   }
                 >
                   {userData.props.username}
