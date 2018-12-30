@@ -2,6 +2,7 @@ import React from "react";
 import { mount } from "enzyme";
 import { getMockProduct } from "../../models/product";
 import { getMockDesign } from "../../models/design";
+import Status from "../../models/status";
 import { EditorContainer } from "../EditorContainer";
 
 describe("EditorContainer", () => {
@@ -316,6 +317,7 @@ describe("EditorContainer", () => {
       name: "boogers",
       user: "123",
       product: defaultProps.product.id,
+      status: Status.UNLISTED,
       variations: [
         {
           name: "Standard",

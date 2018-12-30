@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import designShape from "../../models/design";
 import { P, Icon, ModalPrompt } from "../../theme";
+import ShareModal from "../ShareModal";
 
 /**
  * Overall styling for the toolbar
@@ -34,9 +36,9 @@ export const StyleWrapper = styled.div`
  * The toolbar displayed at the top of the editor to provide various actions.
  */
 const Toolbar = ({
+  design,
   onSave,
   onUpdate,
-  onShare,
   onAutofill,
   onReset,
   onHideOutlines,
@@ -60,9 +62,13 @@ const Toolbar = ({
         )}
       </ModalPrompt>
     )}
-    <P isLight onClick={onShare}>
-      <Icon icon="share" /> Share
-    </P>
+    <ShareModal design={design}>
+      {modal => (
+        <P isLight onClick={modal.actions.open}>
+          <Icon icon="share" /> Share
+        </P>
+      )}
+    </ShareModal>
     {!!onAutofill && (
       <P className="testing_autofill" isLight onClick={onAutofill}>
         <Icon icon="magic" /> Autofill
@@ -83,9 +89,9 @@ const Toolbar = ({
 );
 
 Toolbar.propTypes = {
+  design: designShape,
   onUpdate: PropTypes.func,
   onSave: PropTypes.func,
-  onShare: PropTypes.func.isRequired,
   onAutofill: PropTypes.func,
   onReset: PropTypes.func,
   onHideOutlines: PropTypes.func.isRequired,

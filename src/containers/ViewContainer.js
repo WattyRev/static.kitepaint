@@ -17,7 +17,7 @@ import manufacturerShape from "../models/manufacturer";
 import userShape from "../models/user";
 import { isEmbedded } from "../constants/embed";
 import ErrorPage from "../components/ErrorPage";
-import { softCompareStrings, makeCancelable } from "../utils";
+import { softCompareStrings, makeCancelable, embedAllowed } from "../utils";
 
 /**
  * A container that provides data management for the View page.
@@ -176,19 +176,17 @@ export class ViewContainer extends React.Component {
   };
 
   render() {
-    if (isEmbedded && this.props.product) {
-      const embedWhiteList = [
-        "localhost",
-        ...this.props.product.embed.split(",")
-      ].map(entry => entry.trim());
-      if (!embedWhiteList.includes(window.location.hostname)) {
-        return (
-          <ErrorPage
-            errorCode={401}
-            errorMessage="Embedding of this page is not permitted."
-          />
-        );
-      }
+    if (
+      isEmbedded &&
+      this.props.product &&
+      !embedAllowed(this.props.product.embed.split(","))
+    ) {
+      return (
+        <ErrorPage
+          errorCode={401}
+          errorMessage="Embedding of this page is not permitted."
+        />
+      );
     }
     return this.props.children({
       actions: {

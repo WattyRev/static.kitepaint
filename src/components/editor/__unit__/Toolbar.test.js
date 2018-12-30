@@ -17,7 +17,6 @@ describe("Toolbar", () => {
   let defaultProps;
   beforeEach(() => {
     defaultProps = {
-      onShare: jest.fn(),
       onHideOutlines: jest.fn(),
       onBackgroundChange: jest.fn()
     };

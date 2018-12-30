@@ -6,16 +6,8 @@ import Status from "../../models/status";
 import designShape from "../../models/design";
 import productShape from "../../models/product";
 import manufacturerShape from "../../models/manufacturer";
-import {
-  H2,
-  P,
-  Button,
-  Input,
-  Label,
-  Icon,
-  Tile,
-  ModalConfirm
-} from "../../theme";
+import { H2, P, Button, Icon, Tile, ModalConfirm } from "../../theme";
+import ShareModal from "../ShareModal";
 import Svg from "../Svg";
 
 export const StyleWrapper = styled(Tile)`
@@ -63,26 +55,22 @@ const DesignManager = ({ design, product, manufacturer, onDelete }) => (
           ? Status[design.productStatus]
           : Status[design.status]}
       </P>
-      {[Status.PUBLIC, Status.UNLISTED].includes(design.status) &&
-        [Status.PUBLIC, Status.UNLISTED].includes(design.productStatus) && (
-          <React.Fragment>
-            <Label>Public URL</Label>
-            <Input
-              className="testing_public-url"
-              readOnly
-              value={`${window.location.origin}/view/${design.id}`}
-            />
-          </React.Fragment>
-        )}
-      <Button as={Link} to={`view/${design.id}`}>
-        <Icon icon="eye" /> View
-      </Button>{" "}
+      {design.status !== Status.PRIVATE &&
+        design.productStatus !== Status.PRIVATE && (
+          <Button className="testing_view" as={Link} to={`view/${design.id}`}>
+            <Icon icon="eye" /> View
+          </Button>
+        )}{" "}
       <Button as={Link} to={`edit/${design.id}`}>
         <Icon icon="edit" /> Edit
       </Button>{" "}
-      <Button>
-        <Icon icon="share" /> Share
-      </Button>{" "}
+      <ShareModal design={design}>
+        {modal => (
+          <Button onClick={modal.actions.open}>
+            <Icon icon="share" /> Share
+          </Button>
+        )}
+      </ShareModal>{" "}
       <ModalConfirm
         onConfirm={() => onDelete()}
         confirmText="Yes"

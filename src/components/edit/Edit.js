@@ -46,6 +46,7 @@ const Edit = ({ match }) => (
           {editorData => (
             <React.Fragment>
               <Toolbar
+                design={editData.props.design}
                 onUpdate={editorData.actions.update}
                 onSave={name =>
                   editorData.actions.save({
@@ -53,7 +54,6 @@ const Edit = ({ match }) => (
                     user: editData.props.user.id
                   })
                 }
-                onShare={() => {}}
                 onAutofill={editorData.actions.autofill}
                 onReset={() => {}}
                 onHideOutlines={() => {}}

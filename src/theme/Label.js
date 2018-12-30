@@ -15,5 +15,6 @@ const Label = ({ children, ...props }) => (
 const StyledLabel = styled(Label)`
   margin: 8px 0 4px;
   display: block;
+  font-weight: 600;
 `;
 export default StyledLabel;
