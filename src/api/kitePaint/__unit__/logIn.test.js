@@ -11,7 +11,7 @@ describe("#logIn", () => {
     };
   });
   afterEach(() => {
-    sessionStorage.removeItem("user");
+    localStorage.removeItem("user");
   });
   it("should send the provided data to the correct API", () => {
     expect.assertions(2);
@@ -72,7 +72,7 @@ describe("#logIn", () => {
         logged_in: true,
         abc: "def"
       };
-      expect(sessionStorage.getItem("user")).toEqual(JSON.stringify(expected));
+      expect(localStorage.getItem("user")).toEqual(JSON.stringify(expected));
       expect(response).toEqual({ data: expected });
     });
   });

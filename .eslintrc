@@ -4,23 +4,22 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "prettier",
-    "prettier/react",
+    "prettier/react"
   ],
   "plugins": ["jest"],
   "settings": {
     "react": {
       "createClass": "createReactClass",
       "pragma": "React",
-      "version": "16.6",
+      "version": "16.6"
     },
-    "propWrapperFunctions": [ "forbidExtraProps" ]
+    "propWrapperFunctions": ["forbidExtraProps"]
   },
   "globals": {
     "describe": true,
     "it": true,
     "expect": true,
     "Promise": true,
-    "sessionStorage": true,
     "jest": true,
     "beforeEach": true,
     "afterEach": true,
@@ -30,6 +29,6 @@
     "localStorage": true,
     "console": true,
     "module": true,
-    "require": true,
+    "require": true
   }
 }
