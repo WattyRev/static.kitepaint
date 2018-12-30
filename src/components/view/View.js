@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { PageLoader } from "../../theme";
 import ViewContainer from "../../containers/ViewContainer";
+import Status from "../../models/status";
+import { PageLoader } from "../../theme";
 import Toolbar from "../editor/Toolbar";
 import Sidebar from "./Sidebar";
 import Canvas from "../editor/Canvas";
@@ -23,13 +24,16 @@ const View = ({ match }) => (
       if (designData.props.isLoading) {
         return <PageLoader />;
       }
-      if (!designData.props.design) {
+      if (
+        !designData.props.design ||
+        designData.props.design.status === Status.PRIVATE
+      ) {
         return <ErrorPage />;
       }
       return (
         <React.Fragment>
           <Toolbar
-            onShare={() => {}}
+            design={designData.props.design}
             onHideOutlines={() => {}}
             onBackgroundChange={() => {}}
           />

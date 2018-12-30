@@ -14,6 +14,7 @@ import Input from "./Input";
 import Label from "./Label";
 import Loading from "./Loading";
 import Modal from "./Modal";
+import ModalClose from "./ModalClose";
 import ModalConfirm from "./ModalConfirm";
 import ModalPrompt from "./ModalPrompt";
 import P from "./P";
@@ -42,6 +43,7 @@ export {
   Label,
   Loading,
   Modal,
+  ModalClose,
   ModalConfirm,
   ModalPrompt,
   P,

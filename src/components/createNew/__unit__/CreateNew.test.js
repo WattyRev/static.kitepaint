@@ -19,9 +19,7 @@ describe("CreateNew", () => {
     };
   });
   it("renders", () => {
-    expect.assertions(4);
     const wrapper = shallow(<CreateNew {...defaultProps} />);
-    expect(wrapper).toMatchSnapshot();
 
     // Drill in to product container
     const productData = {
@@ -35,7 +33,6 @@ describe("CreateNew", () => {
         {wrapper.find(CreateNewContainer).prop("children")(productData)}
       </div>
     );
-    expect(CreateNewContainerWrapper).toMatchSnapshot();
 
     // Drill in to editor container
     const editorData = {
@@ -64,7 +61,6 @@ describe("CreateNew", () => {
         )}
       </div>
     );
-    expect(editorContainerWrapper).toMatchSnapshot();
 
     // Drill in to user container
     const userData = {
@@ -73,11 +69,10 @@ describe("CreateNew", () => {
         id: "123"
       }
     };
-    const userContainerWrapper = shallow(
+    shallow(
       <div>
         {editorContainerWrapper.find(UserContainer).prop("children")(userData)}
       </div>
     );
-    expect(userContainerWrapper).toMatchSnapshot();
   });
 });

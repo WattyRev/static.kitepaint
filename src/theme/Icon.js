@@ -16,6 +16,7 @@ import {
   faSignOutAlt,
   faSpinner,
   faUndo,
+  faTimes,
   faTrash
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -38,6 +39,7 @@ export function setupFontAwesome() {
     faSignOutAlt,
     faSpinner,
     faUndo,
+    faTimes,
     faTrash
   );
 }

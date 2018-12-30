@@ -16,6 +16,7 @@ import {
   Tile,
   ModalConfirm
 } from "../../theme";
+import ShareModal from "../ShareModal";
 import Svg from "../Svg";
 
 export const StyleWrapper = styled(Tile)`
@@ -80,9 +81,13 @@ const DesignManager = ({ design, product, manufacturer, onDelete }) => (
       <Button as={Link} to={`edit/${design.id}`}>
         <Icon icon="edit" /> Edit
       </Button>{" "}
-      <Button>
-        <Icon icon="share" /> Share
-      </Button>{" "}
+      <ShareModal design={design}>
+        {modal => (
+          <Button onClick={modal.actions.open}>
+            <Icon icon="share" /> Share
+          </Button>
+        )}
+      </ShareModal>{" "}
       <ModalConfirm
         onConfirm={() => onDelete()}
         confirmText="Yes"

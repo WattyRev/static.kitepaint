@@ -5,9 +5,10 @@ import { connect } from "react-redux";
 import { CREATE_DESIGN, UPDATE_DESIGN } from "../redux/actions";
 import designShape from "../models/design";
 import productShape from "../models/product";
+import Status from "../models/status";
 import { isEmbedded } from "../constants/embed";
 import ErrorPage from "../components/ErrorPage";
-import { softCompareStrings, makeCancelable } from "../utils";
+import { softCompareStrings, makeCancelable, embedAllowed } from "../utils";
 
 const appliedColorsShape = PropTypes.objectOf(
   PropTypes.shape({
@@ -238,7 +239,8 @@ export class EditorContainer extends React.Component {
       name,
       user,
       product: this.props.product.id,
-      variations: this.generateDesignVariations()
+      variations: this.generateDesignVariations(),
+      status: user === "0" ? Status.PUBLIC : Status.UNLISTED
     };
     const promise = makeCancelable(this.props.onSave(design));
     promise.promise.then(response => {
@@ -291,19 +293,17 @@ export class EditorContainer extends React.Component {
   };
 
   render() {
-    if (isEmbedded && this.props.product) {
-      const embedWhiteList = [
-        "localhost",
-        ...this.props.product.embed.split(",")
-      ].map(entry => entry.trim());
-      if (!embedWhiteList.includes(window.location.hostname)) {
-        return (
-          <ErrorPage
-            errorCode={401}
-            errorMessage="Embedding of this page is not permitted."
-          />
-        );
-      }
+    if (
+      isEmbedded &&
+      this.props.product &&
+      !embedAllowed(this.props.product.embed.split(","))
+    ) {
+      return (
+        <ErrorPage
+          errorCode={401}
+          errorMessage="Embedding of this page is not permitted."
+        />
+      );
     }
     const data = {
       actions: {
