@@ -6,16 +6,7 @@ import Status from "../../models/status";
 import designShape from "../../models/design";
 import productShape from "../../models/product";
 import manufacturerShape from "../../models/manufacturer";
-import {
-  H2,
-  P,
-  Button,
-  Input,
-  Label,
-  Icon,
-  Tile,
-  ModalConfirm
-} from "../../theme";
+import { H2, P, Button, Icon, Tile, ModalConfirm } from "../../theme";
 import ShareModal from "../ShareModal";
 import Svg from "../Svg";
 
@@ -66,18 +57,7 @@ const DesignManager = ({ design, product, manufacturer, onDelete }) => (
       </P>
       {design.status !== Status.PRIVATE &&
         design.productStatus !== Status.PRIVATE && (
-          <React.Fragment>
-            <Label>Public URL</Label>
-            <Input
-              className="testing_public-url"
-              readOnly
-              value={`${window.location.origin}/view/${design.id}`}
-            />
-          </React.Fragment>
-        )}
-      {design.status !== Status.PRIVATE &&
-        design.productStatus !== Status.PRIVATE && (
-          <Button as={Link} to={`view/${design.id}`}>
+          <Button className="testing_view" as={Link} to={`view/${design.id}`}>
             <Icon icon="eye" /> View
           </Button>
         )}{" "}

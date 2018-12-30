@@ -72,28 +72,28 @@ describe("DesignManager", () => {
       expect.not.stringContaining("by")
     );
   });
-  it("displays the public url if the design is public", () => {
+  it("displays the view button if the design is public", () => {
     expect.assertions(1);
     defaultProps.design.status = Status.PUBLIC;
 
     const wrapper = shallow(<DesignManager {...defaultProps} />);
 
-    expect(wrapper.find(".testing_public-url")).toHaveLength(1);
+    expect(wrapper.find(".testing_view")).toHaveLength(1);
   });
-  it("displays the public url if the design is unlisted", () => {
+  it("displays the view button if the design is unlisted", () => {
     expect.assertions(1);
     defaultProps.design.status = Status.UNLISTED;
 
     const wrapper = shallow(<DesignManager {...defaultProps} />);
 
-    expect(wrapper.find(".testing_public-url")).toHaveLength(1);
+    expect(wrapper.find(".testing_view")).toHaveLength(1);
   });
-  it("does not display the public url if the design is private", () => {
+  it("does not display the view button if the design is private", () => {
     expect.assertions(1);
     defaultProps.design.status = Status.PRIVATE;
 
     const wrapper = shallow(<DesignManager {...defaultProps} />);
 
-    expect(wrapper.find(".testing_public-url")).toHaveLength(0);
+    expect(wrapper.find(".testing_view")).toHaveLength(0);
   });
 });
