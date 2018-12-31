@@ -6,18 +6,10 @@ import Status from "../../models/status";
 import designShape from "../../models/design";
 import productShape from "../../models/product";
 import manufacturerShape from "../../models/manufacturer";
-import {
-  H2,
-  P,
-  Button,
-  Icon,
-  Tile,
-  ModalConfirm,
-  TextButton
-} from "../../theme";
+import DesignSettingsModalContainer from "../../containers/DesignSettingsModalContainer";
+import { H2, P, Button, Icon, Tile, ModalConfirm } from "../../theme";
 import ShareModal from "../ShareModal";
 import Svg from "../Svg";
-import StatusDropdown from "../StatusDropdown";
 
 export const StyleWrapper = styled(Tile)`
   > div {
@@ -39,13 +31,7 @@ export const StyleWrapper = styled(Tile)`
 /**
  * Provides a UI for managing a user's design.
  */
-const DesignManager = ({
-  design,
-  product,
-  manufacturer,
-  onDelete,
-  onChangeStatus
-}) => (
+const DesignManager = ({ design, product, manufacturer, onDelete }) => (
   <StyleWrapper>
     <div>
       <H2>{design.name}</H2>
@@ -66,16 +52,9 @@ const DesignManager = ({
     <div>
       <P>
         Created: {design.created} | Last Modified: {design.updated} | Visiblity:{" "}
-        <StatusDropdown design={design} onChange={onChangeStatus}>
-          {dropdown => (
-            <TextButton
-              disabled={dropdown.props.isPending}
-              onClick={!dropdown.props.isPending ? dropdown.actions.open : null}
-            >
-              {dropdown.props.currentStatus} <Icon icon="angle-down" />
-            </TextButton>
-          )}
-        </StatusDropdown>
+        {design.status > design.productStatus
+          ? Status[design.productStatus]
+          : Status[design.status]}
       </P>
       {design.status !== Status.PRIVATE &&
         design.productStatus !== Status.PRIVATE && (
@@ -106,14 +85,20 @@ const DesignManager = ({
             <Icon icon="trash" /> Delete
           </Button>
         )}
-      </ModalConfirm>
+      </ModalConfirm>{" "}
+      <DesignSettingsModalContainer design={design}>
+        {modal => (
+          <Button onClick={modal.actions.open}>
+            <Icon icon="cog" /> Settings
+          </Button>
+        )}
+      </DesignSettingsModalContainer>
     </div>
   </StyleWrapper>
 );
 
 DesignManager.propTypes = {
   design: designShape.isRequired,
-  onChangeStatus: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   product: productShape,
   manufacturer: manufacturerShape

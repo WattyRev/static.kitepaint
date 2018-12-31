@@ -32,9 +32,6 @@ const MyDesigns = () => (
               <Spacer key={design.id} bottom="md">
                 <DesignManager
                   onDelete={() => userDesigns.actions.deleteDesign(design.id)}
-                  onChangeStatus={newStatus =>
-                    userDesigns.actions.changeStatus(design.id, newStatus)
-                  }
                   design={design}
                   product={product}
                   manufacturer={manufacturer}

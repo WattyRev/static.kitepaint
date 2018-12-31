@@ -19,6 +19,7 @@ import ModalConfirm from "./ModalConfirm";
 import ModalPrompt from "./ModalPrompt";
 import P from "./P";
 import PageLoader from "./PageLoader";
+import Select from "./Select";
 import Sidebar from "./Sidebar";
 import Spacer from "./Spacer";
 import Text from "./Text";
@@ -49,6 +50,7 @@ export {
   ModalPrompt,
   P,
   PageLoader,
+  Select,
   Sidebar,
   Spacer,
   Text,
