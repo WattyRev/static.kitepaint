@@ -15,7 +15,7 @@ import designShape from "../models/design";
 import productShape from "../models/product";
 import manufacturerShape from "../models/manufacturer";
 import userShape from "../models/user";
-import { isEmbedded } from "../constants/embed";
+import { isEmbedded, defaultBackground } from "../constants/embed";
 import ErrorPage from "../components/ErrorPage";
 import { softCompareStrings, makeCancelable, embedAllowed } from "../utils";
 
@@ -70,7 +70,7 @@ export class ViewContainer extends React.Component {
     isLoading: true,
     usedColors: {},
     currentVariation: null,
-    background: null
+    background: defaultBackground || null
   };
 
   static getDerivedStateFromProps(props, state) {

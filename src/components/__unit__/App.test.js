@@ -4,8 +4,7 @@ import Header from "../layout/Header";
 import App from "../App";
 
 it("renders without crashing", () => {
-  const wrapper = shallow(<App />);
-  expect(wrapper).toMatchSnapshot();
+  shallow(<App />);
 });
 
 it("displays the header when not embedded", () => {

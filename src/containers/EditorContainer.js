@@ -6,7 +6,7 @@ import { CREATE_DESIGN, UPDATE_DESIGN } from "../redux/actions";
 import designShape from "../models/design";
 import productShape from "../models/product";
 import Status from "../models/status";
-import { isEmbedded } from "../constants/embed";
+import { isEmbedded, defaultBackground } from "../constants/embed";
 import ErrorPage from "../components/ErrorPage";
 import { softCompareStrings, makeCancelable, embedAllowed } from "../utils";
 
@@ -113,7 +113,7 @@ export class EditorContainer extends React.Component {
     }
 
     this.state = {
-      background: null,
+      background: defaultBackground || null,
       /**
        * The currently selected color.
        * @type {Object}

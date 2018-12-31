@@ -9,5 +9,8 @@ function inIframe() {
   }
 }
 
+const queryParams = getQueryParams();
+
 export const isEmbedded = inIframe();
-export const externalCss = getQueryParams().css;
+export const externalCss = isEmbedded ? queryParams.css : null;
+export const defaultBackground = isEmbedded ? queryParams.background : null;
