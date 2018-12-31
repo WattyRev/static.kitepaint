@@ -70,7 +70,8 @@ export class ViewContainer extends React.Component {
     isLoading: true,
     usedColors: {},
     currentVariation: null,
-    background: defaultBackground || null
+    background: defaultBackground || null,
+    hideOutlines: false
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -178,6 +179,9 @@ export class ViewContainer extends React.Component {
 
   handleBackgroundChange = value => this.setState({ background: value });
 
+  handleToggleHideOutlines = () =>
+    this.setState({ hideOutlines: !this.state.hideOutlines });
+
   render() {
     if (
       isEmbedded &&
@@ -194,10 +198,12 @@ export class ViewContainer extends React.Component {
     return this.props.children({
       actions: {
         changeBackground: this.handleBackgroundChange,
-        selectVariation: this.handleVariationSelection
+        selectVariation: this.handleVariationSelection,
+        toggleHideOutlines: this.handleToggleHideOutlines
       },
       props: {
         background: this.state.background,
+        hideOutlines: this.state.hideOutlines,
         currentVariation: this.state.currentVariation,
         isLoading: this.state.isLoading,
         design: this.props.design,

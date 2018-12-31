@@ -41,7 +41,8 @@ describe("CreateNew", () => {
         selectColor: jest.fn(),
         applyColor: jest.fn(),
         save: jest.fn(),
-        changeBackground: jest.fn()
+        changeBackground: jest.fn(),
+        toggleHideOutlines: jest.fn()
       },
       props: {
         currentColor: {

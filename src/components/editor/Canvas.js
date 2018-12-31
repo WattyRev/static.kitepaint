@@ -40,6 +40,7 @@ export const StyleWrapper = styled.div`
 class Canvas extends React.Component {
   static propTypes = {
     background: PropTypes.string,
+    hideOutlines: PropTypes.bool,
     /**
      * The product SVG to be rendered and interacted with. Colorable elements (path, polygon, g)
      * should be given a data-id attribute. That is used to indicate that the panel/group can be
@@ -145,7 +146,11 @@ class Canvas extends React.Component {
         isReadOnly={this.props.isReadOnly}
         background={this.props.background}
       >
-        <ColorableSvg svg={this.props.svg} colorMap={this.props.colorMap} />
+        <ColorableSvg
+          hideOutlines={this.props.hideOutlines}
+          svg={this.props.svg}
+          colorMap={this.props.colorMap}
+        />
       </StyleWrapper>
     );
   }

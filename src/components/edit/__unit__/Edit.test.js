@@ -37,7 +37,8 @@ describe("Edit", () => {
       actions: {
         selectColor: jest.fn(),
         selectVariation: jest.fn(),
-        changeBackground: jest.fn()
+        changeBackground: jest.fn(),
+        toggleHideOutlines: jest.fn()
       },
       props: {
         appliedColors: {},

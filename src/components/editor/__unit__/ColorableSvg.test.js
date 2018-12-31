@@ -11,9 +11,7 @@ describe("ColorableSvg", () => {
     };
   });
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = shallow(<ColorableSvg {...defaultProps} />);
-    expect(wrapper).toMatchSnapshot();
+    shallow(<ColorableSvg {...defaultProps} />);
   });
   it("Applies colors to the svg when it renders", () => {
     expect.assertions(2);

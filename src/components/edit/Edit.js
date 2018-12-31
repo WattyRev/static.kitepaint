@@ -47,6 +47,7 @@ const Edit = ({ match }) => (
             <React.Fragment>
               <Toolbar
                 design={editData.props.design}
+                hideOutlines={editorData.props.hideOutlines}
                 onUpdate={editorData.actions.update}
                 onSave={name =>
                   editorData.actions.save({
@@ -56,7 +57,7 @@ const Edit = ({ match }) => (
                 }
                 onAutofill={editorData.actions.autofill}
                 onReset={() => {}}
-                onHideOutlines={() => {}}
+                onHideOutlines={editorData.actions.toggleHideOutlines}
                 onBackgroundChange={editorData.actions.changeBackground}
                 showSettings
               />
@@ -72,6 +73,7 @@ const Edit = ({ match }) => (
                   appliedColors={editorData.props.appliedColors}
                 />
                 <Canvas
+                  hideOutlines={editorData.props.hideOutlines}
                   background={editorData.props.background}
                   colorMap={editorData.props.currentVariationColors}
                   svg={editorData.props.currentVariation.svg}
