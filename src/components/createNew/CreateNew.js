@@ -49,9 +49,10 @@ const CreateNew = ({ match }) => (
                           : "0"
                       });
                     }}
+                    hideOutlines={editorData.props.hideOutlines}
                     onAutofill={editorData.actions.autofill}
                     onReset={() => {}}
-                    onHideOutlines={() => {}}
+                    onHideOutlines={editorData.actions.toggleHideOutlines}
                     onBackgroundChange={editorData.actions.changeBackground}
                   />
                 )}
@@ -68,6 +69,7 @@ const CreateNew = ({ match }) => (
                 />
                 <Canvas
                   background={editorData.props.background}
+                  hideOutlines={editorData.props.hideOutlines}
                   colorMap={editorData.props.currentVariationColors}
                   svg={editorData.props.currentVariation.svg}
                   onClick={editorData.actions.applyColor}

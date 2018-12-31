@@ -34,7 +34,8 @@ const View = ({ match }) => (
         <React.Fragment>
           <Toolbar
             design={viewData.props.design}
-            onHideOutlines={() => {}}
+            hideOutlines={viewData.props.hideOutlines}
+            onHideOutlines={viewData.actions.toggleHideOutlines}
             onBackgroundChange={viewData.actions.changeBackground}
           />
           <PageLayout>
@@ -48,6 +49,7 @@ const View = ({ match }) => (
               onVariationSelect={viewData.actions.selectVariation}
             />
             <Canvas
+              hideOutlines={viewData.props.hideOutlines}
               svg={viewData.props.currentVariation.svg}
               isReadOnly
               background={viewData.props.background}

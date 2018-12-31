@@ -69,6 +69,7 @@ export const StyleWrapper = styled.div`
  */
 const Toolbar = ({
   design,
+  hideOutlines,
   onSave,
   onUpdate,
   onAutofill,
@@ -117,7 +118,8 @@ const Toolbar = ({
       </P>
     )}
     <P className="toolbar-item" isLight onClick={onHideOutlines}>
-      <Icon icon="eye-slash" /> Hide Outlines
+      <Icon icon={hideOutlines ? "eye" : "eye-slash"} />{" "}
+      {hideOutlines ? "Show" : "Hide"} Outlines
     </P>
     <Dropdown
       dropdownContent={dropdown => (
@@ -154,6 +156,7 @@ const Toolbar = ({
 
 Toolbar.propTypes = {
   design: designShape,
+  hideOutlines: PropTypes.bool,
   onUpdate: PropTypes.func,
   onSave: PropTypes.func,
   onAutofill: PropTypes.func,

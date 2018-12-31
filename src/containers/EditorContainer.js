@@ -114,6 +114,7 @@ export class EditorContainer extends React.Component {
 
     this.state = {
       background: defaultBackground || null,
+      hideOutlines: false,
       /**
        * The currently selected color.
        * @type {Object}
@@ -295,6 +296,9 @@ export class EditorContainer extends React.Component {
 
   handleChangeBackground = value => this.setState({ background: value });
 
+  handleToggleHideOutlines = () =>
+    this.setState({ hideOutlines: !this.state.hideOutlines });
+
   render() {
     if (
       isEmbedded &&
@@ -313,6 +317,7 @@ export class EditorContainer extends React.Component {
         applyColor: this.handleColorApplied,
         autofill: this.handleAutofill,
         changeBackground: this.handleChangeBackground,
+        toggleHideOutlines: this.handleToggleHideOutlines,
         save: this.handleSave,
         selectColor: this.handleColorSelection,
         selectVariation: this.handleVariationSelection,
@@ -321,6 +326,7 @@ export class EditorContainer extends React.Component {
       props: {
         appliedColors: this.state.appliedColors,
         background: this.state.background,
+        hideOutlines: this.state.hideOutlines,
         currentColor: this.state.currentColor,
         currentVariation: this.state.currentVariation,
         currentVariationColors: this.getCurrentVariationColors()

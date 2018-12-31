@@ -1,6 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
+import styled, { css } from "styled-components";
 import { appliedColorsShape } from "../../containers/EditorContainer";
+
+const StyledDiv = styled.div`
+  ${props =>
+    props.hideOutlines
+      ? css`
+          svg * {
+            stroke-width: 0;
+          }
+        `
+      : null};
+`;
 
 /**
  * Renders the provided SVG and uses the colorMap to apply a fill color to verious elements
@@ -8,7 +20,8 @@ import { appliedColorsShape } from "../../containers/EditorContainer";
 class ColorableSvg extends React.Component {
   static propTypes = {
     svg: PropTypes.string.isRequired,
-    colorMap: appliedColorsShape.isRequired
+    colorMap: appliedColorsShape.isRequired,
+    hideOutlines: PropTypes.bool
   };
 
   componentDidMount() {
@@ -41,7 +54,8 @@ class ColorableSvg extends React.Component {
 
   render() {
     return (
-      <div
+      <StyledDiv
+        hideOutlines={this.props.hideOutlines}
         ref={node => (this.node = node)}
         dangerouslySetInnerHTML={{ __html: this.props.svg }}
       />
