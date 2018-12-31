@@ -4,5 +4,5 @@
  */
 export default async function logOut() {
   await this.axiosInstance.post("/logout.php");
-  sessionStorage.removeItem("user");
+  localStorage.removeItem("user");
 }

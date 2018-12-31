@@ -9,7 +9,7 @@ describe("#checkLoginStatus", () => {
       post: jest.fn().mockResolvedValue({}),
       get: jest.fn().mockResolvedValue({})
     };
-    sessionStorage.setItem(
+    localStorage.setItem(
       "user",
       JSON.stringify({
         foo: "bar"
@@ -17,11 +17,11 @@ describe("#checkLoginStatus", () => {
     );
   });
   afterEach(() => {
-    sessionStorage.removeItem("user");
+    localStorage.removeItem("user");
   });
   it("rejects if there's no user data in the sesion", () => {
     expect.assertions(1);
-    sessionStorage.removeItem("user");
+    localStorage.removeItem("user");
     return Api.checkLoginStatus().catch(error => {
       expect(error.data).toEqual(
         "No session data was found. The user is not logged in."
@@ -88,7 +88,7 @@ describe("#checkLoginStatus", () => {
         logged_in: true,
         boogers: "and stuff"
       };
-      expect(sessionStorage.getItem("user")).toEqual(
+      expect(localStorage.getItem("user")).toEqual(
         JSON.stringify(expectedValue)
       );
       expect(response).toEqual({ data: expectedValue });

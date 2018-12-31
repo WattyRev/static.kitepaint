@@ -25,7 +25,7 @@ export default async function logIn(username, password) {
   }
 
   // Store the user data in session storage
-  sessionStorage.setItem("user", JSON.stringify(response.data));
+  localStorage.setItem("user", JSON.stringify(response.data));
 
   // Return the response
   return response;

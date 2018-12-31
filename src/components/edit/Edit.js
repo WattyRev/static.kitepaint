@@ -58,6 +58,7 @@ const Edit = ({ match }) => (
                 onReset={() => {}}
                 onHideOutlines={() => {}}
                 onBackgroundChange={() => {}}
+                showSettings
               />
               <PageLayout>
                 <Sidebar

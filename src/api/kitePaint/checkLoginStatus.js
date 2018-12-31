@@ -4,7 +4,7 @@
  */
 export default async function checkLoginStatus() {
   // Get the user data from session storage
-  const sessionData = sessionStorage.getItem("user");
+  const sessionData = localStorage.getItem("user");
   let parsedSessionData;
   try {
     parsedSessionData = JSON.parse(sessionData);
@@ -37,7 +37,7 @@ export default async function checkLoginStatus() {
   }
 
   // Store the user data in session storage
-  sessionStorage.setItem("user", JSON.stringify(response.data));
+  localStorage.setItem("user", JSON.stringify(response.data));
 
   // Return the response
   return response;

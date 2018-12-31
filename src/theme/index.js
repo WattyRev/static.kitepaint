@@ -19,9 +19,11 @@ import ModalConfirm from "./ModalConfirm";
 import ModalPrompt from "./ModalPrompt";
 import P from "./P";
 import PageLoader from "./PageLoader";
+import Select from "./Select";
 import Sidebar from "./Sidebar";
 import Spacer from "./Spacer";
 import Text from "./Text";
+import TextButton from "./TextButton";
 import Tile from "./Tile";
 import Tooltip from "./Tooltip";
 
@@ -48,9 +50,11 @@ export {
   ModalPrompt,
   P,
   PageLoader,
+  Select,
   Sidebar,
   Spacer,
-  Tile,
   Text,
+  TextButton,
+  Tile,
   Tooltip
 };

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import designShape from "../../models/design";
 import { P, Icon, ModalPrompt } from "../../theme";
 import ShareModal from "../ShareModal";
+import DesignSettingsModalContainer from "../../containers/DesignSettingsModalContainer";
 
 /**
  * Overall styling for the toolbar
@@ -42,7 +43,8 @@ const Toolbar = ({
   onAutofill,
   onReset,
   onHideOutlines,
-  onBackgroundChange
+  onBackgroundChange,
+  showSettings
 }) => (
   <StyleWrapper>
     {!!onUpdate && (
@@ -85,6 +87,16 @@ const Toolbar = ({
     <P isLight onClick={onBackgroundChange}>
       <Icon icon="image" /> Background
     </P>
+    {design &&
+      showSettings && (
+        <DesignSettingsModalContainer design={design}>
+          {modal => (
+            <P isLight onClick={modal.actions.open}>
+              <Icon icon="cog" /> Settings
+            </P>
+          )}
+        </DesignSettingsModalContainer>
+      )}
   </StyleWrapper>
 );
 
@@ -95,7 +107,8 @@ Toolbar.propTypes = {
   onAutofill: PropTypes.func,
   onReset: PropTypes.func,
   onHideOutlines: PropTypes.func.isRequired,
-  onBackgroundChange: PropTypes.func.isRequired
+  onBackgroundChange: PropTypes.func.isRequired,
+  showSettings: PropTypes.bool
 };
 
 export default Toolbar;

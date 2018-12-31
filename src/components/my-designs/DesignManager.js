@@ -6,6 +6,7 @@ import Status from "../../models/status";
 import designShape from "../../models/design";
 import productShape from "../../models/product";
 import manufacturerShape from "../../models/manufacturer";
+import DesignSettingsModalContainer from "../../containers/DesignSettingsModalContainer";
 import { H2, P, Button, Icon, Tile, ModalConfirm } from "../../theme";
 import ShareModal from "../ShareModal";
 import Svg from "../Svg";
@@ -84,7 +85,14 @@ const DesignManager = ({ design, product, manufacturer, onDelete }) => (
             <Icon icon="trash" /> Delete
           </Button>
         )}
-      </ModalConfirm>
+      </ModalConfirm>{" "}
+      <DesignSettingsModalContainer design={design}>
+        {modal => (
+          <Button onClick={modal.actions.open}>
+            <Icon icon="cog" /> Settings
+          </Button>
+        )}
+      </DesignSettingsModalContainer>
     </div>
   </StyleWrapper>
 );

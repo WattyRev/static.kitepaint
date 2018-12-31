@@ -10,7 +10,7 @@ describe("#logOut", () => {
     };
   });
   afterEach(() => {
-    sessionStorage.removeItem("user");
+    localStorage.removeItem("user");
   });
   it("makes a request to the correct url", () => {
     expect.assertions(1);
@@ -29,9 +29,9 @@ describe("#logOut", () => {
   });
   it("removes the user from session storage", () => {
     expect.assertions(1);
-    sessionStorage.setItem("user", "foo");
+    localStorage.setItem("user", "foo");
     return Api.logOut().then(() => {
-      expect(sessionStorage.getItem("user")).toEqual(null);
+      expect(localStorage.getItem("user")).toEqual(null);
     });
   });
 });
