@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import { TypographyStyles } from "./Text";
 
-const SelectWrapper = styled.div`
+export const SelectWrapper = styled.div`
   ${TypographyStyles};
   position: relative;
 
@@ -36,5 +37,9 @@ const Select = ({ children, ...props }) => (
     <select {...props}>{children}</select>
   </SelectWrapper>
 );
+
+Select.propTypes = {
+  children: PropTypes.node.isRequired
+};
 
 export default Select;

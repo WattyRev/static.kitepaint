@@ -13,6 +13,7 @@ const StyleWrapper = styled.form`
   }
 `;
 
+/** The content of the Design Settings Modal */
 const Content = ({
   design,
   onSubmit,
@@ -53,12 +54,14 @@ const Content = ({
       <ModalClose onClick={onCancel} />
       <Label>Design Name</Label>
       <Input
+        className="input-name"
         value={design.name}
         onChange={e => onChangeName(e.target.value)}
         required
       />
       <Label>Status</Label>
       <Select
+        className="select-status"
         value={currentStatus}
         onChange={e => onChangeStatus(e.target.value)}
       >
@@ -85,26 +88,44 @@ const Content = ({
 };
 
 Content.propTypes = {
+  /** The design being modified */
   design: designShape.isRequired,
+  /** Called when the form is submitted */
   onSubmit: PropTypes.func.isRequired,
+  /** Called when the cancel button is pressed */
   onCancel: PropTypes.func.isRequired,
+  /** Called when the name changes. Is provided with the new name as the first parameter */
   onChangeName: PropTypes.func.isRequired,
+  /** Called when the status changes. Is provided with the new status as the first parameter */
   onChangeStatus: PropTypes.func.isRequired,
+  /** Disables the button if true */
   isPending: PropTypes.bool.isRequired
 };
 
+export { Content };
+
+/** A stateful modal that allows for changing settings of a design like Status
+ and name */
 class DesignSettingsModal extends React.Component {
   static propTypes = {
+    /** The design being modified */
     design: designShape.isRequired,
+    /** Called when the form is submitted. Is provided an object with the id,
+     name, and status of the design */
     onSubmit: PropTypes.func.isRequired,
+    /** A function that returns renderable content. This is usually used to
+     render a button that triggers the modal to open. */
     children: PropTypes.func.isRequired
   };
 
   constructor(props, ...rest) {
     super(props, ...rest);
     this.state = {
+      /** Is the modal open? */
       isOpen: false,
+      /** Are we processing the submission? */
       isPending: false,
+      /** A copy of the design that can be modified without effecting the higher scope */
       design: Object.assign({}, props.design)
     };
   }
@@ -123,6 +144,9 @@ class DesignSettingsModal extends React.Component {
         status: value
       })
     });
+
+  /** Handles submission by callong onSubmit with the relevant data and handling
+   the promise that it may return. */
   handleSubmit = () => {
     const data = {
       id: this.state.design.id,
