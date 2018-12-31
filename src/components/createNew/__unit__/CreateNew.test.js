@@ -22,7 +22,7 @@ describe("CreateNew", () => {
     const wrapper = shallow(<CreateNew {...defaultProps} />);
 
     // Drill in to product container
-    const productData = {
+    const createNewData = {
       props: {
         product: getMockProduct(),
         manufacturer: getMockManufacturer()
@@ -30,7 +30,7 @@ describe("CreateNew", () => {
     };
     const CreateNewContainerWrapper = shallow(
       <div>
-        {wrapper.find(CreateNewContainer).prop("children")(productData)}
+        {wrapper.find(CreateNewContainer).prop("children")(createNewData)}
       </div>
     );
 
@@ -40,7 +40,8 @@ describe("CreateNew", () => {
         selectVariation: jest.fn(),
         selectColor: jest.fn(),
         applyColor: jest.fn(),
-        save: jest.fn()
+        save: jest.fn(),
+        changeBackground: jest.fn()
       },
       props: {
         currentColor: {

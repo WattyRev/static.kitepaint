@@ -57,7 +57,7 @@ const Edit = ({ match }) => (
                 onAutofill={editorData.actions.autofill}
                 onReset={() => {}}
                 onHideOutlines={() => {}}
-                onBackgroundChange={() => {}}
+                onBackgroundChange={editorData.actions.changeBackground}
                 showSettings
               />
               <PageLayout>
@@ -72,6 +72,7 @@ const Edit = ({ match }) => (
                   appliedColors={editorData.props.appliedColors}
                 />
                 <Canvas
+                  background={editorData.props.background}
                   colorMap={editorData.props.currentVariationColors}
                   svg={editorData.props.currentVariation.svg}
                   onClick={editorData.actions.applyColor}

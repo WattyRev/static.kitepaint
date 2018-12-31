@@ -31,11 +31,11 @@ const PageLayout = styled.div`
  */
 const CreateNew = ({ match }) => (
   <CreateNewContainer productId={match.params.productId}>
-    {productData =>
-      productData.props.isLoading ? (
+    {createNewData =>
+      createNewData.props.isLoading ? (
         <PageLoader />
       ) : (
-        <EditorContainer product={productData.props.product}>
+        <EditorContainer product={createNewData.props.product}>
           {editorData => (
             <React.Fragment>
               <UserContainer>
@@ -52,14 +52,14 @@ const CreateNew = ({ match }) => (
                     onAutofill={editorData.actions.autofill}
                     onReset={() => {}}
                     onHideOutlines={() => {}}
-                    onBackgroundChange={() => {}}
+                    onBackgroundChange={editorData.actions.changeBackground}
                   />
                 )}
               </UserContainer>
               <PageLayout>
                 <Sidebar
-                  product={productData.props.product}
-                  manufacturer={productData.props.manufacturer}
+                  product={createNewData.props.product}
+                  manufacturer={createNewData.props.manufacturer}
                   selectedVariation={editorData.props.currentVariation.name}
                   selectedColor={editorData.props.currentColor.name}
                   onColorSelect={editorData.actions.selectColor}
@@ -67,17 +67,18 @@ const CreateNew = ({ match }) => (
                   appliedColors={editorData.props.appliedColors}
                 />
                 <Canvas
+                  background={editorData.props.background}
                   colorMap={editorData.props.currentVariationColors}
                   svg={editorData.props.currentVariation.svg}
                   onClick={editorData.actions.applyColor}
                   currentColor={editorData.props.currentColor.name}
                 />
-                {productData.props.product.notes &&
-                  !!productData.props.product.notes.length && (
+                {createNewData.props.product.notes &&
+                  !!createNewData.props.product.notes.length && (
                     <div className="product-notes">
                       <H3 isLight>Notes:</H3>
                       <ul>
-                        {productData.props.product.notes.map(
+                        {createNewData.props.product.notes.map(
                           (note, index) =>
                             note.trim() && (
                               <Text isLight as="li" key={note + index}>
