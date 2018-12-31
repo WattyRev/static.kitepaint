@@ -113,6 +113,7 @@ export class EditorContainer extends React.Component {
     }
 
     this.state = {
+      background: null,
       /**
        * The currently selected color.
        * @type {Object}
@@ -292,6 +293,8 @@ export class EditorContainer extends React.Component {
     this.setState({ appliedColors });
   };
 
+  handleChangeBackground = value => this.setState({ background: value });
+
   render() {
     if (
       isEmbedded &&
@@ -309,6 +312,7 @@ export class EditorContainer extends React.Component {
       actions: {
         applyColor: this.handleColorApplied,
         autofill: this.handleAutofill,
+        changeBackground: this.handleChangeBackground,
         save: this.handleSave,
         selectColor: this.handleColorSelection,
         selectVariation: this.handleVariationSelection,
@@ -316,6 +320,7 @@ export class EditorContainer extends React.Component {
       },
       props: {
         appliedColors: this.state.appliedColors,
+        background: this.state.background,
         currentColor: this.state.currentColor,
         currentVariation: this.state.currentVariation,
         currentVariationColors: this.getCurrentVariationColors()

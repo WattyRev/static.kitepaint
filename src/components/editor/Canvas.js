@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
 import { appliedColorsShape } from "../../containers/EditorContainer";
 import ColorableSvg from "./ColorableSvg";
@@ -8,6 +8,14 @@ export const StyleWrapper = styled.div`
   flex-grow: 1;
   ${props => props.theme.patterns.transparencyBackground};
   padding: 16px;
+  ${props =>
+    props.background
+      ? css`
+          background: url(${props.background});
+          background-size: cover;
+          background-position: center;
+        `
+      : null};
 
   > div {
     width: 100%;
@@ -31,6 +39,7 @@ export const StyleWrapper = styled.div`
  */
 class Canvas extends React.Component {
   static propTypes = {
+    background: PropTypes.string,
     /**
      * The product SVG to be rendered and interacted with. Colorable elements (path, polygon, g)
      * should be given a data-id attribute. That is used to indicate that the panel/group can be
@@ -134,6 +143,7 @@ class Canvas extends React.Component {
       <StyleWrapper
         onClick={this.props.isReadOnly ? () => {} : this.handleClick}
         isReadOnly={this.props.isReadOnly}
+        background={this.props.background}
       >
         <ColorableSvg svg={this.props.svg} colorMap={this.props.colorMap} />
       </StyleWrapper>

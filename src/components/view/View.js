@@ -20,34 +20,38 @@ const PageLayout = styled.div`
  */
 const View = ({ match }) => (
   <ViewContainer designId={match.params.designId}>
-    {designData => {
-      if (designData.props.isLoading) {
+    {viewData => {
+      if (viewData.props.isLoading) {
         return <PageLoader />;
       }
       if (
-        !designData.props.design ||
-        designData.props.design.status === Status.PRIVATE
+        !viewData.props.design ||
+        viewData.props.design.status === Status.PRIVATE
       ) {
         return <ErrorPage />;
       }
       return (
         <React.Fragment>
           <Toolbar
-            design={designData.props.design}
+            design={viewData.props.design}
             onHideOutlines={() => {}}
-            onBackgroundChange={() => {}}
+            onBackgroundChange={viewData.actions.changeBackground}
           />
           <PageLayout>
             <Sidebar
-              manufacturer={designData.props.manufacturer}
-              product={designData.props.product}
-              design={designData.props.design}
-              selectedVariation={designData.props.currentVariation.name}
-              usedColors={designData.props.usedColors}
-              user={designData.props.user}
-              onVariationSelect={designData.actions.selectVariation}
+              manufacturer={viewData.props.manufacturer}
+              product={viewData.props.product}
+              design={viewData.props.design}
+              selectedVariation={viewData.props.currentVariation.name}
+              usedColors={viewData.props.usedColors}
+              user={viewData.props.user}
+              onVariationSelect={viewData.actions.selectVariation}
             />
-            <Canvas svg={designData.props.currentVariation.svg} isReadOnly />
+            <Canvas
+              svg={viewData.props.currentVariation.svg}
+              isReadOnly
+              background={viewData.props.background}
+            />
           </PageLayout>
         </React.Fragment>
       );
