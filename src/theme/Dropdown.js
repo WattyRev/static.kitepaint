@@ -19,7 +19,6 @@ export const StyledDropdown = styled.span`
   border: 1px solid ${props => props.theme.colors.gray};
   text-align: right;
   box-shadow: 0px 2px 2px -1px ${props => props.theme.colors.grayDarker};
-  overflow: hidden;
 `;
 
 /**

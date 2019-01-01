@@ -3,6 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import designShape from "../../models/design";
 import { P, Icon, ModalPrompt, Dropdown } from "../../theme";
+import { Item as DropdownItem } from "../../theme/Dropdown";
 import ShareModal from "../ShareModal";
 import DesignSettingsModalContainer from "../../containers/DesignSettingsModalContainer";
 
@@ -53,6 +54,7 @@ export const StyleWrapper = styled.div`
     cursor: pointer;
     transition: 0.4s background;
     border-right: 1px solid ${props => props.theme.colors.grayDark};
+    white-space: nowrap;
 
     &:first-of-type {
       border-left: 1px solid ${props => props.theme.colors.grayDark};
@@ -67,103 +69,395 @@ export const StyleWrapper = styled.div`
 /**
  * The toolbar displayed at the top of the editor to provide various actions.
  */
-const Toolbar = ({
-  design,
-  hideOutlines,
-  onSave,
-  onUpdate,
-  onAutofill,
-  onReset,
-  onHideOutlines,
-  onBackgroundChange,
-  showSettings
-}) => (
-  <StyleWrapper>
-    {!!onUpdate && (
-      <P className="testing_update toolbar-item" isLight onClick={onUpdate}>
-        <Icon icon="save" /> Save
-      </P>
-    )}
-    {!!onSave && (
-      <ModalPrompt
-        onSubmit={onSave}
-        message="To save your design, you must give it a name. What would you like to name your design?"
-      >
-        {modal => (
+class Toolbar extends React.Component {
+  static propTypes = {
+    /** The design being edited */
+    design: designShape,
+    /** Are outlines hidden? */
+    hideOutlines: PropTypes.bool,
+    /** Triggered when the save button is clicked */
+    onUpdate: PropTypes.func,
+    /** Triggered when the save as button is clicked */
+    onSave: PropTypes.func,
+    /** Triggered when the autofill button is clicked */
+    onAutofill: PropTypes.func,
+    /** Triggered when the reset button is clicked */
+    onReset: PropTypes.func,
+    /** Triggered when the hide outlines button is clicked */
+    onHideOutlines: PropTypes.func.isRequired,
+    /** Triggered when a background is selected. The background url is provided
+     as the first parameter */
+    onBackgroundChange: PropTypes.func.isRequired,
+    /** Should the settings button be visible? */
+    showSettings: PropTypes.bool
+  };
+
+  state = {
+    /** The number of items that are truncated due to the screen size */
+    truncationCount: 0
+  };
+
+  /** When the component mounts, take count of the items in the toolbar and
+   the position of their right edge so that we can evaluate for truncation, and
+   trigger truncation */
+  componentDidMount() {
+    if (!this.node) {
+      return;
+    }
+    this._indexActions();
+
+    // Determine the truncation count absed on the stored actionIndex
+    this._determineTruncationCount();
+
+    // Revise truncation when the window resizes.
+    window.addEventListener("resize", this._determineTruncationCount);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this._determineTruncationCount);
+  }
+
+  /** A reference to the StyleWrapper element */
+  node = null;
+
+  /**
+   * An array of numbers where each number represents the right edge of a
+   * toolbar item.
+   */
+  actionIndex = [];
+
+  /** take count of the items in the toolbar and the position of their right
+   edge so that we can evaluate for truncation */
+  _indexActions = () => {
+    const actionIndex = [];
+
+    // Find all toolbar-items and push them into an array along with the x
+    // dimension of their right edge.
+    const items = this.node.querySelectorAll(".toolbar-item");
+    items.forEach(item => {
+      actionIndex.push(item.getBoundingClientRect().right);
+    });
+    this.actionIndex = actionIndex;
+  };
+
+  /** Sets truncationCount based on the window width and the stored right edge
+   position of each item in the toolbar */
+  _determineTruncationCount = () => {
+    const windowWidth = window.innerWidth;
+
+    // get the index of the first toolbar item that overflows the window
+    let truncationIndex;
+    this.actionIndex.find((actionEdge, index) => {
+      // Giving a 20px buffer
+      if (actionEdge > windowWidth - 20) {
+        truncationIndex = index;
+        return true;
+      }
+      return false;
+    });
+
+    if (!truncationIndex) {
+      // If there is no truncationIndex and no items are currently truncated
+      // just return
+      if (this.state.truncationCount === 0) {
+        return;
+      }
+
+      // If there is no truncation index, reset the truncationCount to 0
+      this.setState({
+        truncationCount: 0
+      });
+      return;
+    }
+
+    // Determine how many items should be truncated
+    const truncationCount = this.actionIndex.length - truncationIndex + 1;
+
+    // If we already have the right number of items truncated, return early
+    if (truncationCount === this.state.truncationCount) {
+      return;
+    }
+
+    // Update the truncationCount
+    this.setState({
+      truncationCount
+    });
+  };
+
+  render() {
+    const actions = [];
+
+    // Save
+    if (this.props.onUpdate) {
+      actions.push({
+        name: "save",
+        content: (
           <P
-            className="testing_save toolbar-item"
+            className="testing_update toolbar-item"
             isLight
-            onClick={modal.actions.open}
+            onClick={this.props.onUpdate}
           >
-            <Icon icon="save" /> {onUpdate ? "Save As" : "Save"}
+            <Icon icon="save" />
+            <span className="label"> Save</span>
           </P>
-        )}
-      </ModalPrompt>
-    )}
-    <ShareModal design={design}>
-      {modal => (
-        <P className="toolbar-item" isLight onClick={modal.actions.open}>
-          <Icon icon="share" /> Share
-        </P>
-      )}
-    </ShareModal>
-    {!!onAutofill && (
-      <P className="testing_autofill toolbar-item" isLight onClick={onAutofill}>
-        <Icon icon="magic" /> Autofill
-      </P>
-    )}
-    {!!onReset && (
-      <P className="testing_reset toolbar-item" isLight onClick={onReset}>
-        <Icon icon="eraser" /> Reset
-      </P>
-    )}
-    <P className="toolbar-item" isLight onClick={onHideOutlines}>
-      <Icon icon={hideOutlines ? "eye" : "eye-slash"} />{" "}
-      {hideOutlines ? "Show" : "Hide"} Outlines
-    </P>
-    <Dropdown
-      dropdownContent={dropdown => (
-        <React.Fragment>
-          {backgroundOptions.map(option => (
-            <dropdown.components.Item
-              key={option.value}
-              onClick={() => onBackgroundChange(option.value)}
-            >
-              {option.label}
-            </dropdown.components.Item>
-          ))}
-        </React.Fragment>
-      )}
-    >
-      {dropdown => (
-        <P className="toolbar-item" isLight onClick={dropdown.actions.open}>
-          <Icon icon="image" /> Background
-        </P>
-      )}
-    </Dropdown>
-    {design &&
-      showSettings && (
-        <DesignSettingsModalContainer design={design}>
+        )
+      });
+    }
+
+    // Save As
+    if (this.props.onSave) {
+      actions.push({
+        name: "save-as",
+        content: (
+          <ModalPrompt
+            onSubmit={this.props.onSave}
+            message="To save your design, you must give it a name. What would you like to name your design?"
+          >
+            {modal => (
+              <P
+                className="testing_save toolbar-item"
+                isLight
+                onClick={modal.actions.open}
+              >
+                <Icon icon="save" />
+                <span className="label">
+                  {" "}
+                  {this.props.onUpdate ? "Save As" : "Save"}
+                </span>
+              </P>
+            )}
+          </ModalPrompt>
+        )
+      });
+    }
+
+    // Share
+    actions.push({
+      name: "share",
+      content: (
+        <ShareModal design={this.props.design}>
           {modal => (
             <P className="toolbar-item" isLight onClick={modal.actions.open}>
-              <Icon icon="cog" /> Settings
+              <Icon icon="share" />
+              <span className="label"> Share</span>
             </P>
           )}
-        </DesignSettingsModalContainer>
-      )}
-  </StyleWrapper>
-);
+        </ShareModal>
+      ),
+      truncatedContent: (
+        <ShareModal design={this.props.design}>
+          {modal => (
+            <DropdownItem onClick={modal.actions.open}>
+              <Icon icon="share" />
+              <span className="label"> Share</span>
+            </DropdownItem>
+          )}
+        </ShareModal>
+      )
+    });
 
-Toolbar.propTypes = {
-  design: designShape,
-  hideOutlines: PropTypes.bool,
-  onUpdate: PropTypes.func,
-  onSave: PropTypes.func,
-  onAutofill: PropTypes.func,
-  onReset: PropTypes.func,
-  onHideOutlines: PropTypes.func.isRequired,
-  onBackgroundChange: PropTypes.func.isRequired,
-  showSettings: PropTypes.bool
-};
+    // Autofill
+    if (this.props.onAutofill) {
+      actions.push({
+        name: "autofill",
+        content: (
+          <P
+            className="testing_autofill toolbar-item"
+            isLight
+            onClick={this.props.onAutofill}
+          >
+            <Icon icon="magic" />
+            <span className="label"> Autofill</span>
+          </P>
+        ),
+        truncatedContent: (
+          <DropdownItem onClick={this.props.onAutofill}>
+            <Icon icon="magic" />
+            <span className="label"> Autofill</span>
+          </DropdownItem>
+        )
+      });
+    }
+
+    // Reset
+    if (this.props.onReset) {
+      actions.push({
+        name: "reset",
+        content: (
+          <P
+            className="testing_reset toolbar-item"
+            isLight
+            onClick={this.props.onReset}
+          >
+            <Icon icon="eraser" />
+            <span className="label"> Reset</span>
+          </P>
+        ),
+        truncatedContent: (
+          <DropdownItem onClick={this.props.onReset}>
+            <Icon icon="eraser" />
+            <span className="label"> Reset</span>
+          </DropdownItem>
+        )
+      });
+    }
+
+    // Hide Outlines
+    actions.push({
+      name: "hide-outlines",
+      content: (
+        <P className="toolbar-item" isLight onClick={this.props.onHideOutlines}>
+          <Icon icon={this.props.hideOutlines ? "eye" : "eye-slash"} />
+          <span className="label">
+            {" "}
+            {this.props.hideOutlines ? "Show" : "Hide"} Outlines
+          </span>
+        </P>
+      ),
+      truncatedContent: (
+        <DropdownItem onClick={this.props.onHideOutlines}>
+          <Icon icon={this.props.hideOutlines ? "eye" : "eye-slash"} />
+          <span className="label">
+            {" "}
+            {this.props.hideOutlines ? "Show" : "Hide"} Outlines
+          </span>
+        </DropdownItem>
+      )
+    });
+
+    // Background
+    actions.push({
+      name: "background",
+      content: (
+        <Dropdown
+          dropdownContent={dropdown => (
+            <React.Fragment>
+              {backgroundOptions.map(option => (
+                <dropdown.components.Item
+                  key={option.value}
+                  onClick={() => this.props.onBackgroundChange(option.value)}
+                >
+                  {option.label}
+                </dropdown.components.Item>
+              ))}
+            </React.Fragment>
+          )}
+        >
+          {dropdown => (
+            <P
+              className="toolbar-item"
+              isLight
+              onClick={
+                dropdown.props.isOpen
+                  ? dropdown.actions.close
+                  : dropdown.actions.open
+              }
+            >
+              <Icon icon="image" />
+              <span className="label"> Background</span>
+            </P>
+          )}
+        </Dropdown>
+      ),
+      truncatedContent: (
+        <Dropdown
+          dropdownContent={dropdown => (
+            <React.Fragment>
+              {backgroundOptions.map(option => (
+                <dropdown.components.Item
+                  key={option.value}
+                  onClick={() => this.props.onBackgroundChange(option.value)}
+                >
+                  {option.label}
+                </dropdown.components.Item>
+              ))}
+            </React.Fragment>
+          )}
+        >
+          {dropdown => (
+            <DropdownItem
+              onClick={
+                dropdown.props.isOpen
+                  ? dropdown.actions.close
+                  : dropdown.actions.open
+              }
+            >
+              <Icon icon="image" />
+              <span className="label"> Background</span>
+            </DropdownItem>
+          )}
+        </Dropdown>
+      )
+    });
+
+    // Design Settings
+    if (this.props.design && this.props.showSettings) {
+      actions.push({
+        name: "settings",
+        content: (
+          <DesignSettingsModalContainer design={this.props.design}>
+            {modal => (
+              <P className="toolbar-item" isLight onClick={modal.actions.open}>
+                <Icon icon="cog" />
+                <span className="label"> Settings</span>
+              </P>
+            )}
+          </DesignSettingsModalContainer>
+        ),
+        truncatedContent: (
+          <DesignSettingsModalContainer design={this.props.design}>
+            {modal => (
+              <DropdownItem onClick={modal.actions.open}>
+                <Icon icon="cog" />
+                <span className="label"> Settings</span>
+              </DropdownItem>
+            )}
+          </DesignSettingsModalContainer>
+        )
+      });
+    }
+
+    const nonTruncatedActions = actions.slice(
+      0,
+      actions.length - this.state.truncationCount
+    );
+    const truncatedActions = actions.slice(
+      actions.length - this.state.truncationCount
+    );
+    return (
+      <StyleWrapper ref={node => (this.node = node)}>
+        {nonTruncatedActions.map(action => (
+          <React.Fragment key={action.name}>{action.content}</React.Fragment>
+        ))}
+        {!!truncatedActions.length && (
+          <Dropdown
+            className="testing_truncation-dropdown"
+            dropdownContent={() =>
+              truncatedActions.map(action => (
+                <React.Fragment key={action.name}>
+                  {action.truncatedContent}
+                </React.Fragment>
+              ))
+            }
+          >
+            {dropdown => (
+              <P
+                className="toolbar-item"
+                isLight
+                onClick={
+                  dropdown.props.isOpen
+                    ? dropdown.actions.close
+                    : dropdown.actions.open
+                }
+              >
+                <Icon icon="ellipsis-h" />
+              </P>
+            )}
+          </Dropdown>
+        )}
+      </StyleWrapper>
+    );
+  }
+}
 
 export default Toolbar;

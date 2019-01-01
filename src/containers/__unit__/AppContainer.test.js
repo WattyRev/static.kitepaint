@@ -12,9 +12,7 @@ describe("AppContainer", () => {
     };
   });
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = shallow(<AppContainer {...props} />);
-    expect(wrapper).toMatchSnapshot();
+    shallow(<AppContainer {...props} />);
   });
   describe(".props", () => {
     describe(".isCheckingLogin", () => {

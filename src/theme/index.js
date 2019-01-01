@@ -1,4 +1,5 @@
 import * as colors from "./colors";
+import * as media from "./media";
 import * as patterns from "./patterns";
 import A from "./A";
 import BlockListItem from "./BlockListItem";
@@ -27,7 +28,7 @@ import TextButton from "./TextButton";
 import Tile from "./Tile";
 import Tooltip from "./Tooltip";
 
-const Theme = { colors, patterns };
+const Theme = { colors, media, patterns };
 export default Theme;
 
 export {

@@ -1,13 +1,11 @@
 import React from "react";
-import { mount, shallow } from "enzyme";
+import { mount } from "enzyme";
 import Theme from "../../theme";
 import Text from "../Text";
 
 describe("Text", () => {
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = shallow(<Text theme={Theme}>button</Text>);
-    expect(wrapper).toMatchSnapshot();
+    mount(<Text theme={Theme}>button</Text>);
   });
   describe("isLight", () => {
     it("renders with light text if isLight is true", () => {

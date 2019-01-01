@@ -2,7 +2,7 @@ import { css } from "styled-components";
 import { gray, grayDark } from "./colors";
 
 /**
- * Creates a gray checkbarboad background to denote transparency.
+ * Creates a gray checkerboad background to denote transparency.
  */
 export const transparencyBackground = css`
   background-image: linear-gradient(45deg, ${gray} 25%, transparent 25%),
