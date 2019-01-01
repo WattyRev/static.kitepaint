@@ -42,12 +42,9 @@ class ColorableSvg extends React.Component {
    */
   applyColors = () => {
     const { colorMap } = this.props;
-    Object.keys(colorMap).forEach(id => {
-      const color = colorMap[id].color;
-      const panel = this.node.querySelectorAll(`[data-id="${id}"]`)[0];
-      if (!panel) {
-        return;
-      }
+    this.node.querySelectorAll(`[data-id]`).forEach(panel => {
+      const panelId = panel.getAttribute("data-id");
+      const color = colorMap[panelId] ? colorMap[panelId].color : "#ffffff";
       panel.setAttribute("fill", color);
     });
   };

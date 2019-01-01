@@ -502,10 +502,6 @@ describe("EditorContainer", () => {
           p2: {
             name: "black",
             color: "#000000"
-          },
-          p3: {
-            name: "green",
-            color: "#00ff00"
           }
         },
         Vented: {
@@ -547,6 +543,88 @@ describe("EditorContainer", () => {
             color: "#000000"
           }
         }
+      });
+    });
+  });
+  describe("reset", () => {
+    let wrapper;
+    beforeEach(() => {
+      defaultProps.product.variations = [
+        {
+          name: "Standard",
+          svg: ""
+        },
+        {
+          name: "Vented",
+          svg: ""
+        }
+      ];
+      wrapper = mount(
+        <EditorContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div className="output">
+                {JSON.stringify(data.props.appliedColors)}
+              </div>
+              <div className="reset" onClick={data.actions.reset} />
+              <div className="autofill" onClick={data.actions.autofill} />
+            </React.Fragment>
+          )}
+        </EditorContainer>
+      );
+      wrapper.instance().setState({
+        appliedColors: {
+          Standard: {
+            p1: {
+              name: "black",
+              color: "#000000"
+            },
+            p2: {
+              name: "red",
+              color: "#ff0000"
+            },
+            p3: {
+              name: "green",
+              color: "#00ff00"
+            }
+          },
+          Vented: {
+            p1: {
+              name: "red",
+              color: "#ff0000"
+            },
+            p2: {
+              name: "black",
+              color: "#000000"
+            }
+          }
+        }
+      });
+    });
+    it("resets the current variation", () => {
+      expect.assertions(1);
+      wrapper.find(".reset").simulate("click");
+      expect(JSON.parse(wrapper.find(".output").text())).toEqual({
+        Standard: {},
+        Vented: {
+          p1: {
+            name: "red",
+            color: "#ff0000"
+          },
+          p2: {
+            name: "black",
+            color: "#000000"
+          }
+        }
+      });
+    });
+    it("autofills the reset to other variations.", () => {
+      expect.assertions(1);
+      wrapper.find(".reset").simulate("click");
+      wrapper.find(".autofill").simulate("click");
+      expect(JSON.parse(wrapper.find(".output").text())).toEqual({
+        Standard: {},
+        Vented: {}
       });
     });
   });

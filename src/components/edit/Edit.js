@@ -56,7 +56,7 @@ const Edit = ({ match }) => (
                   })
                 }
                 onAutofill={editorData.actions.autofill}
-                onReset={() => {}}
+                onReset={editorData.actions.reset}
                 onHideOutlines={editorData.actions.toggleHideOutlines}
                 onBackgroundChange={editorData.actions.changeBackground}
                 showSettings

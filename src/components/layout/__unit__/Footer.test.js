@@ -5,9 +5,7 @@ import Footer, { StyleWrapper } from "../Footer";
 
 describe("Footer", () => {
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = shallow(<Footer className="my-footer" />);
-    expect(wrapper).toMatchSnapshot();
+    shallow(<Footer className="my-footer" />);
   });
   describe("StyleWrapper", () => {
     it("renders", () => {
