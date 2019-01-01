@@ -124,7 +124,7 @@ describe("Toolbar", () => {
       const subject = new Toolbar(defaultProps);
       subject.actionIndex = actionIndex;
       subject.setState = jest.fn();
-      window.innerWidth = 800;
+      window.outerWidth = 800;
       subject._determineTruncationCount();
       expect(subject.setState).not.toHaveBeenCalled();
     });
@@ -134,7 +134,7 @@ describe("Toolbar", () => {
       subject.actionIndex = actionIndex;
       subject.setState = jest.fn();
       subject.state.truncationCount = 2;
-      window.innerWidth = 800;
+      window.outerWidth = 800;
       subject._determineTruncationCount();
       expect(subject.setState).toHaveBeenCalledWith({ truncationCount: 0 });
     });
@@ -144,7 +144,7 @@ describe("Toolbar", () => {
       subject.actionIndex = actionIndex;
       subject.setState = jest.fn();
       subject.state.truncationCount = 2;
-      window.innerWidth = 500;
+      window.outerWidth = 500;
       subject._determineTruncationCount();
       expect(subject.setState).not.toHaveBeenCalled();
     });
@@ -154,7 +154,7 @@ describe("Toolbar", () => {
       subject.actionIndex = actionIndex;
       subject.setState = jest.fn();
       subject.state.truncationCount = 2;
-      window.innerWidth = 415;
+      window.outerWidth = 415;
       subject._determineTruncationCount();
       expect(subject.setState).toHaveBeenCalledWith({ truncationCount: 3 });
     });

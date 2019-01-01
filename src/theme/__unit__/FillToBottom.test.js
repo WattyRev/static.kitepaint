@@ -24,16 +24,16 @@ describe("FillToBottom", () => {
     let originalWindowHeight;
     let defaultProps;
     beforeEach(() => {
-      originalWindowHeight = window.innerHeight;
+      originalWindowHeight = window.outerHeight;
       defaultProps = Object.assign({}, FillToBottom.defaultProps);
     });
     afterEach(() => {
-      window.innerHeight = originalWindowHeight;
+      window.outerHeight = originalWindowHeight;
     });
     it("sets the height correctly", () => {
       expect.assertions(1);
       const subject = new FillToBottom(defaultProps);
-      window.innerHeight = 1000;
+      window.outerHeight = 1000;
       subject.originalHeight = 200;
       subject.wrapper = {
         getBoundingClientRect: jest.fn(() => ({
@@ -50,7 +50,7 @@ describe("FillToBottom", () => {
       expect.assertions(1);
       defaultProps.strict = false;
       const subject = new FillToBottom(defaultProps);
-      window.innerHeight = 500;
+      window.outerHeight = 500;
       subject.originalHeight = 500;
       subject.wrapper = {
         getBoundingClientRect: jest.fn(() => ({
@@ -67,7 +67,7 @@ describe("FillToBottom", () => {
       expect.assertions(1);
       defaultProps.strict = true;
       const subject = new FillToBottom(defaultProps);
-      window.innerHeight = 500;
+      window.outerHeight = 500;
       subject.originalHeight = 500;
       subject.wrapper = {
         getBoundingClientRect: jest.fn(() => ({
@@ -84,7 +84,7 @@ describe("FillToBottom", () => {
       expect.assertions(1);
       defaultProps.minHeight = 1000;
       const subject = new FillToBottom(defaultProps);
-      window.innerHeight = 1000;
+      window.outerHeight = 1000;
       subject.originalHeight = 200;
       subject.wrapper = {
         getBoundingClientRect: jest.fn(() => ({

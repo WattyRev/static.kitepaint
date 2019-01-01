@@ -74,7 +74,7 @@ class FillToBottom extends React.Component {
   fillToBottom = () => {
     const wrapperRect = this.wrapper.getBoundingClientRect();
     const distanceFromBottom =
-      window.innerHeight -
+      window.outerHeight -
       wrapperRect.y -
       this.originalHeight -
       this.props.offset;

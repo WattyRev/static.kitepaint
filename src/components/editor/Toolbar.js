@@ -143,7 +143,7 @@ class Toolbar extends React.Component {
   /** Sets truncationCount based on the window width and the stored right edge
    position of each item in the toolbar */
   _determineTruncationCount = () => {
-    const windowWidth = window.innerWidth;
+    const windowWidth = window.outerWidth;
 
     // get the index of the first toolbar item that overflows the window
     let truncationIndex;

@@ -85,7 +85,7 @@ const Sidebar = ({
         <sidebar.components.Heading isLight>
           <Icon icon="palette" /> Colors
         </sidebar.components.Heading>
-        <FillToBottom offset={35}>
+        <FillToBottom offset={33} strict>
           {product.colors.map(color => (
             <sidebar.components.Item
               className="testing_color"
