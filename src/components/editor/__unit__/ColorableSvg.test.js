@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { mount } from "enzyme";
 import ColorableSvg from "../ColorableSvg";
 
 describe("ColorableSvg", () => {
@@ -11,7 +11,7 @@ describe("ColorableSvg", () => {
     };
   });
   it("renders", () => {
-    shallow(<ColorableSvg {...defaultProps} />);
+    mount(<ColorableSvg {...defaultProps} />);
   });
   it("Applies colors to the svg when it renders", () => {
     expect.assertions(2);

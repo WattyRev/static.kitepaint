@@ -230,6 +230,14 @@ export class EditorContainer extends React.Component {
     });
   };
 
+  /** Clears all colors from the current variation */
+  handleReset = () => {
+    const appliedColors = Object.assign({}, this.state.appliedColors, {
+      [this.state.currentVariation.name]: {}
+    });
+    this.setState({ appliedColors });
+  };
+
   /**
    * Handles save by parsing data and submitting a request to create a new design. Redirects to that
    * design's edit page when successful.
@@ -321,7 +329,8 @@ export class EditorContainer extends React.Component {
         save: this.handleSave,
         selectColor: this.handleColorSelection,
         selectVariation: this.handleVariationSelection,
-        update: this.handleUpdate
+        update: this.handleUpdate,
+        reset: this.handleReset
       },
       props: {
         appliedColors: this.state.appliedColors,
