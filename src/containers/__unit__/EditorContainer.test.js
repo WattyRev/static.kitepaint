@@ -502,10 +502,6 @@ describe("EditorContainer", () => {
           p2: {
             name: "black",
             color: "#000000"
-          },
-          p3: {
-            name: "green",
-            color: "#00ff00"
           }
         },
         Vented: {

@@ -290,11 +290,9 @@ export class EditorContainer extends React.Component {
    */
   handleAutofill = () => {
     const currentColors = this.getCurrentVariationColors();
-    const previousAppliedColors = this.state.appliedColors;
     const variations = this.props.product.variations;
     const appliedColors = variations.reduce((accumulated, variation) => {
       accumulated[variation.name] = {
-        ...(previousAppliedColors[variation.name] || {}),
         ...currentColors
       };
       return accumulated;
