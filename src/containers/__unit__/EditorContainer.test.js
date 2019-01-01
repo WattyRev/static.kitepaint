@@ -567,6 +567,7 @@ describe("EditorContainer", () => {
                 {JSON.stringify(data.props.appliedColors)}
               </div>
               <div className="reset" onClick={data.actions.reset} />
+              <div className="autofill" onClick={data.actions.autofill} />
             </React.Fragment>
           )}
         </EditorContainer>
@@ -615,6 +616,15 @@ describe("EditorContainer", () => {
             color: "#000000"
           }
         }
+      });
+    });
+    it("autofills the reset to other variations.", () => {
+      expect.assertions(1);
+      wrapper.find(".reset").simulate("click");
+      wrapper.find(".autofill").simulate("click");
+      expect(JSON.parse(wrapper.find(".output").text())).toEqual({
+        Standard: {},
+        Vented: {}
       });
     });
   });
