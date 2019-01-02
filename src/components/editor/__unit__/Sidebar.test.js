@@ -3,8 +3,7 @@ import { shallow } from "enzyme";
 import { getMockManufacturer } from "../../../models/manufacturer";
 import { getMockProduct } from "../../../models/product";
 import { getMockDesign } from "../../../models/design";
-import { Sidebar as SidebarUI } from "../../../theme";
-import Sidebar from "../Sidebar";
+import Sidebar, { StyledSidebar } from "../Sidebar";
 
 describe("Sidebar", () => {
   let defaultProps;
@@ -30,7 +29,7 @@ describe("Sidebar", () => {
   it("renders", () => {
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     shallow(
-      <div>{wrapper.find(SidebarUI).prop("children")(sidebarUIData)}</div>
+      <div>{wrapper.find(StyledSidebar).prop("children")(sidebarUIData)}</div>
     );
   });
   it("makes the manufacturer list item a link if the product has a url", () => {
@@ -38,7 +37,7 @@ describe("Sidebar", () => {
     defaultProps.product.url = "http://zombo.com";
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarContent = shallow(
-      <div>{wrapper.find(SidebarUI).prop("children")(sidebarUIData)}</div>
+      <div>{wrapper.find(StyledSidebar).prop("children")(sidebarUIData)}</div>
     );
     expect(sidebarContent.find(".testing_manufacturer").prop("as")).toEqual(
       "a"
@@ -53,7 +52,7 @@ describe("Sidebar", () => {
     defaultProps.manufacturer.website = "http://albinoblacksheep.com";
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarContent = shallow(
-      <div>{wrapper.find(SidebarUI).prop("children")(sidebarUIData)}</div>
+      <div>{wrapper.find(StyledSidebar).prop("children")(sidebarUIData)}</div>
     );
     expect(sidebarContent.find(".testing_manufacturer").prop("as")).toEqual(
       "a"
@@ -68,7 +67,7 @@ describe("Sidebar", () => {
     defaultProps.manufacturer.website = null;
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarContent = shallow(
-      <div>{wrapper.find(SidebarUI).prop("children")(sidebarUIData)}</div>
+      <div>{wrapper.find(StyledSidebar).prop("children")(sidebarUIData)}</div>
     );
     expect(sidebarContent.find(".testing_manufacturer").prop("as")).toEqual(
       "div"
@@ -80,7 +79,7 @@ describe("Sidebar", () => {
     defaultProps.design.name = "Boogers";
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarContent = shallow(
-      <div>{wrapper.find(SidebarUI).prop("children")(sidebarUIData)}</div>
+      <div>{wrapper.find(StyledSidebar).prop("children")(sidebarUIData)}</div>
     );
     expect(sidebarContent.find(".testing_design")).toHaveLength(1);
     expect(
@@ -95,7 +94,7 @@ describe("Sidebar", () => {
     defaultProps.design = null;
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarContent = shallow(
-      <div>{wrapper.find(SidebarUI).prop("children")(sidebarUIData)}</div>
+      <div>{wrapper.find(StyledSidebar).prop("children")(sidebarUIData)}</div>
     );
     expect(sidebarContent.find(".testing_design")).toHaveLength(0);
   });
@@ -113,7 +112,7 @@ describe("Sidebar", () => {
     ];
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarContent = shallow(
-      <div>{wrapper.find(SidebarUI).prop("children")(sidebarUIData)}</div>
+      <div>{wrapper.find(StyledSidebar).prop("children")(sidebarUIData)}</div>
     );
     sidebarContent
       .find(".testing_variation")
@@ -136,7 +135,7 @@ describe("Sidebar", () => {
     ];
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarContent = shallow(
-      <div>{wrapper.find(SidebarUI).prop("children")(sidebarUIData)}</div>
+      <div>{wrapper.find(StyledSidebar).prop("children")(sidebarUIData)}</div>
     );
     sidebarContent
       .find(".testing_color")
