@@ -1,7 +1,10 @@
 import React from "react";
 import { mount } from "enzyme";
 import Theme from "../../theme";
+import * as Util from "../../utils";
 import FillToBottom, { StyleWrapper } from "../FillToBottom";
+
+jest.mock("../../utils");
 
 describe("FillToBottom", () => {
   describe("StyleWrapper", () => {
@@ -21,19 +24,16 @@ describe("FillToBottom", () => {
   });
 
   describe("#fillToBottom", () => {
-    let originalWindowHeight;
     let defaultProps;
     beforeEach(() => {
-      originalWindowHeight = window.outerHeight;
       defaultProps = Object.assign({}, FillToBottom.defaultProps);
-    });
-    afterEach(() => {
-      window.outerHeight = originalWindowHeight;
     });
     it("sets the height correctly", () => {
       expect.assertions(1);
       const subject = new FillToBottom(defaultProps);
-      window.outerHeight = 1000;
+      Util.getAppDimensions.mockReturnValue({
+        height: 1000
+      });
       subject.originalHeight = 200;
       subject.wrapper = {
         getBoundingClientRect: jest.fn(() => ({
@@ -50,7 +50,9 @@ describe("FillToBottom", () => {
       expect.assertions(1);
       defaultProps.strict = false;
       const subject = new FillToBottom(defaultProps);
-      window.outerHeight = 500;
+      Util.getAppDimensions.mockReturnValue({
+        height: 500
+      });
       subject.originalHeight = 500;
       subject.wrapper = {
         getBoundingClientRect: jest.fn(() => ({
@@ -67,7 +69,9 @@ describe("FillToBottom", () => {
       expect.assertions(1);
       defaultProps.strict = true;
       const subject = new FillToBottom(defaultProps);
-      window.outerHeight = 500;
+      Util.getAppDimensions.mockReturnValue({
+        height: 500
+      });
       subject.originalHeight = 500;
       subject.wrapper = {
         getBoundingClientRect: jest.fn(() => ({
@@ -84,7 +88,9 @@ describe("FillToBottom", () => {
       expect.assertions(1);
       defaultProps.minHeight = 1000;
       const subject = new FillToBottom(defaultProps);
-      window.outerHeight = 1000;
+      Util.getAppDimensions.mockReturnValue({
+        height: 1000
+      });
       subject.originalHeight = 200;
       subject.wrapper = {
         getBoundingClientRect: jest.fn(() => ({

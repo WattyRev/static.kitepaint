@@ -1,9 +1,12 @@
 import React from "react";
 import { mount, shallow } from "enzyme";
 import { ThemeProvider } from "styled-components";
-import Theme from "../../../theme";
 import { setupFontAwesome } from "../../../theme/Icon";
+import Theme from "../../../theme";
+import * as Util from "../../../utils";
 import Toolbar, { StyleWrapper } from "../Toolbar";
+
+jest.mock("../../../utils");
 
 describe("Toolbar", () => {
   describe("StyleWrapper", () => {
@@ -21,6 +24,7 @@ describe("Toolbar", () => {
       onBackgroundChange: jest.fn()
     };
     setupFontAwesome();
+    Util.getAppDimensions.mockReturnValue({});
   });
   it("renders", () => {
     shallow(<Toolbar {...defaultProps} />);
@@ -124,7 +128,9 @@ describe("Toolbar", () => {
       const subject = new Toolbar(defaultProps);
       subject.actionIndex = actionIndex;
       subject.setState = jest.fn();
-      window.outerWidth = 800;
+      Util.getAppDimensions.mockReturnValue({
+        width: 800
+      });
       subject._determineTruncationCount();
       expect(subject.setState).not.toHaveBeenCalled();
     });
@@ -134,7 +140,9 @@ describe("Toolbar", () => {
       subject.actionIndex = actionIndex;
       subject.setState = jest.fn();
       subject.state.truncationCount = 2;
-      window.outerWidth = 800;
+      Util.getAppDimensions.mockReturnValue({
+        width: 800
+      });
       subject._determineTruncationCount();
       expect(subject.setState).toHaveBeenCalledWith({ truncationCount: 0 });
     });
@@ -144,7 +152,9 @@ describe("Toolbar", () => {
       subject.actionIndex = actionIndex;
       subject.setState = jest.fn();
       subject.state.truncationCount = 2;
-      window.outerWidth = 500;
+      Util.getAppDimensions.mockReturnValue({
+        width: 500
+      });
       subject._determineTruncationCount();
       expect(subject.setState).not.toHaveBeenCalled();
     });
@@ -154,7 +164,9 @@ describe("Toolbar", () => {
       subject.actionIndex = actionIndex;
       subject.setState = jest.fn();
       subject.state.truncationCount = 2;
-      window.outerWidth = 415;
+      Util.getAppDimensions.mockReturnValue({
+        width: 413
+      });
       subject._determineTruncationCount();
       expect(subject.setState).toHaveBeenCalledWith({ truncationCount: 3 });
     });

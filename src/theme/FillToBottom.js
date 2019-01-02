@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
+import { getAppDimensions } from "../utils";
 
 /**
  * A style wrapper that just uses the provided height.
@@ -74,7 +75,7 @@ class FillToBottom extends React.Component {
   fillToBottom = () => {
     const wrapperRect = this.wrapper.getBoundingClientRect();
     const distanceFromBottom =
-      window.outerHeight -
+      getAppDimensions().height -
       wrapperRect.y -
       this.originalHeight -
       this.props.offset;

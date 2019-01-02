@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import designShape from "../../models/design";
-import { P, Icon, ModalPrompt, Dropdown } from "../../theme";
 import { Item as DropdownItem } from "../../theme/Dropdown";
+import { P, Icon, ModalPrompt, Dropdown } from "../../theme";
+import { getAppDimensions } from "../../utils";
 import ShareModal from "../ShareModal";
 import DesignSettingsModalContainer from "../../containers/DesignSettingsModalContainer";
 
@@ -143,7 +144,7 @@ class Toolbar extends React.Component {
   /** Sets truncationCount based on the window width and the stored right edge
    position of each item in the toolbar */
   _determineTruncationCount = () => {
-    const windowWidth = window.outerWidth;
+    const windowWidth = getAppDimensions().width;
 
     // get the index of the first toolbar item that overflows the window
     let truncationIndex;
