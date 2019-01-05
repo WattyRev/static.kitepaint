@@ -35,7 +35,9 @@ const Home = () => (
           </Spacer>
         ) : (
           <React.Fragment>
-            <H2>Recent Designs</H2>
+            <Spacer top="sm" left="sm">
+              <H2>Recent Designs</H2>
+            </Spacer>
             <RecentDesigns
               designs={designsData.props.designs}
               products={designsData.props.products}

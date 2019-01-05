@@ -53,6 +53,7 @@ const View = ({ match }) => (
               svg={viewData.props.currentVariation.svg}
               isReadOnly
               background={viewData.props.background}
+              colorMap={viewData.props.currentVariationColors}
             />
           </PageLayout>
         </React.Fragment>

@@ -4,8 +4,7 @@ import { getMockDesign } from "../../../models/design";
 import { getMockProduct } from "../../../models/product";
 import { getMockManufacturer } from "../../../models/manufacturer";
 import { getMockUser } from "../../../models/user";
-import { Sidebar as SidebarUI } from "../../../theme";
-import Sidebar from "../Sidebar";
+import Sidebar, { StyledSidebar } from "../Sidebar";
 
 describe("Sidebar", () => {
   let defaultProps;
@@ -41,7 +40,9 @@ describe("Sidebar", () => {
   });
   it("renders", () => {
     const wrapper = shallow(<Sidebar {...defaultProps} />);
-    shallow(<div>{wrapper.find(SidebarUI).prop("children")(sidebarData)}</div>);
+    shallow(
+      <div>{wrapper.find(StyledSidebar).prop("children")(sidebarData)}</div>
+    );
   });
   it("displays the product and manufacturer names if both are provided", () => {
     expect.assertions(1);
@@ -52,7 +53,7 @@ describe("Sidebar", () => {
 
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarUI = shallow(
-      <div>{wrapper.find(SidebarUI).prop("children")(sidebarData)}</div>
+      <div>{wrapper.find(StyledSidebar).prop("children")(sidebarData)}</div>
     );
     expect(sidebarUI.find(".testing_manufacturer").text()).toEqual(
       "Boogers by Nose"
@@ -66,7 +67,7 @@ describe("Sidebar", () => {
 
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarUI = shallow(
-      <div>{wrapper.find(SidebarUI).prop("children")(sidebarData)}</div>
+      <div>{wrapper.find(StyledSidebar).prop("children")(sidebarData)}</div>
     );
     expect(
       shallow(<div>{sidebarUI.find(".testing_design").prop("children")}</div>)
@@ -91,7 +92,7 @@ describe("Sidebar", () => {
 
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarUI = shallow(
-      <div>{wrapper.find(SidebarUI).prop("children")(sidebarData)}</div>
+      <div>{wrapper.find(StyledSidebar).prop("children")(sidebarData)}</div>
     );
 
     sidebarUI

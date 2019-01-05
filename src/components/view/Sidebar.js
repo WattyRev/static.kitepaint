@@ -24,6 +24,42 @@ const VariationPreview = styled.div`
   }
 `;
 
+export const StyledSidebar = styled(SidebarUI)`
+  width: 60px;
+
+  .color-tile,
+  .manufacturer-logo,
+  .variation-preview {
+    margin: 0 auto;
+  }
+
+  .color-label,
+  .variation-label,
+  .colors-heading,
+  .manufacturer-info,
+  .design-heading {
+    display: none;
+  }
+
+  ${props => props.theme.media.mediaMd} {
+    width: 175px;
+    .color-label,
+    .variation-label {
+      display: inline;
+    }
+    .colors-heading,
+    .manufacturer-info,
+    .design-heading {
+      display: block;
+    }
+    .color-tile,
+    .manufacturer-logo,
+    .variation-preview {
+      margin: 0;
+    }
+  }
+`;
+
 /**
  * The sidebar displayed when editing/creating a new design
  */
@@ -36,7 +72,7 @@ const Sidebar = ({
   user,
   usedColors
 }) => (
-  <SidebarUI>
+  <StyledSidebar>
     {sidebar => (
       <React.Fragment>
         {product &&
@@ -49,17 +85,21 @@ const Sidebar = ({
               hasAction={!!(product.url || manufacturer.website)}
             >
               <ManufacturerLogo
+                className="manufacturer-logo"
                 size={32}
                 noMargin
                 src={`/logos/${manufacturer.logo}`}
               />
-              <div className="testing_manufacturer">
+              <div className="testing_manufacturer manufacturer-info">
                 {product.name} <br />
                 <small>by {manufacturer.name}</small>
               </div>
             </sidebar.components.Item>
           )}
-        <sidebar.components.Heading className="testing_design" isLight>
+        <sidebar.components.Heading
+          className="testing_design design-heading"
+          isLight
+        >
           {design.name}{" "}
           {user && (
             <React.Fragment>
@@ -77,25 +117,26 @@ const Sidebar = ({
             key={variation.name}
             onClick={() => onVariationSelect(variation.name)}
           >
-            <VariationPreview>
+            <VariationPreview className="variation-preview">
               <Svg svg={variation.svg} />
-            </VariationPreview>{" "}
-            {variation.name}
+            </VariationPreview>
+            <span className="variation-label"> {variation.name}</span>
           </sidebar.components.Item>
         ))}
-        <sidebar.components.Heading isLight>
-          <Icon icon="palette" /> Colors Used
+        <sidebar.components.Heading isLight className="colors-heading">
+          <Icon icon="palette" /> Colors
         </sidebar.components.Heading>
         <FillToBottom offset={35}>
           {usedColors[selectedVariation].map(color => (
             <sidebar.components.Item isLight key={color.color}>
-              <ColorTile color={color.color} /> {color.name || color.color}
+              <ColorTile color={color.color} className="color-tile" />
+              <span className="color-label"> {color.name}</span>
             </sidebar.components.Item>
           ))}
         </FillToBottom>
       </React.Fragment>
     )}
-  </SidebarUI>
+  </StyledSidebar>
 );
 
 Sidebar.propTypes = {
