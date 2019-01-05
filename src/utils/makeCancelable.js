@@ -1,3 +1,6 @@
+/**
+ * Makes a promise cancelable
+ */
 const makeCancelable = promise => {
   let hasCanceled_ = false;
 

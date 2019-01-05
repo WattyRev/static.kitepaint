@@ -18,6 +18,7 @@ import userShape from "../models/user";
 import { isEmbedded, defaultBackground } from "../constants/embed";
 import ErrorPage from "../components/ErrorPage";
 import { softCompareStrings, makeCancelable, embedAllowed } from "../utils";
+import { generateAppliedColors } from "./EditorContainer";
 
 /**
  * A container that provides data management for the View page.
@@ -87,6 +88,14 @@ export class ViewContainer extends React.Component {
     if (!state.currentVariation) {
       newState.currentVariation = variations.find(
         variation => variation.primary
+      );
+    }
+
+    // Set the appied colors if not already set
+    if (!state.appliedColors) {
+      newState.appliedColors = generateAppliedColors(
+        props.design,
+        props.product
       );
     }
 
@@ -165,6 +174,17 @@ export class ViewContainer extends React.Component {
   cancelablePromises = [];
 
   /**
+   * Gets the applied colors for the current variation
+   */
+  getCurrentVariationColors = () => {
+    if (!this.state.currentVariation) {
+      return {};
+    }
+    const currentVariationName = this.state.currentVariation.name;
+    return this.state.appliedColors[currentVariationName] || {};
+  };
+
+  /**
    * Handles when a different variation is selected by updating state.
    * @param  {String} variationName The name of the newly selected variation
    */
@@ -202,6 +222,7 @@ export class ViewContainer extends React.Component {
         toggleHideOutlines: this.handleToggleHideOutlines
       },
       props: {
+        currentVariationColors: this.getCurrentVariationColors(),
         background: this.state.background,
         hideOutlines: this.state.hideOutlines,
         currentVariation: this.state.currentVariation,

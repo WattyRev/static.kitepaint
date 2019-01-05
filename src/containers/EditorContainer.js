@@ -22,6 +22,43 @@ const productAppliedColorsShape = PropTypes.objectOf(appliedColorsShape);
 export { appliedColorsShape, productAppliedColorsShape };
 
 /**
+ * Parses the variations from the provided design in order to determine what colors have been
+ * applied.
+ * @param {Design} design A design to parse the colors from
+ * @param {Product} product The product that the design belongs to
+ * @return {Object}
+ */
+export function generateAppliedColors(design, product) {
+  if (!design || !product) {
+    return {};
+  }
+  const colors = product.colors;
+  return design.variations.reduce((accumulated, variation) => {
+    const { svg, name } = variation;
+    const render = new window.DOMParser().parseFromString(svg, "text/xml");
+    const panels = render.querySelectorAll("[data-id]");
+    const appliedColors = {};
+    for (let i = 0; i < panels.length; i++) {
+      const panel = panels[i];
+      const color = panel.getAttribute("fill");
+      if (color) {
+        const colorMatch = colors.find(storedColor =>
+          softCompareStrings(storedColor.color, color)
+        );
+        const colorName = colorMatch ? colorMatch.name : color;
+        appliedColors[panel.getAttribute("data-id")] = {
+          color,
+          name: colorName
+        };
+      }
+    }
+
+    accumulated[name] = appliedColors;
+    return accumulated;
+  }, {});
+}
+
+/**
  * Manages the overall state of the editor. And provides a means to save changes.
  */
 export class EditorContainer extends React.Component {
@@ -57,41 +94,6 @@ export class EditorContainer extends React.Component {
      */
     onUpdate: PropTypes.func.isRequired
   };
-
-  /**
-   * Parses the variations from the provided design in order to determine what colors have been
-   * applied.
-   * @return {Object}
-   */
-  _generateAppliedColors() {
-    if (!this.props.design) {
-      return {};
-    }
-    const colors = this.props.product.colors;
-    return this.props.design.variations.reduce((accumulated, variation) => {
-      const { svg, name } = variation;
-      const render = new window.DOMParser().parseFromString(svg, "text/xml");
-      const panels = render.querySelectorAll("[data-id]");
-      const appliedColors = {};
-      for (let i = 0; i < panels.length; i++) {
-        const panel = panels[i];
-        const color = panel.getAttribute("fill");
-        if (color) {
-          const colorMatch = colors.find(storedColor =>
-            softCompareStrings(storedColor.color, color)
-          );
-          const colorName = colorMatch ? colorMatch.name : color;
-          appliedColors[panel.getAttribute("data-id")] = {
-            color,
-            name: colorName
-          };
-        }
-      }
-
-      accumulated[name] = appliedColors;
-      return accumulated;
-    }, {});
-  }
 
   constructor(props, ...rest) {
     super(props, ...rest);
@@ -138,7 +140,10 @@ export class EditorContainer extends React.Component {
        * }
        * @type {Object}
        */
-      appliedColors: this._generateAppliedColors()
+      appliedColors: generateAppliedColors(
+        this.props.design,
+        this.props.product
+      )
     };
   }
 

@@ -66,8 +66,8 @@ const Heading = styled(BlockListItem)`
 /**
  * The sidebar displayed when editing/creating a new design
  */
-const Sidebar = ({ children }) => (
-  <StyleWrapper>
+const Sidebar = ({ children, ...props }) => (
+  <StyleWrapper {...props}>
     {children({
       components: {
         Item,

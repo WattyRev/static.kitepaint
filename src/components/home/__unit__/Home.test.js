@@ -10,11 +10,8 @@ describe("Home", () => {
     defaultProps = {};
   });
   it("renders", () => {
-    expect.assertions(3);
-
     // Test the top level
     const wrapper = shallow(<Home {...defaultProps} />);
-    expect(wrapper).toMatchSnapshot();
 
     // Test the content inside UserContainer
     const userContainerData = {
@@ -26,12 +23,11 @@ describe("Home", () => {
         toggleRecognition: jest.fn()
       }
     };
-    const userContainerWrapper = shallow(
+    shallow(
       <div>
         {wrapper.find(UserContainer).prop("children")(userContainerData)}
       </div>
     );
-    expect(userContainerWrapper).toMatchSnapshot();
 
     // Test the content inside RecentDesignsContainer
     const recentDesignsData = {
@@ -41,13 +37,12 @@ describe("Home", () => {
         products: {}
       }
     };
-    const recentDesignsWrapper = shallow(
+    shallow(
       <div>
         {wrapper.find(RecentDesignsContainer).prop("children")(
           recentDesignsData
         )}
       </div>
     );
-    expect(recentDesignsWrapper).toMatchSnapshot();
   });
 });

@@ -1,6 +1,9 @@
 import embedAllowed from "../embedAllowed";
 
 describe("embedAllowed", () => {
+  it("runs without an overridden referrer", () => {
+    embedAllowed([]);
+  });
   it("returns true for localhost urls", () => {
     expect.assertions(1);
     expect(
