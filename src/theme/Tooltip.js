@@ -43,6 +43,7 @@ export const StyleWrapper = styled.div`
   opacity: ${props => (props.removing ? 0 : 1)};
   animation: ${props => (props.removing ? fadeOut : fadeIn)}
     ${props => props.fadeSpeed}s;
+  z-index: 200;
 
   &:before {
     content: "";

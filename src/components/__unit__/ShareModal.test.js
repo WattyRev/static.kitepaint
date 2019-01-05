@@ -2,6 +2,7 @@ import React from "react";
 import { shallow } from "enzyme";
 import { getMockDesign } from "../../models/design";
 import Status from "../../models/status";
+import { Modal } from "../../theme";
 import ShareModal, { Content } from "../ShareModal";
 
 describe("ShareModal", () => {
@@ -67,5 +68,35 @@ describe("ShareModal", () => {
     expect(wrapper.prop("isOpen")).toEqual(false);
     wrapper.find(".open").simulate("click");
     expect(wrapper.prop("isOpen")).toEqual(true);
+  });
+  it("closes the modal when told", () => {
+    expect.assertions(1);
+    const wrapper = shallow(
+      <ShareModal {...defaultProps}>
+        {modal => <button className="open" onClick={modal.actions.open} />}
+      </ShareModal>
+    );
+
+    // Open the modal
+    wrapper.find(".open").simulate("click");
+
+    // Close the modal
+    const modalContent = shallow(
+      <div>{wrapper.find(Modal).prop("modalContent")}</div>
+    );
+    modalContent.find(Content).prop("onClose")();
+
+    expect(wrapper.prop("isOpen")).toEqual(false);
+  });
+  describe("handleDownload", () => {
+    it("runs", () => {
+      const wrapper = shallow(
+        <ShareModal {...defaultProps}>{() => <div />}</ShareModal>
+      );
+      const modalContent = shallow(
+        <div>{wrapper.find(Modal).prop("modalContent")}</div>
+      );
+      modalContent.find(Content).prop("onDownload")();
+    });
   });
 });

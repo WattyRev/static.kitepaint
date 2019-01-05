@@ -15,6 +15,7 @@ describe("DesignSettingsModal", () => {
         onCancel: jest.fn(),
         onChangeName: jest.fn(),
         onChangeStatus: jest.fn(),
+        onChangePrimary: jest.fn(),
         isPending: false
       };
     });
@@ -179,7 +180,10 @@ describe("DesignSettingsModal", () => {
     expect(defaultProps.onSubmit).toHaveBeenCalledWith({
       id: "abc",
       name: "boogies",
-      status: Status.PRIVATE
+      status: Status.PRIVATE,
+      variations: [
+        { name: "Standard", primary: true, svg: "<div>picasso standard</div>" }
+      ]
     });
   });
   it("does not set isPending if onSubmit does not return a promise", () => {

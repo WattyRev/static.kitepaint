@@ -85,6 +85,58 @@ describe("Dropdown", () => {
     expect(wrapper.find(".target")).toHaveLength(0);
   });
 
+  it("unmounts successfully", () => {
+    const wrapper = shallow(
+      <Dropdown dropdownContent={() => <div>test</div>}>
+        {() => <div>test2</div>}
+      </Dropdown>
+    );
+    wrapper.unmount();
+  });
+
+  describe("#autoClose", () => {
+    it("does not close the dropdown is it is not open", () => {
+      expect.assertions(1);
+      const subject = new Dropdown();
+      subject.state.isOpen = false;
+      subject.close = jest.fn();
+
+      subject.autoClose();
+
+      expect(subject.close).not.toHaveBeenCalled();
+    });
+    it("does not close the dropdown if the click event is from inside the dropdown", () => {
+      expect.assertions(1);
+      const subject = new Dropdown();
+      subject.state.isOpen = true;
+      subject.node = {
+        contains: jest.fn().mockReturnValue(true)
+      };
+      subject.close = jest.fn();
+
+      subject.autoClose({
+        target: "foo"
+      });
+
+      expect(subject.close).not.toHaveBeenCalled();
+    });
+    it("closes the dropdown", () => {
+      expect.assertions(1);
+      const subject = new Dropdown();
+      subject.state.isOpen = true;
+      subject.node = {
+        contains: jest.fn().mockReturnValue(false)
+      };
+      subject.close = jest.fn();
+
+      subject.autoClose({
+        target: "foo"
+      });
+
+      expect(subject.close).toHaveBeenCalled();
+    });
+  });
+
   describe("StyledDropdown", () => {
     it("renders", () => {
       mount(<StyledDropdown theme={Theme} />);
@@ -94,6 +146,16 @@ describe("Dropdown", () => {
   describe("Item", () => {
     it("renders", () => {
       mount(<Item theme={Theme} />);
+    });
+    it("shows as black with a pointer cursor", () => {
+      const wrapper = mount(<Item theme={Theme} />);
+      expect(wrapper).toHaveStyleRule("color", Theme.colors.black);
+      expect(wrapper).toHaveStyleRule("cursor", "pointer");
+    });
+    it("shows as gray with a default cursor when disabled", () => {
+      const wrapper = mount(<Item theme={Theme} disabled />);
+      expect(wrapper).toHaveStyleRule("color", Theme.colors.gray);
+      expect(wrapper).toHaveStyleRule("cursor", "default");
     });
   });
   describe("Spacer", () => {
