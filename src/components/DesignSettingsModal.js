@@ -3,7 +3,15 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import designShape from "../models/design";
 import Status from "../models/status";
-import { Modal, ModalClose, Label, Input, Button, Select } from "../theme";
+import {
+  Modal,
+  ModalClose,
+  Label,
+  Input,
+  Button,
+  Select,
+  Tooltip
+} from "../theme";
 
 const StyleWrapper = styled.form`
   max-width: 100%;
@@ -20,6 +28,7 @@ const Content = ({
   onCancel,
   onChangeName,
   onChangeStatus,
+  onChangePrimary,
   isPending
 }) => {
   // Either the design status or the product status; whichever is more restrictive.
@@ -59,7 +68,18 @@ const Content = ({
         onChange={e => onChangeName(e.target.value)}
         required
       />
-      <Label>Status</Label>
+      <Label>
+        Status{" "}
+        <Tooltip>
+          Private designs are only visible by you.
+          <br />
+          Unlisted designs are visible to anyone, but are not organically
+          discoverable.
+          <br />
+          Public designs are visible to anyone and are featured throughout
+          KitePaint.
+        </Tooltip>
+      </Label>
       <Select
         className="select-status"
         value={currentStatus}
@@ -72,6 +92,25 @@ const Content = ({
             value={option.value}
           >
             {option.label}
+          </option>
+        ))}
+      </Select>
+      <Label>
+        Primary Variation{" "}
+        <Tooltip>
+          The primary variation is the one that will be displayed in thumbnails
+          and will be selected by default in the editor or view pages for this
+          design.
+        </Tooltip>
+      </Label>
+      <Select
+        className="select-primary"
+        value={design.variations.find(variation => variation.primary).name}
+        onChange={e => onChangePrimary(e.target.value)}
+      >
+        {design.variations.map(option => (
+          <option key={option.name} value={option.name}>
+            {option.name}
           </option>
         ))}
       </Select>
@@ -98,6 +137,7 @@ Content.propTypes = {
   onChangeName: PropTypes.func.isRequired,
   /** Called when the status changes. Is provided with the new status as the first parameter */
   onChangeStatus: PropTypes.func.isRequired,
+  onChangePrimary: PropTypes.func.isRequired,
   /** Disables the button if true */
   isPending: PropTypes.bool.isRequired
 };
@@ -144,6 +184,21 @@ class DesignSettingsModal extends React.Component {
         status: value
       })
     });
+  handleChangePrimary = value => {
+    const variations = this.state.design.variations.map(variation => {
+      if (variation.name === value) {
+        variation.primary = true;
+        return variation;
+      }
+      variation.primary = false;
+      return variation;
+    });
+    this.setState({
+      design: Object.assign(this.state.design, {
+        variations
+      })
+    });
+  };
 
   /** Handles submission by callong onSubmit with the relevant data and handling
    the promise that it may return. */
@@ -151,7 +206,8 @@ class DesignSettingsModal extends React.Component {
     const data = {
       id: this.state.design.id,
       name: this.state.design.name,
-      status: this.state.design.status
+      status: this.state.design.status,
+      variations: this.state.design.variations
     };
     const request = this.props.onSubmit(data);
     if (request && request.then) {
@@ -180,6 +236,7 @@ class DesignSettingsModal extends React.Component {
             onSubmit={this.handleSubmit}
             onChangeName={this.handleChangeName}
             onChangeStatus={this.handleChangeStatus}
+            onChangePrimary={this.handleChangePrimary}
             isPending={this.state.isPending}
           />
         }

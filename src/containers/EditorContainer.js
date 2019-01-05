@@ -106,8 +106,13 @@ export class EditorContainer extends React.Component {
       );
     }
 
-    // Use the first variation or the one specified
+    // Use the primary variation or the one specified
     let currentVariation = props.product.variations[0];
+    if (props.design) {
+      currentVariation = props.design.variations.find(
+        variation => variation.primary
+      );
+    }
     if (props.defaultVariation) {
       currentVariation = props.product.variations.find(variation =>
         softCompareStrings(variation.name, props.defaultVariation)
