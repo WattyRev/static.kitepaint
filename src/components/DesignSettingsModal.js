@@ -137,6 +137,8 @@ Content.propTypes = {
   onChangeName: PropTypes.func.isRequired,
   /** Called when the status changes. Is provided with the new status as the first parameter */
   onChangeStatus: PropTypes.func.isRequired,
+  /** Called when the primary variation changes. Is provided with the name of
+   the new primary variation */
   onChangePrimary: PropTypes.func.isRequired,
   /** Disables the button if true */
   isPending: PropTypes.bool.isRequired
