@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import MyDesignsContainer from "../../containers/MyDesignsContainer";
-import { H1, Spacer, PageLoader } from "../../theme";
+import { H1, Spacer, PageLoader, P } from "../../theme";
 import DesignManager from "./DesignManager";
 
 const StyleWrapper = styled.div`
@@ -23,22 +24,33 @@ const MyDesigns = () => (
         userDesigns.props.isLoading ? (
           <PageLoader />
         ) : (
-          userDesigns.props.designs.map(design => {
-            const product = userDesigns.props.products[design.product];
-            const manufacturer = product
-              ? userDesigns.props.manufacturers[product.manufacturer]
-              : null;
-            return (
-              <Spacer key={design.id} bottom="md">
-                <DesignManager
-                  onDelete={() => userDesigns.actions.deleteDesign(design.id)}
-                  design={design}
-                  product={product}
-                  manufacturer={manufacturer}
-                />
+          <React.Fragment>
+            {userDesigns.props.designs.map(design => {
+              const product = userDesigns.props.products[design.product];
+              const manufacturer = product
+                ? userDesigns.props.manufacturers[product.manufacturer]
+                : null;
+              return (
+                <Spacer key={design.id} bottom="md">
+                  <DesignManager
+                    onDelete={() => userDesigns.actions.deleteDesign(design.id)}
+                    design={design}
+                    product={product}
+                    manufacturer={manufacturer}
+                  />
+                </Spacer>
+              );
+            })}
+            {!userDesigns.props.designs.length && (
+              <Spacer top="lg" bottom="lg">
+                <P>
+                  You have not saved any designs yet. Go to the{" "}
+                  <Link to="/create">Create</Link> page to start creating a new
+                  design.
+                </P>
               </Spacer>
-            );
-          })
+            )}
+          </React.Fragment>
         )
       }
     </MyDesignsContainer>
