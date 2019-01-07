@@ -35,6 +35,10 @@ export const StyleWrapper = styled.div`
     position: relative;
     margin-bottom: 16px;
   }
+
+  p {
+    position: relative;
+  }
 `;
 
 const ErrorPage = ({ errorCode, errorMessage }) => (
