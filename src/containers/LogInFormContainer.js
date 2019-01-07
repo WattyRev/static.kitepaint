@@ -20,10 +20,15 @@ export class LogInFormContainer extends React.Component {
      * A function called when the link to the register form is clicked.
      */
     onRegister: PropTypes.func.isRequired,
+    /** A function called when the use successfully logs in */
+    onLogin: PropTypes.func,
     /**
      * A function called when the link to the reset password form is clicked.
      */
     onResetPassword: PropTypes.func.isRequired
+  };
+  static defaultProps = {
+    onLogin: () => {}
   };
   state = {
     /**
@@ -85,6 +90,7 @@ export class LogInFormContainer extends React.Component {
         this.setState({
           pendingRequest: false
         });
+        this.props.onLogin();
       })
       .catch(error => {
         if (error.isCanceled) {

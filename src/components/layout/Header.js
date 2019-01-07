@@ -87,7 +87,7 @@ const Header = () => (
       </NavLink>
       <UserContainer>
         {userData =>
-          userData.props.isLoggedIn && (
+          userData.props.isLoggedIn ? (
             <Dropdown
               className="testing_account-dropdown"
               dropdownContent={accountDropdown => (
@@ -128,6 +128,16 @@ const Header = () => (
                 </NavLink>
               )}
             </Dropdown>
+          ) : (
+            <NavLink
+              as={Link}
+              to={{
+                pathname: "/login",
+                search: `?url=${encodeURIComponent(window.location.href)}`
+              }}
+            >
+              Log In
+            </NavLink>
           )
         }
       </UserContainer>

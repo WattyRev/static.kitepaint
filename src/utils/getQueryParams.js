@@ -14,7 +14,7 @@ export default function getQueryParams() {
   return paramStrings.reduce((accumulated, paramString) => {
     const parts = paramString.split("=");
     const paramName = parts[0];
-    const paramValue = parts[1];
+    const paramValue = decodeURIComponent(parts[1]);
 
     // If we haven't handled this param yet, add it to the accumulated object
     if (!accumulated[paramName]) {

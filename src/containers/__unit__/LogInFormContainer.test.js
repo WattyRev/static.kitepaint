@@ -9,7 +9,8 @@ describe("LogInFormContainer", () => {
       id: "abc",
       onSubmit: jest.fn(),
       onRegister: jest.fn(),
-      onResetPassword: jest.fn()
+      onResetPassword: jest.fn(),
+      onLogin: jest.fn()
     };
   });
   it("renders", () => {

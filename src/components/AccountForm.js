@@ -34,7 +34,13 @@ class AccountForm extends React.Component {
     /**
      * A function called when the user indicates that they do, or do not have a KitePaint account.
      */
-    onToggleRecognition: PropTypes.func.isRequired
+    onToggleRecognition: PropTypes.func.isRequired,
+    /** A function called when the use successfully logs in */
+    onLogin: PropTypes.func,
+    className: PropTypes.string
+  };
+  static defaultProps = {
+    onLogin: () => {}
   };
 
   state = {
@@ -62,7 +68,7 @@ class AccountForm extends React.Component {
     // If we don't recognize the user, show the registration form
     if (!isRecognizedUser) {
       return (
-        <StyleWrapper>
+        <StyleWrapper className={this.props.className}>
           <RegisterFormContainer
             id={id}
             onLogIn={this.props.onToggleRecognition}
@@ -74,7 +80,7 @@ class AccountForm extends React.Component {
     // Show the reset password form
     if (this.state.showResetPassword) {
       return (
-        <StyleWrapper>
+        <StyleWrapper className={this.props.className}>
           <ResetPasswordFormContainer
             id={id}
             onCancel={this.handleResetPasswordToggle}
@@ -89,9 +95,10 @@ class AccountForm extends React.Component {
 
     // If all else is false, show the login form
     return (
-      <StyleWrapper>
+      <StyleWrapper className={this.props.className}>
         <LogInFormContainer
           id={id}
+          onLogin={this.props.onLogin}
           onRegister={this.props.onToggleRecognition}
           onResetPassword={this.handleResetPasswordToggle}
         />

@@ -15,6 +15,7 @@ import Designs from "./designs";
 import Edit from "./edit";
 import ErrorPage from "./ErrorPage";
 import Home from "./home";
+import Login from "./login";
 import MyDesigns from "./my-designs";
 import View from "./view";
 
@@ -38,6 +39,7 @@ const App = ({ _isEmbedded }) => (
       <Route exact path="/create/:productId" component={CreateNew} />
       <RestrictedRoute exact path="/designs" component={Designs} />
       <Route exact path="/edit/:designId" component={Edit} />
+      <RestrictedRoute exact path="/login" component={Login} />
       <RestrictedRoute exact path="/my-designs" component={MyDesigns} />
       <Route exact path="/view/:designId" component={View} />
       <Route component={ErrorPage} />
