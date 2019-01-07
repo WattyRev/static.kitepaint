@@ -3,8 +3,42 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { H1, P } from "../theme";
 
-const StyleWrapper = styled.div`
+export const StyleWrapper = styled.div`
   text-align: center;
+  min-height: calc(100vh - 50px);
+  background: url(/errorBackground.jpg);
+  background-size: cover;
+  background-repeat: none;
+  position: relative;
+  padding-top: 10%;
+  box-sizing: border-box;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: ${props => props.theme.colors.white};
+    opacity: 0.3;
+  }
+
+  h1 {
+    display: block;
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+    background: ${props => props.theme.colors.black};
+    color: ${props => props.theme.colors.silver};
+    border-radius: 50%;
+    line-height: 100px;
+    position: relative;
+    margin-bottom: 16px;
+  }
+
+  p {
+    position: relative;
+  }
 `;
 
 const ErrorPage = ({ errorCode, errorMessage }) => (
