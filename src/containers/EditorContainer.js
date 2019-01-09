@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { fromJS } from "immutable";
+import { fromJS, Iterable } from "immutable";
 import { connect } from "react-redux";
 import { CREATE_DESIGN, UPDATE_DESIGN } from "../redux/actions";
 import designShape from "../models/design";
@@ -119,6 +119,11 @@ export class EditorContainer extends React.Component {
       );
     }
 
+    const appliedColors = generateAppliedColors(
+      this.props.design,
+      this.props.product
+    );
+
     this.state = {
       background: defaultBackground || null,
       hideOutlines: false,
@@ -145,12 +150,122 @@ export class EditorContainer extends React.Component {
        * }
        * @type {Object}
        */
-      appliedColors: generateAppliedColors(
-        this.props.design,
-        this.props.product
-      )
+      appliedColors,
+      appliedColorsHistory: [],
+      undoDepth: 0
     };
   }
+
+  /**
+   * Apply colors to the state and keep a record of the change in history.
+   * @param  {String[]} keys The series of keys that point to the value to
+   * change. Is provided to Immutable's setIn. If the array is empty, the value
+   * will be used to overwrite the entire appliedColors value.
+   * @param  {*} value The new value to set
+   * @private
+   */
+  _applyColors(keys, value) {
+    const MAX_HISTORY_LENGTH = 20;
+
+    // Determine the new value for appliedColors, and the current specific
+    // value that is being changed
+    let appliedColors;
+    let previousValue;
+    if (!keys.length) {
+      // If we have no keys, we are replacing the entire appliedColors object
+      appliedColors = value;
+      previousValue = this.state.appliedColors;
+    } else {
+      const currentAppliedColors = fromJS(this.state.appliedColors);
+      appliedColors = currentAppliedColors.setIn(keys, value).toJS();
+      if (currentAppliedColors.hasIn(keys)) {
+        previousValue = currentAppliedColors.getIn(keys, value);
+      }
+
+      // If the previousValue is immutable, convert it to JS.
+      if (Iterable.isIterable(previousValue)) {
+        previousValue = previousValue.toJS();
+      }
+    }
+
+    // Update the history
+
+    // If we have some undo depth, cut the undone steps out of the history since
+    // we are now branching forward with new changes.
+    const appliedColorsHistory = this.state.appliedColorsHistory.slice(
+      this.state.undoDepth
+    );
+    const historyEntry = {
+      keys,
+      value,
+      previousValue
+    };
+    // Add the new history entry to the beginning of the array
+    appliedColorsHistory.unshift(historyEntry);
+    // If we have too many items in the array, delete the oldest one
+    if (appliedColorsHistory.length > MAX_HISTORY_LENGTH) {
+      appliedColorsHistory.pop();
+    }
+
+    // Set state
+    this.setState({
+      appliedColors,
+      appliedColorsHistory,
+      undoDepth: 0
+    });
+  }
+
+  /**
+   * Undo the previous change based on undoDepth and appliedColorsHistory
+   */
+  handleUndo = () => {
+    let appliedColors;
+    const currentUndoDepth = this.state.undoDepth;
+
+    // Cannot undo if there are no more steps to undo
+    if (currentUndoDepth === this.state.appliedColorsHistory.length) {
+      return;
+    }
+    const stepToUndo = this.state.appliedColorsHistory[currentUndoDepth];
+    if (!stepToUndo.keys.length) {
+      appliedColors = stepToUndo.previousValue;
+    } else {
+      const currentAppliedColors = fromJS(this.state.appliedColors);
+      appliedColors = currentAppliedColors
+        .setIn(stepToUndo.keys, stepToUndo.previousValue)
+        .toJS();
+    }
+    this.setState({
+      appliedColors,
+      undoDepth: currentUndoDepth + 1
+    });
+  };
+
+  /**
+   * Redo the last undone change based on undoDepth and appliedColorsHistory
+   */
+  handleRedo = () => {
+    let appliedColors;
+    const currentUndoDepth = this.state.undoDepth;
+
+    // Cannot redo if there is nothing to redo
+    if (currentUndoDepth === 0) {
+      return;
+    }
+    const stepToRedo = this.state.appliedColorsHistory[currentUndoDepth - 1];
+    if (!stepToRedo.keys.length) {
+      appliedColors = stepToRedo.value;
+    } else {
+      const currentAppliedColors = fromJS(this.state.appliedColors);
+      appliedColors = currentAppliedColors
+        .setIn(stepToRedo.keys, stepToRedo.value)
+        .toJS();
+    }
+    this.setState({
+      appliedColors,
+      undoDepth: currentUndoDepth - 1
+    });
+  };
 
   /*
    * Cancels any pending promises before being unmounted.
@@ -194,15 +309,11 @@ export class EditorContainer extends React.Component {
    * Set the color for the specified id on the current variation to the current color.
    * @param  {String} id The ID of the panel, taken from data-id on the element.
    */
-  handleColorApplied = id => {
-    const appliedColorsMap = fromJS(this.state.appliedColors);
-    const appliedColors = appliedColorsMap
-      .setIn([this.state.currentVariation.name, id], this.state.currentColor)
-      .toJS();
-    this.setState({
-      appliedColors
-    });
-  };
+  handleColorApplied = id =>
+    this._applyColors(
+      [this.state.currentVariation.name, id],
+      this.state.currentColor
+    );
 
   /**
    * Generates the design variations based on the product variations and the applied colors.
@@ -241,12 +352,7 @@ export class EditorContainer extends React.Component {
   };
 
   /** Clears all colors from the current variation */
-  handleReset = () => {
-    const appliedColors = Object.assign({}, this.state.appliedColors, {
-      [this.state.currentVariation.name]: {}
-    });
-    this.setState({ appliedColors });
-  };
+  handleReset = () => this._applyColors([this.state.currentVariation.name], {});
 
   /**
    * Handles save by parsing data and submitting a request to create a new design. Redirects to that
@@ -307,7 +413,7 @@ export class EditorContainer extends React.Component {
       };
       return accumulated;
     }, {});
-    this.setState({ appliedColors });
+    this._applyColors([], appliedColors);
   };
 
   handleChangeBackground = value => this.setState({ background: value });
@@ -333,20 +439,25 @@ export class EditorContainer extends React.Component {
         applyColor: this.handleColorApplied,
         autofill: this.handleAutofill,
         changeBackground: this.handleChangeBackground,
-        toggleHideOutlines: this.handleToggleHideOutlines,
+        redo: this.handleRedo,
+        reset: this.handleReset,
         save: this.handleSave,
         selectColor: this.handleColorSelection,
         selectVariation: this.handleVariationSelection,
-        update: this.handleUpdate,
-        reset: this.handleReset
+        toggleHideOutlines: this.handleToggleHideOutlines,
+        undo: this.handleUndo,
+        update: this.handleUpdate
       },
       props: {
         appliedColors: this.state.appliedColors,
         background: this.state.background,
-        hideOutlines: this.state.hideOutlines,
+        canRedo: this.state.undoDepth !== 0,
+        canUndo:
+          this.state.undoDepth !== this.state.appliedColorsHistory.length,
         currentColor: this.state.currentColor,
         currentVariation: this.state.currentVariation,
-        currentVariationColors: this.getCurrentVariationColors()
+        currentVariationColors: this.getCurrentVariationColors(),
+        hideOutlines: this.state.hideOutlines
       }
     };
     return this.props.children(data);

@@ -48,18 +48,22 @@ const Edit = ({ match }) => (
               <Toolbar
                 design={editData.props.design}
                 hideOutlines={editorData.props.hideOutlines}
-                onUpdate={editorData.actions.update}
+                onAutofill={editorData.actions.autofill}
+                onBackgroundChange={editorData.actions.changeBackground}
+                onHideOutlines={editorData.actions.toggleHideOutlines}
+                onRedo={editorData.actions.redo}
+                onReset={editorData.actions.reset}
                 onSave={name =>
                   editorData.actions.save({
                     name,
                     user: editData.props.user.id
                   })
                 }
-                onAutofill={editorData.actions.autofill}
-                onReset={editorData.actions.reset}
-                onHideOutlines={editorData.actions.toggleHideOutlines}
-                onBackgroundChange={editorData.actions.changeBackground}
+                onUndo={editorData.actions.undo}
+                onUpdate={editorData.actions.update}
+                redoDisabled={!editorData.props.canRedo}
                 showSettings
+                undoDisabled={!editorData.props.canUndo}
               />
               <PageLayout>
                 <Sidebar

@@ -8,6 +8,7 @@ import { Text, H3, PageLoader } from "../../theme";
 import Toolbar from "../editor/Toolbar";
 import Sidebar from "../editor/Sidebar";
 import Canvas from "../editor/Canvas";
+import ErrorPage from "../ErrorPage";
 
 const PageLayout = styled.div`
   display: flex;
@@ -31,16 +32,24 @@ const PageLayout = styled.div`
  */
 const CreateNew = ({ match }) => (
   <CreateNewContainer productId={match.params.productId}>
-    {createNewData =>
-      createNewData.props.isLoading ? (
-        <PageLoader />
-      ) : (
+    {createNewData => {
+      if (createNewData.props.isLoading) {
+        return <PageLoader />;
+      }
+      if (!createNewData.props.product) {
+        return <ErrorPage />;
+      }
+      return (
         <EditorContainer product={createNewData.props.product}>
           {editorData => (
             <React.Fragment>
               <UserContainer>
                 {userData => (
                   <Toolbar
+                    hideOutlines={editorData.props.hideOutlines}
+                    onAutofill={editorData.actions.autofill}
+                    onBackgroundChange={editorData.actions.changeBackground}
+                    onHideOutlines={editorData.actions.toggleHideOutlines}
                     onSave={name => {
                       editorData.actions.save({
                         name,
@@ -49,11 +58,11 @@ const CreateNew = ({ match }) => (
                           : "0"
                       });
                     }}
-                    hideOutlines={editorData.props.hideOutlines}
-                    onAutofill={editorData.actions.autofill}
-                    onReset={() => {}}
-                    onHideOutlines={editorData.actions.toggleHideOutlines}
-                    onBackgroundChange={editorData.actions.changeBackground}
+                    onRedo={editorData.actions.redo}
+                    onReset={editorData.actions.reset}
+                    onUndo={editorData.actions.undo}
+                    redoDisabled={!editorData.props.canRedo}
+                    undoDisabled={!editorData.props.canUndo}
                   />
                 )}
               </UserContainer>
@@ -95,8 +104,8 @@ const CreateNew = ({ match }) => (
             </React.Fragment>
           )}
         </EditorContainer>
-      )
-    }
+      );
+    }}
   </CreateNewContainer>
 );
 

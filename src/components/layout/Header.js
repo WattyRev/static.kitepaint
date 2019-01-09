@@ -5,7 +5,7 @@ import UserContainer from "../../containers/UserContainer";
 import { A, H2, Icon, Dropdown } from "../../theme";
 import { TypographyStyles } from "../../theme/Text";
 
-export const StyleWrapper = styled.div`
+export const StyleWrapper = styled.header`
   background: ${({ theme }) => theme.colors.silver};
   height: 48px;
   width: 100%;
