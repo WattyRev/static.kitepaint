@@ -77,7 +77,9 @@ export const StyleWrapper = styled.div`
  */
 class Toolbar extends React.Component {
   static propTypes = {
+    /** Should the undo button be disabled? */
     undoDisabled: PropTypes.bool,
+    /** Should the redo button be disabled? */
     redoDisabled: PropTypes.bool,
     /** The design being edited */
     design: designShape,
