@@ -64,6 +64,11 @@ export const StyleWrapper = styled.div`
     &:hover {
       background: ${props => props.theme.colors.black};
     }
+    &[disabled] {
+      opacity: 0.5;
+      cursor: default;
+      background: none;
+    }
   }
 `;
 
@@ -72,6 +77,10 @@ export const StyleWrapper = styled.div`
  */
 class Toolbar extends React.Component {
   static propTypes = {
+    /** Should the undo button be disabled? */
+    undoDisabled: PropTypes.bool,
+    /** Should the redo button be disabled? */
+    redoDisabled: PropTypes.bool,
     /** The design being edited */
     design: designShape,
     /** Are outlines hidden? */
@@ -89,6 +98,10 @@ class Toolbar extends React.Component {
     /** Triggered when a background is selected. The background url is provided
      as the first parameter */
     onBackgroundChange: PropTypes.func.isRequired,
+    /** Triggered when the undo button is clicked. */
+    onUndo: PropTypes.func,
+    /** Triggered when the redo button is clicked. */
+    onRedo: PropTypes.func,
     /** Should the settings button be visible? */
     showSettings: PropTypes.bool
   };
@@ -257,74 +270,59 @@ class Toolbar extends React.Component {
       )
     });
 
-    // Autofill
-    if (this.props.onAutofill) {
+    // Undo
+    if (this.props.onUndo) {
       actions.push({
-        name: "autofill",
+        name: "undo",
         content: (
           <P
-            className="testing_autofill toolbar-item"
+            className="toolbar-item"
+            disabled={this.props.undoDisabled}
             isLight
-            onClick={this.props.onAutofill}
+            onClick={this.props.onUndo}
           >
-            <Icon icon="magic" />
-            <span className="label"> Autofill</span>
+            <Icon icon="undo" />
+            <span className="label"> Undo</span>
           </P>
         ),
         truncatedContent: (
-          <DropdownItem onClick={this.props.onAutofill}>
-            <Icon icon="magic" />
-            <span className="label"> Autofill</span>
+          <DropdownItem
+            disabled={this.props.undoDisabled}
+            onClick={this.props.onUndo}
+          >
+            <Icon icon="undo" />
+            <span className="label"> Undo</span>
           </DropdownItem>
         )
       });
     }
 
-    // Reset
-    if (this.props.onReset) {
+    // Redo
+    if (this.props.onRedo) {
       actions.push({
-        name: "reset",
+        name: "redo",
         content: (
           <P
-            className="testing_reset toolbar-item"
+            className="toolbar-item"
+            disabled={this.props.redoDisabled}
             isLight
-            onClick={this.props.onReset}
+            onClick={this.props.onRedo}
           >
-            <Icon icon="eraser" />
-            <span className="label"> Reset</span>
+            <Icon icon="redo" />
+            <span className="label"> Redo</span>
           </P>
         ),
         truncatedContent: (
-          <DropdownItem onClick={this.props.onReset}>
-            <Icon icon="eraser" />
-            <span className="label"> Reset</span>
+          <DropdownItem
+            disabled={this.props.redoDisabled}
+            onClick={this.props.onRedo}
+          >
+            <Icon icon="redo" />
+            <span className="label"> Redo</span>
           </DropdownItem>
         )
       });
     }
-
-    // Hide Outlines
-    actions.push({
-      name: "hide-outlines",
-      content: (
-        <P className="toolbar-item" isLight onClick={this.props.onHideOutlines}>
-          <Icon icon={this.props.hideOutlines ? "eye" : "eye-slash"} />
-          <span className="label">
-            {" "}
-            {this.props.hideOutlines ? "Show" : "Hide"} Outlines
-          </span>
-        </P>
-      ),
-      truncatedContent: (
-        <DropdownItem onClick={this.props.onHideOutlines}>
-          <Icon icon={this.props.hideOutlines ? "eye" : "eye-slash"} />
-          <span className="label">
-            {" "}
-            {this.props.hideOutlines ? "Show" : "Hide"} Outlines
-          </span>
-        </DropdownItem>
-      )
-    });
 
     // Background
     actions.push({
@@ -390,6 +388,75 @@ class Toolbar extends React.Component {
         </Dropdown>
       )
     });
+
+    // Hide Outlines
+    actions.push({
+      name: "hide-outlines",
+      content: (
+        <P className="toolbar-item" isLight onClick={this.props.onHideOutlines}>
+          <Icon icon={this.props.hideOutlines ? "eye" : "eye-slash"} />
+          <span className="label">
+            {" "}
+            {this.props.hideOutlines ? "Show" : "Hide"} Outlines
+          </span>
+        </P>
+      ),
+      truncatedContent: (
+        <DropdownItem onClick={this.props.onHideOutlines}>
+          <Icon icon={this.props.hideOutlines ? "eye" : "eye-slash"} />
+          <span className="label">
+            {" "}
+            {this.props.hideOutlines ? "Show" : "Hide"} Outlines
+          </span>
+        </DropdownItem>
+      )
+    });
+
+    // Autofill
+    if (this.props.onAutofill) {
+      actions.push({
+        name: "autofill",
+        content: (
+          <P
+            className="testing_autofill toolbar-item"
+            isLight
+            onClick={this.props.onAutofill}
+          >
+            <Icon icon="magic" />
+            <span className="label"> Autofill</span>
+          </P>
+        ),
+        truncatedContent: (
+          <DropdownItem onClick={this.props.onAutofill}>
+            <Icon icon="magic" />
+            <span className="label"> Autofill</span>
+          </DropdownItem>
+        )
+      });
+    }
+
+    // Reset
+    if (this.props.onReset) {
+      actions.push({
+        name: "reset",
+        content: (
+          <P
+            className="testing_reset toolbar-item"
+            isLight
+            onClick={this.props.onReset}
+          >
+            <Icon icon="eraser" />
+            <span className="label"> Reset</span>
+          </P>
+        ),
+        truncatedContent: (
+          <DropdownItem onClick={this.props.onReset}>
+            <Icon icon="eraser" />
+            <span className="label"> Reset</span>
+          </DropdownItem>
+        )
+      });
+    }
 
     // Design Settings
     if (this.props.design && this.props.showSettings) {

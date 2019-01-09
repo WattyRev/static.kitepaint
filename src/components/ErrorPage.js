@@ -20,7 +20,7 @@ export const StyleWrapper = styled.div`
     width: 100%;
     height: 100%;
     background: ${props => props.theme.colors.white};
-    opacity: 0.3;
+    opacity: 0.6;
   }
 
   h1 {

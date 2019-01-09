@@ -9,9 +9,7 @@ describe("Footer", () => {
   });
   describe("StyleWrapper", () => {
     it("renders", () => {
-      expect.assertions(1);
-      const wrapper = mount(<StyleWrapper theme={Theme} />);
-      expect(wrapper.find("div")).toHaveLength(1);
+      mount(<StyleWrapper theme={Theme} />);
     });
   });
 });

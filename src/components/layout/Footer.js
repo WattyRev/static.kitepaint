@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { isEmbedded } from "../../constants/embed";
 import { A, P } from "../../theme";
 
-export const StyleWrapper = styled.div`
+export const StyleWrapper = styled.footer`
   text-align: center;
   border-top: 1px solid ${props => props.theme.colors.grayDark}
   padding: 8px;

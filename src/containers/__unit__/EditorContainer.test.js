@@ -628,4 +628,516 @@ describe("EditorContainer", () => {
       });
     });
   });
+  describe("undo/redo", () => {
+    it("can undo multiple actions", () => {
+      expect.assertions(5);
+      const wrapper = mount(
+        <EditorContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div
+                className="selectBlack"
+                onClick={() => data.actions.selectColor("black")}
+              />
+              <div
+                className="selectRed"
+                onClick={() => data.actions.selectColor("red")}
+              />
+              <div
+                className="applyColor1"
+                onClick={() => data.actions.applyColor("p1")}
+              />
+              <div
+                className="applyColor2"
+                onClick={() => data.actions.applyColor("p2")}
+              />
+              <div
+                className="applyColor3"
+                onClick={() => data.actions.applyColor("p3")}
+              />
+              <div className="undo" onClick={data.actions.undo} />
+              <div className="appliedColors">
+                {JSON.stringify(data.props.appliedColors)}
+              </div>
+            </React.Fragment>
+          )}
+        </EditorContainer>
+      );
+
+      // Set some colors
+      wrapper.find(".selectBlack").simulate("click");
+      wrapper.find(".applyColor1").simulate("click");
+      wrapper.find(".applyColor2").simulate("click");
+      wrapper.find(".selectRed").simulate("click");
+      wrapper.find(".applyColor3").simulate("click");
+      wrapper.find(".applyColor1").simulate("click");
+
+      // Undo one step at a time and check the result
+      expect(wrapper.find(".appliedColors").text()).toEqual(
+        JSON.stringify({
+          Standard: {
+            p1: {
+              name: "red",
+              color: "#ff0000"
+            },
+            p2: {
+              name: "black",
+              color: "#000000"
+            },
+            p3: {
+              name: "red",
+              color: "#ff0000"
+            }
+          }
+        })
+      );
+      wrapper.find(".undo").simulate("click");
+      expect(wrapper.find(".appliedColors").text()).toEqual(
+        JSON.stringify({
+          Standard: {
+            p1: {
+              name: "black",
+              color: "#000000"
+            },
+            p2: {
+              name: "black",
+              color: "#000000"
+            },
+            p3: {
+              name: "red",
+              color: "#ff0000"
+            }
+          }
+        })
+      );
+      wrapper.find(".undo").simulate("click");
+      expect(wrapper.find(".appliedColors").text()).toEqual(
+        JSON.stringify({
+          Standard: {
+            p1: {
+              name: "black",
+              color: "#000000"
+            },
+            p2: {
+              name: "black",
+              color: "#000000"
+            }
+          }
+        })
+      );
+      wrapper.find(".undo").simulate("click");
+      expect(wrapper.find(".appliedColors").text()).toEqual(
+        JSON.stringify({
+          Standard: {
+            p1: {
+              name: "black",
+              color: "#000000"
+            }
+          }
+        })
+      );
+      wrapper.find(".undo").simulate("click");
+      expect(wrapper.find(".appliedColors").text()).toEqual(
+        JSON.stringify({
+          Standard: {}
+        })
+      );
+    });
+    it("can redo multiple undone actions", () => {
+      expect.assertions(5);
+      const wrapper = mount(
+        <EditorContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div
+                className="selectBlack"
+                onClick={() => data.actions.selectColor("black")}
+              />
+              <div
+                className="selectRed"
+                onClick={() => data.actions.selectColor("red")}
+              />
+              <div
+                className="applyColor1"
+                onClick={() => data.actions.applyColor("p1")}
+              />
+              <div
+                className="applyColor2"
+                onClick={() => data.actions.applyColor("p2")}
+              />
+              <div
+                className="applyColor3"
+                onClick={() => data.actions.applyColor("p3")}
+              />
+              <div className="undo" onClick={data.actions.undo} />
+              <div className="redo" onClick={data.actions.redo} />
+              <div className="appliedColors">
+                {JSON.stringify(data.props.appliedColors)}
+              </div>
+            </React.Fragment>
+          )}
+        </EditorContainer>
+      );
+
+      // Set some colors
+      wrapper.find(".selectBlack").simulate("click");
+      wrapper.find(".applyColor1").simulate("click");
+      wrapper.find(".applyColor2").simulate("click");
+      wrapper.find(".selectRed").simulate("click");
+      wrapper.find(".applyColor3").simulate("click");
+      wrapper.find(".applyColor1").simulate("click");
+
+      // Undo the actions
+      wrapper.find(".undo").simulate("click");
+      wrapper.find(".undo").simulate("click");
+      wrapper.find(".undo").simulate("click");
+      wrapper.find(".undo").simulate("click");
+      wrapper.find(".undo").simulate("click");
+
+      // Start redoing actions one at a time.
+      expect(wrapper.find(".appliedColors").text()).toEqual(
+        JSON.stringify({
+          Standard: {}
+        })
+      );
+
+      wrapper.find(".redo").simulate("click");
+      expect(wrapper.find(".appliedColors").text()).toEqual(
+        JSON.stringify({
+          Standard: {
+            p1: {
+              name: "black",
+              color: "#000000"
+            }
+          }
+        })
+      );
+      wrapper.find(".redo").simulate("click");
+      expect(wrapper.find(".appliedColors").text()).toEqual(
+        JSON.stringify({
+          Standard: {
+            p1: {
+              name: "black",
+              color: "#000000"
+            },
+            p2: {
+              name: "black",
+              color: "#000000"
+            }
+          }
+        })
+      );
+      wrapper.find(".redo").simulate("click");
+      expect(wrapper.find(".appliedColors").text()).toEqual(
+        JSON.stringify({
+          Standard: {
+            p1: {
+              name: "black",
+              color: "#000000"
+            },
+            p2: {
+              name: "black",
+              color: "#000000"
+            },
+            p3: {
+              name: "red",
+              color: "#ff0000"
+            }
+          }
+        })
+      );
+      wrapper.find(".redo").simulate("click");
+      expect(wrapper.find(".appliedColors").text()).toEqual(
+        JSON.stringify({
+          Standard: {
+            p1: {
+              name: "red",
+              color: "#ff0000"
+            },
+            p2: {
+              name: "black",
+              color: "#000000"
+            },
+            p3: {
+              name: "red",
+              color: "#ff0000"
+            }
+          }
+        })
+      );
+    });
+    it("sets canRedo to false if no actions have been undone", () => {
+      expect.assertions(1);
+      const wrapper = mount(
+        <EditorContainer {...defaultProps}>
+          {data => (
+            <div className="canRedo">
+              {data.props.canRedo ? "true" : "false"}
+            </div>
+          )}
+        </EditorContainer>
+      );
+      expect(wrapper.find(".canRedo").text()).toEqual("false");
+    });
+    it("sets canRedo to true if actions have been undone", () => {
+      expect.assertions(1);
+      const wrapper = mount(
+        <EditorContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div
+                className="selectBlack"
+                onClick={() => data.actions.selectColor("black")}
+              />
+              <div
+                className="applyColor1"
+                onClick={() => data.actions.applyColor("p1")}
+              />
+              <div className="undo" onClick={data.actions.undo} />
+              <div className="canRedo">
+                {data.props.canRedo ? "true" : "false"}
+              </div>
+            </React.Fragment>
+          )}
+        </EditorContainer>
+      );
+      wrapper.find(".selectBlack").simulate("click");
+      wrapper.find(".applyColor1").simulate("click");
+      wrapper.find(".undo").simulate("click");
+      expect(wrapper.find(".canRedo").text()).toEqual("true");
+    });
+    it("sets canRedo to false if actions have been undone, but more actions have been performed", () => {
+      expect.assertions(1);
+      const wrapper = mount(
+        <EditorContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div
+                className="selectBlack"
+                onClick={() => data.actions.selectColor("black")}
+              />
+              <div
+                className="applyColor1"
+                onClick={() => data.actions.applyColor("p1")}
+              />
+              <div className="undo" onClick={data.actions.undo} />
+              <div className="canRedo">
+                {data.props.canRedo ? "true" : "false"}
+              </div>
+            </React.Fragment>
+          )}
+        </EditorContainer>
+      );
+      wrapper.find(".selectBlack").simulate("click");
+      wrapper.find(".applyColor1").simulate("click");
+      wrapper.find(".undo").simulate("click");
+      wrapper.find(".applyColor1").simulate("click");
+      expect(wrapper.find(".canRedo").text()).toEqual("false");
+    });
+    it("sets canUndo to false if no actions have been performed", () => {
+      expect.assertions(1);
+      const wrapper = mount(
+        <EditorContainer {...defaultProps}>
+          {data => (
+            <div className="canUndo">
+              {data.props.canUndo ? "true" : "false"}
+            </div>
+          )}
+        </EditorContainer>
+      );
+      expect(wrapper.find(".canUndo").text()).toEqual("false");
+    });
+    it("sets canUndo to true after an action has been performed", () => {
+      expect.assertions(1);
+      const wrapper = mount(
+        <EditorContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div
+                className="selectBlack"
+                onClick={() => data.actions.selectColor("black")}
+              />
+              <div
+                className="applyColor1"
+                onClick={() => data.actions.applyColor("p1")}
+              />
+              <div className="canUndo">
+                {data.props.canUndo ? "true" : "false"}
+              </div>
+            </React.Fragment>
+          )}
+        </EditorContainer>
+      );
+      wrapper.find(".selectBlack").simulate("click");
+      wrapper.find(".applyColor1").simulate("click");
+      expect(wrapper.find(".canUndo").text()).toEqual("true");
+    });
+    it("sets canUndo to false after an action has been performed and undone", () => {
+      expect.assertions(1);
+      const wrapper = mount(
+        <EditorContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div
+                className="selectBlack"
+                onClick={() => data.actions.selectColor("black")}
+              />
+              <div
+                className="applyColor1"
+                onClick={() => data.actions.applyColor("p1")}
+              />
+              <div className="undo" onClick={data.actions.undo} />
+              <div className="canUndo">
+                {data.props.canUndo ? "true" : "false"}
+              </div>
+            </React.Fragment>
+          )}
+        </EditorContainer>
+      );
+      wrapper.find(".selectBlack").simulate("click");
+      wrapper.find(".applyColor1").simulate("click");
+      wrapper.find(".undo").simulate("click");
+      expect(wrapper.find(".canUndo").text()).toEqual("false");
+    });
+    it("can undo and redo an autofill", () => {
+      expect.assertions(3);
+      defaultProps.product.variations = [
+        {
+          name: "Standard",
+          svg: ""
+        },
+        {
+          name: "Vented",
+          svg: ""
+        }
+      ];
+      const wrapper = mount(
+        <EditorContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div
+                className="selectBlack"
+                onClick={() => data.actions.selectColor("black")}
+              />
+              <div
+                className="applyColor1"
+                onClick={() => data.actions.applyColor("p1")}
+              />
+              <div className="undo" onClick={data.actions.undo} />
+              <div className="redo" onClick={data.actions.redo} />
+              <div className="autofill" onClick={data.actions.autofill} />
+              <div className="appliedColors">
+                {JSON.stringify(data.props.appliedColors)}
+              </div>
+            </React.Fragment>
+          )}
+        </EditorContainer>
+      );
+
+      wrapper.find(".selectBlack").simulate("click");
+      wrapper.find(".applyColor1").simulate("click");
+      wrapper.find(".autofill").simulate("click");
+
+      expect(wrapper.find(".appliedColors").text()).toEqual(
+        JSON.stringify({
+          Standard: {
+            p1: {
+              name: "black",
+              color: "#000000"
+            }
+          },
+          Vented: {
+            p1: {
+              name: "black",
+              color: "#000000"
+            }
+          }
+        })
+      );
+
+      wrapper.find(".undo").simulate("click");
+      expect(wrapper.find(".appliedColors").text()).toEqual(
+        JSON.stringify({
+          Standard: {
+            p1: {
+              name: "black",
+              color: "#000000"
+            }
+          }
+        })
+      );
+
+      wrapper.find(".redo").simulate("click");
+      expect(wrapper.find(".appliedColors").text()).toEqual(
+        JSON.stringify({
+          Standard: {
+            p1: {
+              name: "black",
+              color: "#000000"
+            }
+          },
+          Vented: {
+            p1: {
+              name: "black",
+              color: "#000000"
+            }
+          }
+        })
+      );
+    });
+    it("can undo and redo a reset", () => {
+      expect.assertions(3);
+      const wrapper = mount(
+        <EditorContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div
+                className="selectBlack"
+                onClick={() => data.actions.selectColor("black")}
+              />
+              <div
+                className="applyColor1"
+                onClick={() => data.actions.applyColor("p1")}
+              />
+              <div className="undo" onClick={data.actions.undo} />
+              <div className="redo" onClick={data.actions.redo} />
+              <div className="reset" onClick={data.actions.reset} />
+              <div className="appliedColors">
+                {JSON.stringify(data.props.appliedColors)}
+              </div>
+            </React.Fragment>
+          )}
+        </EditorContainer>
+      );
+
+      wrapper.find(".selectBlack").simulate("click");
+      wrapper.find(".applyColor1").simulate("click");
+      wrapper.find(".reset").simulate("click");
+
+      expect(wrapper.find(".appliedColors").text()).toEqual(
+        JSON.stringify({
+          Standard: {}
+        })
+      );
+
+      wrapper.find(".undo").simulate("click");
+      expect(wrapper.find(".appliedColors").text()).toEqual(
+        JSON.stringify({
+          Standard: {
+            p1: {
+              name: "black",
+              color: "#000000"
+            }
+          }
+        })
+      );
+
+      wrapper.find(".redo").simulate("click");
+      expect(wrapper.find(".appliedColors").text()).toEqual(
+        JSON.stringify({
+          Standard: {}
+        })
+      );
+    });
+  });
 });

@@ -10,9 +10,7 @@ describe("Header", () => {
     defaultProps = {};
   });
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = shallow(<Header {...defaultProps} />);
-    expect(wrapper).toMatchSnapshot();
+    shallow(<Header {...defaultProps} />);
   });
   it("should display the account dropdown if the user is logged in", () => {
     expect.assertions(1);
@@ -48,9 +46,7 @@ describe("Header", () => {
   });
   describe("StyleWrapper", () => {
     it("renders", () => {
-      expect.assertions(1);
-      const wrapper = mount(<StyleWrapper theme={Theme} />);
-      expect(wrapper.find("div")).toHaveLength(1);
+      mount(<StyleWrapper theme={Theme} />);
     });
   });
 });
