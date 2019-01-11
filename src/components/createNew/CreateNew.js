@@ -4,10 +4,11 @@ import styled from "styled-components";
 import CreateNewContainer from "../../containers/CreateNewContainer";
 import EditorContainer from "../../containers/EditorContainer";
 import UserContainer from "../../containers/UserContainer";
-import { Text, H3, PageLoader } from "../../theme";
+import { PageLoader } from "../../theme";
 import Toolbar from "../editor/Toolbar";
 import Sidebar from "../editor/Sidebar";
 import Canvas from "../editor/Canvas";
+import ProductNotes from "../editor/ProductNotes";
 import ErrorPage from "../ErrorPage";
 
 const PageLayout = styled.div`
@@ -86,19 +87,7 @@ const CreateNew = ({ match }) => (
                 />
                 {createNewData.props.product.notes &&
                   !!createNewData.props.product.notes.length && (
-                    <div className="product-notes">
-                      <H3 isLight>Notes:</H3>
-                      <ul>
-                        {createNewData.props.product.notes.map(
-                          (note, index) =>
-                            note.trim() && (
-                              <Text isLight as="li" key={note + index}>
-                                {note}
-                              </Text>
-                            )
-                        )}
-                      </ul>
-                    </div>
+                    <ProductNotes notes={createNewData.props.product.notes} />
                   )}
               </PageLayout>
             </React.Fragment>
