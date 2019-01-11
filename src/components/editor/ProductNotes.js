@@ -22,8 +22,13 @@ export const StyleWrapper = styled.div`
   }
 `;
 
+/**
+ * Displays an info icon that opens a modal when clicked. The modal contains
+ * the provided notes.
+ */
 class ProductNotes extends React.Component {
   static propTypes = {
+    /** The notes to be displayed in the modal */
     notes: PropTypes.arrayOf(PropTypes.string).isRequired
   };
 
