@@ -29,6 +29,7 @@
     "localStorage": true,
     "console": true,
     "module": true,
-    "require": true
+    "require": true,
+    "process": true
   }
 }

@@ -3,15 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"npm run start:react\" \"npm run start:embed\"",
-    "start:react": "react-scripts start",
-    "start:embed": "nodemon ./embed/server.js localhost 3001",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "test:debug": "node --inspect-brk /node_modules/.bin/jest --runInBand",
+    "deploy:beta": "PUBLIC_URL=https://static.beta.kitepaint.com npm run build && SFTP_PATH=./public_html/static.beta.kitepaint.com/ node sftp-deployment.js",
+    "deploy:prod": "PUBLIC_URL=https://static.kitepaint.com npm run build && SFTP_PATH=./public_html/static.kitepaint.com/ node sftp-deployment.js",
     "eject": "react-scripts eject",
     "lint": "eslint ./src",
-    "pretest": "npm run lint"
+    "pretest": "npm run lint",
+    "start:embed": "nodemon ./embed/server.js localhost 3001",
+    "start:react": "react-scripts start",
+    "start": "concurrently \"npm run start:react\" \"npm run start:embed\"",
+    "test:debug": "node --inspect-brk /node_modules/.bin/jest --runInBand",
+    "test": "react-scripts test"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.7",
@@ -84,6 +86,7 @@
     "jest-styled-components": "^6.3.0",
     "lint-staged": "^7.3.0",
     "nodemon": "^1.18.9",
-    "serve-static": "^1.13.2"
+    "serve-static": "^1.13.2",
+    "ssh2-sftp-client": "^2.4.3"
   }
 }
