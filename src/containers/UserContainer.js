@@ -35,10 +35,17 @@ export class UserContainer extends React.Component {
     /**
      * A function called to indicate if the user is recognized or not. Provided by Redux.
      */
-    onSetRecognition: PropTypes.func.isRequired
+    onSetRecognition: PropTypes.func.isRequired,
+    /** Called when this component triggers a redirect. Mostly used for testing */
+    onRedirect: PropTypes.func
+  };
+
+  defaultProps: {
+    onRedirect: () => {}
   };
 
   state = {
+    // When true, a <Redirect> element should be rendered to redirect to the home page.
     redirect: false
   };
 
@@ -52,7 +59,7 @@ export class UserContainer extends React.Component {
 
   // Handle when the user requests to log out
   handleLogOut = () => {
-    this.props.onLogOut().then(() => {
+    return this.props.onLogOut().then(() => {
       // Turn on the redirect
       this.setState(
         {
@@ -60,18 +67,22 @@ export class UserContainer extends React.Component {
         },
 
         // Turn the redirect back off
-        () => {
+        () =>
           this.setState({
             redirect: false
-          });
-        }
+          })
       );
     });
   };
 
+  buildRedirect = () => {
+    this.props.onRedirect();
+    return <Redirect to="/" />;
+  };
+
   render() {
     if (this.state.redirect) {
-      return <Redirect to="/" />;
+      return this.buildRedirect();
     }
     const { email, id, isLoggedIn, isLoggingIn, username } = this.props.user;
     return this.props.children({
