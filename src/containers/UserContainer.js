@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { getUser, getUserRecognition } from "../redux/modules/user";
 import { SET_RECOGNIZED_USER, LOG_OUT } from "../redux/actions";
 
@@ -37,6 +38,10 @@ export class UserContainer extends React.Component {
     onSetRecognition: PropTypes.func.isRequired
   };
 
+  state = {
+    redirect: false
+  };
+
   /**
    * Toggles the variable in state and in local storage
    */
@@ -45,11 +50,33 @@ export class UserContainer extends React.Component {
     this.props.onSetRecognition(!isRecognizedUser);
   };
 
+  // Handle when the user requests to log out
+  handleLogOut = () => {
+    this.props.onLogOut().then(() => {
+      // Turn on the redirect
+      this.setState(
+        {
+          redirect: true
+        },
+
+        // Turn the redirect back off
+        () => {
+          this.setState({
+            redirect: false
+          });
+        }
+      );
+    });
+  };
+
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/" />;
+    }
     const { email, id, isLoggedIn, isLoggingIn, username } = this.props.user;
     return this.props.children({
       actions: {
-        logOut: this.props.onLogOut,
+        logOut: this.handleLogOut,
         toggleRecognition: this.toggleRecognition
       },
       props: {
