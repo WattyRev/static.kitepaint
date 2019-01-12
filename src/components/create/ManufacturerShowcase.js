@@ -3,6 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import manufacturerShape from "../../models/manufacturer";
 import { H3, A, P, Tile } from "../../theme";
+import { getAssetUrl } from "../../utils";
 import ManufacturerLogo from "../ManufacturerLogo";
 
 /**
@@ -26,7 +27,7 @@ const HeadingWrapper = styled.div`
 const ManufacturerShowcase = ({ manufacturer, children }) => (
   <StyleWrapper>
     <HeadingWrapper>
-      <ManufacturerLogo src={`/logos/${manufacturer.logo}`} />
+      <ManufacturerLogo src={getAssetUrl(`/logos/${manufacturer.logo}`)} />
       <div>
         <H3>{manufacturer.name}</H3>
         {manufacturer.website && (

@@ -19,8 +19,6 @@ describe("RecentDesigns", () => {
     };
   });
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = shallow(<RecentDesigns {...props} />);
-    expect(wrapper).toMatchSnapshot();
+    shallow(<RecentDesigns {...props} />);
   });
 });

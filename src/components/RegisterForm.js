@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { A, P, Label, Input, Button, Error, Tooltip } from "../theme";
+import { getAssetUrl } from "../utils";
 
 /**
  * A form for registering an account for KitePaint.
@@ -94,7 +95,10 @@ const RegisterForm = ({
           Sign Up
         </Button>
         <P>
-          <A href="/KitePaintTermsandConditions.pdf" target="_blank">
+          <A
+            href={getAssetUrl("/KitePaintTermsandConditions.pdf")}
+            target="_blank"
+          >
             Terms and Conditions
           </A>
         </P>

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import designShape from "../../models/design";
 import { Item as DropdownItem } from "../../theme/Dropdown";
 import { P, Icon, ModalPrompt, Dropdown } from "../../theme";
-import { getAppDimensions } from "../../utils";
+import { getAppDimensions, getAssetUrl } from "../../utils";
 import ShareModal from "../ShareModal";
 import DesignSettingsModalContainer from "../../containers/DesignSettingsModalContainer";
 
@@ -15,27 +15,27 @@ const backgroundOptions = [
   },
   {
     label: "Beach",
-    value: "/backgrounds/beach.jpg"
+    value: getAssetUrl("/backgrounds/beach.jpg")
   },
   {
     label: "Blue Sky",
-    value: "/backgrounds/blue-sky.jpg"
+    value: getAssetUrl("/backgrounds/blue-sky.jpg")
   },
   {
     label: "Dark Sky",
-    value: "/backgrounds/dark-sky.jpg"
+    value: getAssetUrl("/backgrounds/dark-sky.jpg")
   },
   {
     label: "Orange Sky",
-    value: "/backgrounds/orange-sky.jpg"
+    value: getAssetUrl("/backgrounds/orange-sky.jpg")
   },
   {
     label: "Grass",
-    value: "/backgrounds/grass.jpg"
+    value: getAssetUrl("/backgrounds/grass.jpg")
   },
   {
     label: "Water",
-    value: "/backgrounds/water.jpg"
+    value: getAssetUrl("/backgrounds/water.jpg")
   }
 ];
 
