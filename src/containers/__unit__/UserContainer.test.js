@@ -67,4 +67,28 @@ describe("UserContainer", () => {
       expect(props.onSetRecognition.mock.calls[0][0]).toEqual(true);
     });
   });
+  describe("#handleLogOut", () => {
+    it("does not redirect to the home page by default", () => {
+      expect.assertions(1);
+      props.onRedirect = jest.fn();
+      shallow(<UserContainer {...props}>{() => <div />}</UserContainer>);
+      expect(props.onRedirect).not.toHaveBeenCalled();
+    });
+    it("redirects to the home page after a successful log out", () => {
+      expect.assertions(1);
+      props.onLogOut.mockResolvedValue();
+      props.onRedirect = jest.fn();
+      const wrapper = shallow(
+        <UserContainer {...props}>
+          {data => <div className="logOut" onClick={data.actions.logOut} />}
+        </UserContainer>
+      );
+      return wrapper
+        .find(".logOut")
+        .prop("onClick")()
+        .then(() => {
+          expect(props.onRedirect).toHaveBeenCalled();
+        });
+    });
+  });
 });

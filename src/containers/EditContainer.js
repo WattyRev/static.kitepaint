@@ -36,7 +36,7 @@ export class EditContainer extends React.Component {
      * The currently logged in user
      */
     user: PropTypes.shape({
-      id: PropTypes.string.isRequired
+      id: PropTypes.string
     }),
     /**
      * A function to request the design be fetched. Provided by redux.

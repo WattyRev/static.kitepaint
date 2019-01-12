@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { getUser, getUserRecognition } from "../redux/modules/user";
 import { SET_RECOGNIZED_USER, LOG_OUT } from "../redux/actions";
 
@@ -34,7 +35,18 @@ export class UserContainer extends React.Component {
     /**
      * A function called to indicate if the user is recognized or not. Provided by Redux.
      */
-    onSetRecognition: PropTypes.func.isRequired
+    onSetRecognition: PropTypes.func.isRequired,
+    /** Called when this component triggers a redirect. Mostly used for testing */
+    onRedirect: PropTypes.func
+  };
+
+  defaultProps: {
+    onRedirect: () => {}
+  };
+
+  state = {
+    // When true, a <Redirect> element should be rendered to redirect to the home page.
+    redirect: false
   };
 
   /**
@@ -45,11 +57,37 @@ export class UserContainer extends React.Component {
     this.props.onSetRecognition(!isRecognizedUser);
   };
 
+  // Handle when the user requests to log out
+  handleLogOut = () => {
+    return this.props.onLogOut().then(() => {
+      // Turn on the redirect
+      this.setState(
+        {
+          redirect: true
+        },
+
+        // Turn the redirect back off
+        () =>
+          this.setState({
+            redirect: false
+          })
+      );
+    });
+  };
+
+  buildRedirect = () => {
+    this.props.onRedirect();
+    return <Redirect to="/" />;
+  };
+
   render() {
+    if (this.state.redirect) {
+      return this.buildRedirect();
+    }
     const { email, id, isLoggedIn, isLoggingIn, username } = this.props.user;
     return this.props.children({
       actions: {
-        logOut: this.props.onLogOut,
+        logOut: this.handleLogOut,
         toggleRecognition: this.toggleRecognition
       },
       props: {
