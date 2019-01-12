@@ -1,21 +1,34 @@
 /* eslint-disable no-console */
-
 import React from "react";
 import styled, { css, keyframes } from "styled-components";
 import P from "./P";
 
+/**
+ * Triggers a success alert to display with the provided message.
+ * @param  {String} message message
+ */
 export function success(message) {
   window.kp_alert({
     message,
     type: "success"
   });
 }
+
+/**
+ * Triggers a warning alert to display with the provided message.
+ * @param  {String} message message
+ */
 export function warn(message) {
   window.kp_alert({
     message,
     type: "warning"
   });
 }
+
+/**
+ * Triggers an error alert to display with the provided message.
+ * @param  {String} message message
+ */
 export function error(message) {
   window.kp_alert({
     message,
@@ -23,6 +36,9 @@ export function error(message) {
   });
 }
 
+/**
+ * Styling for the element that contains all of the alerts.
+ */
 const AlertWrapper = styled.div`
   position: fixed;
   top: 7vh;
@@ -30,6 +46,7 @@ const AlertWrapper = styled.div`
   z-index: 1000;
 `;
 
+/** The animation used when an alert is created. */
 const alertEntryAnimation = keyframes`
   0% {
     transform: translateX(120%);
@@ -42,6 +59,11 @@ const alertEntryAnimation = keyframes`
   }
 `;
 
+/**
+ * An individual alert
+ * @prop {Boolean} removing Causes the alert to animate away before being removed from the DOM
+ * @prop {"success"|"warning"|"error"} alertType
+ */
 export const StyledAlert = styled.div`
   padding: 8px;
   box-sizing: border-box;
@@ -109,12 +131,18 @@ export const StyledAlert = styled.div`
 
 class Alert extends React.Component {
   state = {
+    /** An array of alerts being displayed. */
     alerts: [
       // { Example data format
+      //   // A unique ID for this alert
       //   id: "abc",
+      //   // The displayed message
       //   message: "boogers",
+      //   // The type of alert (error, warning, or success)
       //   type: "error",
+      //   // The time that it was created (ms)
       //   created: 123,
+      //   // Indication if the alert is about to be removed
       //   removing: false
       // },
     ]
@@ -150,6 +178,8 @@ class Alert extends React.Component {
       );
       return;
     }
+
+    // Create the alert and store it on the state with the others
     const currentAlerts = this.state.alerts;
     const currentTime = new Date().getTime();
     const id = `${currentTime}${type}${message}`;
@@ -164,8 +194,10 @@ class Alert extends React.Component {
       alerts: currentAlerts
     });
 
+    // Wait the specified duration to remove the alert
     return new Promise(resolve => {
       window.setTimeout(() => {
+        // Only remove the alert if it still exists
         if (this.state.alerts.find(alert => alert.id === id)) {
           this.removeAlert(id);
         }
@@ -175,6 +207,7 @@ class Alert extends React.Component {
   };
 
   removeAlert = id => {
+    // Indicate on the alert that it will be removed soon
     const updatedAlerts = this.state.alerts.map(alert => {
       if (alert.id === id) {
         alert.removing = true;
@@ -184,6 +217,8 @@ class Alert extends React.Component {
     this.setState({
       alerts: updatedAlerts
     });
+
+    // Give the alert time to animate out before removing it from the DOM
     window.setTimeout(() => {
       const prunedAlerts = this.state.alerts.filter(alert => alert.id !== id);
       this.setState({
