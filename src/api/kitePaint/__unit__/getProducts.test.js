@@ -1,4 +1,5 @@
 import { KitePaintApi } from "../../KitePaintApi";
+jest.mock("../../../theme/Alert");
 
 describe("#getProducts", () => {
   let Api;

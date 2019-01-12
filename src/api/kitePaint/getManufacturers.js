@@ -1,3 +1,5 @@
+import { error } from "../../theme/Alert";
+
 /**
  * Get all manufacturers.
  * @param  {Boolean} [useCache=true] If true, the request will be cached, and subsequent duplicate
@@ -22,13 +24,11 @@ export default async function getManufacturers(useCache = true) {
 
   // Handle invalid responses
   if (!response.data) {
-    return new Promise((resolve, reject) =>
-      reject(
-        response.data
-          ? response.data.message
-          : "The request for manufacturers was unsuccessful"
-      )
-    );
+    const message = response.data
+      ? response.data.message
+      : "The request for manufacturers was unsuccessful";
+    error(message);
+    return new Promise((resolve, reject) => reject(message));
   }
 
   return response;

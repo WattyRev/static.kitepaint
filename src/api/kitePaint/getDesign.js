@@ -1,3 +1,5 @@
+import { error } from "../../theme/Alert";
+
 /**
  * Retrieves the design with the specified id
  * @param  {String}  id
@@ -20,21 +22,19 @@ export default async function getDesign(id, useCache = true) {
 
   // Handle invalid responses
   if (!response.data || !response.data.length) {
-    return new Promise((resolve, reject) =>
-      reject(
-        response.data
-          ? response.data.message
-          : `The request for design ${id} was unsuccessful`
-      )
-    );
+    const message = response.data
+      ? response.data.message
+      : `The request for design ${id} was unsuccessful`;
+    error(message);
+    return new Promise((resolve, reject) => reject(message));
   }
 
   response.data = response.data[0];
 
   if (response.data.active === "0") {
-    return new Promise((resolve, reject) =>
-      reject(`Design ${id} has been deleted.`)
-    );
+    const message = `Design ${id} has been deleted.`;
+    error(message);
+    return new Promise((resolve, reject) => reject(message));
   }
 
   response.data.variations = JSON.parse(response.data.variations);

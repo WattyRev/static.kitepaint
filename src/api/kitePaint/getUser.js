@@ -1,4 +1,5 @@
 import Qs from "qs";
+import { error } from "../../theme/Alert";
 
 /**
  * Retrieves a user by ID
@@ -30,13 +31,11 @@ export default async function getUser(id, useCache = true) {
 
   // Handle invalid responses
   if (!response.data || !response.data.length) {
-    return new Promise((resolve, reject) =>
-      reject(
-        response.data
-          ? response.data.message
-          : `The request for user ${id} was unsuccessful`
-      )
-    );
+    const message = response.data
+      ? response.data.message
+      : `The request for user ${id} was unsuccessful`;
+    error(message);
+    return new Promise((resolve, reject) => reject(message));
   }
 
   response.data = response.data[0];

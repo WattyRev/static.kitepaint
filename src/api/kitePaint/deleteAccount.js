@@ -1,3 +1,5 @@
+import { error, success } from "../../theme/Alert";
+
 /**
  * Triggers deletion of the specified account
  * @param  {String}  id       The account's ID
@@ -17,11 +19,13 @@ export default async function deleteAccount(id, password) {
   );
 
   if (!response.data || !response.data.changed) {
-    return new Promise((resolve, reject) =>
-      reject(
-        response.data ? response.data.message : "Could not delete account."
-      )
-    );
+    const message = response.data
+      ? response.data.message
+      : "Could not delete account.";
+    error(message);
+    return new Promise((resolve, reject) => reject(message));
   }
+
+  success("Your account has been deleted.");
   return response;
 }

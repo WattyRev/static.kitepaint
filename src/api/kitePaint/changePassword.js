@@ -1,3 +1,5 @@
+import { error, success } from "../../theme/Alert";
+
 /**
  * Changes the user's password
  * @param  {Onbject}  data Must contain string values: username, currentPassword,
@@ -20,12 +22,13 @@ export default async function changePassword(data) {
   );
 
   if (!response.data || !response.data.changed) {
-    return new Promise((resolve, reject) =>
-      reject(
-        response.data ? response.data.message : "Could not change the password."
-      )
-    );
+    const message = response.data
+      ? response.data.message
+      : "Could not change the password.";
+    error(message);
+    return new Promise((resolve, reject) => reject(message));
   }
 
+  success("Your password has been changed.");
   return response;
 }

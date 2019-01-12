@@ -1,6 +1,8 @@
 import { KitePaintApi } from "../../KitePaintApi";
 import { getObjectFromFormData } from "../../__unit__/KitePaintApi.test";
 
+jest.mock("../../../theme/Alert");
+
 describe("#createDesign", () => {
   let Api;
   beforeEach(() => {

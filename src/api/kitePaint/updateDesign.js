@@ -1,3 +1,5 @@
+import { error, success } from "../../theme/Alert";
+
 /**
  * Update an existing design
  * @param  {Object}  designData
@@ -17,15 +19,14 @@ export default async function updateDesign(designData) {
 
   // The server should respond with valid: true.
   if (!response.data || !response.data.valid) {
-    return new Promise((resolve, reject) =>
-      reject(
-        response.data
-          ? response.data.message
-          : "The design could not be updated"
-      )
-    );
+    const message = response.data
+      ? response.data.message
+      : "The design could not be updated";
+    error(message);
+    return new Promise((resolve, reject) => reject(message));
   }
 
+  success("The design has been saved");
   return {
     data: designData
   };

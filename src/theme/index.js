@@ -2,6 +2,7 @@ import * as colors from "./colors";
 import * as media from "./media";
 import * as patterns from "./patterns";
 import A from "./A";
+import Alert from "./Alert";
 import BlockListItem from "./BlockListItem";
 import Button from "./Button";
 import Dropdown from "./Dropdown";
@@ -33,6 +34,7 @@ export default Theme;
 
 export {
   A,
+  Alert,
   BlockListItem,
   Button,
   Dropdown,

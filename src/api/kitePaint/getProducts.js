@@ -1,3 +1,5 @@
+import { error } from "../../theme/Alert";
+
 /**
  * Get all products.
  * @param  {Boolean} [useCache=true] If true, the request will be cached, and subsequent duplicate
@@ -18,13 +20,11 @@ export default async function getProducts(useCache = true) {
 
   // Handle invalid responses
   if (!response.data) {
-    return new Promise((resolve, reject) =>
-      reject(
-        response.data
-          ? response.data.message
-          : "The request for products was unsuccessful"
-      )
-    );
+    const message = response.data
+      ? response.data.message
+      : "The request for products was unsuccessful";
+    error(message);
+    return new Promise((resolve, reject) => reject(message));
   }
 
   response.data = response.data.map(product => {

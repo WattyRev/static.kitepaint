@@ -1,3 +1,5 @@
+import { error, success } from "../../theme/Alert";
+
 /**
  * Deletes the design with the specified ID.
  * @param  {String}  designId
@@ -15,14 +17,13 @@ export default async function deleteDesign(designId) {
 
   // The server should respond with valid: true and with the id of the newly created design.
   if (!response.data || !response.data.valid) {
-    return new Promise((resolve, reject) =>
-      reject(
-        response.data
-          ? response.data.message
-          : "The design could not be deleted"
-      )
-    );
+    const message = response.data
+      ? response.data.message
+      : "The design could not be deleted";
+    error(message);
+    return new Promise((resolve, reject) => reject(message));
   }
 
+  success("The design has been deleted.");
   return response;
 }

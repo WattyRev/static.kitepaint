@@ -1,3 +1,5 @@
+import { error } from "../../theme/Alert";
+
 /**
  * Sends a request to reset a user's password.
  * @param  {String} username The username of the user to reset the password for.
@@ -17,13 +19,11 @@ export default async function resetPassword(username, email) {
   );
   // If there's no data, or if the data returns with reset as false, reject.
   if (!response.data || !response.data.reset) {
-    return new Promise((resolve, reject) =>
-      reject(
-        response.data
-          ? response.data.message
-          : "The reset password request was unsuccessful."
-      )
-    );
+    const message = response.data
+      ? response.data.message
+      : "The reset password request was unsuccessful.";
+    error(message);
+    return new Promise((resolve, reject) => reject(message));
   }
   return response;
 }

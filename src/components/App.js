@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Route, Switch } from "react-router-dom";
 import { isEmbedded } from "../constants/embed";
+import { Alert } from "../theme";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
 import EmbeddedCss from "./EmbeddedCss";
@@ -45,6 +46,7 @@ const App = ({ _isEmbedded }) => (
       <Route component={ErrorPage} />
     </Switch>
     <Footer />
+    <Alert />
   </React.Fragment>
 );
 

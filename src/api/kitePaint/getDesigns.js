@@ -1,4 +1,5 @@
 import Qs from "qs";
+import { error } from "../../theme/Alert";
 
 /**
  * Get saved designs.
@@ -52,13 +53,11 @@ export default async function getDesigns(filter = {}, useCache = true) {
 
   // Handle invalid responses
   if (!response.data) {
-    return new Promise((resolve, reject) =>
-      reject(
-        response.data
-          ? response.data.message
-          : "The request for designs was unsuccessful"
-      )
-    );
+    const message = response.data
+      ? response.data.message
+      : "The request for designs was unsuccessful";
+    error(message);
+    return new Promise((resolve, reject) => reject(message));
   }
 
   response.data = response.data.map(design => {

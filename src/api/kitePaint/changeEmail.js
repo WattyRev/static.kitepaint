@@ -1,3 +1,5 @@
+import { error, success } from "../../theme/Alert";
+
 /**
  * Changes the email address for the user's account
  * @param  {String}  userId The user's id
@@ -17,15 +19,14 @@ export default async function changeEmail(userId, newEmail) {
   );
 
   if (!response.data || !response.data.changed) {
-    return new Promise((resolve, reject) =>
-      reject(
-        response.data
-          ? response.data.message
-          : "Could not change the email address."
-      )
-    );
+    const message = response.data
+      ? response.data.message
+      : "Could not change the email address.";
+    error(message);
+    return new Promise((resolve, reject) => reject(message));
   }
 
   response.data.email = newEmail;
+  success("Your email address has been saved.");
   return response;
 }
