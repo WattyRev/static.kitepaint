@@ -7,6 +7,7 @@ import designShape from "../../models/design";
 import userShape from "../../models/user";
 import ColorTile from "../editor/ColorTile";
 import { Icon, FillToBottom, Sidebar as SidebarUI } from "../../theme";
+import { getAssetUrl } from "../../utils";
 import ManufacturerLogo from "../ManufacturerLogo";
 import Svg from "../Svg";
 
@@ -88,7 +89,7 @@ const Sidebar = ({
                 className="manufacturer-logo"
                 size={32}
                 noMargin
-                src={`/logos/${manufacturer.logo}`}
+                src={getAssetUrl(`/logos/${manufacturer.logo}`)}
               />
               <div className="testing_manufacturer manufacturer-info">
                 {product.name} <br />

@@ -6,6 +6,7 @@ import designShape from "../models/design";
 import productShape from "../models/product";
 import manufacturerShape from "../models/manufacturer";
 import { P } from "../theme";
+import { getAssetUrl } from "../utils";
 import Svg from "./Svg";
 import ManufacturerLogo from "./ManufacturerLogo";
 
@@ -83,7 +84,7 @@ const RecentDesigns = ({ designs, products, manufacturers, cta }) => {
               </P>
               <ManufacturerLogo
                 className="logo"
-                src={`/logos/${manufacturer.logo}`}
+                src={getAssetUrl(`/logos/${manufacturer.logo}`)}
                 noMargin
                 size={45}
               />

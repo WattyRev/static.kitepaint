@@ -17,9 +17,7 @@ describe("RegisterForm", () => {
     };
   });
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = shallow(<RegisterForm {...defaultProps} />);
-    expect(wrapper).toMatchSnapshot();
+    shallow(<RegisterForm {...defaultProps} />);
   });
   describe(".props", () => {
     describe(".email", () => {

@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { getAssetUrl } from "../utils";
 import { H1, P } from "../theme";
 
 export const StyleWrapper = styled.div`
   text-align: center;
   min-height: calc(100vh - 50px);
-  background: url(/errorBackground.jpg);
+  background: url(${getAssetUrl("/errorBackground.jpg")});
   background-size: cover;
   background-repeat: none;
   position: relative;
