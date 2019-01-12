@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecentDesigns renders 1`] = `
+<styled.div>
+  <div
+    className="designs"
+  >
+    <Link
+      className="design-wrapper"
+      key="design-1"
+      replace={false}
+      to="/view/design-1"
+    >
+      <Svg
+        className="design-preview"
+        svg="<div>picasso standard</div>"
+      />
+      <P
+        className="design-name"
+        isLight={true}
+      >
+        picasso
+      </P>
+      <styled.div
+        className="logo"
+        noMargin={true}
+        size={45}
+        src="/logos/abc.jpg"
+      />
+    </Link>
+  </div>
+</styled.div>
+`;

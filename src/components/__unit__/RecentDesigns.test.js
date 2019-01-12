@@ -1,0 +1,26 @@
+import React from "react";
+import { shallow } from "enzyme";
+import { getMockDesign } from "../../models/design";
+import { getMockProduct } from "../../models/product";
+import { getMockManufacturer } from "../../models/manufacturer";
+import RecentDesigns from "../RecentDesigns";
+
+describe("RecentDesigns", () => {
+  let props;
+  beforeEach(() => {
+    props = {
+      designs: [getMockDesign()],
+      manufacturers: {
+        [getMockManufacturer().id]: getMockManufacturer()
+      },
+      products: {
+        [getMockProduct().id]: getMockProduct()
+      }
+    };
+  });
+  it("renders", () => {
+    expect.assertions(1);
+    const wrapper = shallow(<RecentDesigns {...props} />);
+    expect(wrapper).toMatchSnapshot();
+  });
+});

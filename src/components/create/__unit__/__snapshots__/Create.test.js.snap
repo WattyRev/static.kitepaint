@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Create renders 1`] = `
+<styled.div>
+  <div
+    className="heading"
+  >
+    <Styled(H1)>
+      Create
+    </Styled(H1)>
+    <P>
+      Select a kite that you want to design
+    </P>
+  </div>
+  <Connect(ProductsContainer)>
+    <Component />
+  </Connect(ProductsContainer)>
+</styled.div>
+`;
+
+exports[`Create renders 2`] = `
+<div>
+  <Spacer
+    bottom="md"
+    key="manufacturer-1"
+  >
+    <ManufacturerShowcase
+      manufacturer={
+        Object {
+          "id": "manufacturer-1",
+          "logo": "abc.jpg",
+          "name": "Krazy Kites",
+          "website": "http://krazykites.com",
+        }
+      }
+    >
+      <div
+        className="products-wrapper"
+      >
+        <ProductShowcase
+          key="product-1"
+          product={
+            Object {
+              "colors": Array [
+                Object {
+                  "color": "#ff0000",
+                  "name": "red",
+                },
+                Object {
+                  "color": "#000000",
+                  "name": "black",
+                },
+              ],
+              "embed": "krazykites.com",
+              "id": "product-1",
+              "manufacturer": "manufacturer-1",
+              "name": "Krazy Kite",
+              "status": "2",
+              "url": "http://krazykites.com/krazy-kite",
+              "variations": Array [
+                Object {
+                  "name": "Standard",
+                  "svg": "<div>Kool Kite</div>",
+                },
+              ],
+            }
+          }
+        />
+      </div>
+    </ManufacturerShowcase>
+  </Spacer>
+</div>
+`;

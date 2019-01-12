@@ -1,21 +1,39 @@
 language: node_js
 node_js:
-  - "7"
+  - "8"
 stages:
+  # Running tests on all branches
+  - name: test
+    if: (NOT type IN (pull_request))
+
+  # Running build in test environments without deployment
   - name: build
-    if: (type IN (pull_request)) OR (NOT branch = master OR branch = staging)
+    if: (NOT type IN (pull_request)) OR (NOT branch = master OR branch = staging)
+
+  # Production deployment (includes build internally)
   - name: deploy-prod
     if: (NOT type IN (pull_request)) AND (branch = master)
+
+  # Staging/Beta deployment (includes build internally)
   - name: deploy-beta
     if: (NOT type IN (pull_request)) AND (branch = staging)
 jobs:
   include:
+    # Run tests with coverage
+    - stage: test
+      script: npm run test -- --coverage
+
+    # Build the application
     - stage: build
       script: npm run build
+
+    # Build and deploy to production
     - stage: deploy-prod
-      script: npm run deploy:prod -- --sftp-user=${SFTP_USER} --sftp-pass=${SFTP_PASS} --sftp-host=${SFTP_HOST}
+      script: SFTP_USER=${SFTP_USER} SFTP_PASS=${SFTP_PASS} SFTP_HOST=${SFTP_HOST} npm run deploy:prod
+
+    # Build and deploy to beta
     - stage: deploy-beta
-      script: npm run deploy:beta -- --sftp-user=${SFTP_USER} --sftp-pass=${SFTP_PASS} --sftp-host=${SFTP_HOST}
+      script: SFTP_USER=${SFTP_USER} SFTP_PASS=${SFTP_PASS} SFTP_HOST=${SFTP_HOST} npm run deploy:beta
 notifications:
   email:
     on_success: never

@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LogInFormContainer renders 1`] = `
+<LogInForm
+  errorMessage={null}
+  id="abc"
+  isDisabled={false}
+  onPasswordChange={[Function]}
+  onRegister={[MockFunction]}
+  onResetPassword={[MockFunction]}
+  onSubmit={[Function]}
+  onUsernameChange={[Function]}
+  password=""
+  username=""
+/>
+`;

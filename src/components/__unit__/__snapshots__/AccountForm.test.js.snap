@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountForm renders 1`] = `
+<styled.div>
+  <Connect(RegisterFormContainer)
+    id="abc"
+    onLogIn={[MockFunction]}
+  />
+</styled.div>
+`;
