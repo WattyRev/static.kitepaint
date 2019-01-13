@@ -126,7 +126,7 @@ const Sidebar = ({
         <sidebar.components.Heading isLight className="colors-heading">
           <Icon icon="palette" /> Colors
         </sidebar.components.Heading>
-        <FillToBottom offset={33} strict>
+        <FillToBottom offset={33} strict minHeight={300}>
           {product.colors.map(color => (
             <sidebar.components.Item
               className="testing_color"

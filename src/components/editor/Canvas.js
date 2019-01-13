@@ -26,6 +26,8 @@ export const StyleWrapper = styled.div`
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    max-width: 100%;
+    max-height: 100%;
 
     *[data-id] {
       cursor: ${props => (props.isReadOnly ? "default" : "pointer")};
