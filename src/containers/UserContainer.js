@@ -40,7 +40,7 @@ export class UserContainer extends React.Component {
     onRedirect: PropTypes.func
   };
 
-  defaultProps: {
+  static defaultProps: {
     onRedirect: () => {}
   };
 
