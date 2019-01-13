@@ -72,7 +72,12 @@ export const StyleWrapper = styled.div`
   }
 `;
 
-export const DataWrapper = ({ children, design, onSave }) => (
+/**
+ * Provides the modals that can be accessed from the toolbar.
+ * These need to be wrapped around the toolbar because if they are in a dropdown,
+ * the modal will disappear when the dropdown auto closes.
+ */
+export const ModalWrapper = ({ children, design, onSave }) => (
   <ModalPrompt
     onSubmit={onSave}
     message="To save your design, you must give it a name. What would you like to name your design?"
@@ -102,7 +107,7 @@ export const DataWrapper = ({ children, design, onSave }) => (
   </ModalPrompt>
 );
 
-DataWrapper.propTypes = {
+ModalWrapper.propTypes = {
   children: PropTypes.func.isRequired,
   design: designShape,
   onSave: PropTypes.func
@@ -235,11 +240,8 @@ class Toolbar extends React.Component {
   };
 
   render() {
-    // DesignSettingsModalContainer must be wrapping the whole thing because if
-    // it is rendered inside the dropdown, the modal will disappear when the
-    // dropdown auto-closes.
     return (
-      <DataWrapper design={this.props.design} onSave={this.props.onSave}>
+      <ModalWrapper design={this.props.design} onSave={this.props.onSave}>
         {dataWrapper => {
           const actions = [];
 
@@ -571,7 +573,7 @@ class Toolbar extends React.Component {
             </StyleWrapper>
           );
         }}
-      </DataWrapper>
+      </ModalWrapper>
     );
   }
 }

@@ -4,7 +4,7 @@ import { setupFontAwesome } from "../../../theme/Icon";
 import { getMockDesign } from "../../../models/design";
 import Theme, { ModalPrompt } from "../../../theme";
 import * as Util from "../../../utils";
-import Toolbar, { StyleWrapper, DataWrapper } from "../Toolbar";
+import Toolbar, { StyleWrapper, ModalWrapper } from "../Toolbar";
 import ShareModal from "../../ShareModal";
 import DesignSettingsModalContainer from "../../../containers/DesignSettingsModalContainer";
 
@@ -18,7 +18,7 @@ describe("Toolbar", () => {
       expect(wrapper.find("div")).toHaveLength(1);
     });
   });
-  describe("DataWrapper", () => {
+  describe("ModalWrapper", () => {
     let defaultProps;
     let saveData;
     let designSettingsData;
@@ -34,7 +34,7 @@ describe("Toolbar", () => {
     });
     it("renders", () => {
       const wrapper = shallow(
-        <DataWrapper {...defaultProps}>{() => {}}</DataWrapper>
+        <ModalWrapper {...defaultProps}>{() => {}}</ModalWrapper>
       );
       const saveContent = shallow(
         <div>{wrapper.find(ModalPrompt).prop("children")(saveData)}</div>
@@ -56,7 +56,7 @@ describe("Toolbar", () => {
       expect.assertions(1);
       delete defaultProps.design;
       const wrapper = shallow(
-        <DataWrapper {...defaultProps}>{() => {}}</DataWrapper>
+        <ModalWrapper {...defaultProps}>{() => {}}</ModalWrapper>
       );
       const saveContent = shallow(
         <div>{wrapper.find(ModalPrompt).prop("children")(saveData)}</div>
@@ -66,13 +66,13 @@ describe("Toolbar", () => {
   });
 
   let defaultProps;
-  let dataWrapperData;
+  let modalWrapperData;
   beforeEach(() => {
     defaultProps = {
       onHideOutlines: jest.fn(),
       onBackgroundChange: jest.fn()
     };
-    dataWrapperData = {
+    modalWrapperData = {
       designSettingsModal: {
         actions: {
           open: jest.fn()
@@ -97,7 +97,7 @@ describe("Toolbar", () => {
   it("renders", () => {
     const wrapper = shallow(<Toolbar {...defaultProps} />);
     shallow(
-      <div>{wrapper.find(DataWrapper).prop("children")(dataWrapperData)}</div>
+      <div>{wrapper.find(ModalWrapper).prop("children")(modalWrapperData)}</div>
     );
   });
 
@@ -106,7 +106,7 @@ describe("Toolbar", () => {
     defaultProps.onSave = null;
     const wrapper = shallow(<Toolbar {...defaultProps} />);
     const content = shallow(
-      <div>{wrapper.find(DataWrapper).prop("children")(dataWrapperData)}</div>
+      <div>{wrapper.find(ModalWrapper).prop("children")(modalWrapperData)}</div>
     );
     expect(content.find(".testing_save")).toHaveLength(0);
   });
@@ -115,7 +115,7 @@ describe("Toolbar", () => {
     defaultProps.onSave = jest.fn();
     const wrapper = shallow(<Toolbar {...defaultProps} />);
     const content = shallow(
-      <div>{wrapper.find(DataWrapper).prop("children")(dataWrapperData)}</div>
+      <div>{wrapper.find(ModalWrapper).prop("children")(modalWrapperData)}</div>
     );
     expect(content.find(".testing_save")).toHaveLength(1);
   });
@@ -124,7 +124,7 @@ describe("Toolbar", () => {
     defaultProps.onAutofill = null;
     const wrapper = shallow(<Toolbar {...defaultProps} />);
     const content = shallow(
-      <div>{wrapper.find(DataWrapper).prop("children")(dataWrapperData)}</div>
+      <div>{wrapper.find(ModalWrapper).prop("children")(modalWrapperData)}</div>
     );
     expect(content.find(".testing_autofill")).toHaveLength(0);
   });
@@ -133,7 +133,7 @@ describe("Toolbar", () => {
     defaultProps.onAutofill = jest.fn();
     const wrapper = shallow(<Toolbar {...defaultProps} />);
     const content = shallow(
-      <div>{wrapper.find(DataWrapper).prop("children")(dataWrapperData)}</div>
+      <div>{wrapper.find(ModalWrapper).prop("children")(modalWrapperData)}</div>
     );
     expect(content.find(".testing_autofill")).toHaveLength(1);
   });
@@ -142,7 +142,7 @@ describe("Toolbar", () => {
     defaultProps.onReset = null;
     const wrapper = shallow(<Toolbar {...defaultProps} />);
     const content = shallow(
-      <div>{wrapper.find(DataWrapper).prop("children")(dataWrapperData)}</div>
+      <div>{wrapper.find(ModalWrapper).prop("children")(modalWrapperData)}</div>
     );
     expect(content.find(".testing_reset")).toHaveLength(0);
   });
@@ -151,7 +151,7 @@ describe("Toolbar", () => {
     defaultProps.onReset = jest.fn();
     const wrapper = shallow(<Toolbar {...defaultProps} />);
     const content = shallow(
-      <div>{wrapper.find(DataWrapper).prop("children")(dataWrapperData)}</div>
+      <div>{wrapper.find(ModalWrapper).prop("children")(modalWrapperData)}</div>
     );
     expect(content.find(".testing_reset")).toHaveLength(1);
   });
