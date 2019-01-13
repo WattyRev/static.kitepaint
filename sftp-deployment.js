@@ -55,7 +55,10 @@ async function uploadContents(client, folderToUpload, uploadTo) {
 
     const remoteItemSize = remoteItem ? remoteItem.size : 0;
     const localItemSize = localItemStats.size;
-    if (remoteItemSize === localItemSize) {
+    const shouldAlwaysUpload = !![".html"].find(
+      search => localPath.indexOf(search) > -1
+    );
+    if (!shouldAlwaysUpload && remoteItemSize === localItemSize) {
       console.log(`No changes made to ${localPath}. Skipping upload.`);
       return new Promise(resolve => resolve());
     }
