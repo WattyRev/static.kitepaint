@@ -336,6 +336,9 @@ export class EditorContainer extends React.Component {
       Object.keys(colorMap).forEach(id => {
         const color = colorMap[id].color;
         const panel = render.querySelector(`[data-id="${id}"]`);
+        if (!panel) {
+          return;
+        }
         panel.setAttribute("fill", color);
       });
 

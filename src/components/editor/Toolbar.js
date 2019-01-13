@@ -72,6 +72,42 @@ export const StyleWrapper = styled.div`
   }
 `;
 
+export const DataWrapper = ({ children, design, onSave }) => (
+  <ModalPrompt
+    onSubmit={onSave}
+    message="To save your design, you must give it a name. What would you like to name your design?"
+  >
+    {saveModal => {
+      if (design) {
+        return (
+          <DesignSettingsModalContainer design={design}>
+            {designSettingsModal => (
+              <ShareModal design={design}>
+                {shareModal =>
+                  children({
+                    designSettingsModal,
+                    saveModal,
+                    shareModal
+                  })
+                }
+              </ShareModal>
+            )}
+          </DesignSettingsModalContainer>
+        );
+      }
+      return children({
+        saveModal
+      });
+    }}
+  </ModalPrompt>
+);
+
+DataWrapper.propTypes = {
+  children: PropTypes.func.isRequired,
+  design: designShape,
+  onSave: PropTypes.func
+};
+
 /**
  * The toolbar displayed at the top of the editor to provide various actions.
  */
@@ -199,331 +235,343 @@ class Toolbar extends React.Component {
   };
 
   render() {
-    const actions = [];
-
-    // Save
-    if (this.props.onUpdate) {
-      actions.push({
-        name: "save",
-        content: (
-          <P
-            className="testing_update toolbar-item"
-            isLight
-            onClick={this.props.onUpdate}
-          >
-            <Icon icon="save" />
-            <span className="label"> Save</span>
-          </P>
-        )
-      });
-    }
-
-    // Save As
-    if (this.props.onSave) {
-      actions.push({
-        name: "save-as",
-        content: (
-          <ModalPrompt
-            onSubmit={this.props.onSave}
-            message="To save your design, you must give it a name. What would you like to name your design?"
-          >
-            {modal => (
-              <P
-                className="testing_save toolbar-item"
-                isLight
-                onClick={modal.actions.open}
-              >
-                <Icon icon="save" />
-                <span className="label">
-                  {" "}
-                  {this.props.onUpdate ? "Save As" : "Save"}
-                </span>
-              </P>
-            )}
-          </ModalPrompt>
-        )
-      });
-    }
-
-    // Share
-    actions.push({
-      name: "share",
-      content: (
-        <ShareModal design={this.props.design}>
-          {modal => (
-            <P className="toolbar-item" isLight onClick={modal.actions.open}>
-              <Icon icon="share" />
-              <span className="label"> Share</span>
-            </P>
-          )}
-        </ShareModal>
-      ),
-      truncatedContent: (
-        <ShareModal design={this.props.design}>
-          {modal => (
-            <DropdownItem onClick={modal.actions.open}>
-              <Icon icon="share" />
-              <span className="label"> Share</span>
-            </DropdownItem>
-          )}
-        </ShareModal>
-      )
-    });
-
-    // Undo
-    if (this.props.onUndo) {
-      actions.push({
-        name: "undo",
-        content: (
-          <P
-            className="toolbar-item"
-            disabled={this.props.undoDisabled}
-            isLight
-            onClick={this.props.onUndo}
-          >
-            <Icon icon="undo" />
-            <span className="label"> Undo</span>
-          </P>
-        ),
-        truncatedContent: (
-          <DropdownItem
-            disabled={this.props.undoDisabled}
-            onClick={this.props.onUndo}
-          >
-            <Icon icon="undo" />
-            <span className="label"> Undo</span>
-          </DropdownItem>
-        )
-      });
-    }
-
-    // Redo
-    if (this.props.onRedo) {
-      actions.push({
-        name: "redo",
-        content: (
-          <P
-            className="toolbar-item"
-            disabled={this.props.redoDisabled}
-            isLight
-            onClick={this.props.onRedo}
-          >
-            <Icon icon="redo" />
-            <span className="label"> Redo</span>
-          </P>
-        ),
-        truncatedContent: (
-          <DropdownItem
-            disabled={this.props.redoDisabled}
-            onClick={this.props.onRedo}
-          >
-            <Icon icon="redo" />
-            <span className="label"> Redo</span>
-          </DropdownItem>
-        )
-      });
-    }
-
-    // Background
-    actions.push({
-      name: "background",
-      content: (
-        <Dropdown
-          dropdownContent={dropdown => (
-            <React.Fragment>
-              {backgroundOptions.map(option => (
-                <dropdown.components.Item
-                  key={option.value}
-                  onClick={() => this.props.onBackgroundChange(option.value)}
-                >
-                  {option.label}
-                </dropdown.components.Item>
-              ))}
-            </React.Fragment>
-          )}
-        >
-          {dropdown => (
-            <P
-              className="toolbar-item"
-              isLight
-              onClick={
-                dropdown.props.isOpen
-                  ? dropdown.actions.close
-                  : dropdown.actions.open
-              }
-            >
-              <Icon icon="image" />
-              <span className="label"> Background</span>
-            </P>
-          )}
-        </Dropdown>
-      ),
-      truncatedContent: (
-        <Dropdown
-          dropdownContent={dropdown => (
-            <React.Fragment>
-              {backgroundOptions.map(option => (
-                <dropdown.components.Item
-                  key={option.value}
-                  onClick={() => this.props.onBackgroundChange(option.value)}
-                >
-                  {option.label}
-                </dropdown.components.Item>
-              ))}
-            </React.Fragment>
-          )}
-        >
-          {dropdown => (
-            <DropdownItem
-              onClick={
-                dropdown.props.isOpen
-                  ? dropdown.actions.close
-                  : dropdown.actions.open
-              }
-            >
-              <Icon icon="image" />
-              <span className="label"> Background</span>
-            </DropdownItem>
-          )}
-        </Dropdown>
-      )
-    });
-
-    // Hide Outlines
-    actions.push({
-      name: "hide-outlines",
-      content: (
-        <P className="toolbar-item" isLight onClick={this.props.onHideOutlines}>
-          <Icon icon={this.props.hideOutlines ? "eye" : "eye-slash"} />
-          <span className="label">
-            {" "}
-            {this.props.hideOutlines ? "Show" : "Hide"} Outlines
-          </span>
-        </P>
-      ),
-      truncatedContent: (
-        <DropdownItem onClick={this.props.onHideOutlines}>
-          <Icon icon={this.props.hideOutlines ? "eye" : "eye-slash"} />
-          <span className="label">
-            {" "}
-            {this.props.hideOutlines ? "Show" : "Hide"} Outlines
-          </span>
-        </DropdownItem>
-      )
-    });
-
-    // Autofill
-    if (this.props.onAutofill) {
-      actions.push({
-        name: "autofill",
-        content: (
-          <P
-            className="testing_autofill toolbar-item"
-            isLight
-            onClick={this.props.onAutofill}
-          >
-            <Icon icon="magic" />
-            <span className="label"> Autofill</span>
-          </P>
-        ),
-        truncatedContent: (
-          <DropdownItem onClick={this.props.onAutofill}>
-            <Icon icon="magic" />
-            <span className="label"> Autofill</span>
-          </DropdownItem>
-        )
-      });
-    }
-
-    // Reset
-    if (this.props.onReset) {
-      actions.push({
-        name: "reset",
-        content: (
-          <P
-            className="testing_reset toolbar-item"
-            isLight
-            onClick={this.props.onReset}
-          >
-            <Icon icon="eraser" />
-            <span className="label"> Reset</span>
-          </P>
-        ),
-        truncatedContent: (
-          <DropdownItem onClick={this.props.onReset}>
-            <Icon icon="eraser" />
-            <span className="label"> Reset</span>
-          </DropdownItem>
-        )
-      });
-    }
-
-    // Design Settings
-    if (this.props.design && this.props.showSettings) {
-      actions.push({
-        name: "settings",
-        content: (
-          <DesignSettingsModalContainer design={this.props.design}>
-            {modal => (
-              <P className="toolbar-item" isLight onClick={modal.actions.open}>
-                <Icon icon="cog" />
-                <span className="label"> Settings</span>
-              </P>
-            )}
-          </DesignSettingsModalContainer>
-        ),
-        truncatedContent: (
-          <DesignSettingsModalContainer design={this.props.design}>
-            {modal => (
-              <DropdownItem onClick={modal.actions.open}>
-                <Icon icon="cog" />
-                <span className="label"> Settings</span>
-              </DropdownItem>
-            )}
-          </DesignSettingsModalContainer>
-        )
-      });
-    }
-
-    const nonTruncatedActions = actions.slice(
-      0,
-      actions.length - this.state.truncationCount
-    );
-    const truncatedActions = actions.slice(
-      actions.length - this.state.truncationCount
-    );
+    // DesignSettingsModalContainer must be wrapping the whole thing because if
+    // it is rendered inside the dropdown, the modal will disappear when the
+    // dropdown auto-closes.
     return (
-      <StyleWrapper ref={node => (this.node = node)}>
-        {nonTruncatedActions.map(action => (
-          <React.Fragment key={action.name}>{action.content}</React.Fragment>
-        ))}
-        {!!truncatedActions.length && (
-          <Dropdown
-            className="testing_truncation-dropdown"
-            dropdownContent={() =>
-              truncatedActions.map(action => (
-                <React.Fragment key={action.name}>
-                  {action.truncatedContent}
-                </React.Fragment>
-              ))
-            }
-          >
-            {dropdown => (
+      <DataWrapper design={this.props.design} onSave={this.props.onSave}>
+        {dataWrapper => {
+          const actions = [];
+
+          // Save
+          if (this.props.onUpdate) {
+            actions.push({
+              name: "save",
+              content: (
+                <P
+                  className="testing_update toolbar-item"
+                  isLight
+                  onClick={this.props.onUpdate}
+                >
+                  <Icon icon="save" />
+                  <span className="label"> Save</span>
+                </P>
+              ),
+              truncatedContent: (
+                <DropdownItem onClick={this.props.onUpdate}>
+                  <Icon icon="share" />
+                  <span className="label"> Share</span>
+                </DropdownItem>
+              )
+            });
+          }
+
+          // Save As
+          if (this.props.onSave) {
+            actions.push({
+              name: "save-as",
+              content: (
+                <P
+                  className="testing_save toolbar-item"
+                  isLight
+                  onClick={dataWrapper.saveModal.actions.open}
+                >
+                  <Icon icon="save" />
+                  <span className="label">
+                    {" "}
+                    {this.props.onUpdate ? "Save As" : "Save"}
+                  </span>
+                </P>
+              )
+            });
+          }
+
+          // Share
+          actions.push({
+            name: "share",
+            content: (
               <P
                 className="toolbar-item"
                 isLight
-                onClick={
-                  dropdown.props.isOpen
-                    ? dropdown.actions.close
-                    : dropdown.actions.open
-                }
+                onClick={dataWrapper.shareModal.actions.open}
               >
-                <Icon icon="ellipsis-h" />
+                <Icon icon="share" />
+                <span className="label"> Share</span>
               </P>
-            )}
-          </Dropdown>
-        )}
-      </StyleWrapper>
+            ),
+            truncatedContent: (
+              <DropdownItem onClick={dataWrapper.shareModal.actions.open}>
+                <Icon icon="share" />
+                <span className="label"> Share</span>
+              </DropdownItem>
+            )
+          });
+
+          // Undo
+          if (this.props.onUndo) {
+            actions.push({
+              name: "undo",
+              content: (
+                <P
+                  className="toolbar-item"
+                  disabled={this.props.undoDisabled}
+                  isLight
+                  onClick={this.props.onUndo}
+                >
+                  <Icon icon="undo" />
+                  <span className="label"> Undo</span>
+                </P>
+              ),
+              truncatedContent: (
+                <DropdownItem
+                  disabled={this.props.undoDisabled}
+                  onClick={this.props.onUndo}
+                >
+                  <Icon icon="undo" />
+                  <span className="label"> Undo</span>
+                </DropdownItem>
+              )
+            });
+          }
+
+          // Redo
+          if (this.props.onRedo) {
+            actions.push({
+              name: "redo",
+              content: (
+                <P
+                  className="toolbar-item"
+                  disabled={this.props.redoDisabled}
+                  isLight
+                  onClick={this.props.onRedo}
+                >
+                  <Icon icon="redo" />
+                  <span className="label"> Redo</span>
+                </P>
+              ),
+              truncatedContent: (
+                <DropdownItem
+                  disabled={this.props.redoDisabled}
+                  onClick={this.props.onRedo}
+                >
+                  <Icon icon="redo" />
+                  <span className="label"> Redo</span>
+                </DropdownItem>
+              )
+            });
+          }
+
+          // Background
+          actions.push({
+            name: "background",
+            content: (
+              <Dropdown
+                dropdownContent={dropdown => (
+                  <React.Fragment>
+                    {backgroundOptions.map(option => (
+                      <dropdown.components.Item
+                        key={option.value}
+                        onClick={() =>
+                          this.props.onBackgroundChange(option.value)
+                        }
+                      >
+                        {option.label}
+                      </dropdown.components.Item>
+                    ))}
+                  </React.Fragment>
+                )}
+              >
+                {dropdown => (
+                  <P
+                    className="toolbar-item"
+                    isLight
+                    onClick={
+                      dropdown.props.isOpen
+                        ? dropdown.actions.close
+                        : dropdown.actions.open
+                    }
+                  >
+                    <Icon icon="image" />
+                    <span className="label"> Background</span>
+                  </P>
+                )}
+              </Dropdown>
+            ),
+            truncatedContent: (
+              <Dropdown
+                dropdownContent={dropdown => (
+                  <React.Fragment>
+                    {backgroundOptions.map(option => (
+                      <dropdown.components.Item
+                        key={option.value}
+                        onClick={() =>
+                          this.props.onBackgroundChange(option.value)
+                        }
+                      >
+                        {option.label}
+                      </dropdown.components.Item>
+                    ))}
+                  </React.Fragment>
+                )}
+              >
+                {dropdown => (
+                  <DropdownItem
+                    onClick={
+                      dropdown.props.isOpen
+                        ? dropdown.actions.close
+                        : dropdown.actions.open
+                    }
+                  >
+                    <Icon icon="image" />
+                    <span className="label"> Background</span>
+                  </DropdownItem>
+                )}
+              </Dropdown>
+            )
+          });
+
+          // Hide Outlines
+          actions.push({
+            name: "hide-outlines",
+            content: (
+              <P
+                className="toolbar-item"
+                isLight
+                onClick={this.props.onHideOutlines}
+              >
+                <Icon icon={this.props.hideOutlines ? "eye" : "eye-slash"} />
+                <span className="label">
+                  {" "}
+                  {this.props.hideOutlines ? "Show" : "Hide"} Outlines
+                </span>
+              </P>
+            ),
+            truncatedContent: (
+              <DropdownItem onClick={this.props.onHideOutlines}>
+                <Icon icon={this.props.hideOutlines ? "eye" : "eye-slash"} />
+                <span className="label">
+                  {" "}
+                  {this.props.hideOutlines ? "Show" : "Hide"} Outlines
+                </span>
+              </DropdownItem>
+            )
+          });
+
+          // Autofill
+          if (this.props.onAutofill) {
+            actions.push({
+              name: "autofill",
+              content: (
+                <P
+                  className="testing_autofill toolbar-item"
+                  isLight
+                  onClick={this.props.onAutofill}
+                >
+                  <Icon icon="magic" />
+                  <span className="label"> Autofill</span>
+                </P>
+              ),
+              truncatedContent: (
+                <DropdownItem onClick={this.props.onAutofill}>
+                  <Icon icon="magic" />
+                  <span className="label"> Autofill</span>
+                </DropdownItem>
+              )
+            });
+          }
+
+          // Reset
+          if (this.props.onReset) {
+            actions.push({
+              name: "reset",
+              content: (
+                <P
+                  className="testing_reset toolbar-item"
+                  isLight
+                  onClick={this.props.onReset}
+                >
+                  <Icon icon="eraser" />
+                  <span className="label"> Reset</span>
+                </P>
+              ),
+              truncatedContent: (
+                <DropdownItem onClick={this.props.onReset}>
+                  <Icon icon="eraser" />
+                  <span className="label"> Reset</span>
+                </DropdownItem>
+              )
+            });
+          }
+
+          // Design Settings
+          if (this.props.design && this.props.showSettings) {
+            actions.push({
+              name: "settings",
+              content: (
+                <P
+                  className="toolbar-item"
+                  isLight
+                  onClick={dataWrapper.designSettingsModal.actions.open}
+                >
+                  <Icon icon="cog" />
+                  <span className="label"> Settings</span>
+                </P>
+              ),
+              truncatedContent: (
+                <DropdownItem
+                  onClick={dataWrapper.designSettingsModal.actions.open}
+                >
+                  <Icon icon="cog" />
+                  <span className="label"> Settings</span>
+                </DropdownItem>
+              )
+            });
+          }
+
+          const nonTruncatedActions = actions.slice(
+            0,
+            actions.length - this.state.truncationCount
+          );
+          const truncatedActions = actions.slice(
+            actions.length - this.state.truncationCount
+          );
+          return (
+            <StyleWrapper ref={node => (this.node = node)}>
+              {nonTruncatedActions.map(action => (
+                <React.Fragment key={action.name}>
+                  {action.content}
+                </React.Fragment>
+              ))}
+              {!!truncatedActions.length && (
+                <Dropdown
+                  className="testing_truncation-dropdown"
+                  dropdownContent={() =>
+                    truncatedActions.map(action => (
+                      <React.Fragment key={action.name}>
+                        {action.truncatedContent}
+                      </React.Fragment>
+                    ))
+                  }
+                >
+                  {dropdown => (
+                    <P
+                      className="toolbar-item"
+                      isLight
+                      onClick={
+                        dropdown.props.isOpen
+                          ? dropdown.actions.close
+                          : dropdown.actions.open
+                      }
+                    >
+                      <Icon icon="ellipsis-h" />
+                    </P>
+                  )}
+                </Dropdown>
+              )}
+            </StyleWrapper>
+          );
+        }}
+      </DataWrapper>
     );
   }
 }
