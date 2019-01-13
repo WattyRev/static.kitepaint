@@ -49,7 +49,11 @@ describe("UserContainer", () => {
     mount(<UserContainer {...props}>{children}</UserContainer>);
     const providedActions = children.mock.calls[0][0].actions;
     const actionKeys = Object.keys(providedActions);
-    expect(actionKeys).toEqual(["logOut", "toggleRecognition"]);
+    expect(actionKeys).toEqual([
+      "logOut",
+      "toggleRecognition",
+      "setRecognition"
+    ]);
   });
   describe("#toggleRecognition", () => {
     it("should call onSetRecognition with false if it isRecognizedUser was true", () => {
