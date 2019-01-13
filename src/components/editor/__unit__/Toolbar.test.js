@@ -1,10 +1,12 @@
 import React from "react";
 import { mount, shallow } from "enzyme";
-import { ThemeProvider } from "styled-components";
 import { setupFontAwesome } from "../../../theme/Icon";
-import Theme from "../../../theme";
+import { getMockDesign } from "../../../models/design";
+import Theme, { ModalPrompt } from "../../../theme";
 import * as Util from "../../../utils";
-import Toolbar, { StyleWrapper } from "../Toolbar";
+import Toolbar, { StyleWrapper, ModalWrapper } from "../Toolbar";
+import ShareModal from "../../ShareModal";
+import DesignSettingsModalContainer from "../../../containers/DesignSettingsModalContainer";
 
 jest.mock("../../../utils");
 
@@ -16,79 +18,142 @@ describe("Toolbar", () => {
       expect(wrapper.find("div")).toHaveLength(1);
     });
   });
+  describe("ModalWrapper", () => {
+    let defaultProps;
+    let saveData;
+    let designSettingsData;
+    let shareData;
+    beforeEach(() => {
+      defaultProps = {
+        design: getMockDesign(),
+        onSave: jest.fn()
+      };
+      saveData = {};
+      designSettingsData = {};
+      shareData = {};
+    });
+    it("renders", () => {
+      const wrapper = shallow(
+        <ModalWrapper {...defaultProps}>{() => {}}</ModalWrapper>
+      );
+      const saveContent = shallow(
+        <div>{wrapper.find(ModalPrompt).prop("children")(saveData)}</div>
+      );
+      const designSettingsContent = shallow(
+        <div>
+          {saveContent.find(DesignSettingsModalContainer).prop("children")(
+            designSettingsData
+          )}
+        </div>
+      );
+      shallow(
+        <div>
+          {designSettingsContent.find(ShareModal).prop("children")(shareData)}
+        </div>
+      );
+    });
+    it("does not render design specific wrappers if no design is provided", () => {
+      expect.assertions(1);
+      delete defaultProps.design;
+      const wrapper = shallow(
+        <ModalWrapper {...defaultProps}>{() => {}}</ModalWrapper>
+      );
+      const saveContent = shallow(
+        <div>{wrapper.find(ModalPrompt).prop("children")(saveData)}</div>
+      );
+      expect(saveContent.find(DesignSettingsModalContainer)).toHaveLength(0);
+    });
+  });
 
   let defaultProps;
+  let modalWrapperData;
   beforeEach(() => {
     defaultProps = {
       onHideOutlines: jest.fn(),
       onBackgroundChange: jest.fn()
     };
+    modalWrapperData = {
+      designSettingsModal: {
+        actions: {
+          open: jest.fn()
+        }
+      },
+      shareModal: {
+        actions: {
+          open: jest.fn()
+        }
+      },
+      saveModal: {
+        actions: {
+          open: jest.fn()
+        }
+      }
+    };
     setupFontAwesome();
-    Util.getAppDimensions.mockReturnValue({});
+    Util.getAppDimensions.mockReturnValue({
+      width: 2500
+    });
   });
   it("renders", () => {
-    shallow(<Toolbar {...defaultProps} />);
+    const wrapper = shallow(<Toolbar {...defaultProps} />);
+    shallow(
+      <div>{wrapper.find(ModalWrapper).prop("children")(modalWrapperData)}</div>
+    );
   });
 
   it("does not display the save button is no onSave is provided", () => {
     expect.assertions(1);
     defaultProps.onSave = null;
-    const wrapper = mount(
-      <ThemeProvider theme={Theme}>
-        <Toolbar {...defaultProps} />
-      </ThemeProvider>
+    const wrapper = shallow(<Toolbar {...defaultProps} />);
+    const content = shallow(
+      <div>{wrapper.find(ModalWrapper).prop("children")(modalWrapperData)}</div>
     );
-    expect(wrapper.find("P.testing_save")).toHaveLength(0);
+    expect(content.find(".testing_save")).toHaveLength(0);
   });
   it("displays the save button if onSave is provided", () => {
     expect.assertions(1);
     defaultProps.onSave = jest.fn();
-    const wrapper = mount(
-      <ThemeProvider theme={Theme}>
-        <Toolbar {...defaultProps} />
-      </ThemeProvider>
+    const wrapper = shallow(<Toolbar {...defaultProps} />);
+    const content = shallow(
+      <div>{wrapper.find(ModalWrapper).prop("children")(modalWrapperData)}</div>
     );
-    expect(wrapper.find("P.testing_save")).toHaveLength(1);
+    expect(content.find(".testing_save")).toHaveLength(1);
   });
   it("does not display the autofill button if no onAutofill is provided", () => {
     expect.assertions(1);
     defaultProps.onAutofill = null;
-    const wrapper = mount(
-      <ThemeProvider theme={Theme}>
-        <Toolbar {...defaultProps} />
-      </ThemeProvider>
+    const wrapper = shallow(<Toolbar {...defaultProps} />);
+    const content = shallow(
+      <div>{wrapper.find(ModalWrapper).prop("children")(modalWrapperData)}</div>
     );
-    expect(wrapper.find("P.testing_autofill")).toHaveLength(0);
+    expect(content.find(".testing_autofill")).toHaveLength(0);
   });
   it("displays the autofill button if onAutofill is provided", () => {
     expect.assertions(1);
     defaultProps.onAutofill = jest.fn();
-    const wrapper = mount(
-      <ThemeProvider theme={Theme}>
-        <Toolbar {...defaultProps} />
-      </ThemeProvider>
+    const wrapper = shallow(<Toolbar {...defaultProps} />);
+    const content = shallow(
+      <div>{wrapper.find(ModalWrapper).prop("children")(modalWrapperData)}</div>
     );
-    expect(wrapper.find("P.testing_autofill")).toHaveLength(1);
+    expect(content.find(".testing_autofill")).toHaveLength(1);
   });
   it("does not display the reset button if no onReset is provided", () => {
     expect.assertions(1);
     defaultProps.onReset = null;
-    const wrapper = mount(
-      <ThemeProvider theme={Theme}>
-        <Toolbar {...defaultProps} />
-      </ThemeProvider>
+    const wrapper = shallow(<Toolbar {...defaultProps} />);
+    const content = shallow(
+      <div>{wrapper.find(ModalWrapper).prop("children")(modalWrapperData)}</div>
     );
-    expect(wrapper.find("P.testing_reset")).toHaveLength(0);
+    expect(content.find(".testing_reset")).toHaveLength(0);
   });
   it("displays the reset button if onReset is provided", () => {
     expect.assertions(1);
     defaultProps.onReset = jest.fn();
-    const wrapper = mount(
-      <ThemeProvider theme={Theme}>
-        <Toolbar {...defaultProps} />
-      </ThemeProvider>
+    const wrapper = shallow(<Toolbar {...defaultProps} />);
+    const content = shallow(
+      <div>{wrapper.find(ModalWrapper).prop("children")(modalWrapperData)}</div>
     );
-    expect(wrapper.find("P.testing_reset")).toHaveLength(1);
+    expect(content.find(".testing_reset")).toHaveLength(1);
   });
   describe("#_indexActions", () => {
     it("indexes all the actions", () => {
