@@ -57,6 +57,9 @@ export class UserContainer extends React.Component {
     this.props.onSetRecognition(!isRecognizedUser);
   };
 
+  /** Sets isRecognizedUser to the given value */
+  setRecognition = value => this.props.onSetRecognition(value);
+
   // Handle when the user requests to log out
   handleLogOut = () => {
     return this.props.onLogOut().then(() => {
@@ -88,7 +91,8 @@ export class UserContainer extends React.Component {
     return this.props.children({
       actions: {
         logOut: this.handleLogOut,
-        toggleRecognition: this.toggleRecognition
+        toggleRecognition: this.toggleRecognition,
+        setRecognition: this.setRecognition
       },
       props: {
         email,

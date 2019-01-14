@@ -130,6 +130,7 @@ const Header = () => (
             </Dropdown>
           ) : (
             <NavLink
+              onClick={() => userData.actions.setRecognition(true)}
               as={Link}
               to={{
                 pathname: "/login",
