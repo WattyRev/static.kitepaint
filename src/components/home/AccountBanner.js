@@ -11,6 +11,13 @@ export const StyleWrapper = styled.div`
 
   .message {
     padding: 16px;
+    display: none;
+  }
+
+  ${props => props.theme.media.mediaSm} {
+    .message {
+      display: block;
+    }
   }
 `;
 
