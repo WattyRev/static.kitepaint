@@ -39,29 +39,16 @@ describe("Toolbar", () => {
       const saveContent = shallow(
         <div>{wrapper.find(ModalPrompt).prop("children")(saveData)}</div>
       );
-      const designSettingsContent = shallow(
-        <div>
-          {saveContent.find(DesignSettingsModalContainer).prop("children")(
-            designSettingsData
-          )}
-        </div>
+      const shareModalContent = shallow(
+        <div>{saveContent.find(ShareModal).prop("children")(shareData)}</div>
       );
       shallow(
         <div>
-          {designSettingsContent.find(ShareModal).prop("children")(shareData)}
+          {shareModalContent
+            .find(DesignSettingsModalContainer)
+            .prop("children")(designSettingsData)}
         </div>
       );
-    });
-    it("does not render design specific wrappers if no design is provided", () => {
-      expect.assertions(1);
-      delete defaultProps.design;
-      const wrapper = shallow(
-        <ModalWrapper {...defaultProps}>{() => {}}</ModalWrapper>
-      );
-      const saveContent = shallow(
-        <div>{wrapper.find(ModalPrompt).prop("children")(saveData)}</div>
-      );
-      expect(saveContent.find(DesignSettingsModalContainer)).toHaveLength(0);
     });
   });
 

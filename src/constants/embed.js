@@ -12,5 +12,5 @@ function inIframe() {
 const queryParams = getQueryParams();
 
 export const isEmbedded = inIframe();
-export const externalCss = isEmbedded ? queryParams.css : null;
+export const externalCss = isEmbedded ? queryParams["css-url"] : null;
 export const defaultBackground = isEmbedded ? queryParams.background : null;

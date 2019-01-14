@@ -82,28 +82,21 @@ export const ModalWrapper = ({ children, design, onSave }) => (
     onSubmit={onSave}
     message="To save your design, you must give it a name. What would you like to name your design?"
   >
-    {saveModal => {
-      if (design) {
-        return (
+    {saveModal => (
+      <ShareModal design={design}>
+        {shareModal => (
           <DesignSettingsModalContainer design={design}>
-            {designSettingsModal => (
-              <ShareModal design={design}>
-                {shareModal =>
-                  children({
-                    designSettingsModal,
-                    saveModal,
-                    shareModal
-                  })
-                }
-              </ShareModal>
-            )}
+            {designSettingsModal =>
+              children({
+                designSettingsModal,
+                saveModal,
+                shareModal
+              })
+            }
           </DesignSettingsModalContainer>
-        );
-      }
-      return children({
-        saveModal
-      });
-    }}
+        )}
+      </ShareModal>
+    )}
   </ModalPrompt>
 );
 
