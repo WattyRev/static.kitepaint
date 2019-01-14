@@ -29,13 +29,13 @@ Some query parameters are supported for embedded use:
 
 | Param Name   | Description                                                                                                                                                                                                                                                                                  | Example                           |
 | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
-| `css`        | Allows referencing a CSS file that will be added to the page. This allows you to modify the application's styling to better match your website. This parameter is provided for your convenience. Maintaining this CSS and ensuring it's functionality is not the responsiblity of KitePaint. | `//my-website.com/someStyles.css` |
+| `css-url`    | Allows referencing a CSS file that will be added to the page. This allows you to modify the application's styling to better match your website. This parameter is provided for your convenience. Maintaining this CSS and ensuring it's functionality is not the responsiblity of KitePaint. | `//my-website.com/someStyles.css` |
 | `background` | Allows providing a background image that can be used as the default background for the editor. KitePaint's background images may be used. A list of images is provided below.                                                                                                                | `//my-website.com/someImage.jpg`  |
 
 Here is an example:
 
 ```
-https://kitepaint.com/create/5?css=//my-website.com/test.css&background=//my-website.com/someImage.jpg
+https://kitepaint.com/create/5?css-url=//my-website.com/test.css&background=//my-website.com/someImage.jpg
 ```
 
 #### Background Images

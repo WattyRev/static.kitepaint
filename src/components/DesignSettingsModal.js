@@ -31,6 +31,9 @@ const Content = ({
   onChangePrimary,
   isPending
 }) => {
+  if (!design) {
+    return null;
+  }
   // Either the design status or the product status; whichever is more restrictive.
   const currentStatus =
     design.status > design.productStatus ? design.productStatus : design.status;
@@ -128,7 +131,7 @@ const Content = ({
 
 Content.propTypes = {
   /** The design being modified */
-  design: designShape.isRequired,
+  design: designShape,
   /** Called when the form is submitted */
   onSubmit: PropTypes.func.isRequired,
   /** Called when the cancel button is pressed */
@@ -151,7 +154,7 @@ export { Content };
 class DesignSettingsModal extends React.Component {
   static propTypes = {
     /** The design being modified */
-    design: designShape.isRequired,
+    design: designShape,
     /** Called when the form is submitted. Is provided an object with the id,
      name, and status of the design */
     onSubmit: PropTypes.func.isRequired,
@@ -227,6 +230,9 @@ class DesignSettingsModal extends React.Component {
   };
 
   render() {
+    if (!this.props.design) {
+      return this.props.children({});
+    }
     return (
       <Modal
         isOpen={this.state.isOpen}
