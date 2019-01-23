@@ -105,64 +105,75 @@ describe("Designs redux module", () => {
               id: "123",
               name: "test1",
               status: Status.PUBLIC,
+              updated: "01/05/2019",
               productStatus: Status.PUBLIC
             },
             "103": {
               id: "103",
               name: "test1",
+              updated: "01/04/2019",
               status: Status.UNLISTED
             },
             "107": {
               id: "107",
               name: "test1",
+              updated: "01/03/2019",
               status: Status.PRIVATE
             },
             "345": {
               id: "345",
               name: "test1",
               status: Status.PUBLIC,
+              updated: "01/02/2019",
               productStatus: Status.UNLISTED
             },
             "567": {
               id: "567",
               name: "test1",
               status: Status.PUBLIC,
+              updated: "01/01/2019",
               productStatus: Status.PRIVATE
             },
             "234": {
               id: "234",
               name: "test1",
               status: Status.PUBLIC,
+              updated: "01/06/2019",
               productStatus: Status.PUBLIC
             },
             "100": {
               id: "100",
               name: "test1",
               status: Status.PUBLIC,
+              updated: "01/01/2019",
               productStatus: Status.PUBLIC
             },
             "984": {
               id: "984",
               name: "test1",
               status: Status.PUBLIC,
+              updated: "01/10/2019",
               productStatus: Status.PUBLIC
             },
             "546": {
               id: "546",
               name: "test1",
               status: Status.PUBLIC,
+              updated: "01/08/2019",
               productStatus: Status.PUBLIC
             },
             "456": {
               id: "456",
               name: "test1",
               status: Status.PUBLIC,
+              updated: "01/07/2019",
               productStatus: Status.PUBLIC
             },
             "891": {
               id: "891",
               name: "test1",
               status: Status.PUBLIC,
+              updated: "01/09/2019",
               productStatus: Status.PUBLIC
             }
           }
@@ -187,24 +198,28 @@ describe("Designs redux module", () => {
               id: "123",
               name: "test1",
               user: "abc",
+              updated: "01/06/2019",
               status: Status.PUBLIC
             },
             "234": {
               id: "234",
               name: "test1",
               user: "def",
+              updated: "01/05/2019",
               status: Status.PUBLIC
             },
             "103": {
               id: "103",
               name: "test1",
               user: "abc",
+              updated: "01/04/2019",
               status: Status.UNLISTED
             },
             "107": {
               id: "107",
               name: "test1",
               user: "abc",
+              updated: "01/05/2019",
               status: Status.PRIVATE
             }
           }
