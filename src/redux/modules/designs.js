@@ -46,8 +46,8 @@ export default handleActions(
 );
 
 const sortNewestToOldest = (designA, designB) => {
-  const aId = moment(designA.get("updated")).valueOf();
-  const bId = moment(designB.get("updated")).valueOf();
+  const aId = moment(designA.get("updated"), "MM/DD/YYYY").valueOf();
+  const bId = moment(designB.get("updated"), "MM/DD/YYYY").valueOf();
   if (aId > bId) {
     return -1;
   }
