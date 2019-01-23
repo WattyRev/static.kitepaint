@@ -1,5 +1,6 @@
 import { handleActions } from "redux-actions";
 import { fromJS } from "immutable";
+import moment from "moment";
 import Status from "../../models/status";
 import {
   GET_DESIGNS,
@@ -45,8 +46,8 @@ export default handleActions(
 );
 
 const sortNewestToOldest = (designA, designB) => {
-  const aId = designA.get("id");
-  const bId = designB.get("id");
+  const aId = moment(designA.get("updated")).valueOf();
+  const bId = moment(designB.get("updated")).valueOf();
   if (aId > bId) {
     return -1;
   }
