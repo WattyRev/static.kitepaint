@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { getMockDesign } from "../../models/design";
+import { getMockDesign } from "../../models/Design";
 import { getMockProduct } from "../../models/product";
 import { ViewContainer } from "../ViewContainer";
 
@@ -23,19 +23,20 @@ describe("ViewContainer", () => {
   it("selects the primary variation as the currentVariation", () => {
     expect.assertions(1);
     defaultProps.product = getMockProduct();
-    defaultProps.design = getMockDesign();
-    defaultProps.design.variations = [
-      {
-        name: "Standard",
-        svg: "",
-        primary: false
-      },
-      {
-        name: "Vented",
-        svg: "",
-        primary: true
-      }
-    ];
+    defaultProps.design = getMockDesign({
+      variations: [
+        {
+          name: "Standard",
+          svg: "",
+          primary: false
+        },
+        {
+          name: "Vented",
+          svg: "",
+          primary: true
+        }
+      ]
+    });
     const wrapper = shallow(
       <ViewContainer {...defaultProps}>
         {viewData => (
@@ -62,22 +63,23 @@ describe("ViewContainer", () => {
         color: "#FFFFFF"
       }
     ];
-    defaultProps.design = getMockDesign();
-    defaultProps.design.variations = [
-      {
-        name: "Standard",
-        svg: `<svg viewBox="0 0 1963.2 651.1">
-            <polygon data-id="p1" fill="#FF0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
-            <polygon data-id="p2" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
-          </svg>`,
-        primary: false
-      },
-      {
-        name: "Vented",
-        svg: "",
-        primary: true
-      }
-    ];
+    defaultProps.design = getMockDesign({
+      variations: [
+        {
+          name: "Standard",
+          svg: `<svg viewBox="0 0 1963.2 651.1">
+              <polygon data-id="p1" fill="#FF0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+              <polygon data-id="p2" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+            </svg>`,
+          primary: false
+        },
+        {
+          name: "Vented",
+          svg: "",
+          primary: true
+        }
+      ]
+    });
     const wrapper = shallow(
       <ViewContainer {...defaultProps}>
         {viewData => (

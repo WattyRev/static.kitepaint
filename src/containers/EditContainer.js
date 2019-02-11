@@ -6,7 +6,7 @@ import { getDesignById } from "../redux/modules/designs";
 import { getProductById } from "../redux/modules/products";
 import { getManufacturerByProductId } from "../redux/modules/manufacturers";
 import { GET_DESIGN, GET_PRODUCTS, GET_MANUFACTURERS } from "../redux/actions";
-import designShape from "../models/design";
+import Design from "../models/Design";
 import productShape from "../models/product";
 import manufacturerShape from "../models/manufacturer";
 import { makeCancelable } from "../utils";
@@ -23,7 +23,7 @@ export class EditContainer extends React.Component {
     /**
      * The design being edited
      */
-    design: designShape,
+    design: PropTypes.instanceOf(Design),
     /**
      * The product. Provided by redux.
      */
@@ -98,7 +98,7 @@ export class EditContainer extends React.Component {
   render() {
     // If the design was not made by the current user, don't provide it.
     const userMatchesDesign =
-      this.props.design && this.props.design.user === this.props.user.id;
+      this.props.design && this.props.design.get("user") === this.props.user.id;
     return this.props.children({
       props: {
         design: userMatchesDesign ? this.props.design : null,
@@ -113,10 +113,10 @@ export class EditContainer extends React.Component {
 
 const mapStateToProps = (state, props) => ({
   user: getUser(state),
-  product: getProductById(state, props.design && props.design.product),
+  product: getProductById(state, props.design && props.design.get("product")),
   manufacturer: getManufacturerByProductId(
     state,
-    props.design && props.design.product
+    props.design && props.design.get("product")
   )
 });
 

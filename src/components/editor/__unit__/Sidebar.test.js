@@ -2,7 +2,7 @@ import React from "react";
 import { shallow } from "enzyme";
 import { getMockManufacturer } from "../../../models/manufacturer";
 import { getMockProduct } from "../../../models/product";
-import { getMockDesign } from "../../../models/design";
+import { getMockDesign } from "../../../models/Design";
 import Sidebar, { StyledSidebar } from "../Sidebar";
 
 describe("Sidebar", () => {
@@ -75,8 +75,9 @@ describe("Sidebar", () => {
   });
   it("displays a heading with the design name if there is a design", () => {
     expect.assertions(2);
-    defaultProps.design = getMockDesign();
-    defaultProps.design.name = "Boogers";
+    defaultProps.design = getMockDesign({
+      name: "Boogers"
+    });
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarContent = shallow(
       <div>{wrapper.find(StyledSidebar).prop("children")(sidebarUIData)}</div>

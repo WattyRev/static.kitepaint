@@ -1,5 +1,5 @@
 import { fromJS } from "immutable";
-import Status from "../../../models/status";
+import Status from "../../../models/Status";
 import { GET_PRODUCTS } from "../../actions";
 import Reducer, {
   defaultState,

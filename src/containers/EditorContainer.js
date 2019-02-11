@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { fromJS, Iterable } from "immutable";
 import { connect } from "react-redux";
 import { CREATE_DESIGN, UPDATE_DESIGN } from "../redux/actions";
-import designShape from "../models/design";
+import Design from "../models/Design";
 import productShape from "../models/product";
-import Status from "../models/status";
+import Status from "../models/Status";
 import { isEmbedded, defaultBackground } from "../constants/embed";
 import ErrorPage from "../components/ErrorPage";
 import { softCompareStrings, makeCancelable, embedAllowed } from "../utils";
@@ -33,7 +33,7 @@ export function generateAppliedColors(design, product) {
     return {};
   }
   const colors = product.colors;
-  return design.variations.reduce((accumulated, variation) => {
+  return design.get("variations").reduce((accumulated, variation) => {
     const { svg, name } = variation;
     const render = new window.DOMParser().parseFromString(svg, "text/xml");
     const panels = render.querySelectorAll("[data-id]");
@@ -75,7 +75,7 @@ export class EditorContainer extends React.Component {
     /**
      * An existing design being edited.
      */
-    design: designShape,
+    design: PropTypes.instanceOf(Design),
     /**
      * The default variation (name) to be selected. Will default to the first variation on the
      * product otherwise.
@@ -109,9 +109,9 @@ export class EditorContainer extends React.Component {
     // Use the primary variation or the one specified
     let currentVariation = props.product.variations[0];
     if (props.design) {
-      currentVariation = props.design.variations.find(
-        variation => variation.primary
-      );
+      currentVariation = props.design
+        .get("variations")
+        .find(variation => variation.primary);
     }
     if (props.defaultVariation) {
       currentVariation = props.product.variations.find(variation =>
@@ -389,7 +389,7 @@ export class EditorContainer extends React.Component {
    */
   handleUpdate = () => {
     const design = {
-      id: this.props.design.id,
+      id: this.props.design.get("id"),
       variations: this.generateDesignVariations()
     };
     this.props.onUpdate(design);

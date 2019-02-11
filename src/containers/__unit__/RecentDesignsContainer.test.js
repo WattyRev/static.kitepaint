@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { getMockDesign } from "../../models/design";
+import { getMockDesign } from "../../models/Design";
 import { RecentDesignsContainer } from "../RecentDesignsContainer";
 
 describe("RecentDesignsContainer", () => {

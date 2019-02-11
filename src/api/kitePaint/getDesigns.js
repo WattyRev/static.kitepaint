@@ -1,4 +1,5 @@
 import Qs from "qs";
+import Design from "../../models/Design";
 import { error } from "../../theme/Alert";
 
 /**
@@ -62,7 +63,7 @@ export default async function getDesigns(filter = {}, useCache = true) {
 
   response.data = response.data.map(design => {
     design.variations = JSON.parse(design.variations);
-    return design;
+    return new Design(design);
   });
 
   return response;

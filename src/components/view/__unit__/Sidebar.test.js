@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { getMockDesign } from "../../../models/design";
+import { getMockDesign } from "../../../models/Design";
 import { getMockProduct } from "../../../models/product";
 import { getMockManufacturer } from "../../../models/manufacturer";
 import { getMockUser } from "../../../models/user";
@@ -10,14 +10,15 @@ describe("Sidebar", () => {
   let defaultProps;
   let sidebarData;
   beforeEach(() => {
-    const design = getMockDesign();
-    design.variations = [
-      {
-        svg: "<div>SVG</div>",
-        name: "Standard",
-        primary: true
-      }
-    ];
+    const design = getMockDesign({
+      variations: [
+        {
+          svg: "<div>SVG</div>",
+          name: "Standard",
+          primary: true
+        }
+      ]
+    });
     defaultProps = {
       design,
       usedColors: {
@@ -63,7 +64,10 @@ describe("Sidebar", () => {
     expect.assertions(1);
     defaultProps.user = getMockUser();
     defaultProps.user.username = "Mister Krabs";
-    defaultProps.design.name = "The Flying Dutchman";
+    defaultProps.design = defaultProps.design.set(
+      "name",
+      "The Flying Dutchman"
+    );
 
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarUI = shallow(
@@ -77,7 +81,7 @@ describe("Sidebar", () => {
   });
   it("triggers onVariationSelect when a variation is selected", () => {
     expect.assertions(2);
-    defaultProps.design.variations = [
+    defaultProps.design = defaultProps.design.set("variations", [
       {
         svg: "<div>SVG</div>",
         name: "Standard",
@@ -88,7 +92,7 @@ describe("Sidebar", () => {
         name: "Vented",
         primary: false
       }
-    ];
+    ]);
 
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarUI = shallow(

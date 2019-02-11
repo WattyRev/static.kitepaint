@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 import MyDesignsContainer from "../../../containers/MyDesignsContainer";
-import { getMockDesign } from "../../../models/design";
+import { getMockDesign } from "../../../models/Design";
 import { getMockProduct } from "../../../models/product";
 import { getMockManufacturer } from "../../../models/manufacturer";
 import DesignManager from "../DesignManager";

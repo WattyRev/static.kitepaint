@@ -66,11 +66,16 @@ describe("#getDesign", () => {
       ]
     });
     return Api.getDesign("123").then(response => {
-      expect(response).toEqual({
-        data: {
-          id: "123",
-          variations: []
-        }
+      expect(response.data.get("json")).toEqual({
+        created: null,
+        id: "123",
+        name: null,
+        product: null,
+        productStatus: null,
+        status: null,
+        updated: null,
+        user: null,
+        variations: []
       });
     });
   });

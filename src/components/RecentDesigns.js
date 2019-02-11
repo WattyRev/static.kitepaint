@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import designShape from "../models/design";
+import Design from "../models/Design";
 import productShape from "../models/product";
 import manufacturerShape from "../models/manufacturer";
 import { P } from "../theme";
@@ -67,20 +67,23 @@ const RecentDesigns = ({ designs, products, manufacturers, cta }) => {
     <StyleWrapper>
       <div className="designs">
         {designs.map(design => {
-          const product = products[design.product];
+          const product = products[design.get("product")];
           const manufacturer = manufacturers[product.manufacturer];
           return (
             <Link
-              key={design.id}
+              key={design.get("id")}
               className="design-wrapper"
-              to={`/view/${design.id}`}
+              to={`/view/${design.get("id")}`}
             >
               <Svg
                 className="design-preview"
-                svg={design.variations.find(variation => variation.primary).svg}
+                svg={
+                  design.get("variations").find(variation => variation.primary)
+                    .svg
+                }
               />
               <P isLight className="design-name">
-                {design.name}
+                {design.get("name")}
               </P>
               <ManufacturerLogo
                 className="logo"
@@ -101,7 +104,7 @@ RecentDesigns.propTypes = {
   /**
    * The designs to be displayed
    */
-  designs: PropTypes.arrayOf(designShape).isRequired,
+  designs: PropTypes.arrayOf(PropTypes.instanceOf(Design)).isRequired,
   manufacturers: PropTypes.objectOf(manufacturerShape).isRequired,
   products: PropTypes.objectOf(productShape).isRequired,
   cta: PropTypes.node

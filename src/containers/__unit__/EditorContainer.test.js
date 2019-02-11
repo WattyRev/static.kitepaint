@@ -1,8 +1,8 @@
 import React from "react";
 import { mount } from "enzyme";
 import { getMockProduct } from "../../models/product";
-import { getMockDesign } from "../../models/design";
-import Status from "../../models/status";
+import { getMockDesign } from "../../models/Design";
+import Status from "../../models/Status";
 import { EditorContainer } from "../EditorContainer";
 
 describe("EditorContainer", () => {
@@ -342,18 +342,19 @@ describe("EditorContainer", () => {
   });
   it("generates applied colors based on the provided design", () => {
     expect.assertions(1);
-    defaultProps.design = getMockDesign();
-    defaultProps.design.variations = [
-      {
-        name: "Standard",
-        primary: true,
-        svg: `<svg viewBox="0 0 1963.2 651.1">
-              <polygon data-id="p1" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
-              <polygon data-id="p2" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
-              <polygon data-id="p3" fill="#123456" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
-            </svg>`
-      }
-    ];
+    defaultProps.design = getMockDesign({
+      variations: [
+        {
+          name: "Standard",
+          primary: true,
+          svg: `<svg viewBox="0 0 1963.2 651.1">
+                <polygon data-id="p1" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+                <polygon data-id="p2" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+                <polygon data-id="p3" fill="#123456" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+              </svg>`
+        }
+      ]
+    });
     defaultProps.product.colors = [
       {
         name: "black",

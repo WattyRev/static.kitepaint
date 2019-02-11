@@ -1,4 +1,5 @@
 import { KitePaintApi } from "../../KitePaintApi";
+import Design from "../../../models/Design";
 import { getObjectFromFormData } from "../../__unit__/KitePaintApi.test";
 jest.mock("../../../theme/Alert");
 
@@ -13,18 +14,25 @@ describe("#updateDesign", () => {
   });
   it("makes the correct request with the provided data", () => {
     expect.assertions(2);
-    Api.updateDesign({
-      name: "test",
-      user: "1",
-      product: "2",
-      variations: []
-    }).catch(() => {});
+    Api.updateDesign(
+      new Design({
+        name: "test",
+        user: "1",
+        product: "2",
+        variations: []
+      })
+    ).catch(() => {});
     const call = Api.axiosInstance.post.mock.calls[0];
     expect(call[0]).toEqual("/designs.php");
     expect(getObjectFromFormData(call[1])).toEqual({
+      created: "null",
+      id: "null",
       name: "test",
-      user: "1",
       product: "2",
+      productStatus: "null",
+      status: "null",
+      updated: "null",
+      user: "1",
       variations: "[]"
     });
   });
@@ -33,24 +41,28 @@ describe("#updateDesign", () => {
     Api.axiosInstance.post.mockReturnValue(
       new Promise((resolve, reject) => reject())
     );
-    return Api.updateDesign({
-      name: "test",
-      user: "1",
-      product: "2",
-      variations: []
-    }).catch(() => {
+    return Api.updateDesign(
+      new Design({
+        name: "test",
+        user: "1",
+        product: "2",
+        variations: []
+      })
+    ).catch(() => {
       expect(true).toEqual(true);
     });
   });
   it("should reject if the api returns no data", () => {
     expect.assertions(1);
     Api.axiosInstance.post.mockReturnValue(new Promise(resolve => resolve({})));
-    return Api.updateDesign({
-      name: "test",
-      user: "1",
-      product: "2",
-      variations: []
-    }).catch(() => {
+    return Api.updateDesign(
+      new Design({
+        name: "test",
+        user: "1",
+        product: "2",
+        variations: []
+      })
+    ).catch(() => {
       expect(true).toEqual(true);
     });
   });
@@ -66,12 +78,14 @@ describe("#updateDesign", () => {
         })
       )
     );
-    return Api.updateDesign({
-      name: "test",
-      user: "1",
-      product: "2",
-      variations: []
-    }).catch(() => {
+    return Api.updateDesign(
+      new Design({
+        name: "test",
+        user: "1",
+        product: "2",
+        variations: []
+      })
+    ).catch(() => {
       expect(true).toEqual(true);
     });
   });
@@ -86,12 +100,14 @@ describe("#updateDesign", () => {
         })
       )
     );
-    return Api.updateDesign({
-      name: "test",
-      user: "1",
-      product: "2",
-      variations: []
-    }).then(() => {
+    return Api.updateDesign(
+      new Design({
+        name: "test",
+        user: "1",
+        product: "2",
+        variations: []
+      })
+    ).then(() => {
       expect(true).toEqual(true);
     });
   });

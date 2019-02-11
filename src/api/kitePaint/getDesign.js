@@ -1,3 +1,4 @@
+import Design from "../../models/Design";
 import { error } from "../../theme/Alert";
 
 /**
@@ -38,5 +39,6 @@ export default async function getDesign(id, useCache = true) {
   }
 
   response.data.variations = JSON.parse(response.data.variations);
+  response.data = new Design(response.data);
   return response;
 }

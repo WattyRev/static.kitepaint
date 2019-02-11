@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import ViewContainer from "../../containers/ViewContainer";
-import Status from "../../models/status";
+import Status from "../../models/Status";
 import { PageLoader } from "../../theme";
 import Toolbar from "../editor/Toolbar";
 import Sidebar from "./Sidebar";

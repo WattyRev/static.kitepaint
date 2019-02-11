@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import designShape from "../models/design";
+import Design from "../models/Design";
 import productShape from "../models/product";
 import manufacturerShape from "../models/manufacturer";
 import { getRecentDesigns } from "../redux/modules/designs";
@@ -22,7 +22,7 @@ export class RecentDesignsContainer extends React.Component {
     /**
      * A list of designs
      */
-    designs: PropTypes.arrayOf(designShape).isRequired,
+    designs: PropTypes.arrayOf(PropTypes.instanceOf(Design)).isRequired,
     /** The manufacturers indexed by id */
     manufacturers: PropTypes.objectOf(manufacturerShape).isRequired,
     /** The products indexed by id */

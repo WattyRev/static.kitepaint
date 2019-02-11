@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { getMockDesign } from "../../models/design";
-import Status from "../../models/status";
+import { getMockDesign } from "../../models/Design";
+import Status from "../../models/Status";
 import { Modal } from "../../theme";
 import ShareModal, { Content } from "../ShareModal";
 
@@ -20,19 +20,19 @@ describe("ShareModal", () => {
     });
     it("shows the public URL if the design is public", () => {
       expect.assertions(1);
-      defaultProps.design.status = Status.PUBLIC;
+      defaultProps.design = defaultProps.design.set("status", Status.PUBLIC);
       const wrapper = shallow(<Content {...defaultProps} />);
       expect(wrapper.find(".testing_public-url")).toHaveLength(1);
     });
     it("shows the public URL if the design is unlisted", () => {
       expect.assertions(1);
-      defaultProps.design.status = Status.UNLISTED;
+      defaultProps.design = defaultProps.design.set("status", Status.UNLISTED);
       const wrapper = shallow(<Content {...defaultProps} />);
       expect(wrapper.find(".testing_public-url")).toHaveLength(1);
     });
     it("does not show the public url if the design is private", () => {
       expect.assertions(1);
-      defaultProps.design.status = Status.PRIVATE;
+      defaultProps.design = defaultProps.design.set("status", Status.PRIVATE);
       const wrapper = shallow(<Content {...defaultProps} />);
       expect(wrapper.find(".testing_public-url")).toHaveLength(0);
     });

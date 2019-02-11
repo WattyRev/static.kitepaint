@@ -1,6 +1,6 @@
 import { handleActions } from "redux-actions";
 import { fromJS } from "immutable";
-import Status from "../../models/status";
+import Status from "../../models/Status";
 import { GET_PRODUCTS } from "../actions";
 
 export const defaultState = fromJS({});

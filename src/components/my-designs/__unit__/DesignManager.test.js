@@ -1,9 +1,8 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import theme from "../../../theme";
-import Status from "../../../models/status";
 import { getMockProduct } from "../../../models/product";
-import { getMockDesign } from "../../../models/design";
+import { getMockDesign } from "../../../models/Design";
 import { getMockManufacturer } from "../../../models/manufacturer";
 import DesignManager, { StyleWrapper } from "../DesignManager";
 
@@ -72,29 +71,5 @@ describe("DesignManager", () => {
     expect(wrapper.find(".testing_product-info").text()).toEqual(
       expect.not.stringContaining("by")
     );
-  });
-  it("displays the view button if the design is public", () => {
-    expect.assertions(1);
-    defaultProps.design.status = Status.PUBLIC;
-
-    const wrapper = shallow(<DesignManager {...defaultProps} />);
-
-    expect(wrapper.find(".testing_view")).toHaveLength(1);
-  });
-  it("displays the view button if the design is unlisted", () => {
-    expect.assertions(1);
-    defaultProps.design.status = Status.UNLISTED;
-
-    const wrapper = shallow(<DesignManager {...defaultProps} />);
-
-    expect(wrapper.find(".testing_view")).toHaveLength(1);
-  });
-  it("does not display the view button if the design is private", () => {
-    expect.assertions(1);
-    defaultProps.design.status = Status.PRIVATE;
-
-    const wrapper = shallow(<DesignManager {...defaultProps} />);
-
-    expect(wrapper.find(".testing_view")).toHaveLength(0);
   });
 });

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import manufacturerShape from "../../models/manufacturer";
 import productShape from "../../models/product";
-import designShape from "../../models/design";
+import Design from "../../models/Design";
 import userShape from "../../models/user";
 import ColorTile from "../editor/ColorTile";
 import { Icon, FillToBottom, Sidebar as SidebarUI } from "../../theme";
@@ -101,7 +101,7 @@ const Sidebar = ({
           className="testing_design design-heading"
           isLight
         >
-          {design.name}{" "}
+          {design.get("name")}{" "}
           {user && (
             <React.Fragment>
               <br />
@@ -109,7 +109,7 @@ const Sidebar = ({
             </React.Fragment>
           )}
         </sidebar.components.Heading>
-        {design.variations.map(variation => (
+        {design.get("variations").map(variation => (
           <sidebar.components.Item
             className="testing_variation"
             isLight
@@ -152,7 +152,7 @@ Sidebar.propTypes = {
   /**
    * The pre-existing design that is being edited, if any
    */
-  design: designShape.isRequired,
+  design: PropTypes.instanceOf(Design).isRequired,
   /**
    * The user that created the design.
    */

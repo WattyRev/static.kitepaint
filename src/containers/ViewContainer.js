@@ -11,7 +11,7 @@ import {
   GET_MANUFACTURERS,
   GET_USER
 } from "../redux/actions";
-import designShape from "../models/design";
+import Design from "../models/Design";
 import productShape from "../models/product";
 import manufacturerShape from "../models/manufacturer";
 import userShape from "../models/user";
@@ -44,7 +44,7 @@ export class ViewContainer extends React.Component {
     /**
      * The design being viewed. Provided by Redux.
      */
-    design: designShape,
+    design: PropTypes.instanceOf(Design),
     /**
      * The ID of the design that is being viewed.
      */
@@ -76,7 +76,7 @@ export class ViewContainer extends React.Component {
   };
 
   static getDerivedStateFromProps(props, state) {
-    const variations = props.design && props.design.variations;
+    const variations = props.design && props.design.get("variations");
     const productColors = props.product && props.product.colors;
     if (!variations || !productColors) {
       return {};
@@ -189,9 +189,9 @@ export class ViewContainer extends React.Component {
    * @param  {String} variationName The name of the newly selected variation
    */
   handleVariationSelection = variationName => {
-    const currentVariation = this.props.design.variations.find(variation =>
-      softCompareStrings(variation.name, variationName)
-    );
+    const currentVariation = this.props.design
+      .get("variations")
+      .find(variation => softCompareStrings(variation.name, variationName));
     this.setState({
       currentVariation
     });
@@ -238,12 +238,12 @@ export class ViewContainer extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  product: getProductById(state, props.design && props.design.product),
+  product: getProductById(state, props.design && props.design.get("product")),
   manufacturer: getManufacturerByProductId(
     state,
-    props.design && props.design.product
+    props.design && props.design.get("product")
   ),
-  user: getUserById(state, props.design && props.design.user)
+  user: getUserById(state, props.design && props.design.get("user"))
 });
 
 const mapDispatchToProps = {

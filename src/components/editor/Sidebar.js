@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import manufacturerShape from "../../models/manufacturer";
 import productShape from "../../models/product";
-import designShape from "../../models/design";
+import Design from "../../models/Design";
 import { productAppliedColorsShape } from "../../containers/EditorContainer";
 import { Icon, FillToBottom, Sidebar as SidebarUI } from "../../theme";
 import { getAssetUrl } from "../../utils";
@@ -102,7 +102,7 @@ const Sidebar = ({
             className="testing_design design-heading"
             isLight
           >
-            {design.name}
+            {design.get("name")}
           </sidebar.components.Heading>
         )}
         {product.variations.map(variation => (
@@ -159,7 +159,7 @@ Sidebar.propTypes = {
   /**
    * The pre-existing design that is being edited, if any
    */
-  design: designShape,
+  design: PropTypes.instanceOf(Design),
   /**
    * The name of the variation that is currently selected
    */

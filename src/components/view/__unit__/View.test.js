@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { getMockDesign } from "../../../models/design";
+import { getMockDesign } from "../../../models/Design";
 import ViewContainer from "../../../containers/ViewContainer";
 import { PageLoader } from "../../../theme";
 import ErrorPage from "../../ErrorPage";
@@ -19,7 +19,9 @@ describe("View", () => {
     };
     viewData = {
       actions: {
-        selectVariation: jest.fn()
+        selectVariation: jest.fn(),
+        toggleHideOutlines: jest.fn(),
+        changeBackground: jest.fn()
       },
       props: {
         currentVariation: {
