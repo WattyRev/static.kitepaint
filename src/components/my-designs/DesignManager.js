@@ -55,16 +55,20 @@ const DesignManager = ({ design, product, manufacturer, onDelete }) => (
         {design.get("updated")} | Visiblity:{" "}
         {Status[design.get("currentStatus")]}
       </P>
-      <Button
-        className="testing_view"
-        as={Link}
-        to={`view/${design.get("id")}`}
-      >
-        <Icon icon="eye" /> View
-      </Button>{" "}
-      <Button as={Link} to={`edit/${design.get("id")}`}>
-        <Icon icon="edit" /> Edit
-      </Button>{" "}
+      {!design.get("isPrivateProduct") && (
+        <Button
+          className="testing_view"
+          as={Link}
+          to={`view/${design.get("id")}`}
+        >
+          <Icon icon="eye" /> View
+        </Button>
+      )}{" "}
+      {!design.get("isPrivateProduct") && (
+        <Button as={Link} to={`edit/${design.get("id")}`}>
+          <Icon icon="edit" /> Edit
+        </Button>
+      )}{" "}
       <ShareModal design={design}>
         {modal => (
           <Button onClick={modal.actions.open}>

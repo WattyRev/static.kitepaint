@@ -24,9 +24,10 @@ export default handleActions(
     },
     [GET_DESIGN.RECEIVED]: (state, action) => {
       const { data } = action.payload;
-      return state.merge({
-        [data.get("id")]: data
-      });
+      if (!data || !data.get) {
+        return state;
+      }
+      return state.set(data.get("id"), data);
     },
     [DELETE_DESIGN.RECEIVED]: (state, action) => {
       const { data } = action.payload;
@@ -35,6 +36,9 @@ export default handleActions(
     },
     [UPDATE_DESIGN.RECEIVED]: (state, action) => {
       const { data } = action.payload;
+      if (!data || !data.get) {
+        return state;
+      }
       const id = data.get("id");
       return state.set(id, data);
     }
