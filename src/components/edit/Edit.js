@@ -39,6 +39,11 @@ const Edit = ({ match }) => (
       if (!editData.props.design) {
         return <ErrorPage />;
       }
+      if (!editData.props.product) {
+        return (
+          <ErrorPage errorMessage="This product is no longer available." />
+        );
+      }
       return (
         <EditorContainer
           design={editData.props.design}
