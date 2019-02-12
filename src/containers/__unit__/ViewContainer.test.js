@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 import { getMockDesign } from "../../models/Design";
-import { getMockProduct } from "../../models/product";
+import { getMockProduct } from "../../models/Product";
 import { ViewContainer } from "../ViewContainer";
 
 describe("ViewContainer", () => {

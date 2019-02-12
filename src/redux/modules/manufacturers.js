@@ -12,7 +12,7 @@ export default handleActions(
     [GET_MANUFACTURERS.RECEIVED]: (state, action) => {
       const { data } = action.payload;
       const manufacturersById = data.reduce((accumulated, manufacturer) => {
-        accumulated[manufacturer.id] = manufacturer;
+        accumulated[manufacturer.get("id")] = manufacturer;
         return accumulated;
       }, {});
       return state.merge(manufacturersById);
@@ -58,10 +58,7 @@ export const getManufacturerByProductId = (state, productId) => {
 
   const manufacturerId = product.get("manufacturer");
   const manufacturer = state.getIn(["manufacturers", manufacturerId]);
-  if (!manufacturer) {
-    return null;
-  }
-  return manufacturer.toJS();
+  return manufacturer || null;
 };
 
 /**

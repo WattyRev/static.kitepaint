@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import { getProductById } from "../redux/modules/products";
 import { getManufacturerByProductId } from "../redux/modules/manufacturers";
 import { GET_PRODUCTS, GET_MANUFACTURERS } from "../redux/actions";
-import productShape from "../models/product";
-import manufacturerShape from "../models/manufacturer";
+import productShape from "../models/Product";
+import Manufacturer from "../models/Manufacturer";
 import { makeCancelable } from "../utils";
 
 /**
@@ -24,7 +24,7 @@ export class CreateNewContainer extends React.Component {
     /**
      * The manufactuer of the product. Provided by redux.
      */
-    manufacturer: manufacturerShape,
+    manufacturer: PropTypes.instanceOf(Manufacturer),
     /**
      * A function to request the product be fetched. Provided by redux.
      */

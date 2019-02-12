@@ -1,15 +1,13 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { getMockManufacturer } from "../../../models/manufacturer";
-import { getMockProduct } from "../../../models/product";
+import { getMockManufacturer } from "../../../models/Manufacturer";
+import { getMockProduct } from "../../../models/Product";
 import ProductsContainer from "../../../containers/ProductsContainer";
 import Create from "../Create";
 
 describe("Create", () => {
   it("renders", () => {
-    expect.assertions(2);
     const wrapper = shallow(<Create />);
-    expect(wrapper).toMatchSnapshot();
 
     const mockProductData = {
       props: {
@@ -19,11 +17,10 @@ describe("Create", () => {
         }
       }
     };
-    const productsContainerWrapper = shallow(
+    shallow(
       <div>
         {wrapper.find(ProductsContainer).prop("children")(mockProductData)}
       </div>
     );
-    expect(productsContainerWrapper).toMatchSnapshot();
   });
 });

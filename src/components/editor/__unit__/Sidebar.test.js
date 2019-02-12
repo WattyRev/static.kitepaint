@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { getMockManufacturer } from "../../../models/manufacturer";
-import { getMockProduct } from "../../../models/product";
+import { getMockManufacturer } from "../../../models/Manufacturer";
+import { getMockProduct } from "../../../models/Product";
 import { getMockDesign } from "../../../models/Design";
 import Sidebar, { StyledSidebar } from "../Sidebar";
 
@@ -49,7 +49,9 @@ describe("Sidebar", () => {
   it("makes the manufacturer list item a link if the product does not have a url, but the manufacturer has a website", () => {
     expect.assertions(2);
     defaultProps.product.url = null;
-    defaultProps.manufacturer.website = "http://albinoblacksheep.com";
+    defaultProps.manufacturer = getMockManufacturer({
+      website: "http://albinoblacksheep.com"
+    });
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarContent = shallow(
       <div>{wrapper.find(StyledSidebar).prop("children")(sidebarUIData)}</div>
@@ -64,7 +66,9 @@ describe("Sidebar", () => {
   it("makes the manufacturer list item a div if there is no url or website", () => {
     expect.assertions(1);
     defaultProps.product.url = null;
-    defaultProps.manufacturer.website = null;
+    defaultProps.manufacturer = getMockManufacturer({
+      website: null
+    });
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarContent = shallow(
       <div>{wrapper.find(StyledSidebar).prop("children")(sidebarUIData)}</div>

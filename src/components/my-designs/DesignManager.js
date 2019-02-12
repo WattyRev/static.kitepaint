@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Status from "../../models/Status";
 import Design from "../../models/Design";
-import productShape from "../../models/product";
-import manufacturerShape from "../../models/manufacturer";
+import productShape from "../../models/Product";
+import Manufacturer from "../../models/Manufacturer";
 import DesignSettingsModalContainer from "../../containers/DesignSettingsModalContainer";
 import { H2, P, Button, Icon, Tile, ModalConfirm } from "../../theme";
 import ShareModal from "../ShareModal";
@@ -39,7 +39,7 @@ const DesignManager = ({ design, product, manufacturer, onDelete }) => (
         <P>
           <strong className="testing_product-info">
             {product.name}
-            {manufacturer && ` by ${manufacturer.name}`}
+            {manufacturer && ` by ${manufacturer.get("name")}`}
           </strong>
         </P>
       )}
@@ -101,6 +101,6 @@ DesignManager.propTypes = {
   design: PropTypes.instanceOf(Design),
   onDelete: PropTypes.func.isRequired,
   product: productShape,
-  manufacturer: manufacturerShape
+  manufacturer: PropTypes.instanceOf(Manufacturer)
 };
 export default DesignManager;

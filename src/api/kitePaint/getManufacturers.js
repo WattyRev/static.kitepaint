@@ -1,10 +1,11 @@
+import Manufacturer from "../../models/Manufacturer";
 import { error } from "../../theme/Alert";
 
 /**
  * Get all manufacturers.
  * @param  {Boolean} [useCache=true] If true, the request will be cached, and subsequent duplicate
  * requests will not be made within 10 minutes.
- * @return {Promise}
+ * @return {Promise} { data: Manufacturer[] }
  */
 export default async function getManufacturers(useCache = true) {
   // Look for cached values if useCache is true
@@ -30,6 +31,10 @@ export default async function getManufacturers(useCache = true) {
     error(message);
     return new Promise((resolve, reject) => reject(message));
   }
+
+  response.data = response.data.map(
+    manufacturer => new Manufacturer(manufacturer)
+  );
 
   return response;
 }

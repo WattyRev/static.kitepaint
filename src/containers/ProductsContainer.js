@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import { getPublicProductsGrouped } from "../redux/modules/products";
 import { getManufacturers } from "../redux/modules/manufacturers";
 import { GET_PRODUCTS, GET_MANUFACTURERS } from "../redux/actions";
-import productShape from "../models/product";
-import manufacturerShape from "../models/manufacturer";
+import productShape from "../models/Product";
+import Manufacturer from "../models/Manufacturer";
 import { makeCancelable } from "../utils";
 
 /**
@@ -25,7 +25,8 @@ export class ProductsContainer extends React.Component {
     /**
      * A list of manufacturers
      */
-    manufacturers: PropTypes.arrayOf(manufacturerShape).isRequired,
+    manufacturers: PropTypes.arrayOf(PropTypes.instanceOf(Manufacturer))
+      .isRequired,
     /**
      * A function to trigger the retreival of the products. This should update the redux state,
      * causing products to be provided through redux.

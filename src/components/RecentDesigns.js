@@ -3,8 +3,8 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Design from "../models/Design";
-import productShape from "../models/product";
-import manufacturerShape from "../models/manufacturer";
+import productShape from "../models/Product";
+import Manufacturer from "../models/Manufacturer";
 import { P } from "../theme";
 import { getAssetUrl } from "../utils";
 import Svg from "./Svg";
@@ -87,7 +87,7 @@ const RecentDesigns = ({ designs, products, manufacturers, cta }) => {
               </P>
               <ManufacturerLogo
                 className="logo"
-                src={getAssetUrl(`/logos/${manufacturer.logo}`)}
+                src={getAssetUrl(`/logos/${manufacturer.get("logo")}`)}
                 noMargin
                 size={45}
               />
@@ -105,7 +105,8 @@ RecentDesigns.propTypes = {
    * The designs to be displayed
    */
   designs: PropTypes.arrayOf(PropTypes.instanceOf(Design)).isRequired,
-  manufacturers: PropTypes.objectOf(manufacturerShape).isRequired,
+  manufacturers: PropTypes.objectOf(PropTypes.instanceOf(Manufacturer))
+    .isRequired,
   products: PropTypes.objectOf(productShape).isRequired,
   cta: PropTypes.node
 };

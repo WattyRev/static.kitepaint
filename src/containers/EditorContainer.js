@@ -4,7 +4,7 @@ import { fromJS, Iterable } from "immutable";
 import { connect } from "react-redux";
 import { CREATE_DESIGN, UPDATE_DESIGN } from "../redux/actions";
 import Design from "../models/Design";
-import productShape from "../models/product";
+import productShape from "../models/Product";
 import Status from "../models/Status";
 import { isEmbedded, defaultBackground } from "../constants/embed";
 import ErrorPage from "../components/ErrorPage";

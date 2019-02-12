@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import manufacturerShape from "../../models/manufacturer";
-import productShape from "../../models/product";
+import Manufacturer from "../../models/Manufacturer";
+import productShape from "../../models/Product";
 import Design from "../../models/Design";
 import { productAppliedColorsShape } from "../../containers/EditorContainer";
 import { Icon, FillToBottom, Sidebar as SidebarUI } from "../../theme";
@@ -80,21 +80,21 @@ const Sidebar = ({
         <sidebar.components.Item
           className="testing_manufacturer"
           isLight
-          as={product.url || manufacturer.website ? "a" : "div"}
-          href={product.url || manufacturer.website}
+          as={product.url || manufacturer.get("website") ? "a" : "div"}
+          href={product.url || manufacturer.get("website")}
           target="_blank"
-          hasAction={!!(product.url || manufacturer.website)}
+          hasAction={!!(product.url || manufacturer.get("website"))}
         >
           <ManufacturerLogo
             className="manufacturer-logo"
             size={32}
             noMargin
-            src={getAssetUrl(`/logos/${manufacturer.logo}`)}
+            src={getAssetUrl(`/logos/${manufacturer.get("logo")}`)}
           />
           <div className="manufacturer-info">
             {product.name}
             <br />
-            <small>by {manufacturer.name}</small>
+            <small>by {manufacturer.get("name")}</small>
           </div>
         </sidebar.components.Item>
         {design && (
@@ -151,7 +151,7 @@ Sidebar.propTypes = {
   /**
    * The manufacturer that creates the product being edited.
    */
-  manufacturer: manufacturerShape.isRequired,
+  manufacturer: PropTypes.instanceOf(Manufacturer).isRequired,
   /**
    * The produt that is being edited
    */

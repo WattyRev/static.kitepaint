@@ -1,6 +1,6 @@
 import React from "react";
 import { mount } from "enzyme";
-import { getMockProduct } from "../../models/product";
+import { getMockProduct } from "../../models/Product";
 import { getMockDesign } from "../../models/Design";
 import Status from "../../models/Status";
 import { EditorContainer } from "../EditorContainer";

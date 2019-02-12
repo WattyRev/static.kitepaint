@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Design from "../models/Design";
-import productShape from "../models/product";
-import manufacturerShape from "../models/manufacturer";
+import productShape from "../models/Product";
+import Manufacturer from "../models/Manufacturer";
 import { getRecentDesigns } from "../redux/modules/designs";
 import { getProductsWithIndex } from "../redux/modules/products";
 import { getManufacturersWithIndex } from "../redux/modules/manufacturers";
@@ -24,7 +24,8 @@ export class RecentDesignsContainer extends React.Component {
      */
     designs: PropTypes.arrayOf(PropTypes.instanceOf(Design)).isRequired,
     /** The manufacturers indexed by id */
-    manufacturers: PropTypes.objectOf(manufacturerShape).isRequired,
+    manufacturers: PropTypes.objectOf(PropTypes.instanceOf(Manufacturer))
+      .isRequired,
     /** The products indexed by id */
     products: PropTypes.objectOf(productShape).isRequired,
     /**

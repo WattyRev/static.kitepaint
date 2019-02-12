@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import productShape from "../../models/product";
+import productShape from "../../models/Product";
 import { H3 } from "../../theme";
 import Svg from "../Svg";
 

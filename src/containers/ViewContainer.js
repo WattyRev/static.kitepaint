@@ -12,9 +12,9 @@ import {
   GET_USER
 } from "../redux/actions";
 import Design from "../models/Design";
-import productShape from "../models/product";
-import manufacturerShape from "../models/manufacturer";
-import userShape from "../models/user";
+import productShape from "../models/Product";
+import Manufacturer from "../models/Manufacturer";
+import userShape from "../models/User";
 import { isEmbedded, defaultBackground } from "../constants/embed";
 import ErrorPage from "../components/ErrorPage";
 import { softCompareStrings, makeCancelable, embedAllowed } from "../utils";
@@ -56,7 +56,7 @@ export class ViewContainer extends React.Component {
     /**
      * The manufacturer related to the design. Provided by Redux.
      */
-    manufacturer: manufacturerShape,
+    manufacturer: PropTypes.instanceOf(Manufacturer),
     /**
      * The user that created the design. Provided by Redux.
      */

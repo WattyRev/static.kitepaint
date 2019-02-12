@@ -37,7 +37,7 @@ const getMockProduct = () => ({
   id: "product-1",
   embed: "krazykites.com",
   name: "Krazy Kite",
-  manufacturer: getMockManufacturer().id,
+  manufacturer: getMockManufacturer().get("id"),
   url: "http://krazykites.com/krazy-kite",
   colors: [
     {

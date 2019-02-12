@@ -1,9 +1,9 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import theme from "../../../theme";
-import { getMockProduct } from "../../../models/product";
+import { getMockProduct } from "../../../models/Product";
 import { getMockDesign } from "../../../models/Design";
-import { getMockManufacturer } from "../../../models/manufacturer";
+import { getMockManufacturer } from "../../../models/Manufacturer";
 import DesignManager, { StyleWrapper } from "../DesignManager";
 
 describe("DesignManager", () => {
@@ -49,8 +49,9 @@ describe("DesignManager", () => {
     product.name = "That one kite";
     defaultProps.product = product;
 
-    const manufacturer = getMockManufacturer();
-    manufacturer.name = "That one company";
+    const manufacturer = getMockManufacturer({
+      name: "That one company"
+    });
     defaultProps.manufacturer = manufacturer;
 
     const wrapper = shallow(<DesignManager {...defaultProps} />);

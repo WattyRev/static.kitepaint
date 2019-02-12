@@ -1,9 +1,9 @@
 import React from "react";
 import { shallow } from "enzyme";
 import { getMockDesign } from "../../../models/Design";
-import { getMockProduct } from "../../../models/product";
-import { getMockManufacturer } from "../../../models/manufacturer";
-import { getMockUser } from "../../../models/user";
+import { getMockProduct } from "../../../models/Product";
+import { getMockManufacturer } from "../../../models/Manufacturer";
+import { getMockUser } from "../../../models/User";
 import Sidebar, { StyledSidebar } from "../Sidebar";
 
 describe("Sidebar", () => {
@@ -49,8 +49,9 @@ describe("Sidebar", () => {
     expect.assertions(1);
     defaultProps.product = getMockProduct();
     defaultProps.product.name = "Boogers";
-    defaultProps.manufacturer = getMockManufacturer();
-    defaultProps.manufacturer.name = "Nose";
+    defaultProps.manufacturer = getMockManufacturer({
+      name: "Nose"
+    });
 
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarUI = shallow(

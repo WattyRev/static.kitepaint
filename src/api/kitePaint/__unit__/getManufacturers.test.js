@@ -56,12 +56,11 @@ describe("#getManufacturers", () => {
       ]
     });
     return Api.getManufacturers().then(response => {
-      expect(response).toEqual({
-        data: [
-          {
-            id: "123"
-          }
-        ]
+      expect(response.data[0].get("json")).toEqual({
+        id: "123",
+        logo: null,
+        name: null,
+        website: null
       });
     });
   });

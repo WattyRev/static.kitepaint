@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import manufacturerShape from "../../models/manufacturer";
+import Manufacturer from "../../models/Manufacturer";
 import { H3, A, P, Tile } from "../../theme";
 import { getAssetUrl } from "../../utils";
 import ManufacturerLogo from "../ManufacturerLogo";
@@ -27,13 +27,15 @@ const HeadingWrapper = styled.div`
 const ManufacturerShowcase = ({ manufacturer, children }) => (
   <StyleWrapper>
     <HeadingWrapper>
-      <ManufacturerLogo src={getAssetUrl(`/logos/${manufacturer.logo}`)} />
+      <ManufacturerLogo
+        src={getAssetUrl(`/logos/${manufacturer.get("logo")}`)}
+      />
       <div>
-        <H3>{manufacturer.name}</H3>
-        {manufacturer.website && (
+        <H3>{manufacturer.get("name")}</H3>
+        {manufacturer.get("website") && (
           <P className="testing_website">
-            <A href={manufacturer.website} target="_blank">
-              {manufacturer.website}
+            <A href={manufacturer.get("website")} target="_blank">
+              {manufacturer.get("website")}
             </A>
           </P>
         )}
@@ -47,7 +49,7 @@ ManufacturerShowcase.propTypes = {
   /**
    * The manufacturer being showcased
    */
-  manufacturer: manufacturerShape.isRequired,
+  manufacturer: PropTypes.instanceOf(Manufacturer).isRequired,
 
   /**
    * Content to display within the showcase

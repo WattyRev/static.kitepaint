@@ -1,6 +1,8 @@
 import { fromJS } from "immutable";
-import { getMockProduct } from "../../../models/product";
-import { getMockManufacturer } from "../../../models/manufacturer";
+import { getMockProduct } from "../../../models/Product";
+import Manufacturer, {
+  getMockManufacturer
+} from "../../../models/Manufacturer";
 import { GET_MANUFACTURERS } from "../../actions";
 import Reducer, {
   defaultState,
@@ -18,16 +20,19 @@ describe("Manufacturers redux module", () => {
           type: GET_MANUFACTURERS.RECEIVED,
           payload: {
             data: [
-              {
+              new Manufacturer({
                 id: "123",
-                name: "foo"
-              }
+                name: "foo",
+                logo: "whatever"
+              })
             ]
           }
         });
-        expect(response.get("123").toJS()).toEqual({
+        expect(response.get("123").get("json")).toEqual({
           id: "123",
-          name: "foo"
+          name: "foo",
+          logo: "whatever",
+          website: null
         });
       });
     });
