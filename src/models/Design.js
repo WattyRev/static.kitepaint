@@ -39,6 +39,11 @@ const Design = createModel("Design", {
     );
   }),
 
+  // Is this design based on a private product?
+  isPrivateProduct: computed(function() {
+    return this.get("productStatus") === Status.PRIVATE;
+  }),
+
   // Either the design status or the product status; whichever is more restrictive.
   currentStatus: computed(function() {
     return this.get("status") > this.get("productStatus")

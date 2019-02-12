@@ -26,6 +26,11 @@ const View = ({ match }) => (
       if (!viewData.props.design) {
         return <ErrorPage />;
       }
+      if (!viewData.props.product) {
+        return (
+          <ErrorPage errorMessage="This product is no longer available." />
+        );
+      }
       return (
         <React.Fragment>
           <Toolbar
