@@ -78,11 +78,12 @@ describe("Manufacturers redux module", () => {
       });
       it("returns null if it could not find the manufacturer", () => {
         expect.assertions(1);
-        const mockProduct = getMockProduct();
-        mockProduct.id = "abc";
+        const mockProduct = getMockProduct({
+          id: "abc"
+        });
         const mockState = fromJS({
           products: {
-            [mockProduct.id]: mockProduct
+            [mockProduct.get("id")]: mockProduct
           },
           manufacturers: {}
         });
@@ -91,18 +92,20 @@ describe("Manufacturers redux module", () => {
       });
       it("returns the manufacturer", () => {
         expect.assertions(1);
-        const mockProduct = getMockProduct();
-        mockProduct.id = "abc";
-        mockProduct.manufacturer = "def";
-        const mockManufacturer = getMockManufacturer();
-        mockManufacturer.id = "def";
+        const mockProduct = getMockProduct({
+          id: "abc",
+          manufacturer: "def"
+        });
+        const mockManufacturer = getMockManufacturer({
+          id: "def"
+        });
         const mockState = fromJS({
           products: {
-            [mockProduct.id]: mockProduct
+            [mockProduct.get("id")]: mockProduct
           },
           manufacturers: {
-            [getMockManufacturer().id]: getMockManufacturer,
-            [mockManufacturer.id]: mockManufacturer
+            [getMockManufacturer().get("id")]: getMockManufacturer(),
+            [mockManufacturer.get("id")]: mockManufacturer
           }
         });
         const response = getManufacturerByProductId(mockState, "abc");

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Manufacturer from "../../models/Manufacturer";
-import productShape from "../../models/Product";
+import Product from "../../models/Product";
 import Design from "../../models/Design";
 import userShape from "../../models/User";
 import ColorTile from "../editor/ColorTile";
@@ -80,10 +80,12 @@ const Sidebar = ({
           manufacturer && (
             <sidebar.components.Item
               isLight
-              as={product.url || manufacturer.get("website") ? "a" : "div"}
-              href={product.url || manufacturer.get("website")}
+              as={
+                product.get("url") || manufacturer.get("website") ? "a" : "div"
+              }
+              href={product.get("url") || manufacturer.get("website")}
               target="_blank"
-              hasAction={!!(product.url || manufacturer.get("website"))}
+              hasAction={!!(product.get("url") || manufacturer.get("website"))}
             >
               <ManufacturerLogo
                 className="manufacturer-logo"
@@ -92,7 +94,7 @@ const Sidebar = ({
                 src={getAssetUrl(`/logos/${manufacturer.get("logo")}`)}
               />
               <div className="testing_manufacturer manufacturer-info">
-                {product.name} <br />
+                {product.get("name")} <br />
                 <small>by {manufacturer.get("name")}</small>
               </div>
             </sidebar.components.Item>
@@ -148,7 +150,7 @@ Sidebar.propTypes = {
   /**
    * The produt that is being edited
    */
-  product: productShape,
+  product: PropTypes.instanceOf(Product),
   /**
    * The pre-existing design that is being edited, if any
    */

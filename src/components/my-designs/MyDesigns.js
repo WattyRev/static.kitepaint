@@ -26,14 +26,16 @@ const MyDesigns = () => (
         ) : (
           <React.Fragment>
             {userDesigns.props.designs.map(design => {
-              const product = userDesigns.props.products[design.product];
+              const product = userDesigns.props.products[design.get("product")];
               const manufacturer = product
-                ? userDesigns.props.manufacturers[product.manufacturer]
+                ? userDesigns.props.manufacturers[product.get("manufacturer")]
                 : null;
               return (
-                <Spacer key={design.id} bottom="md">
+                <Spacer key={design.get("id")} bottom="md">
                   <DesignManager
-                    onDelete={() => userDesigns.actions.deleteDesign(design.id)}
+                    onDelete={() =>
+                      userDesigns.actions.deleteDesign(design.get("id"))
+                    }
                     design={design}
                     product={product}
                     manufacturer={manufacturer}

@@ -38,16 +38,20 @@ const Create = () => (
             <PageLoader />
           ) : (
             productsData.props.manufacturers.map(manufacturer => {
-              const products = productsData.props.products[manufacturer.id];
+              const products =
+                productsData.props.products[manufacturer.get("id")];
               if (!products || !products.length) {
                 return null;
               }
               return (
-                <Spacer key={manufacturer.id} bottom="md">
+                <Spacer key={manufacturer.get("id")} bottom="md">
                   <ManufacturerShowcase manufacturer={manufacturer}>
                     <div className="products-wrapper">
                       {products.map(product => (
-                        <ProductShowcase product={product} key={product.id} />
+                        <ProductShowcase
+                          product={product}
+                          key={product.get("id")}
+                        />
                       ))}
                     </div>
                   </ManufacturerShowcase>

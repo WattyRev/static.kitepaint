@@ -4,7 +4,7 @@ import { fromJS, Iterable } from "immutable";
 import { connect } from "react-redux";
 import { CREATE_DESIGN, UPDATE_DESIGN } from "../redux/actions";
 import Design from "../models/Design";
-import productShape from "../models/Product";
+import Product from "../models/Product";
 import Status from "../models/Status";
 import { isEmbedded, defaultBackground } from "../constants/embed";
 import ErrorPage from "../components/ErrorPage";
@@ -32,7 +32,7 @@ export function generateAppliedColors(design, product) {
   if (!design || !product) {
     return {};
   }
-  const colors = product.colors;
+  const colors = product.get("colors");
   return design.get("variations").reduce((accumulated, variation) => {
     const { svg, name } = variation;
     const render = new window.DOMParser().parseFromString(svg, "text/xml");
@@ -66,7 +66,7 @@ export class EditorContainer extends React.Component {
     /**
      * The product being edited
      */
-    product: productShape.isRequired,
+    product: PropTypes.instanceOf(Product).isRequired,
     /**
      * The default color (name) to be selected. Will default to the first color on the product
      * otherwise.
@@ -99,24 +99,26 @@ export class EditorContainer extends React.Component {
     super(props, ...rest);
 
     // Use the first color, or the one specified
-    let currentColor = props.product.colors[0];
+    let currentColor = props.product.get("colors")[0];
     if (props.defaultColor) {
-      currentColor = props.product.colors.find(color =>
-        softCompareStrings(color.name, props.defaultColor)
-      );
+      currentColor = props.product
+        .get("colors")
+        .find(color => softCompareStrings(color.name, props.defaultColor));
     }
 
     // Use the primary variation or the one specified
-    let currentVariation = props.product.variations[0];
+    let currentVariation = props.product.get("variations")[0];
     if (props.design) {
       currentVariation = props.design
         .get("variations")
         .find(variation => variation.primary);
     }
     if (props.defaultVariation) {
-      currentVariation = props.product.variations.find(variation =>
-        softCompareStrings(variation.name, props.defaultVariation)
-      );
+      currentVariation = props.product
+        .get("variations")
+        .find(variation =>
+          softCompareStrings(variation.name, props.defaultVariation)
+        );
     }
 
     const appliedColors = generateAppliedColors(
@@ -284,9 +286,9 @@ export class EditorContainer extends React.Component {
    * @param  {String} colorName The name of the newly selected color
    */
   handleColorSelection = colorName => {
-    const currentColor = this.props.product.colors.find(color =>
-      softCompareStrings(color.name, colorName)
-    );
+    const currentColor = this.props.product
+      .get("colors")
+      .find(color => softCompareStrings(color.name, colorName));
     this.setState({
       currentColor
     });
@@ -297,9 +299,9 @@ export class EditorContainer extends React.Component {
    * @param  {String} variationName The name of the newly selected variation
    */
   handleVariationSelection = variationName => {
-    const currentVariation = this.props.product.variations.find(variation =>
-      softCompareStrings(variation.name, variationName)
-    );
+    const currentVariation = this.props.product
+      .get("variations")
+      .find(variation => softCompareStrings(variation.name, variationName));
     this.setState({
       currentVariation
     });
@@ -321,7 +323,7 @@ export class EditorContainer extends React.Component {
    */
   generateDesignVariations = () => {
     const appliedColors = this.state.appliedColors;
-    const productVariations = this.props.product.variations;
+    const productVariations = this.props.product.get("variations");
 
     // Build each variation
     return productVariations.map((variation, index) => {
@@ -367,7 +369,7 @@ export class EditorContainer extends React.Component {
     const design = {
       name,
       user,
-      product: this.props.product.id,
+      product: this.props.product.get("id"),
       variations: this.generateDesignVariations(),
       status: user === "0" ? Status.PUBLIC : Status.UNLISTED
     };
@@ -409,7 +411,7 @@ export class EditorContainer extends React.Component {
    */
   handleAutofill = () => {
     const currentColors = this.getCurrentVariationColors();
-    const variations = this.props.product.variations;
+    const variations = this.props.product.get("variations");
     const appliedColors = variations.reduce((accumulated, variation) => {
       accumulated[variation.name] = {
         ...currentColors
@@ -428,7 +430,7 @@ export class EditorContainer extends React.Component {
     if (
       isEmbedded &&
       this.props.product &&
-      !embedAllowed(this.props.product.embed.split(","))
+      !embedAllowed(this.props.product.get("embed").split(","))
     ) {
       return (
         <ErrorPage

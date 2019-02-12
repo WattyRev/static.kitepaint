@@ -1,4 +1,5 @@
 import { fromJS } from "immutable";
+import { getMockProduct } from "../../../models/Product";
 import Status from "../../../models/Status";
 import { GET_PRODUCTS } from "../../actions";
 import Reducer, {
@@ -17,17 +18,14 @@ describe("Products redux module", () => {
           type: GET_PRODUCTS.RECEIVED,
           payload: {
             data: [
-              {
+              getMockProduct({
                 id: "123",
                 name: "foo"
-              }
+              })
             ]
           }
         });
-        expect(response.get("123").toJS()).toEqual({
-          id: "123",
-          name: "foo"
-        });
+        expect(response.get("123").get("id")).toEqual("123");
       });
     });
   });
@@ -101,21 +99,18 @@ describe("Products redux module", () => {
         expect.assertions(1);
         const mockState = fromJS({
           products: {
-            "123": {
+            "123": getMockProduct({
               id: "123",
-              name: "def",
-              foo: "bar"
-            },
-            "234": {
+              name: "def"
+            }),
+            "234": getMockProduct({
               id: "234",
-              name: "abc",
-              foo: "bar"
-            },
-            "456": {
+              name: "abc"
+            }),
+            "456": getMockProduct({
               id: "456",
-              name: "gfd",
-              foo: "far"
-            }
+              name: "gfd"
+            })
           }
         });
         const response = getProductById(mockState, "76");
@@ -125,29 +120,22 @@ describe("Products redux module", () => {
         expect.assertions(1);
         const mockState = fromJS({
           products: {
-            "123": {
+            "123": getMockProduct({
               id: "123",
-              name: "def",
-              foo: "bar"
-            },
-            "234": {
+              name: "def"
+            }),
+            "234": getMockProduct({
               id: "234",
-              name: "abc",
-              foo: "bar"
-            },
-            "456": {
+              name: "abc"
+            }),
+            "456": getMockProduct({
               id: "456",
-              name: "gfd",
-              foo: "far"
-            }
+              name: "gfd"
+            })
           }
         });
         const response = getProductById(mockState, "234");
-        expect(response).toEqual({
-          id: "234",
-          name: "abc",
-          foo: "bar"
-        });
+        expect(response.get("id")).toEqual("234");
       });
     });
     describe("getProductsWithIndex", () => {

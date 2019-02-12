@@ -48,7 +48,8 @@ describe("CreateNewContainer", () => {
       <CreateNewContainer {...defaultProps}>
         {data => (
           <div className="content">
-            {data.props.product.name} by {data.props.manufacturer.name}
+            {data.props.product.get("name")} by{" "}
+            {data.props.manufacturer.get("name")}
           </div>
         )}
       </CreateNewContainer>

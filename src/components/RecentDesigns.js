@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Design from "../models/Design";
-import productShape from "../models/Product";
+import Product from "../models/Product";
 import Manufacturer from "../models/Manufacturer";
 import { P } from "../theme";
 import { getAssetUrl } from "../utils";
@@ -68,7 +68,7 @@ const RecentDesigns = ({ designs, products, manufacturers, cta }) => {
       <div className="designs">
         {designs.map(design => {
           const product = products[design.get("product")];
-          const manufacturer = manufacturers[product.manufacturer];
+          const manufacturer = manufacturers[product.get("manufacturer")];
           return (
             <Link
               key={design.get("id")}
@@ -107,7 +107,7 @@ RecentDesigns.propTypes = {
   designs: PropTypes.arrayOf(PropTypes.instanceOf(Design)).isRequired,
   manufacturers: PropTypes.objectOf(PropTypes.instanceOf(Manufacturer))
     .isRequired,
-  products: PropTypes.objectOf(productShape).isRequired,
+  products: PropTypes.objectOf(PropTypes.instanceOf(Product)).isRequired,
   cta: PropTypes.node
 };
 

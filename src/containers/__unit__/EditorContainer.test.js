@@ -30,16 +30,18 @@ describe("EditorContainer", () => {
   });
   it("sets the current color as the first color in the product", () => {
     expect.assertions(1);
-    defaultProps.product.colors = [
-      {
-        name: "red",
-        color: "#ff0000"
-      },
-      {
-        name: "black",
-        color: "#000000"
-      }
-    ];
+    defaultProps.product = getMockProduct({
+      colors: [
+        {
+          name: "red",
+          color: "#ff0000"
+        },
+        {
+          name: "black",
+          color: "#000000"
+        }
+      ]
+    });
 
     const wrapper = mount(
       <EditorContainer {...defaultProps}>
@@ -50,16 +52,18 @@ describe("EditorContainer", () => {
   });
   it("sets the current color as the provided default color", () => {
     expect.assertions(1);
-    defaultProps.product.colors = [
-      {
-        name: "red",
-        color: "#ff0000"
-      },
-      {
-        name: "black",
-        color: "#000000"
-      }
-    ];
+    defaultProps.product = getMockProduct({
+      colors: [
+        {
+          name: "red",
+          color: "#ff0000"
+        },
+        {
+          name: "black",
+          color: "#000000"
+        }
+      ]
+    });
     defaultProps.defaultColor = "black";
 
     const wrapper = mount(
@@ -71,16 +75,18 @@ describe("EditorContainer", () => {
   });
   it("sets the current variation as the first variation in the product", () => {
     expect.assertions(1);
-    defaultProps.product.variations = [
-      {
-        name: "Standard",
-        svg: "<div>test</div>"
-      },
-      {
-        name: "Vented",
-        svg: "<div>test vented</div>"
-      }
-    ];
+    defaultProps.product = getMockProduct({
+      variations: [
+        {
+          name: "Standard",
+          svg: "<div>test</div>"
+        },
+        {
+          name: "Vented",
+          svg: "<div>test vented</div>"
+        }
+      ]
+    });
 
     const wrapper = mount(
       <EditorContainer {...defaultProps}>
@@ -93,16 +99,18 @@ describe("EditorContainer", () => {
   });
   it("sets the current variation as the provided default variation", () => {
     expect.assertions(1);
-    defaultProps.product.variations = [
-      {
-        name: "Standard",
-        svg: "<div>test</div>"
-      },
-      {
-        name: "Vented",
-        svg: "<div>test vented</div>"
-      }
-    ];
+    defaultProps.product = getMockProduct({
+      variations: [
+        {
+          name: "Standard",
+          svg: "<div>test</div>"
+        },
+        {
+          name: "Vented",
+          svg: "<div>test vented</div>"
+        }
+      ]
+    });
     defaultProps.defaultVariation = "vented";
 
     const wrapper = mount(
@@ -116,16 +124,18 @@ describe("EditorContainer", () => {
   });
   it("changes the color when handleColorSelection is called", () => {
     expect.assertions(1);
-    defaultProps.product.colors = [
-      {
-        name: "red",
-        color: "#ff0000"
-      },
-      {
-        name: "black",
-        color: "#000000"
-      }
-    ];
+    defaultProps.product = getMockProduct({
+      colors: [
+        {
+          name: "red",
+          color: "#ff0000"
+        },
+        {
+          name: "black",
+          color: "#000000"
+        }
+      ]
+    });
 
     const wrapper = mount(
       <EditorContainer {...defaultProps}>
@@ -144,16 +154,18 @@ describe("EditorContainer", () => {
   });
   it("changes the variation when handleVariationSelection is called", () => {
     expect.assertions(1);
-    defaultProps.product.variations = [
-      {
-        name: "Standard",
-        svg: "<div>test</div>"
-      },
-      {
-        name: "Vented",
-        svg: "<div>test vented</div>"
-      }
-    ];
+    defaultProps.product = getMockProduct({
+      variations: [
+        {
+          name: "Standard",
+          svg: "<div>test</div>"
+        },
+        {
+          name: "Vented",
+          svg: "<div>test vented</div>"
+        }
+      ]
+    });
 
     const wrapper = mount(
       <EditorContainer {...defaultProps}>
@@ -193,16 +205,18 @@ describe("EditorContainer", () => {
   });
   it("provides the applied colors for the current variation", () => {
     expect.assertions(3);
-    defaultProps.product.variations = [
-      {
-        name: "Standard",
-        svg: "<div>test</div>"
-      },
-      {
-        name: "Vented",
-        svg: "<div>test vented</div>"
-      }
-    ];
+    defaultProps.product = getMockProduct({
+      variations: [
+        {
+          name: "Standard",
+          svg: "<div>test</div>"
+        },
+        {
+          name: "Vented",
+          svg: "<div>test vented</div>"
+        }
+      ]
+    });
     const wrapper = mount(
       <EditorContainer {...defaultProps}>
         {data => (
@@ -247,26 +261,28 @@ describe("EditorContainer", () => {
     expect.assertions(2);
 
     // Create some mock variations
-    defaultProps.product.variations = [
-      {
-        name: "Standard",
-        svg: `
+    defaultProps.product = getMockProduct({
+      variations: [
+        {
+          name: "Standard",
+          svg: `
           <svg viewBox="0 0 1963.2 651.1">
               <polygon data-id="p1" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
               <polygon data-id="p2" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
             </svg>
         `
-      },
-      {
-        name: "Vented",
-        svg: `
+        },
+        {
+          name: "Vented",
+          svg: `
           <svg viewBox="0 0 1963.2 651.1">
               <polygon data-id="p1" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
               <polygon data-id="p2" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
             </svg>
         `
-      }
-    ];
+        }
+      ]
+    });
     const wrapper = mount(
       <EditorContainer {...defaultProps}>
         {data => (
@@ -316,7 +332,7 @@ describe("EditorContainer", () => {
     expect(defaultProps.onSave.mock.calls[0][0]).toEqual({
       name: "boogers",
       user: "123",
-      product: defaultProps.product.id,
+      product: defaultProps.product.get("id"),
       status: Status.UNLISTED,
       variations: [
         {
@@ -355,20 +371,22 @@ describe("EditorContainer", () => {
         }
       ]
     });
-    defaultProps.product.colors = [
-      {
-        name: "black",
-        color: "#000000"
-      },
-      {
-        name: "red",
-        color: "#FF0000"
-      },
-      {
-        name: "green",
-        color: "#00FF00"
-      }
-    ];
+    defaultProps.product = getMockProduct({
+      colors: [
+        {
+          name: "black",
+          color: "#000000"
+        },
+        {
+          name: "red",
+          color: "#FF0000"
+        },
+        {
+          name: "green",
+          color: "#00FF00"
+        }
+      ]
+    });
     const wrapper = mount(
       <EditorContainer {...defaultProps}>
         {data => (
@@ -400,16 +418,18 @@ describe("EditorContainer", () => {
   describe("autofill", () => {
     let wrapper;
     beforeEach(() => {
-      defaultProps.product.variations = [
-        {
-          name: "Standard",
-          svg: ""
-        },
-        {
-          name: "Vented",
-          svg: ""
-        }
-      ];
+      defaultProps.product = getMockProduct({
+        variations: [
+          {
+            name: "Standard",
+            svg: ""
+          },
+          {
+            name: "Vented",
+            svg: ""
+          }
+        ]
+      });
       wrapper = mount(
         <EditorContainer {...defaultProps}>
           {data => (
@@ -550,16 +570,18 @@ describe("EditorContainer", () => {
   describe("reset", () => {
     let wrapper;
     beforeEach(() => {
-      defaultProps.product.variations = [
-        {
-          name: "Standard",
-          svg: ""
-        },
-        {
-          name: "Vented",
-          svg: ""
-        }
-      ];
+      defaultProps.product = getMockProduct({
+        variations: [
+          {
+            name: "Standard",
+            svg: ""
+          },
+          {
+            name: "Vented",
+            svg: ""
+          }
+        ]
+      });
       wrapper = mount(
         <EditorContainer {...defaultProps}>
           {data => (
@@ -1002,16 +1024,18 @@ describe("EditorContainer", () => {
     });
     it("can undo and redo an autofill", () => {
       expect.assertions(3);
-      defaultProps.product.variations = [
-        {
-          name: "Standard",
-          svg: ""
-        },
-        {
-          name: "Vented",
-          svg: ""
-        }
-      ];
+      defaultProps.product = getMockProduct({
+        variations: [
+          {
+            name: "Standard",
+            svg: ""
+          },
+          {
+            name: "Vented",
+            svg: ""
+          }
+        ]
+      });
       const wrapper = mount(
         <EditorContainer {...defaultProps}>
           {data => (

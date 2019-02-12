@@ -26,8 +26,9 @@ describe("DesignManager", () => {
   });
   it("displays the product name if a product was provided", () => {
     expect.assertions(1);
-    const product = getMockProduct();
-    product.name = "That one kite";
+    const product = getMockProduct({
+      name: "That one kite"
+    });
     defaultProps.product = product;
     const wrapper = shallow(<DesignManager {...defaultProps} />);
 
@@ -45,8 +46,9 @@ describe("DesignManager", () => {
   it("displays the manufacturer name if both the product and manufacturer were provided", () => {
     expect.assertions(1);
 
-    const product = getMockProduct();
-    product.name = "That one kite";
+    const product = getMockProduct({
+      name: "That one kite"
+    });
     defaultProps.product = product;
 
     const manufacturer = getMockManufacturer({
@@ -63,8 +65,9 @@ describe("DesignManager", () => {
   it("does not display the manufacturer name if the manufacturer is not provided", () => {
     expect.assertions(1);
 
-    const product = getMockProduct();
-    product.name = "That one kite";
+    const product = getMockProduct({
+      name: "That one kite"
+    });
     defaultProps.product = product;
 
     const wrapper = shallow(<DesignManager {...defaultProps} />);

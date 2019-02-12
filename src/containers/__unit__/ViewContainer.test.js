@@ -48,21 +48,22 @@ describe("ViewContainer", () => {
   });
   it("provides the colors used in the current variation", () => {
     expect.assertions(1);
-    defaultProps.product = getMockProduct();
-    defaultProps.product.colors = [
-      {
-        name: "Red",
-        color: "#ff0000"
-      },
-      {
-        name: "Black",
-        color: "#000000"
-      },
-      {
-        name: "White",
-        color: "#FFFFFF"
-      }
-    ];
+    defaultProps.product = getMockProduct({
+      colors: [
+        {
+          name: "Red",
+          color: "#ff0000"
+        },
+        {
+          name: "Black",
+          color: "#000000"
+        },
+        {
+          name: "White",
+          color: "#FFFFFF"
+        }
+      ]
+    });
     defaultProps.design = getMockDesign({
       variations: [
         {

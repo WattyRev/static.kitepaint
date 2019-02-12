@@ -47,8 +47,9 @@ describe("Sidebar", () => {
   });
   it("displays the product and manufacturer names if both are provided", () => {
     expect.assertions(1);
-    defaultProps.product = getMockProduct();
-    defaultProps.product.name = "Boogers";
+    defaultProps.product = getMockProduct({
+      name: "Boogers"
+    });
     defaultProps.manufacturer = getMockManufacturer({
       name: "Nose"
     });

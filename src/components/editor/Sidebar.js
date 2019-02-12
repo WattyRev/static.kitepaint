@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Manufacturer from "../../models/Manufacturer";
-import productShape from "../../models/Product";
+import Product from "../../models/Product";
 import Design from "../../models/Design";
 import { productAppliedColorsShape } from "../../containers/EditorContainer";
 import { Icon, FillToBottom, Sidebar as SidebarUI } from "../../theme";
@@ -80,10 +80,10 @@ const Sidebar = ({
         <sidebar.components.Item
           className="testing_manufacturer"
           isLight
-          as={product.url || manufacturer.get("website") ? "a" : "div"}
-          href={product.url || manufacturer.get("website")}
+          as={product.get("url") || manufacturer.get("website") ? "a" : "div"}
+          href={product.get("url") || manufacturer.get("website")}
           target="_blank"
-          hasAction={!!(product.url || manufacturer.get("website"))}
+          hasAction={!!(product.get("url") || manufacturer.get("website"))}
         >
           <ManufacturerLogo
             className="manufacturer-logo"
@@ -92,7 +92,7 @@ const Sidebar = ({
             src={getAssetUrl(`/logos/${manufacturer.get("logo")}`)}
           />
           <div className="manufacturer-info">
-            {product.name}
+            {product.get("name")}
             <br />
             <small>by {manufacturer.get("name")}</small>
           </div>
@@ -105,7 +105,7 @@ const Sidebar = ({
             {design.get("name")}
           </sidebar.components.Heading>
         )}
-        {product.variations.map(variation => (
+        {product.get("variations").map(variation => (
           <sidebar.components.Item
             className="testing_variation"
             isLight
@@ -127,7 +127,7 @@ const Sidebar = ({
           <Icon icon="palette" /> Colors
         </sidebar.components.Heading>
         <FillToBottom offset={33} strict minHeight={300}>
-          {product.colors.map(color => (
+          {product.get("colors").map(color => (
             <sidebar.components.Item
               className="testing_color"
               isLight
@@ -155,7 +155,7 @@ Sidebar.propTypes = {
   /**
    * The produt that is being edited
    */
-  product: productShape.isRequired,
+  product: PropTypes.instanceOf(Product).isRequired,
   /**
    * The pre-existing design that is being edited, if any
    */

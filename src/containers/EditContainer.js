@@ -7,7 +7,7 @@ import { getProductById } from "../redux/modules/products";
 import { getManufacturerByProductId } from "../redux/modules/manufacturers";
 import { GET_DESIGN, GET_PRODUCTS, GET_MANUFACTURERS } from "../redux/actions";
 import Design from "../models/Design";
-import productShape from "../models/Product";
+import Product from "../models/Product";
 import Manufacturer from "../models/Manufacturer";
 import { makeCancelable } from "../utils";
 
@@ -27,7 +27,7 @@ export class EditContainer extends React.Component {
     /**
      * The product. Provided by redux.
      */
-    product: productShape,
+    product: PropTypes.instanceOf(Product),
     /**
      * The manufactuer of the product. Provided by redux.
      */

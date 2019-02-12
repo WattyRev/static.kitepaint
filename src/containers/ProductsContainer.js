@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { getPublicProductsGrouped } from "../redux/modules/products";
 import { getManufacturers } from "../redux/modules/manufacturers";
 import { GET_PRODUCTS, GET_MANUFACTURERS } from "../redux/actions";
-import productShape from "../models/Product";
+import Product from "../models/Product";
 import Manufacturer from "../models/Manufacturer";
 import { makeCancelable } from "../utils";
 
@@ -20,8 +20,9 @@ export class ProductsContainer extends React.Component {
     /**
      * The products indexed by manufacturer id.
      */
-    products: PropTypes.objectOf(PropTypes.arrayOf(productShape).isRequired)
-      .isRequired,
+    products: PropTypes.objectOf(
+      PropTypes.arrayOf(PropTypes.instanceOf(Product)).isRequired
+    ).isRequired,
     /**
      * A list of manufacturers
      */

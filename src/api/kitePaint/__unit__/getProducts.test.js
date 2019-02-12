@@ -54,15 +54,16 @@ describe("#getProducts", () => {
       ]
     });
     return Api.getProducts().then(response => {
-      expect(response).toEqual({
-        data: [
-          {
-            id: "123",
-            variations: [],
-            colors: [],
-            notes: []
-          }
-        ]
+      expect(response.data[0].get("json")).toEqual({
+        colors: [],
+        embed: null,
+        id: "123",
+        manufacturer: null,
+        name: null,
+        notes: [],
+        status: null,
+        url: null,
+        variations: []
       });
     });
   });

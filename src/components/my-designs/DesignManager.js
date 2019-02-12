@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Status from "../../models/Status";
 import Design from "../../models/Design";
-import productShape from "../../models/Product";
+import Product from "../../models/Product";
 import Manufacturer from "../../models/Manufacturer";
 import DesignSettingsModalContainer from "../../containers/DesignSettingsModalContainer";
 import { H2, P, Button, Icon, Tile, ModalConfirm } from "../../theme";
@@ -38,7 +38,7 @@ const DesignManager = ({ design, product, manufacturer, onDelete }) => (
       {product && (
         <P>
           <strong className="testing_product-info">
-            {product.name}
+            {product.get("name")}
             {manufacturer && ` by ${manufacturer.get("name")}`}
           </strong>
         </P>
@@ -100,7 +100,7 @@ const DesignManager = ({ design, product, manufacturer, onDelete }) => (
 DesignManager.propTypes = {
   design: PropTypes.instanceOf(Design),
   onDelete: PropTypes.func.isRequired,
-  product: productShape,
+  product: PropTypes.instanceOf(Product),
   manufacturer: PropTypes.instanceOf(Manufacturer)
 };
 export default DesignManager;

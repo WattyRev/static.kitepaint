@@ -85,9 +85,9 @@ const Edit = ({ match }) => (
                   onClick={editorData.actions.applyColor}
                   currentColor={editorData.props.currentColor.name}
                 />
-                {editData.props.product.notes &&
-                  !!editData.props.product.notes.length && (
-                    <ProductNotes notes={editData.props.product.notes} />
+                {editData.props.product.get("notes") &&
+                  !!editData.props.product.get("notes").length && (
+                    <ProductNotes notes={editData.props.product.get("notes")} />
                   )}
               </PageLayout>
             </React.Fragment>

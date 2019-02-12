@@ -12,7 +12,7 @@ import {
   GET_USER
 } from "../redux/actions";
 import Design from "../models/Design";
-import productShape from "../models/Product";
+import Product from "../models/Product";
 import Manufacturer from "../models/Manufacturer";
 import userShape from "../models/User";
 import { isEmbedded, defaultBackground } from "../constants/embed";
@@ -52,7 +52,7 @@ export class ViewContainer extends React.Component {
     /**
      * The product related to the design. Provided by Redux.
      */
-    product: productShape,
+    product: PropTypes.instanceOf(Product),
     /**
      * The manufacturer related to the design. Provided by Redux.
      */
@@ -77,7 +77,7 @@ export class ViewContainer extends React.Component {
 
   static getDerivedStateFromProps(props, state) {
     const variations = props.design && props.design.get("variations");
-    const productColors = props.product && props.product.colors;
+    const productColors = props.product && props.product.get("colors");
     if (!variations || !productColors) {
       return {};
     }
@@ -206,7 +206,7 @@ export class ViewContainer extends React.Component {
     if (
       isEmbedded &&
       this.props.product &&
-      !embedAllowed(this.props.product.embed.split(","))
+      !embedAllowed(this.props.product.get("embed").split(","))
     ) {
       return (
         <ErrorPage

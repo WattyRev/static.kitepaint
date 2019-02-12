@@ -35,14 +35,15 @@ describe("RecentDesignsContainer", () => {
   });
   it("provides the designs in the render", () => {
     expect.assertions(1);
-    const design = getMockDesign();
-    design.name = "my-design";
+    const design = getMockDesign({
+      name: "my-design"
+    });
     props.designs = [design];
     const wrapper = shallow(
       <RecentDesignsContainer {...props}>
         {data => (
           <div className="testing_target">
-            {data.props.designs.map(design => design.name)}
+            {data.props.designs.map(design => design.get("name"))}
           </div>
         )}
       </RecentDesignsContainer>

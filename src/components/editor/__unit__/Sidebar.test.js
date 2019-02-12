@@ -34,7 +34,9 @@ describe("Sidebar", () => {
   });
   it("makes the manufacturer list item a link if the product has a url", () => {
     expect.assertions(2);
-    defaultProps.product.url = "http://zombo.com";
+    defaultProps.product = getMockProduct({
+      url: "http://zombo.com"
+    });
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarContent = shallow(
       <div>{wrapper.find(StyledSidebar).prop("children")(sidebarUIData)}</div>
@@ -48,7 +50,9 @@ describe("Sidebar", () => {
   });
   it("makes the manufacturer list item a link if the product does not have a url, but the manufacturer has a website", () => {
     expect.assertions(2);
-    defaultProps.product.url = null;
+    defaultProps.product = getMockProduct({
+      url: null
+    });
     defaultProps.manufacturer = getMockManufacturer({
       website: "http://albinoblacksheep.com"
     });
@@ -65,7 +69,9 @@ describe("Sidebar", () => {
   });
   it("makes the manufacturer list item a div if there is no url or website", () => {
     expect.assertions(1);
-    defaultProps.product.url = null;
+    defaultProps.product = getMockProduct({
+      url: null
+    });
     defaultProps.manufacturer = getMockManufacturer({
       website: null
     });
@@ -105,16 +111,18 @@ describe("Sidebar", () => {
   });
   it("triggers onVariationSelect when a variation is selected", () => {
     expect.assertions(2);
-    defaultProps.product.variations = [
-      {
-        name: "Standard",
-        svg: "<div>Kool Kite</div>"
-      },
-      {
-        name: "Vented",
-        svg: "<div>Kool Vented Kite</div>"
-      }
-    ];
+    defaultProps.product = getMockProduct({
+      variations: [
+        {
+          name: "Standard",
+          svg: "<div>Kool Kite</div>"
+        },
+        {
+          name: "Vented",
+          svg: "<div>Kool Vented Kite</div>"
+        }
+      ]
+    });
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarContent = shallow(
       <div>{wrapper.find(StyledSidebar).prop("children")(sidebarUIData)}</div>
@@ -128,16 +136,18 @@ describe("Sidebar", () => {
   });
   it("triggers onColorSelect when a color is selected", () => {
     expect.assertions(2);
-    defaultProps.product.colors = [
-      {
-        name: "red",
-        color: "#ff0000"
-      },
-      {
-        name: "black",
-        color: "#000000"
-      }
-    ];
+    defaultProps.product = getMockProduct({
+      colors: [
+        {
+          name: "red",
+          color: "#ff0000"
+        },
+        {
+          name: "black",
+          color: "#000000"
+        }
+      ]
+    });
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarContent = shallow(
       <div>{wrapper.find(StyledSidebar).prop("children")(sidebarUIData)}</div>

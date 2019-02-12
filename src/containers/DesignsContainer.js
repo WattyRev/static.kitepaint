@@ -6,7 +6,7 @@ import { getProductsWithIndex } from "../redux/modules/products";
 import { getManufacturersWithIndex } from "../redux/modules/manufacturers";
 import { GET_DESIGNS, GET_PRODUCTS, GET_MANUFACTURERS } from "../redux/actions";
 import Design from "../models/Design";
-import productShape from "../models/Product";
+import Product from "../models/Product";
 import Manufacturer from "../models/Manufacturer";
 import { makeCancelable } from "../utils";
 
@@ -74,7 +74,7 @@ export class Data extends React.Component {
     /**
      * All of the products, indexed by ID. Provided by Redux.
      */
-    products: PropTypes.objectOf(productShape).isRequired,
+    products: PropTypes.objectOf(PropTypes.instanceOf(Product)).isRequired,
     /**
      * All the manufacturers, indexed by ID. Provided by Redux.
      */
