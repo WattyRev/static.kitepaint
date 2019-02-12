@@ -1,5 +1,6 @@
 import { fromJS } from "immutable";
-import Status from "../../../models/status";
+import Design from "../../../models/Design";
+import Status from "../../../models/Status";
 import Reducer, {
   defaultState,
   getRecentDesigns,
@@ -22,16 +23,23 @@ describe("Designs redux module", () => {
           type: GET_DESIGNS.RECEIVED,
           payload: {
             data: [
-              {
+              new Design({
                 id: "123",
                 name: "foo"
-              }
+              })
             ]
           }
         });
-        expect(response.get("123").toJS()).toEqual({
+        expect(response.get("123").get("json")).toEqual({
+          created: null,
           id: "123",
-          name: "foo"
+          name: "foo",
+          product: null,
+          productStatus: null,
+          status: null,
+          updated: null,
+          user: null,
+          variations: null
         });
       });
     });
@@ -41,15 +49,22 @@ describe("Designs redux module", () => {
         const response = Reducer(defaultState, {
           type: GET_DESIGN.RECEIVED,
           payload: {
-            data: {
+            data: new Design({
               id: "123",
               name: "foo"
-            }
+            })
           }
         });
-        expect(response.get("123").toJS()).toEqual({
+        expect(response.get("123").get("json")).toEqual({
+          created: null,
           id: "123",
-          name: "foo"
+          name: "foo",
+          product: null,
+          productStatus: null,
+          status: null,
+          updated: null,
+          user: null,
+          variations: null
         });
       });
     });
@@ -71,26 +86,30 @@ describe("Designs redux module", () => {
       it("updates the relevant design", () => {
         expect.assertions(1);
         let state = fromJS({
-          abc: {
-            foo: "bar",
-            bar: "foo"
-          }
+          abc: new Design({
+            id: "abc",
+            name: "foo"
+          })
         });
         const response = Reducer(state, {
           type: UPDATE_DESIGN.RECEIVED,
           payload: {
-            data: {
+            data: new Design({
               id: "abc",
-              foo: "far"
-            }
+              name: "far"
+            })
           }
         });
-        expect(response.toJS()).toEqual({
-          abc: {
-            id: "abc",
-            foo: "far",
-            bar: "foo"
-          }
+        expect(response.get("abc").get("json")).toEqual({
+          created: null,
+          id: "abc",
+          name: "far",
+          product: null,
+          productStatus: null,
+          status: null,
+          updated: null,
+          user: null,
+          variations: null
         });
       });
     });
@@ -101,85 +120,85 @@ describe("Designs redux module", () => {
         expect.assertions(1);
         const mockState = fromJS({
           designs: {
-            "123": {
+            "123": new Design({
               id: "123",
               name: "test1",
               status: Status.PUBLIC,
               updated: "01/05/2019",
               productStatus: Status.PUBLIC
-            },
-            "103": {
+            }),
+            "103": new Design({
               id: "103",
               name: "test1",
               updated: "01/04/2019",
               status: Status.UNLISTED
-            },
-            "107": {
+            }),
+            "107": new Design({
               id: "107",
               name: "test1",
               updated: "01/03/2019",
               status: Status.PRIVATE
-            },
-            "345": {
+            }),
+            "345": new Design({
               id: "345",
               name: "test1",
               status: Status.PUBLIC,
               updated: "01/02/2019",
               productStatus: Status.UNLISTED
-            },
-            "567": {
+            }),
+            "567": new Design({
               id: "567",
               name: "test1",
               status: Status.PUBLIC,
               updated: "01/01/2019",
               productStatus: Status.PRIVATE
-            },
-            "234": {
+            }),
+            "234": new Design({
               id: "234",
               name: "test1",
               status: Status.PUBLIC,
               updated: "01/06/2019",
               productStatus: Status.PUBLIC
-            },
-            "100": {
+            }),
+            "100": new Design({
               id: "100",
               name: "test1",
               status: Status.PUBLIC,
               updated: "01/01/2019",
               productStatus: Status.PUBLIC
-            },
-            "984": {
+            }),
+            "984": new Design({
               id: "984",
               name: "test1",
               status: Status.PUBLIC,
               updated: "01/10/2019",
               productStatus: Status.PUBLIC
-            },
-            "546": {
+            }),
+            "546": new Design({
               id: "546",
               name: "test1",
               status: Status.PUBLIC,
               updated: "01/08/2019",
               productStatus: Status.PUBLIC
-            },
-            "456": {
+            }),
+            "456": new Design({
               id: "456",
               name: "test1",
               status: Status.PUBLIC,
               updated: "01/07/2019",
               productStatus: Status.PUBLIC
-            },
-            "891": {
+            }),
+            "891": new Design({
               id: "891",
               name: "test1",
               status: Status.PUBLIC,
               updated: "01/09/2019",
               productStatus: Status.PUBLIC
-            }
+            })
           }
         });
         const response = getRecentDesigns(mockState, 6);
-        expect(response.map(item => item.id)).toEqual([
+        expect(response.map(item => item.get("id"))).toEqual([
           "984",
           "891",
           "546",
@@ -194,38 +213,42 @@ describe("Designs redux module", () => {
         expect.assertions(1);
         const mockState = fromJS({
           designs: {
-            "123": {
+            "123": new Design({
               id: "123",
               name: "test1",
               user: "abc",
               updated: "01/06/2019",
               status: Status.PUBLIC
-            },
-            "234": {
+            }),
+            "234": new Design({
               id: "234",
               name: "test1",
               user: "def",
               updated: "01/05/2019",
               status: Status.PUBLIC
-            },
-            "103": {
+            }),
+            "103": new Design({
               id: "103",
               name: "test1",
               user: "abc",
               updated: "01/04/2019",
               status: Status.UNLISTED
-            },
-            "107": {
+            }),
+            "107": new Design({
               id: "107",
               name: "test1",
               user: "abc",
               updated: "01/05/2019",
               status: Status.PRIVATE
-            }
+            })
           }
         });
         const response = getDesignsByUser(mockState, "abc");
-        expect(response.map(item => item.id)).toEqual(["123", "107", "103"]);
+        expect(response.map(item => item.get("id"))).toEqual([
+          "123",
+          "107",
+          "103"
+        ]);
       });
     });
     describe("getDesignById", () => {
@@ -233,38 +256,43 @@ describe("Designs redux module", () => {
         expect.assertions(1);
         const mockState = fromJS({
           designs: {
-            "123": {
+            "123": new Design({
               id: "123",
               name: "test1",
               user: "abc",
               status: Status.PUBLIC
-            },
-            "234": {
+            }),
+            "234": new Design({
               id: "234",
               name: "test1",
               user: "def",
               status: Status.PUBLIC
-            },
-            "103": {
+            }),
+            "103": new Design({
               id: "103",
               name: "test1",
               user: "abc",
               status: Status.UNLISTED
-            },
-            "107": {
+            }),
+            "107": new Design({
               id: "107",
               name: "test1",
               user: "abc",
               status: Status.PRIVATE
-            }
+            })
           }
         });
         const response = getDesignById(mockState, "234");
-        expect(response).toEqual({
+        expect(response.get("json")).toEqual({
+          created: null,
           id: "234",
           name: "test1",
+          product: null,
+          productStatus: null,
+          status: "2",
+          updated: null,
           user: "def",
-          status: Status.PUBLIC
+          variations: null
         });
       });
     });

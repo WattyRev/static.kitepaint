@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import designShape from "../models/design";
-import productShape from "../models/product";
-import manufacturerShape from "../models/manufacturer";
+import Design from "../models/Design";
+import Product from "../models/Product";
+import Manufacturer from "../models/Manufacturer";
 import { getRecentDesigns } from "../redux/modules/designs";
 import { getProductsWithIndex } from "../redux/modules/products";
 import { getManufacturersWithIndex } from "../redux/modules/manufacturers";
@@ -22,11 +22,12 @@ export class RecentDesignsContainer extends React.Component {
     /**
      * A list of designs
      */
-    designs: PropTypes.arrayOf(designShape).isRequired,
+    designs: PropTypes.arrayOf(PropTypes.instanceOf(Design)).isRequired,
     /** The manufacturers indexed by id */
-    manufacturers: PropTypes.objectOf(manufacturerShape).isRequired,
+    manufacturers: PropTypes.objectOf(PropTypes.instanceOf(Manufacturer))
+      .isRequired,
     /** The products indexed by id */
-    products: PropTypes.objectOf(productShape).isRequired,
+    products: PropTypes.objectOf(PropTypes.instanceOf(Product)).isRequired,
     /**
      * A function to trigger the retrieval of the designs. This should update the redux state,
      * causing designs to be provided through redux.

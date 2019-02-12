@@ -1,23 +1,24 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { getMockDesign } from "../../../models/design";
-import { getMockProduct } from "../../../models/product";
-import { getMockManufacturer } from "../../../models/manufacturer";
-import { getMockUser } from "../../../models/user";
+import { getMockDesign } from "../../../models/Design";
+import { getMockProduct } from "../../../models/Product";
+import { getMockManufacturer } from "../../../models/Manufacturer";
+import { getMockUser } from "../../../models/User";
 import Sidebar, { StyledSidebar } from "../Sidebar";
 
 describe("Sidebar", () => {
   let defaultProps;
   let sidebarData;
   beforeEach(() => {
-    const design = getMockDesign();
-    design.variations = [
-      {
-        svg: "<div>SVG</div>",
-        name: "Standard",
-        primary: true
-      }
-    ];
+    const design = getMockDesign({
+      variations: [
+        {
+          svg: "<div>SVG</div>",
+          name: "Standard",
+          primary: true
+        }
+      ]
+    });
     defaultProps = {
       design,
       usedColors: {
@@ -46,10 +47,12 @@ describe("Sidebar", () => {
   });
   it("displays the product and manufacturer names if both are provided", () => {
     expect.assertions(1);
-    defaultProps.product = getMockProduct();
-    defaultProps.product.name = "Boogers";
-    defaultProps.manufacturer = getMockManufacturer();
-    defaultProps.manufacturer.name = "Nose";
+    defaultProps.product = getMockProduct({
+      name: "Boogers"
+    });
+    defaultProps.manufacturer = getMockManufacturer({
+      name: "Nose"
+    });
 
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarUI = shallow(
@@ -61,9 +64,13 @@ describe("Sidebar", () => {
   });
   it("displays the username if a user is provided", () => {
     expect.assertions(1);
-    defaultProps.user = getMockUser();
-    defaultProps.user.username = "Mister Krabs";
-    defaultProps.design.name = "The Flying Dutchman";
+    defaultProps.user = getMockUser({
+      username: "Mister Krabs"
+    });
+    defaultProps.design = defaultProps.design.set(
+      "name",
+      "The Flying Dutchman"
+    );
 
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarUI = shallow(
@@ -77,7 +84,7 @@ describe("Sidebar", () => {
   });
   it("triggers onVariationSelect when a variation is selected", () => {
     expect.assertions(2);
-    defaultProps.design.variations = [
+    defaultProps.design = defaultProps.design.set("variations", [
       {
         svg: "<div>SVG</div>",
         name: "Standard",
@@ -88,7 +95,7 @@ describe("Sidebar", () => {
         name: "Vented",
         primary: false
       }
-    ];
+    ]);
 
     const wrapper = shallow(<Sidebar {...defaultProps} />);
     const sidebarUI = shallow(

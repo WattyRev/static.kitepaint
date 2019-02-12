@@ -1,7 +1,7 @@
 import React from "react";
 import { mount } from "enzyme";
-import { getMockProduct } from "../../models/product";
-import { getMockManufacturer } from "../../models/manufacturer";
+import { getMockProduct } from "../../models/Product";
+import { getMockManufacturer } from "../../models/Manufacturer";
 import { CreateNewContainer } from "../CreateNewContainer";
 
 describe("CreateNewContainer", () => {
@@ -48,7 +48,8 @@ describe("CreateNewContainer", () => {
       <CreateNewContainer {...defaultProps}>
         {data => (
           <div className="content">
-            {data.props.product.name} by {data.props.manufacturer.name}
+            {data.props.product.get("name")} by{" "}
+            {data.props.manufacturer.get("name")}
           </div>
         )}
       </CreateNewContainer>

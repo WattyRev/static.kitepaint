@@ -2,11 +2,11 @@ import { error, success } from "../../theme/Alert";
 
 /**
  * Update an existing design
- * @param  {Object}  designData
+ * @param  {Design}  design
  * @return {Promise}
  */
-export default async function updateDesign(designData) {
-  const data = Object.assign({}, designData);
+export default async function updateDesign(design) {
+  const data = design.get("json");
   if (data.variations) {
     // Stringify the variations since that's what the API handles for now.
     data.variations = JSON.stringify(data.variations);
@@ -28,6 +28,6 @@ export default async function updateDesign(designData) {
 
   success("The design has been saved");
   return {
-    data: designData
+    data: design
   };
 }

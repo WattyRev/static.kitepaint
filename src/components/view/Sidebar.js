@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import manufacturerShape from "../../models/manufacturer";
-import productShape from "../../models/product";
-import designShape from "../../models/design";
-import userShape from "../../models/user";
+import Manufacturer from "../../models/Manufacturer";
+import Product from "../../models/Product";
+import Design from "../../models/Design";
+import User from "../../models/User";
 import ColorTile from "../editor/ColorTile";
 import { Icon, FillToBottom, Sidebar as SidebarUI } from "../../theme";
 import { getAssetUrl } from "../../utils";
@@ -80,20 +80,22 @@ const Sidebar = ({
           manufacturer && (
             <sidebar.components.Item
               isLight
-              as={product.url || manufacturer.website ? "a" : "div"}
-              href={product.url || manufacturer.website}
+              as={
+                product.get("url") || manufacturer.get("website") ? "a" : "div"
+              }
+              href={product.get("url") || manufacturer.get("website")}
               target="_blank"
-              hasAction={!!(product.url || manufacturer.website)}
+              hasAction={!!(product.get("url") || manufacturer.get("website"))}
             >
               <ManufacturerLogo
                 className="manufacturer-logo"
                 size={32}
                 noMargin
-                src={getAssetUrl(`/logos/${manufacturer.logo}`)}
+                src={getAssetUrl(`/logos/${manufacturer.get("logo")}`)}
               />
               <div className="testing_manufacturer manufacturer-info">
-                {product.name} <br />
-                <small>by {manufacturer.name}</small>
+                {product.get("name")} <br />
+                <small>by {manufacturer.get("name")}</small>
               </div>
             </sidebar.components.Item>
           )}
@@ -101,15 +103,15 @@ const Sidebar = ({
           className="testing_design design-heading"
           isLight
         >
-          {design.name}{" "}
+          {design.get("name")}{" "}
           {user && (
             <React.Fragment>
               <br />
-              designed by {user.username}
+              designed by {user.get("username")}
             </React.Fragment>
           )}
         </sidebar.components.Heading>
-        {design.variations.map(variation => (
+        {design.get("variations").map(variation => (
           <sidebar.components.Item
             className="testing_variation"
             isLight
@@ -144,19 +146,19 @@ Sidebar.propTypes = {
   /**
    * The manufacturer that creates the product being edited.
    */
-  manufacturer: manufacturerShape,
+  manufacturer: PropTypes.instanceOf(Manufacturer),
   /**
    * The produt that is being edited
    */
-  product: productShape,
+  product: PropTypes.instanceOf(Product),
   /**
    * The pre-existing design that is being edited, if any
    */
-  design: designShape.isRequired,
+  design: PropTypes.instanceOf(Design).isRequired,
   /**
    * The user that created the design.
    */
-  user: userShape,
+  user: PropTypes.instanceOf(User),
   /**
    * The name of the variation that is currently selected
    */

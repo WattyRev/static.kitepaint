@@ -1,20 +1,29 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { getMockDesign } from "../../models/design";
-import { getMockProduct } from "../../models/product";
-import { getMockManufacturer } from "../../models/manufacturer";
+import { getMockDesign } from "../../models/Design";
+import { getMockProduct } from "../../models/Product";
+import { getMockManufacturer } from "../../models/Manufacturer";
 import RecentDesigns from "../RecentDesigns";
 
 describe("RecentDesigns", () => {
   let props;
   beforeEach(() => {
     props = {
-      designs: [getMockDesign()],
+      designs: [
+        getMockDesign({
+          product: "prod-abc"
+        })
+      ],
       manufacturers: {
-        [getMockManufacturer().id]: getMockManufacturer()
+        ["manu-abc"]: getMockManufacturer({
+          id: "manu-abc"
+        })
       },
       products: {
-        [getMockProduct().id]: getMockProduct()
+        "prod-abc": getMockProduct({
+          id: "prod-abc",
+          manufacturer: "manu-abc"
+        })
       }
     };
   });

@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import designShape from "../models/design";
-import productShape from "../models/product";
-import manufacturerShape from "../models/manufacturer";
+import Design from "../models/Design";
+import Product from "../models/Product";
+import Manufacturer from "../models/Manufacturer";
 import { P } from "../theme";
 import { getAssetUrl } from "../utils";
 import Svg from "./Svg";
@@ -67,24 +67,27 @@ const RecentDesigns = ({ designs, products, manufacturers, cta }) => {
     <StyleWrapper>
       <div className="designs">
         {designs.map(design => {
-          const product = products[design.product];
-          const manufacturer = manufacturers[product.manufacturer];
+          const product = products[design.get("product")];
+          const manufacturer = manufacturers[product.get("manufacturer")];
           return (
             <Link
-              key={design.id}
+              key={design.get("id")}
               className="design-wrapper"
-              to={`/view/${design.id}`}
+              to={`/view/${design.get("id")}`}
             >
               <Svg
                 className="design-preview"
-                svg={design.variations.find(variation => variation.primary).svg}
+                svg={
+                  design.get("variations").find(variation => variation.primary)
+                    .svg
+                }
               />
               <P isLight className="design-name">
-                {design.name}
+                {design.get("name")}
               </P>
               <ManufacturerLogo
                 className="logo"
-                src={getAssetUrl(`/logos/${manufacturer.logo}`)}
+                src={getAssetUrl(`/logos/${manufacturer.get("logo")}`)}
                 noMargin
                 size={45}
               />
@@ -101,9 +104,10 @@ RecentDesigns.propTypes = {
   /**
    * The designs to be displayed
    */
-  designs: PropTypes.arrayOf(designShape).isRequired,
-  manufacturers: PropTypes.objectOf(manufacturerShape).isRequired,
-  products: PropTypes.objectOf(productShape).isRequired,
+  designs: PropTypes.arrayOf(PropTypes.instanceOf(Design)).isRequired,
+  manufacturers: PropTypes.objectOf(PropTypes.instanceOf(Manufacturer))
+    .isRequired,
+  products: PropTypes.objectOf(PropTypes.instanceOf(Product)).isRequired,
   cta: PropTypes.node
 };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import Theme from "../../../theme";
-import { getMockManufacturer } from "../../../models/manufacturer";
+import { getMockManufacturer } from "../../../models/Manufacturer";
 import ManufacturerShowcase, { StyleWrapper } from "../ManufacturerShowcase";
 
 describe("ManufacturerShowcase", () => {
@@ -20,7 +20,9 @@ describe("ManufacturerShowcase", () => {
   });
   it("renders the website if provided", () => {
     expect.assertions(1);
-    mockProps.manufacturer.website = "http://test.com";
+    mockProps.manufacturer = getMockManufacturer({
+      website: "http://test.com"
+    });
     const wrapper = shallow(
       <ManufacturerShowcase {...mockProps}>
         <div>Children!</div>
@@ -30,7 +32,9 @@ describe("ManufacturerShowcase", () => {
   });
   it("does not render the website if not provided", () => {
     expect.assertions(1);
-    mockProps.manufacturer.website = "";
+    mockProps.manufacturer = getMockManufacturer({
+      website: ""
+    });
     const wrapper = shallow(
       <ManufacturerShowcase {...mockProps}>
         <div>Children!</div>

@@ -1,8 +1,8 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { getMockDesign } from "../../models/design";
-import { getMockProduct } from "../../models/product";
-import { getMockManufacturer } from "../../models/manufacturer";
+import { getMockDesign } from "../../models/Design";
+import { getMockProduct } from "../../models/Product";
+import { getMockManufacturer } from "../../models/Manufacturer";
 import { MyDesignsContainer } from "../MyDesignsContainer";
 
 describe("MyDesignsContainer", () => {

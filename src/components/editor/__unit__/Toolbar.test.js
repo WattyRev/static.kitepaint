@@ -1,7 +1,7 @@
 import React from "react";
 import { mount, shallow } from "enzyme";
 import { setupFontAwesome } from "../../../theme/Icon";
-import { getMockDesign } from "../../../models/design";
+import { getMockDesign } from "../../../models/Design";
 import Theme, { ModalPrompt } from "../../../theme";
 import * as Util from "../../../utils";
 import Toolbar, { StyleWrapper, ModalWrapper } from "../Toolbar";

@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import productShape from "../../models/product";
+import PropTypes from "prop-types";
+import Product from "../../models/Product";
 import { H3 } from "../../theme";
 import Svg from "../Svg";
 
@@ -61,11 +62,11 @@ export const StyleWrapper = styled.div`
  * A preview of a specific product, which links to the create page for that product.
  */
 const ProductShowcase = ({ product }) => (
-  <StyleWrapper as={Link} to={`/create/${product.id}`}>
-    <H3 className="product-heading">{product.name}</H3>
-    {product.variations.map(variation => (
+  <StyleWrapper as={Link} to={`/create/${product.get("id")}`}>
+    <H3 className="product-heading">{product.get("name")}</H3>
+    {product.get("variations").map(variation => (
       <Svg
-        className={`preview count-${product.variations.length}`}
+        className={`preview count-${product.get("variations").length}`}
         key={variation.name}
         svg={variation.svg}
       />
@@ -77,7 +78,7 @@ ProductShowcase.propTypes = {
   /**
    * The product being showcased
    */
-  product: productShape.isRequired
+  product: PropTypes.instanceOf(Product).isRequired
 };
 
 export default ProductShowcase;

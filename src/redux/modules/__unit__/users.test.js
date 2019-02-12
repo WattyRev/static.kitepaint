@@ -1,5 +1,6 @@
 import { fromJS } from "immutable";
 import { GET_USER } from "../../actions";
+import User from "../../../models/User";
 import Reducer, { defaultState, getUserById } from "../users";
 
 describe("Users redux module", () => {
@@ -10,16 +11,13 @@ describe("Users redux module", () => {
         const response = Reducer(defaultState, {
           type: GET_USER.RECEIVED,
           payload: {
-            data: {
+            data: new User({
               loginid: "123",
-              name: "foo"
-            }
+              username: "foo"
+            })
           }
         });
-        expect(response.get("123").toJS()).toEqual({
-          loginid: "123",
-          name: "foo"
-        });
+        expect(response.get("123").get("username")).toEqual("foo");
       });
     });
   });
@@ -29,21 +27,18 @@ describe("Users redux module", () => {
         expect.assertions(1);
         const mockState = fromJS({
           users: {
-            "123": {
+            "123": new User({
               loginid: "123",
-              name: "def",
-              foo: "bar"
-            },
-            "234": {
+              username: "def"
+            }),
+            "234": new User({
               loginid: "234",
-              name: "abc",
-              foo: "bar"
-            },
-            "456": {
+              username: "abc"
+            }),
+            "456": new User({
               loginid: "456",
-              name: "gfd",
-              foo: "far"
-            }
+              username: "gfd"
+            })
           }
         });
         const response = getUserById(mockState, "76");
@@ -53,29 +48,22 @@ describe("Users redux module", () => {
         expect.assertions(1);
         const mockState = fromJS({
           users: {
-            "123": {
+            "123": new User({
               loginid: "123",
-              name: "def",
-              foo: "bar"
-            },
-            "234": {
+              username: "def"
+            }),
+            "234": new User({
               loginid: "234",
-              name: "abc",
-              foo: "bar"
-            },
-            "456": {
+              username: "abc"
+            }),
+            "456": new User({
               loginid: "456",
-              name: "gfd",
-              foo: "far"
-            }
+              username: "gfd"
+            })
           }
         });
         const response = getUserById(mockState, "234");
-        expect(response).toEqual({
-          loginid: "234",
-          name: "abc",
-          foo: "bar"
-        });
+        expect(response.get("username")).toEqual("abc");
       });
     });
   });

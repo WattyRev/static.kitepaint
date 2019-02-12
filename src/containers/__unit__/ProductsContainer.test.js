@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
-import { getMockProduct } from "../../models/product";
-import { getMockManufacturer } from "../../models/manufacturer";
+import { getMockProduct } from "../../models/Product";
+import { getMockManufacturer } from "../../models/Manufacturer";
 import { ProductsContainer } from "../ProductsContainer";
 
 describe("ProductsContainer", () => {

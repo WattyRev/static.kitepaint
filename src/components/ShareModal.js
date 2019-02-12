@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import designShape from "../models/design";
-import Status from "../models/status";
+import Design from "../models/Design";
 import { Modal, Label, Input, P, Button, ModalClose, Spacer } from "../theme";
 
 const StyleWrapper = styled.div`
@@ -20,7 +19,7 @@ export const Content = ({ design, onClose, onDownload }) => {
       {design && (
         <React.Fragment>
           <Label className="testing_share-content">Public URL</Label>
-          {design.status === Status.PRIVATE ? (
+          {design.get("isPrivate") ? (
             <P>
               This design is set to Private. It must be Unlisted or Public in
               order to share the URL.
@@ -29,13 +28,13 @@ export const Content = ({ design, onClose, onDownload }) => {
             <Input
               className="testing_public-url"
               readOnly
-              value={`${window.location.origin}/view/${design.id}`}
+              value={`${window.location.origin}/view/${design.get("id")}`}
             />
           )}
           <Spacer top="md" />
           <Label>Download SVG files</Label>
           <Button isPrimary onClick={onDownload}>
-            Download {design.variations.length} files
+            Download {design.get("variations").length} files
           </Button>
         </React.Fragment>
       )}
@@ -46,7 +45,7 @@ export const Content = ({ design, onClose, onDownload }) => {
 
 Content.propTypes = {
   /** The design being shared, if any */
-  design: designShape,
+  design: PropTypes.instanceOf(Design),
   /** Called when the user clicks the close button */
   onClose: PropTypes.func.isRequired,
   /** Called when the user clicks the download button */
@@ -68,7 +67,7 @@ class ShareModal extends React.Component {
     /** A function that returns renderable content */
     children: PropTypes.func.isRequired,
     /** A design to be shared. */
-    design: designShape
+    design: PropTypes.instanceOf(Design)
   };
 
   state = {
@@ -82,7 +81,7 @@ class ShareModal extends React.Component {
 
   /** Downloads the design variations as SVG files */
   handleDownload = () => {
-    this.props.design.variations.forEach(variation => {
+    this.props.design.get("variations").forEach(variation => {
       var element = document.createElement("a");
       element.setAttribute(
         "href",
@@ -90,7 +89,7 @@ class ShareModal extends React.Component {
       );
       element.setAttribute(
         "download",
-        `${this.props.design.name} - ${variation.name}.svg`
+        `${this.props.design.get("name")} - ${variation.name}.svg`
       );
 
       element.style.display = "none";

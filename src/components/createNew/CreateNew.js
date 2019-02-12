@@ -85,9 +85,11 @@ const CreateNew = ({ match }) => (
                   onClick={editorData.actions.applyColor}
                   currentColor={editorData.props.currentColor.name}
                 />
-                {createNewData.props.product.notes &&
-                  !!createNewData.props.product.notes.length && (
-                    <ProductNotes notes={createNewData.props.product.notes} />
+                {createNewData.props.product.get("notes") &&
+                  !!createNewData.props.product.get("notes").length && (
+                    <ProductNotes
+                      notes={createNewData.props.product.get("notes")}
+                    />
                   )}
               </PageLayout>
             </React.Fragment>

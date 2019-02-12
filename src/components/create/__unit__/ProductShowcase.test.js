@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
-import { getMockProduct } from "../../../models/product";
+import { getMockProduct } from "../../../models/Product";
 import Theme from "../../../theme";
 import ProductShowcase, { StyleWrapper } from "../ProductShowcase";
 

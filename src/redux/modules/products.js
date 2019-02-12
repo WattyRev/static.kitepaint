@@ -1,6 +1,6 @@
 import { handleActions } from "redux-actions";
 import { fromJS } from "immutable";
-import Status from "../../models/status";
+import Status from "../../models/Status";
 import { GET_PRODUCTS } from "../actions";
 
 export const defaultState = fromJS({});
@@ -13,7 +13,7 @@ export default handleActions(
     [GET_PRODUCTS.RECEIVED]: (state, action) => {
       const { data } = action.payload;
       const productsById = data.reduce((accumulated, product) => {
-        accumulated[product.id] = product;
+        accumulated[product.get("id")] = product;
         return accumulated;
       }, {});
       return state.merge(productsById);
@@ -46,10 +46,7 @@ export const getPublicProductsGrouped = (state, groupBy) => {
 export const getProductById = (state, id) => {
   const products = state.get("products");
   const product = products.get(id, null);
-  if (!product) {
-    return null;
-  }
-  return product.toJS();
+  return product;
 };
 
 /**

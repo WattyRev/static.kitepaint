@@ -1,3 +1,4 @@
+import Product from "../../models/Product";
 import { error } from "../../theme/Alert";
 
 /**
@@ -31,7 +32,7 @@ export default async function getProducts(useCache = true) {
     product.variations = JSON.parse(product.variations);
     product.colors = JSON.parse(product.colors);
     product.notes = JSON.parse(product.notes).filter(note => !!note);
-    return product;
+    return new Product(product);
   });
 
   return response;

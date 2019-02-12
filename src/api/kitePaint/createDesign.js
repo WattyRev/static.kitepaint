@@ -2,15 +2,18 @@ import { error, success } from "../../theme/Alert";
 
 /**
  * Creates a new design based on the provided data.
- * @param  {Object}  designData Should contain name, user, product, and variations
+ * @param  {Design}  design An unsaved design model
  * @return {Promise} Resolves with an object that contains an id property of the new design.
  */
-export default async function createDesign(designData) {
+export default async function createDesign(design) {
   const defaults = {
     status: 0,
     new: 1
   };
-  const data = Object.assign(defaults, designData);
+  const data = Object.assign(
+    defaults,
+    design.getProperties("name", "product", "user", "variations", "status")
+  );
 
   // Stringify the variations since that's what the API handles for now.
   data.variations = JSON.stringify(data.variations);

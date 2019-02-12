@@ -1,10 +1,11 @@
 import Qs from "qs";
+import User from "../../models/User";
 import { error } from "../../theme/Alert";
 
 /**
  * Retrieves a user by ID
  * @param  {String}  id
- * @return {Promise} Resolves with the retrieved user
+ * @return {Promise} Resolves with the retrieved User
  */
 export default async function getUser(id, useCache = true) {
   // Build the request data to be sent to the server as query params
@@ -38,7 +39,7 @@ export default async function getUser(id, useCache = true) {
     return new Promise((resolve, reject) => reject(message));
   }
 
-  response.data = response.data[0];
+  response.data = new User(response.data[0]);
 
   return response;
 }

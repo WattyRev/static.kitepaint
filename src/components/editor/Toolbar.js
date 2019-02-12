@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import designShape from "../../models/design";
+import Design from "../../models/Design";
 import { Item as DropdownItem } from "../../theme/Dropdown";
 import { P, Icon, ModalPrompt, Dropdown } from "../../theme";
 import { getAppDimensions, getAssetUrl } from "../../utils";
@@ -100,9 +100,13 @@ export const ModalWrapper = ({ children, design, onSave }) => (
   </ModalPrompt>
 );
 
+ModalWrapper.defaultProps = {
+  onSave: () => {}
+};
+
 ModalWrapper.propTypes = {
   children: PropTypes.func.isRequired,
-  design: designShape,
+  design: PropTypes.instanceOf(Design),
   onSave: PropTypes.func
 };
 
@@ -116,7 +120,7 @@ class Toolbar extends React.Component {
     /** Should the redo button be disabled? */
     redoDisabled: PropTypes.bool,
     /** The design being edited */
-    design: designShape,
+    design: PropTypes.instanceOf(Design),
     /** Are outlines hidden? */
     hideOutlines: PropTypes.bool,
     /** Triggered when the save button is clicked */

@@ -11,9 +11,9 @@ import {
   GET_MANUFACTURERS,
   DELETE_DESIGN
 } from "../redux/actions";
-import designShape from "../models/design";
-import productShape from "../models/product";
-import manufacturerShape from "../models/manufacturer";
+import Design from "../models/Design";
+import Product from "../models/Product";
+import Manufacturer from "../models/Manufacturer";
 import { makeCancelable } from "../utils";
 
 /**
@@ -40,15 +40,16 @@ export class MyDesignsContainer extends React.Component {
     /**
      * The designs created by the current user. Provided by Redux.
      */
-    designs: PropTypes.arrayOf(designShape).isRequired,
+    designs: PropTypes.arrayOf(PropTypes.instanceOf(Design)).isRequired,
     /**
      * All of the products, indexed by ID. Provided by Redux.
      */
-    products: PropTypes.objectOf(productShape).isRequired,
+    products: PropTypes.objectOf(PropTypes.instanceOf(Product)).isRequired,
     /**
      * All the manufacturers, indexed by ID. Provided by Redux.
      */
-    manufacturers: PropTypes.objectOf(manufacturerShape).isRequired,
+    manufacturers: PropTypes.objectOf(PropTypes.instanceOf(Manufacturer))
+      .isRequired,
     /**
      * The current user. Provided by Redux.
      */

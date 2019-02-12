@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { getMockDesign } from "../../models/design";
+import { getMockDesign } from "../../models/Design";
 import { EditContainer } from "../EditContainer";
 
 describe("EditContainer", () => {
@@ -21,8 +21,9 @@ describe("EditContainer", () => {
     defaultProps.user = {
       id: "abc"
     };
-    defaultProps.design = getMockDesign();
-    defaultProps.design.user = "def";
+    defaultProps.design = getMockDesign({
+      user: "def"
+    });
 
     const wrapper = shallow(
       <EditContainer {...defaultProps}>
@@ -41,8 +42,9 @@ describe("EditContainer", () => {
     defaultProps.user = {
       id: "abc"
     };
-    defaultProps.design = getMockDesign();
-    defaultProps.design.user = "abc";
+    defaultProps.design = getMockDesign({
+      user: "abc"
+    });
 
     const wrapper = shallow(
       <EditContainer {...defaultProps}>

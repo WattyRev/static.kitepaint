@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import ViewContainer from "../../containers/ViewContainer";
-import Status from "../../models/status";
 import { PageLoader } from "../../theme";
 import Toolbar from "../editor/Toolbar";
 import Sidebar from "./Sidebar";
@@ -24,10 +23,7 @@ const View = ({ match }) => (
       if (viewData.props.isLoading) {
         return <PageLoader />;
       }
-      if (
-        !viewData.props.design ||
-        viewData.props.design.status === Status.PRIVATE
-      ) {
+      if (!viewData.props.design) {
         return <ErrorPage />;
       }
       return (

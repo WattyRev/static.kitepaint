@@ -1,6 +1,8 @@
 import { fromJS } from "immutable";
-import { getMockProduct } from "../../../models/product";
-import { getMockManufacturer } from "../../../models/manufacturer";
+import { getMockProduct } from "../../../models/Product";
+import Manufacturer, {
+  getMockManufacturer
+} from "../../../models/Manufacturer";
 import { GET_MANUFACTURERS } from "../../actions";
 import Reducer, {
   defaultState,
@@ -18,16 +20,19 @@ describe("Manufacturers redux module", () => {
           type: GET_MANUFACTURERS.RECEIVED,
           payload: {
             data: [
-              {
+              new Manufacturer({
                 id: "123",
-                name: "foo"
-              }
+                name: "foo",
+                logo: "whatever"
+              })
             ]
           }
         });
-        expect(response.get("123").toJS()).toEqual({
+        expect(response.get("123").get("json")).toEqual({
           id: "123",
-          name: "foo"
+          name: "foo",
+          logo: "whatever",
+          website: null
         });
       });
     });
@@ -73,11 +78,12 @@ describe("Manufacturers redux module", () => {
       });
       it("returns null if it could not find the manufacturer", () => {
         expect.assertions(1);
-        const mockProduct = getMockProduct();
-        mockProduct.id = "abc";
+        const mockProduct = getMockProduct({
+          id: "abc"
+        });
         const mockState = fromJS({
           products: {
-            [mockProduct.id]: mockProduct
+            [mockProduct.get("id")]: mockProduct
           },
           manufacturers: {}
         });
@@ -86,18 +92,20 @@ describe("Manufacturers redux module", () => {
       });
       it("returns the manufacturer", () => {
         expect.assertions(1);
-        const mockProduct = getMockProduct();
-        mockProduct.id = "abc";
-        mockProduct.manufacturer = "def";
-        const mockManufacturer = getMockManufacturer();
-        mockManufacturer.id = "def";
+        const mockProduct = getMockProduct({
+          id: "abc",
+          manufacturer: "def"
+        });
+        const mockManufacturer = getMockManufacturer({
+          id: "def"
+        });
         const mockState = fromJS({
           products: {
-            [mockProduct.id]: mockProduct
+            [mockProduct.get("id")]: mockProduct
           },
           manufacturers: {
-            [getMockManufacturer().id]: getMockManufacturer,
-            [mockManufacturer.id]: mockManufacturer
+            [getMockManufacturer().get("id")]: getMockManufacturer(),
+            [mockManufacturer.get("id")]: mockManufacturer
           }
         });
         const response = getManufacturerByProductId(mockState, "abc");

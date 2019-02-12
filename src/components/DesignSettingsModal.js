@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import designShape from "../models/design";
-import Status from "../models/status";
+import Design from "../models/Design";
+import Status from "../models/Status";
 import {
   Modal,
   ModalClose,
@@ -34,21 +34,18 @@ const Content = ({
   if (!design) {
     return null;
   }
-  // Either the design status or the product status; whichever is more restrictive.
-  const currentStatus =
-    design.status > design.productStatus ? design.productStatus : design.status;
 
   // The list of status options
   const statusOptions = [
     {
       value: Status.PUBLIC,
       label: Status[Status.PUBLIC],
-      disabled: design.productStatus < Status.PUBLIC
+      disabled: design.get("productStatus") < Status.PUBLIC
     },
     {
       value: Status.UNLISTED,
       label: Status[Status.UNLISTED],
-      disabled: design.productStatus < Status.UNLISTED
+      disabled: design.get("productStatus") < Status.UNLISTED
     },
     {
       value: Status.PRIVATE,
@@ -67,7 +64,7 @@ const Content = ({
       <Label>Design Name</Label>
       <Input
         className="input-name"
-        value={design.name}
+        value={design.get("name")}
         onChange={e => onChangeName(e.target.value)}
         required
       />
@@ -85,7 +82,7 @@ const Content = ({
       </Label>
       <Select
         className="select-status"
-        value={currentStatus}
+        value={design.get("currentStatus")}
         onChange={e => onChangeStatus(e.target.value)}
       >
         {statusOptions.map(option => (
@@ -108,10 +105,12 @@ const Content = ({
       </Label>
       <Select
         className="select-primary"
-        value={design.variations.find(variation => variation.primary).name}
+        value={
+          design.get("variations").find(variation => variation.primary).name
+        }
         onChange={e => onChangePrimary(e.target.value)}
       >
-        {design.variations.map(option => (
+        {design.get("variations").map(option => (
           <option key={option.name} value={option.name}>
             {option.name}
           </option>
@@ -131,7 +130,7 @@ const Content = ({
 
 Content.propTypes = {
   /** The design being modified */
-  design: designShape,
+  design: PropTypes.instanceOf(Design),
   /** Called when the form is submitted */
   onSubmit: PropTypes.func.isRequired,
   /** Called when the cancel button is pressed */
@@ -154,7 +153,7 @@ export { Content };
 class DesignSettingsModal extends React.Component {
   static propTypes = {
     /** The design being modified */
-    design: designShape,
+    design: PropTypes.instanceOf(Design),
     /** Called when the form is submitted. Is provided an object with the id,
      name, and status of the design */
     onSubmit: PropTypes.func.isRequired,
@@ -170,8 +169,7 @@ class DesignSettingsModal extends React.Component {
       isOpen: false,
       /** Are we processing the submission? */
       isPending: false,
-      /** A copy of the design that can be modified without effecting the higher scope */
-      design: Object.assign({}, props.design)
+      design: props.design
     };
   }
 
@@ -179,18 +177,14 @@ class DesignSettingsModal extends React.Component {
   handleClose = () => this.setState({ isOpen: false });
   handleChangeName = value =>
     this.setState({
-      design: Object.assign(this.state.design, {
-        name: value
-      })
+      design: this.state.design.set("name", value)
     });
   handleChangeStatus = value =>
     this.setState({
-      design: Object.assign(this.state.design, {
-        status: value
-      })
+      design: this.state.design.set("status", value)
     });
   handleChangePrimary = value => {
-    const variations = this.state.design.variations.map(variation => {
+    const variations = this.state.design.get("variations").map(variation => {
       if (variation.name === value) {
         variation.primary = true;
         return variation;
@@ -199,22 +193,14 @@ class DesignSettingsModal extends React.Component {
       return variation;
     });
     this.setState({
-      design: Object.assign(this.state.design, {
-        variations
-      })
+      design: this.state.design.set("variations", variations)
     });
   };
 
-  /** Handles submission by callong onSubmit with the relevant data and handling
+  /** Handles submission by calling onSubmit with the relevant data and handling
    the promise that it may return. */
   handleSubmit = () => {
-    const data = {
-      id: this.state.design.id,
-      name: this.state.design.name,
-      status: this.state.design.status,
-      variations: this.state.design.variations
-    };
-    const request = this.props.onSubmit(data);
+    const request = this.props.onSubmit(this.state.design);
     if (request && request.then) {
       this.setState({ isPending: true });
       request.then(() => {

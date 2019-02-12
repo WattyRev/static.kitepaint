@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { getMockDesign } from "../../models/design";
-import Status from "../../models/status";
+import { getMockDesign } from "../../models/Design";
+import Status from "../../models/Status";
 import { Modal } from "../../theme";
 import DesignSettingsModal, { Content } from "../DesignSettingsModal";
 
@@ -24,8 +24,10 @@ describe("DesignSettingsModal", () => {
     });
     it("shows the design status if it is more restrictive", () => {
       expect.assertions(1);
-      defaultProps.design.status = Status.PRIVATE;
-      defaultProps.design.productStatus = Status.PUBLIC;
+      defaultProps.design = getMockDesign({
+        status: Status.PRIVATE,
+        productStatus: Status.PUBLIC
+      });
       const wrapper = shallow(<Content {...defaultProps} />);
       expect(wrapper.find(".select-status").prop("value")).toEqual(
         Status.PRIVATE
@@ -33,8 +35,10 @@ describe("DesignSettingsModal", () => {
     });
     it("shows the produ'ct status if it is more restrictive", () => {
       expect.assertions(1);
-      defaultProps.design.status = Status.PUBLIC;
-      defaultProps.design.productStatus = Status.UNLISTED;
+      defaultProps.design = getMockDesign({
+        status: Status.PUBLIC,
+        productStatus: Status.UNLISTED
+      });
       const wrapper = shallow(<Content {...defaultProps} />);
       expect(wrapper.find(".select-status").prop("value")).toEqual(
         Status.UNLISTED
@@ -42,14 +46,18 @@ describe("DesignSettingsModal", () => {
     });
     it("correctly enables status options", () => {
       expect.assertions(1);
-      defaultProps.design.productStatus = Status.PUBLIC;
+      defaultProps.design = getMockDesign({
+        productStatus: Status.PUBLIC
+      });
       const wrapper = shallow(<Content {...defaultProps} />);
       expect(wrapper.find("option[disabled=true]")).toHaveLength(0);
     });
     it("correctly disables status options", () => {
       expect.assertions(2);
       // If the productStatus is UNLISTED, the public option should be disabled.
-      defaultProps.design.productStatus = Status.UNLISTED;
+      defaultProps.design = getMockDesign({
+        productStatus: Status.UNLISTED
+      });
       const wrapper = shallow(<Content {...defaultProps} />);
       expect(wrapper.find("option[disabled=true]")).toHaveLength(1);
       expect(wrapper.find("option[disabled=true]").key()).toEqual(
@@ -135,39 +143,59 @@ describe("DesignSettingsModal", () => {
   });
   it("handles a change in the design name", () => {
     expect.assertions(1);
-    defaultProps.design.name = "Not Boogers";
+    defaultProps.design = getMockDesign({
+      name: "Not Boogers"
+    });
     const wrapper = shallow(
       <DesignSettingsModal {...defaultProps}>
         {() => <div />}
       </DesignSettingsModal>
     );
-    const contentWrapper = shallow(
+    let contentWrapper = shallow(
       <div>{wrapper.find(Modal).prop("modalContent")}</div>
     );
     contentWrapper.find(Content).prop("onChangeName")("Boogers");
-    expect(contentWrapper.find(Content).prop("design").name).toEqual("Boogers");
+    contentWrapper = shallow(
+      <div>{wrapper.find(Modal).prop("modalContent")}</div>
+    );
+    expect(
+      contentWrapper
+        .find(Content)
+        .prop("design")
+        .get("name")
+    ).toEqual("Boogers");
   });
   it("handles a change in the design status", () => {
     expect.assertions(1);
-    defaultProps.design.status = Status.PRIVATE;
+    defaultProps.design = getMockDesign({
+      status: Status.PRIVATE
+    });
     const wrapper = shallow(
       <DesignSettingsModal {...defaultProps}>
         {() => <div />}
       </DesignSettingsModal>
     );
-    const contentWrapper = shallow(
+    let contentWrapper = shallow(
       <div>{wrapper.find(Modal).prop("modalContent")}</div>
     );
     contentWrapper.find(Content).prop("onChangeStatus")(Status.PUBLIC);
-    expect(contentWrapper.find(Content).prop("design").status).toEqual(
-      Status.PUBLIC
+    contentWrapper = shallow(
+      <div>{wrapper.find(Modal).prop("modalContent")}</div>
     );
+    expect(
+      contentWrapper
+        .find(Content)
+        .prop("design")
+        .get("status")
+    ).toEqual(Status.PUBLIC);
   });
   it("calls onSubmit when the form is submitted", () => {
     expect.assertions(1);
-    defaultProps.design.id = "abc";
-    defaultProps.design.name = "boogies";
-    defaultProps.design.status = Status.PRIVATE;
+    defaultProps.design = getMockDesign({
+      id: "abc",
+      name: "boogies",
+      status: Status.PRIVATE
+    });
     const wrapper = shallow(
       <DesignSettingsModal {...defaultProps}>
         {() => <div />}
@@ -177,14 +205,7 @@ describe("DesignSettingsModal", () => {
       <div>{wrapper.find(Modal).prop("modalContent")}</div>
     );
     contentWrapper.find(Content).prop("onSubmit")();
-    expect(defaultProps.onSubmit).toHaveBeenCalledWith({
-      id: "abc",
-      name: "boogies",
-      status: Status.PRIVATE,
-      variations: [
-        { name: "Standard", primary: true, svg: "<div>picasso standard</div>" }
-      ]
-    });
+    expect(defaultProps.onSubmit).toHaveBeenCalledWith(defaultProps.design);
   });
   it("does not set isPending if onSubmit does not return a promise", () => {
     expect.assertions(1);

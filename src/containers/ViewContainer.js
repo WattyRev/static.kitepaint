@@ -11,10 +11,10 @@ import {
   GET_MANUFACTURERS,
   GET_USER
 } from "../redux/actions";
-import designShape from "../models/design";
-import productShape from "../models/product";
-import manufacturerShape from "../models/manufacturer";
-import userShape from "../models/user";
+import Design from "../models/Design";
+import Product from "../models/Product";
+import Manufacturer from "../models/Manufacturer";
+import User from "../models/User";
 import { isEmbedded, defaultBackground } from "../constants/embed";
 import ErrorPage from "../components/ErrorPage";
 import { softCompareStrings, makeCancelable, embedAllowed } from "../utils";
@@ -44,7 +44,7 @@ export class ViewContainer extends React.Component {
     /**
      * The design being viewed. Provided by Redux.
      */
-    design: designShape,
+    design: PropTypes.instanceOf(Design),
     /**
      * The ID of the design that is being viewed.
      */
@@ -52,15 +52,15 @@ export class ViewContainer extends React.Component {
     /**
      * The product related to the design. Provided by Redux.
      */
-    product: productShape,
+    product: PropTypes.instanceOf(Product),
     /**
      * The manufacturer related to the design. Provided by Redux.
      */
-    manufacturer: manufacturerShape,
+    manufacturer: PropTypes.instanceOf(Manufacturer),
     /**
      * The user that created the design. Provided by Redux.
      */
-    user: userShape,
+    user: PropTypes.instanceOf(User),
     /**
      * A function that renders content.
      */
@@ -76,8 +76,8 @@ export class ViewContainer extends React.Component {
   };
 
   static getDerivedStateFromProps(props, state) {
-    const variations = props.design && props.design.variations;
-    const productColors = props.product && props.product.colors;
+    const variations = props.design && props.design.get("variations");
+    const productColors = props.product && props.product.get("colors");
     if (!variations || !productColors) {
       return {};
     }
@@ -152,7 +152,7 @@ export class ViewContainer extends React.Component {
     this.cancelablePromises.push(request);
     request.promise
       .then(responses => {
-        const userId = responses[2].data.user;
+        const userId = responses[2].data.get("user");
         return this.props.onFetchUser(userId);
       })
       .then(() => {
@@ -189,9 +189,9 @@ export class ViewContainer extends React.Component {
    * @param  {String} variationName The name of the newly selected variation
    */
   handleVariationSelection = variationName => {
-    const currentVariation = this.props.design.variations.find(variation =>
-      softCompareStrings(variation.name, variationName)
-    );
+    const currentVariation = this.props.design
+      .get("variations")
+      .find(variation => softCompareStrings(variation.name, variationName));
     this.setState({
       currentVariation
     });
@@ -206,7 +206,7 @@ export class ViewContainer extends React.Component {
     if (
       isEmbedded &&
       this.props.product &&
-      !embedAllowed(this.props.product.embed.split(","))
+      !embedAllowed(this.props.product.get("embed").split(","))
     ) {
       return (
         <ErrorPage
@@ -238,12 +238,12 @@ export class ViewContainer extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  product: getProductById(state, props.design && props.design.product),
+  product: getProductById(state, props.design && props.design.get("product")),
   manufacturer: getManufacturerByProductId(
     state,
-    props.design && props.design.product
+    props.design && props.design.get("product")
   ),
-  user: getUserById(state, props.design && props.design.user)
+  user: getUserById(state, props.design && props.design.get("user"))
 });
 
 const mapDispatchToProps = {
