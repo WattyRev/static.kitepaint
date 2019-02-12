@@ -12,7 +12,7 @@ export default handleActions(
     [GET_USER.RECEIVED]: (state, action) => {
       const { data } = action.payload;
       return state.merge({
-        [data.loginid]: data
+        [data.get("loginid")]: data
       });
     }
   },
@@ -27,5 +27,5 @@ export default handleActions(
  */
 export const getUserById = (state, id) => {
   const user = state.getIn(["users", id]);
-  return user ? user.toJS() : null;
+  return user ? user : null;
 };

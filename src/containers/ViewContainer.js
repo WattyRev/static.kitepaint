@@ -14,7 +14,7 @@ import {
 import Design from "../models/Design";
 import Product from "../models/Product";
 import Manufacturer from "../models/Manufacturer";
-import userShape from "../models/User";
+import User from "../models/User";
 import { isEmbedded, defaultBackground } from "../constants/embed";
 import ErrorPage from "../components/ErrorPage";
 import { softCompareStrings, makeCancelable, embedAllowed } from "../utils";
@@ -60,7 +60,7 @@ export class ViewContainer extends React.Component {
     /**
      * The user that created the design. Provided by Redux.
      */
-    user: userShape,
+    user: PropTypes.instanceOf(User),
     /**
      * A function that renders content.
      */
@@ -152,7 +152,7 @@ export class ViewContainer extends React.Component {
     this.cancelablePromises.push(request);
     request.promise
       .then(responses => {
-        const userId = responses[2].data.user;
+        const userId = responses[2].data.get("user");
         return this.props.onFetchUser(userId);
       })
       .then(() => {

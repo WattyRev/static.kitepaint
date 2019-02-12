@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Manufacturer from "../../models/Manufacturer";
 import Product from "../../models/Product";
 import Design from "../../models/Design";
-import userShape from "../../models/User";
+import User from "../../models/User";
 import ColorTile from "../editor/ColorTile";
 import { Icon, FillToBottom, Sidebar as SidebarUI } from "../../theme";
 import { getAssetUrl } from "../../utils";
@@ -107,7 +107,7 @@ const Sidebar = ({
           {user && (
             <React.Fragment>
               <br />
-              designed by {user.username}
+              designed by {user.get("username")}
             </React.Fragment>
           )}
         </sidebar.components.Heading>
@@ -158,7 +158,7 @@ Sidebar.propTypes = {
   /**
    * The user that created the design.
    */
-  user: userShape,
+  user: PropTypes.instanceOf(User),
   /**
    * The name of the variation that is currently selected
    */

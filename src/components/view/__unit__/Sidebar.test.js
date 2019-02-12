@@ -64,8 +64,9 @@ describe("Sidebar", () => {
   });
   it("displays the username if a user is provided", () => {
     expect.assertions(1);
-    defaultProps.user = getMockUser();
-    defaultProps.user.username = "Mister Krabs";
+    defaultProps.user = getMockUser({
+      username: "Mister Krabs"
+    });
     defaultProps.design = defaultProps.design.set(
       "name",
       "The Flying Dutchman"

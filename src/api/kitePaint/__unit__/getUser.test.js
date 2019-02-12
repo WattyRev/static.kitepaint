@@ -57,15 +57,14 @@ describe("#getUser", () => {
     Api.axiosInstance.get.mockResolvedValue({
       data: [
         {
-          id: "123"
+          loginid: "123"
         }
       ]
     });
     return Api.getUser("abc").then(response => {
-      expect(response).toEqual({
-        data: {
-          id: "123"
-        }
+      expect(response.data.get("json")).toEqual({
+        loginid: "123",
+        username: null
       });
     });
   });
