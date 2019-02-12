@@ -9,12 +9,21 @@ describe("RecentDesigns", () => {
   let props;
   beforeEach(() => {
     props = {
-      designs: [getMockDesign()],
+      designs: [
+        getMockDesign({
+          product: "prod-abc"
+        })
+      ],
       manufacturers: {
-        [getMockManufacturer().get("id")]: getMockManufacturer()
+        ["manu-abc"]: getMockManufacturer({
+          id: "manu-abc"
+        })
       },
       products: {
-        [getMockProduct().get("id")]: getMockProduct()
+        "prod-abc": getMockProduct({
+          id: "prod-abc",
+          manufacturer: "manu-abc"
+        })
       }
     };
   });
