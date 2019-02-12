@@ -14,7 +14,7 @@ describe("RecentDesigns", () => {
         [getMockManufacturer().get("id")]: getMockManufacturer()
       },
       products: {
-        [getMockProduct().id]: getMockProduct()
+        [getMockProduct().get("id")]: getMockProduct()
       }
     };
   });
