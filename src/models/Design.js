@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { createModel, computed } from "manikin-model";
 import moment from "moment";
-import { getMockProduct } from "./product";
-import Status, { statusProp } from "./status";
+import { getMockProduct } from "./Product";
+import Status, { statusProp } from "./Status";
 
 const Design = createModel("Design", {
   active: null,

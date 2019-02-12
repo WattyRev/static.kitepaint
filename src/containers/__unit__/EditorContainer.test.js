@@ -329,7 +329,11 @@ describe("EditorContainer", () => {
     wrapper.find(".target").simulate("click");
 
     expect(defaultProps.onSave).toHaveBeenCalled();
-    expect(defaultProps.onSave.mock.calls[0][0]).toEqual({
+    expect(defaultProps.onSave.mock.calls[0][0].get("json")).toEqual({
+      id: null,
+      created: null,
+      productStatus: null,
+      updated: null,
       name: "boogers",
       user: "123",
       product: defaultProps.product.get("id"),

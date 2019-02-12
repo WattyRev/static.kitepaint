@@ -11,6 +11,9 @@ export default handleActions(
   {
     [GET_USER.RECEIVED]: (state, action) => {
       const { data } = action.payload;
+      if (!data || !data.get) {
+        return state;
+      }
       return state.merge({
         [data.get("loginid")]: data
       });

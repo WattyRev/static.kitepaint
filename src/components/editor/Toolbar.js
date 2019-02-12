@@ -100,6 +100,10 @@ export const ModalWrapper = ({ children, design, onSave }) => (
   </ModalPrompt>
 );
 
+ModalWrapper.defaultProps = {
+  onSave: () => {}
+};
+
 ModalWrapper.propTypes = {
   children: PropTypes.func.isRequired,
   design: PropTypes.instanceOf(Design),

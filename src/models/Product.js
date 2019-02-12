@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { createModel, computed } from "manikin-model";
-import { getMockManufacturer } from "./manufacturer";
-import Status, { statusProp } from "./status";
+import { getMockManufacturer } from "./Manufacturer";
+import Status, { statusProp } from "./Status";
 
 /**
  * A product is a kite that can be customized to create a design.

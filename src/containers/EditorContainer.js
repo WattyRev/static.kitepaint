@@ -366,13 +366,13 @@ export class EditorContainer extends React.Component {
    */
   handleSave = data => {
     const { name, user } = data;
-    const design = {
+    const design = new Design({
       name,
       user,
       product: this.props.product.get("id"),
       variations: this.generateDesignVariations(),
       status: user === "0" ? Status.PUBLIC : Status.UNLISTED
-    };
+    });
     const promise = makeCancelable(this.props.onSave(design));
     promise.promise.then(response => {
       const designId = response.data.id;
