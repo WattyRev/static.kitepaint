@@ -18,7 +18,7 @@ const generateObjectFromQueryParams = queryParams => {
 /**
  * Provides redirection from old Angular URLs to new urls.
  */
-class LegacyRedirect extends React.Component {
+export class LegacyRedirect extends React.Component {
   static propTypes = {
     /** The history object provided by react-router-dom */
     history: PropTypes.shape({
@@ -73,7 +73,6 @@ class LegacyRedirect extends React.Component {
         from: "view?id=:designId",
         to: "/view/:designId"
       }
-      // TODO Handle embedded urls
     ];
 
     // redirectData will house the variables used in the path
