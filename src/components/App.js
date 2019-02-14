@@ -7,6 +7,7 @@ import Header from "./layout/Header";
 import Footer from "./layout/Footer";
 import EmbeddedCss from "./EmbeddedCss";
 import RestrictedRoute from "./RestrictedRoute";
+import LegacyRedirect from "./LegacyRedirect";
 import About from "./about";
 import Account from "./account";
 import Activate from "./activate";
@@ -27,6 +28,7 @@ const App = ({ _isEmbedded }) => (
   <React.Fragment>
     <EmbeddedCss />
     {!_isEmbedded && <Header />}
+    <LegacyRedirect />
     <Switch>
       <RestrictedRoute exact path="/" component={Home} />
       <RestrictedRoute exact path="/about" component={About} />
