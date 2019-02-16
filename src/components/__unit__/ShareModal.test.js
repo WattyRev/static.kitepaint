@@ -12,7 +12,8 @@ describe("ShareModal", () => {
       defaultProps = {
         design: getMockDesign(),
         onClose: jest.fn(),
-        onDownload: jest.fn()
+        onDownloadSvg: jest.fn(),
+        onDownloadPng: jest.fn()
       };
     });
     it("renders", () => {
@@ -88,7 +89,7 @@ describe("ShareModal", () => {
 
     expect(wrapper.prop("isOpen")).toEqual(false);
   });
-  describe("handleDownload", () => {
+  describe("handleDownloadSvg", () => {
     it("runs", () => {
       const wrapper = shallow(
         <ShareModal {...defaultProps}>{() => <div />}</ShareModal>
@@ -96,7 +97,7 @@ describe("ShareModal", () => {
       const modalContent = shallow(
         <div>{wrapper.find(Modal).prop("modalContent")}</div>
       );
-      modalContent.find(Content).prop("onDownload")();
+      modalContent.find(Content).prop("onDownloadSvg")();
     });
   });
 });
