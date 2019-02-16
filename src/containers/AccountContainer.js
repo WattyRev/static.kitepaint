@@ -162,9 +162,16 @@ export class AccountContainer extends React.Component {
    * Submits the user provided email to change the email on the current account
    */
   handleSubmitEmail = () => {
-    const request = makeCancelable(
-      this.props.onEmailChange(this.props.user.id, this.state.email)
-    );
+    let request;
+    // If the email was not changed, don't do anything, but behave as if it was
+    // successful.
+    if (this.state.email === this.props.user.email) {
+      request = makeCancelable(Promise.resolve());
+    } else {
+      request = makeCancelable(
+        this.props.onEmailChange(this.props.user.id, this.state.email)
+      );
+    }
     this._requests.push(request);
     return request.promise
       .then(() => {
