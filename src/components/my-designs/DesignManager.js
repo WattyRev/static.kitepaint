@@ -7,7 +7,7 @@ import Design from "../../models/Design";
 import Product from "../../models/Product";
 import Manufacturer from "../../models/Manufacturer";
 import DesignSettingsModalContainer from "../../containers/DesignSettingsModalContainer";
-import { H2, P, Button, Icon, Tile, ModalConfirm } from "../../theme";
+import { H2, P, Button, Icon, Tile, ModalConfirm, Error } from "../../theme";
 import ShareModal from "../ShareModal";
 import Svg from "../Svg";
 
@@ -97,6 +97,11 @@ const DesignManager = ({ design, product, manufacturer, onDelete }) => (
           </Button>
         )}
       </DesignSettingsModalContainer>
+      {design.get("isPrivateProduct") && (
+        <Error>
+          <P>This product is no longer available.</P>
+        </Error>
+      )}
     </div>
   </StyleWrapper>
 );
