@@ -18,6 +18,7 @@ export const StyleWrapper = styled.div`
       : null};
 
   > div {
+    min-height: 50vh;
     width: 100%;
     height: 100%;
     position: relative;
