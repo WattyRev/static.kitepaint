@@ -33,10 +33,18 @@ export function generateAppliedColors(design, product) {
     return {};
   }
   const colors = product.get("colors");
+
+  // Loop through each variation to grab the colors per panel
   return design.get("variations").reduce((accumulated, variation) => {
     const { svg, name } = variation;
+
+    // Render the variation's SVG
     const render = new window.DOMParser().parseFromString(svg, "text/xml");
+
+    // Find all of the colorable elements
     const panels = render.querySelectorAll("[data-id]");
+
+    // Build an object mapping each panel to its color
     const appliedColors = {};
     for (let i = 0; i < panels.length; i++) {
       const panel = panels[i];
