@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Designs renders 1`] = `
+<Spacer
+  bottom="md"
+  left="md"
+  right="md"
+  top="md"
+>
+  <Styled(H1)>
+    Public Designs
+  </Styled(H1)>
+  <Spacer
+    bottom="md"
+  />
+  <P>
+    Designs that were made by other KitePaint users and are set to public.
+  </P>
+  <DesignsContainer>
+    <Component />
+  </DesignsContainer>
+</Spacer>
+`;

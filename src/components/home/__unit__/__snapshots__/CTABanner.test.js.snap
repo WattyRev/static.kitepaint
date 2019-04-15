@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CTABanner renders 1`] = `
+<styled.div>
+  <div
+    className="cta-wrapper"
+  >
+    <Styled(H3)
+      isLight={true}
+    >
+      Get started new by creating a new kite design!
+    </Styled(H3)>
+    <Button
+      as={[Function]}
+      isBlock={true}
+      isPrimary={true}
+      to="/create"
+    >
+      Get Started
+    </Button>
+  </div>
+</styled.div>
+`;

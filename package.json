@@ -1,35 +1,95 @@
 {
-    "name": "static.kitepaint",
-    "version": "1.0.0",
-    "description": "A site for kite colorizers.",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"I got no tests\"",
-        "start": "grunt start",
-        "build": "grunt build",
-        "deploy:prod": "grunt deploy-prod",
-        "deploy:beta": "grunt deploy-beta"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/WattyRev/static.kitepaint.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/WattyRev/static.kitepaint/issues"
-    },
-    "homepage": "https://github.com/WattyRev/static.kitepaint#readme",
-    "devDependencies": {
-        "grunt": "^1.0.3",
-        "grunt-concurrent": "^2.3.1",
-        "grunt-contrib-concat": "^1.0.1",
-        "grunt-contrib-connect": "^2.0.0",
-        "grunt-contrib-copy": "^1.0.0",
-        "grunt-contrib-less": "^2.0.0",
-        "grunt-contrib-watch": "^1.1.0",
-        "grunt-run": "^0.8.1",
-        "load-grunt-tasks": "^3.5.2",
-        "ssh2-sftp-client": "^3.1.0"
+  "name": "kitepaint",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "react-scripts build",
+    "deploy:beta": "PUBLIC_URL=https://static.beta.kitepaint.com npm run build && SFTP_PATH=./public_html/static.beta.kitepaint.com/ node sftp-deployment.js",
+    "deploy:prod": "PUBLIC_URL=https://static.kitepaint.com npm run build && SFTP_PATH=./public_html/static.kitepaint.com/ node sftp-deployment.js",
+    "eject": "react-scripts eject",
+    "lint": "eslint ./src",
+    "pretest": "npm run lint",
+    "start:embed": "nodemon ./embed/server.js localhost 3001",
+    "start:react": "react-scripts start",
+    "start": "concurrently \"npm run start:react\" \"npm run start:embed\"",
+    "test:debug": "node --inspect-brk /node_modules/.bin/jest --runInBand",
+    "test": "react-scripts test"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.7",
+    "@fortawesome/free-solid-svg-icons": "^5.4.2",
+    "@fortawesome/react-fontawesome": "^0.1.3",
+    "axios": "^0.18.0",
+    "canvg": "^1.5.3",
+    "immutable": "^3.8.2",
+    "manikin-model": "^1.0.1",
+    "moment": "^2.24.0",
+    "normalize.css": "^8.0.0",
+    "prettier": "^1.14.3",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-redux": "^5.1.0",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.0.5",
+    "react-test-renderer": "^16.6.0",
+    "redux": "^4.0.1",
+    "redux-actions": "^2.6.3",
+    "redux-immutable": "^4.0.0",
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^4.0.2"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 10",
+    "not op_mini all"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,json}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    },
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/setupTests.js",
+      "!src/**/*.test.js"
+    ]
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "connect": "^3.6.6",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-jest": "^21.27.1",
+    "eslint-plugin-react": "^7.11.1",
+    "husky": "^1.1.2",
+    "jest-environment-enzyme": "^7.0.1",
+    "jest-enzyme": "^7.0.1",
+    "jest-styled-components": "^6.3.0",
+    "lint-staged": "^7.3.0",
+    "nodemon": "^1.18.9",
+    "serve-static": "^1.13.2",
+    "ssh2-sftp-client": "^2.4.3"
+  }
 }

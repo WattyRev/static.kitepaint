@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorPage renders 1`] = `
+<styled.div>
+  <Styled(H1)>
+    404
+  </Styled(H1)>
+  <P>
+    Page not found
+  </P>
+</styled.div>
+`;

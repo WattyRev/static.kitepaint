@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountBanner renders 1`] = `
+<styled.div>
+  <div>
+    Hello!
+  </div>
+  <div
+    className="message"
+  >
+    <Styled(H2)>
+      Create an Account
+    </Styled(H2)>
+    <P>
+      By creating a free account, you get access to features such as:
+    </P>
+    <ul>
+      <li>
+        <P>
+          Save your designs and modify them later
+        </P>
+      </li>
+      <li>
+        <P>
+          Control the visibility of your designs
+        </P>
+      </li>
+      <li>
+        <P>
+          More features to come!
+        </P>
+      </li>
+    </ul>
+  </div>
+</styled.div>
+`;
