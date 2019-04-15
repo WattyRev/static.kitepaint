@@ -32,6 +32,9 @@ class ColorableSvg extends React.Component {
     this.applyColors();
   }
 
+  /**
+   * The colors that were originally used for each panel.
+   */
   originalColors = {};
 
   /**
@@ -46,6 +49,9 @@ class ColorableSvg extends React.Component {
     const { colorMap } = this.props;
     this.node.querySelectorAll(`[data-id]`).forEach(panel => {
       const panelId = panel.getAttribute("data-id");
+
+      // Build up a list of original colors if we haven't already, so that we
+      // know what to fall back to when the colorMap is empty.
       if (!this.originalColors[panelId]) {
         this.originalColors[panelId] = panel.getAttribute("fill");
       }
