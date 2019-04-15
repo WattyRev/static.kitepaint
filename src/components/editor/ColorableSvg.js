@@ -33,6 +33,11 @@ class ColorableSvg extends React.Component {
   }
 
   /**
+   * The colors that were originally used for each panel.
+   */
+  originalColors = {};
+
+  /**
    * A DOM reference to the div containing the SVG
    */
   node = null;
@@ -44,9 +49,15 @@ class ColorableSvg extends React.Component {
     const { colorMap } = this.props;
     this.node.querySelectorAll(`[data-id]`).forEach(panel => {
       const panelId = panel.getAttribute("data-id");
+
+      // Build up a list of original colors if we haven't already, so that we
+      // know what to fall back to when the colorMap is empty.
+      if (!this.originalColors[panelId]) {
+        this.originalColors[panelId] = panel.getAttribute("fill");
+      }
       const color = colorMap[panelId]
         ? colorMap[panelId].color
-        : panel.getAttribute("fill");
+        : this.originalColors[panelId];
       panel.setAttribute("fill", color);
     });
   };
