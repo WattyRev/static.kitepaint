@@ -20,7 +20,7 @@ const Footer = props => (
       {isEmbedded ? (
         <React.Fragment>
           Powered by{" "}
-          <A href="http://kitepaint.com" target="_blank">
+          <A href="https://kitepaint.com" target="_blank">
             KitePaint
           </A>
         </React.Fragment>
