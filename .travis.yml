@@ -8,7 +8,7 @@ stages:
 
   # Running build in test environments without deployment
   - name: build
-    if: (NOT type IN (pull_request)) OR (NOT branch = master OR branch = staging)
+    if: (NOT type IN (pull_request)) AND ((NOT branch = master) AND (NOT branch = staging))
 
   # Production deployment (includes build internally)
   - name: deploy-prod
