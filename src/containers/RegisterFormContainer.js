@@ -111,7 +111,7 @@ export class RegisterFormContainer extends React.Component {
       email: this.state.email,
       username: this.state.username,
       password: this.state.password,
-      password2: this.state.password2
+      password2: this.state.passwordConfirmation
     };
     this.setState({
       pendingRequest: true
