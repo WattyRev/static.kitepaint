@@ -48,6 +48,7 @@ Product.propTypes = {
   ),
   variations: PropTypes.arrayOf(
     PropTypes.shape({
+      id: PropTypes.string,
       name: PropTypes.string.isRequired,
       svg: PropTypes.string.isRequired
     })
