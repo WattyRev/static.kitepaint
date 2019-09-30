@@ -26,11 +26,13 @@ describe("ViewContainer", () => {
     defaultProps.design = getMockDesign({
       variations: [
         {
+          id: "0",
           name: "Standard",
           svg: "",
           primary: false
         },
         {
+          id: "1",
           name: "Vented",
           svg: "",
           primary: true
@@ -67,6 +69,7 @@ describe("ViewContainer", () => {
     defaultProps.design = getMockDesign({
       variations: [
         {
+          id: "0",
           name: "Standard",
           svg: `<svg viewBox="0 0 1963.2 651.1">
               <polygon data-id="p1" fill="#FF0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
@@ -75,6 +78,7 @@ describe("ViewContainer", () => {
           primary: false
         },
         {
+          id: "1",
           name: "Vented",
           svg: "",
           primary: true
@@ -85,9 +89,7 @@ describe("ViewContainer", () => {
       <ViewContainer {...defaultProps}>
         {viewData => (
           <div className="target">
-            {viewData.props.usedColors.Standard.map(color => color.name).join(
-              ", "
-            )}
+            {viewData.props.usedColors["0"].map(color => color.name).join(", ")}
           </div>
         )}
       </ViewContainer>

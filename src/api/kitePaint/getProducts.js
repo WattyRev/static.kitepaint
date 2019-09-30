@@ -29,12 +29,6 @@ export default async function getProducts(useCache = true) {
   }
 
   response.data = response.data.map(product => {
-    // Variations used to be provided as a JSON string. This check is here for
-    // backwards compatibility. It can be removed once the related changes are
-    // in production
-    if (typeof product.variations === "string") {
-      product.variations = JSON.parse(product.variations);
-    }
     product.colors = JSON.parse(product.colors);
     product.notes = JSON.parse(product.notes).filter(note => !!note);
     return new Product(product);

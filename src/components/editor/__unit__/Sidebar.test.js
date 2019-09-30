@@ -114,10 +114,12 @@ describe("Sidebar", () => {
     defaultProps.product = getMockProduct({
       variations: [
         {
+          id: "0",
           name: "Standard",
           svg: "<div>Kool Kite</div>"
         },
         {
+          id: "1",
           name: "Vented",
           svg: "<div>Kool Vented Kite</div>"
         }
@@ -132,7 +134,7 @@ describe("Sidebar", () => {
       .at(1)
       .simulate("click");
     expect(defaultProps.onVariationSelect).toHaveBeenCalled();
-    expect(defaultProps.onVariationSelect.mock.calls[0][0]).toEqual("Vented");
+    expect(defaultProps.onVariationSelect.mock.calls[0][0]).toEqual("1");
   });
   it("triggers onColorSelect when a color is selected", () => {
     expect.assertions(2);

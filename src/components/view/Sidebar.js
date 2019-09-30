@@ -116,9 +116,9 @@ const Sidebar = ({
             className="testing_variation"
             isLight
             hasAction
-            isActive={variation.name === selectedVariation}
-            key={variation.name}
-            onClick={() => onVariationSelect(variation.name)}
+            isActive={variation.id === selectedVariation}
+            key={variation.id}
+            onClick={() => onVariationSelect(variation.id)}
           >
             <VariationPreview className="variation-preview">
               <Svg svg={variation.svg} />
@@ -160,7 +160,7 @@ Sidebar.propTypes = {
    */
   user: PropTypes.instanceOf(User),
   /**
-   * The name of the variation that is currently selected
+   * The id of the variation that is currently selected
    */
   selectedVariation: PropTypes.string.isRequired,
   /**
@@ -176,7 +176,7 @@ Sidebar.propTypes = {
   ).isRequired,
   /**
    * Called when a variation is selected.
-   * Is provided with the variation name as the first parameter.
+   * Is provided with the variation id as the first parameter.
    */
   onVariationSelect: PropTypes.func.isRequired
 };

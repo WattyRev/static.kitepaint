@@ -71,7 +71,7 @@ const CreateNew = ({ match }) => (
                 <Sidebar
                   product={createNewData.props.product}
                   manufacturer={createNewData.props.manufacturer}
-                  selectedVariation={editorData.props.currentVariation.name}
+                  selectedVariation={editorData.props.currentVariation.id}
                   selectedColor={editorData.props.currentColor.name}
                   onColorSelect={editorData.actions.selectColor}
                   onVariationSelect={editorData.actions.selectVariation}

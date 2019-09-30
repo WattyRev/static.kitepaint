@@ -36,7 +36,7 @@ export function generateAppliedColors(design, product) {
 
   // Loop through each variation to grab the colors per panel
   return design.get("variations").reduce((accumulated, variation) => {
-    const { svg, name } = variation;
+    const { svg, id } = variation;
 
     // Render the variation's SVG
     const render = new window.DOMParser().parseFromString(svg, "text/xml");
@@ -61,7 +61,7 @@ export function generateAppliedColors(design, product) {
       }
     }
 
-    accumulated[name] = appliedColors;
+    accumulated[id] = appliedColors;
     return accumulated;
   }, {});
 }
@@ -85,7 +85,7 @@ export class EditorContainer extends React.Component {
      */
     design: PropTypes.instanceOf(Design),
     /**
-     * The default variation (name) to be selected. Will default to the first variation on the
+     * The default variation (id) to be selected. Will default to the first variation on the
      * product otherwise.
      */
     defaultVariation: PropTypes.string,
@@ -116,6 +116,7 @@ export class EditorContainer extends React.Component {
 
     // Use the primary variation or the one specified
     let currentVariation = props.product.get("variations")[0];
+
     if (props.design) {
       currentVariation = props.design
         .get("variations")
@@ -124,9 +125,7 @@ export class EditorContainer extends React.Component {
     if (props.defaultVariation) {
       currentVariation = props.product
         .get("variations")
-        .find(variation =>
-          softCompareStrings(variation.name, props.defaultVariation)
-        );
+        .find(variation => variation.id === props.defaultVariation);
     }
 
     const appliedColors = generateAppliedColors(
@@ -151,7 +150,7 @@ export class EditorContainer extends React.Component {
        * The currently applied colors.
        * Example
        * {
-       *   "my-variation": {
+       *   "variation-id": {
        *     p1: {
        *       name: "black",
        *       color: "#000"
@@ -304,12 +303,12 @@ export class EditorContainer extends React.Component {
 
   /**
    * Handles when a different variation is selected by updating state.
-   * @param  {String} variationName The name of the newly selected variation
+   * @param  {String} variationId The id of the newly selected variation
    */
-  handleVariationSelection = variationName => {
+  handleVariationSelection = variationId => {
     const currentVariation = this.props.product
       .get("variations")
-      .find(variation => softCompareStrings(variation.name, variationName));
+      .find(variation => variation.id === variationId);
     this.setState({
       currentVariation
     });
@@ -321,7 +320,7 @@ export class EditorContainer extends React.Component {
    */
   handleColorApplied = id =>
     this._applyColors(
-      [this.state.currentVariation.name, id],
+      [this.state.currentVariation.id, id],
       this.state.currentColor
     );
 
@@ -340,7 +339,7 @@ export class EditorContainer extends React.Component {
         variation.svg,
         "text/xml"
       );
-      const colorMap = appliedColors[variation.name] || {};
+      const colorMap = appliedColors[variation.id] || {};
 
       // Apply each color to the rendered variation
       Object.keys(colorMap).forEach(id => {
@@ -357,6 +356,7 @@ export class EditorContainer extends React.Component {
 
       // Return the variation
       return {
+        id: variation.id,
         name: variation.name,
         primary: !index,
         svg
@@ -365,7 +365,7 @@ export class EditorContainer extends React.Component {
   };
 
   /** Clears all colors from the current variation */
-  handleReset = () => this._applyColors([this.state.currentVariation.name], {});
+  handleReset = () => this._applyColors([this.state.currentVariation.id], {});
 
   /**
    * Handles save by parsing data and submitting a request to create a new design. Redirects to that
@@ -409,8 +409,8 @@ export class EditorContainer extends React.Component {
    * Gets the applied colors for the current variation
    */
   getCurrentVariationColors = () => {
-    const currentVariationName = this.state.currentVariation.name;
-    return this.state.appliedColors[currentVariationName] || {};
+    const currentVariationId = this.state.currentVariation.id;
+    return this.state.appliedColors[currentVariationId] || {};
   };
 
   /**
@@ -421,7 +421,7 @@ export class EditorContainer extends React.Component {
     const currentColors = this.getCurrentVariationColors();
     const variations = this.props.product.get("variations");
     const appliedColors = variations.reduce((accumulated, variation) => {
-      accumulated[variation.name] = {
+      accumulated[variation.id] = {
         ...currentColors
       };
       return accumulated;
