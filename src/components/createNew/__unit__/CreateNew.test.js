@@ -51,6 +51,7 @@ describe("CreateNew", () => {
           name: "blue"
         },
         currentVariation: {
+          id: "1",
           name: "Standard",
           svg: ""
         },

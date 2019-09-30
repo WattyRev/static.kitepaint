@@ -43,6 +43,7 @@ describe("Edit", () => {
       props: {
         appliedColors: {},
         currentVariation: {
+          id: "1",
           name: "Standard",
           svg: ""
         },

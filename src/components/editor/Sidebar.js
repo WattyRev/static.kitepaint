@@ -110,14 +110,14 @@ const Sidebar = ({
             className="testing_variation"
             isLight
             hasAction
-            isActive={variation.name === selectedVariation}
-            key={variation.name}
-            onClick={() => onVariationSelect(variation.name)}
+            isActive={variation.id === selectedVariation}
+            key={variation.id}
+            onClick={() => onVariationSelect(variation.id)}
           >
             <VariationPreview className="variation-preview">
               <ColorableSvg
                 svg={variation.svg}
-                colorMap={appliedColors[variation.name] || {}}
+                colorMap={appliedColors[variation.id] || {}}
               />
             </VariationPreview>
             <span className="variation-label"> {variation.name}</span>
@@ -175,7 +175,7 @@ Sidebar.propTypes = {
   onColorSelect: PropTypes.func.isRequired,
   /**
    * Called when a variation is selected.
-   * Is provided with the variation name as the first parameter.
+   * Is provided with the variation id as the first parameter.
    */
   onVariationSelect: PropTypes.func.isRequired
 };

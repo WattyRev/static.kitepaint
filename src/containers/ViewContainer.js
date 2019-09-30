@@ -130,7 +130,7 @@ export class ViewContainer extends React.Component {
         });
         return accumulatedColors;
       }, []);
-      accumulated[variation.name] = colors;
+      accumulated[variation.id] = colors;
       return accumulated;
     }, {});
 
@@ -180,18 +180,18 @@ export class ViewContainer extends React.Component {
     if (!this.state.currentVariation) {
       return {};
     }
-    const currentVariationName = this.state.currentVariation.name;
-    return this.state.appliedColors[currentVariationName] || {};
+    const currentVariationId = this.state.currentVariation.id;
+    return this.state.appliedColors[currentVariationId] || {};
   };
 
   /**
    * Handles when a different variation is selected by updating state.
-   * @param  {String} variationName The name of the newly selected variation
+   * @param  {String} variationId The id of the newly selected variation
    */
-  handleVariationSelection = variationName => {
+  handleVariationSelection = variationId => {
     const currentVariation = this.props.design
       .get("variations")
-      .find(variation => softCompareStrings(variation.name, variationName));
+      .find(variation => variation.id === variationId);
     this.setState({
       currentVariation
     });

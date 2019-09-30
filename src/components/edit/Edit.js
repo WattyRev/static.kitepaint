@@ -76,7 +76,7 @@ const Edit = ({ match }) => (
                   design={editData.props.design}
                   product={editData.props.product}
                   manufacturer={editData.props.manufacturer}
-                  selectedVariation={editorData.props.currentVariation.name}
+                  selectedVariation={editorData.props.currentVariation.id}
                   selectedColor={editorData.props.currentColor.name}
                   onColorSelect={editorData.actions.selectColor}
                   onVariationSelect={editorData.actions.selectVariation}
