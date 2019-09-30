@@ -47,7 +47,7 @@ describe("#getProducts", () => {
       data: [
         {
           id: "123",
-          variations: "[]",
+          variations: [],
           colors: "[]",
           notes: '[""]'
         }
