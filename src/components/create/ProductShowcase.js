@@ -67,7 +67,7 @@ const ProductShowcase = ({ product }) => (
     {product.get("variations").map(variation => (
       <Svg
         className={`preview count-${product.get("variations").length}`}
-        key={variation.name}
+        key={variation.id}
         svg={variation.svg}
       />
     ))}

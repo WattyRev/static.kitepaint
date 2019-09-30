@@ -78,10 +78,12 @@ describe("EditorContainer", () => {
     defaultProps.product = getMockProduct({
       variations: [
         {
+          id: "0",
           name: "Standard",
           svg: "<div>test</div>"
         },
         {
+          id: "1",
           name: "Vented",
           svg: "<div>test vented</div>"
         }
@@ -102,16 +104,18 @@ describe("EditorContainer", () => {
     defaultProps.product = getMockProduct({
       variations: [
         {
+          id: "0",
           name: "Standard",
           svg: "<div>test</div>"
         },
         {
+          id: "1",
           name: "Vented",
           svg: "<div>test vented</div>"
         }
       ]
     });
-    defaultProps.defaultVariation = "vented";
+    defaultProps.defaultVariation = "1";
 
     const wrapper = mount(
       <EditorContainer {...defaultProps}>
@@ -157,10 +161,12 @@ describe("EditorContainer", () => {
     defaultProps.product = getMockProduct({
       variations: [
         {
+          id: "0",
           name: "Standard",
           svg: "<div>test</div>"
         },
         {
+          id: "1",
           name: "Vented",
           svg: "<div>test vented</div>"
         }
@@ -172,7 +178,7 @@ describe("EditorContainer", () => {
         {data => (
           <div
             className="target"
-            onClick={() => data.actions.selectVariation("Vented")}
+            onClick={() => data.actions.selectVariation("1")}
           >
             {data.props.currentVariation.name}
           </div>
@@ -195,7 +201,7 @@ describe("EditorContainer", () => {
     );
     wrapper.find(".target").simulate("click");
     expect(JSON.parse(wrapper.find(".target").text())).toEqual({
-      Standard: {
+      "1": {
         p1: {
           name: "red",
           color: "#ff0000"
@@ -208,10 +214,12 @@ describe("EditorContainer", () => {
     defaultProps.product = getMockProduct({
       variations: [
         {
+          id: "0",
           name: "Standard",
           svg: "<div>test</div>"
         },
         {
+          id: "1",
           name: "Vented",
           svg: "<div>test vented</div>"
         }
@@ -233,7 +241,7 @@ describe("EditorContainer", () => {
             />
             <div
               className="change-variation"
-              onClick={() => data.actions.selectVariation("Vented")}
+              onClick={() => data.actions.selectVariation("1")}
             />
           </React.Fragment>
         )}
@@ -264,6 +272,7 @@ describe("EditorContainer", () => {
     defaultProps.product = getMockProduct({
       variations: [
         {
+          id: "0",
           name: "Standard",
           svg: `
           <svg viewBox="0 0 1963.2 651.1">
@@ -273,6 +282,7 @@ describe("EditorContainer", () => {
         `
         },
         {
+          id: "1",
           name: "Vented",
           svg: `
           <svg viewBox="0 0 1963.2 651.1">
@@ -302,7 +312,7 @@ describe("EditorContainer", () => {
     // Set state to behave as if we have added colors to the variations
     wrapper.instance().setState({
       appliedColors: {
-        Standard: {
+        "0": {
           p1: {
             name: "black",
             color: "#000000"
@@ -312,7 +322,7 @@ describe("EditorContainer", () => {
             color: "#ff0000"
           }
         },
-        Vented: {
+        "1": {
           p1: {
             name: "red",
             color: "#ff0000"
@@ -340,6 +350,7 @@ describe("EditorContainer", () => {
       status: Status.UNLISTED,
       variations: [
         {
+          id: "0",
           name: "Standard",
           primary: true,
           svg: `
@@ -349,6 +360,7 @@ describe("EditorContainer", () => {
             </svg>`.trim()
         },
         {
+          id: "1",
           name: "Vented",
           primary: false,
           svg: `
@@ -365,6 +377,7 @@ describe("EditorContainer", () => {
     defaultProps.design = getMockDesign({
       variations: [
         {
+          id: "0",
           name: "Standard",
           primary: true,
           svg: `<svg viewBox="0 0 1963.2 651.1">
@@ -403,7 +416,7 @@ describe("EditorContainer", () => {
 
     const response = JSON.parse(wrapper.find(".target").text());
     expect(response).toEqual({
-      Standard: {
+      "0": {
         p1: {
           name: "red",
           color: "#ff0000"
@@ -425,10 +438,12 @@ describe("EditorContainer", () => {
       defaultProps.product = getMockProduct({
         variations: [
           {
+            id: "0",
             name: "Standard",
             svg: ""
           },
           {
+            id: "1",
             name: "Vented",
             svg: ""
           }
@@ -443,7 +458,7 @@ describe("EditorContainer", () => {
               </div>
               <div
                 className="select-vented"
-                onClick={() => data.actions.selectVariation("Vented")}
+                onClick={() => data.actions.selectVariation("1")}
               />
               <div className="autofill" onClick={data.actions.autofill} />
             </React.Fragment>
@@ -452,7 +467,7 @@ describe("EditorContainer", () => {
       );
       wrapper.instance().setState({
         appliedColors: {
-          Standard: {
+          "0": {
             p1: {
               name: "black",
               color: "#000000"
@@ -466,7 +481,7 @@ describe("EditorContainer", () => {
               color: "#00ff00"
             }
           },
-          Vented: {
+          "1": {
             p1: {
               name: "red",
               color: "#ff0000"
@@ -483,7 +498,7 @@ describe("EditorContainer", () => {
     it("autofills the vented variation based on the standard variation", () => {
       wrapper.find(".autofill").simulate("click");
       expect(JSON.parse(wrapper.find(".output").text())).toEqual({
-        Standard: {
+        "0": {
           p1: {
             name: "black",
             color: "#000000"
@@ -497,7 +512,7 @@ describe("EditorContainer", () => {
             color: "#00ff00"
           }
         },
-        Vented: {
+        "1": {
           p1: {
             name: "black",
             color: "#000000"
@@ -519,7 +534,7 @@ describe("EditorContainer", () => {
       wrapper.find(".select-vented").simulate("click");
       wrapper.find(".autofill").simulate("click");
       expect(JSON.parse(wrapper.find(".output").text())).toEqual({
-        Standard: {
+        "0": {
           p1: {
             name: "red",
             color: "#ff0000"
@@ -529,7 +544,7 @@ describe("EditorContainer", () => {
             color: "#000000"
           }
         },
-        Vented: {
+        "1": {
           p1: {
             name: "red",
             color: "#ff0000"
@@ -546,7 +561,7 @@ describe("EditorContainer", () => {
       expect.assertions(1);
       wrapper.instance().setState({
         appliedColors: {
-          Standard: {
+          "0": {
             p1: {
               name: "black",
               color: "#000000"
@@ -556,13 +571,13 @@ describe("EditorContainer", () => {
       });
       wrapper.find(".autofill").simulate("click");
       expect(JSON.parse(wrapper.find(".output").text())).toEqual({
-        Standard: {
+        "0": {
           p1: {
             name: "black",
             color: "#000000"
           }
         },
-        Vented: {
+        "1": {
           p1: {
             name: "black",
             color: "#000000"
@@ -577,10 +592,12 @@ describe("EditorContainer", () => {
       defaultProps.product = getMockProduct({
         variations: [
           {
+            id: "0",
             name: "Standard",
             svg: ""
           },
           {
+            id: "1",
             name: "Vented",
             svg: ""
           }
@@ -601,7 +618,7 @@ describe("EditorContainer", () => {
       );
       wrapper.instance().setState({
         appliedColors: {
-          Standard: {
+          "0": {
             p1: {
               name: "black",
               color: "#000000"
@@ -615,7 +632,7 @@ describe("EditorContainer", () => {
               color: "#00ff00"
             }
           },
-          Vented: {
+          "1": {
             p1: {
               name: "red",
               color: "#ff0000"
@@ -632,8 +649,8 @@ describe("EditorContainer", () => {
       expect.assertions(1);
       wrapper.find(".reset").simulate("click");
       expect(JSON.parse(wrapper.find(".output").text())).toEqual({
-        Standard: {},
-        Vented: {
+        "0": {},
+        "1": {
           p1: {
             name: "red",
             color: "#ff0000"
@@ -650,8 +667,8 @@ describe("EditorContainer", () => {
       wrapper.find(".reset").simulate("click");
       wrapper.find(".autofill").simulate("click");
       expect(JSON.parse(wrapper.find(".output").text())).toEqual({
-        Standard: {},
-        Vented: {}
+        "0": {},
+        "1": {}
       });
     });
   });
@@ -702,7 +719,7 @@ describe("EditorContainer", () => {
       // Undo one step at a time and check the result
       expect(wrapper.find(".appliedColors").text()).toEqual(
         JSON.stringify({
-          Standard: {
+          "1": {
             p1: {
               name: "red",
               color: "#ff0000"
@@ -721,7 +738,7 @@ describe("EditorContainer", () => {
       wrapper.find(".undo").simulate("click");
       expect(wrapper.find(".appliedColors").text()).toEqual(
         JSON.stringify({
-          Standard: {
+          "1": {
             p1: {
               name: "black",
               color: "#000000"
@@ -740,7 +757,7 @@ describe("EditorContainer", () => {
       wrapper.find(".undo").simulate("click");
       expect(wrapper.find(".appliedColors").text()).toEqual(
         JSON.stringify({
-          Standard: {
+          "1": {
             p1: {
               name: "black",
               color: "#000000"
@@ -755,7 +772,7 @@ describe("EditorContainer", () => {
       wrapper.find(".undo").simulate("click");
       expect(wrapper.find(".appliedColors").text()).toEqual(
         JSON.stringify({
-          Standard: {
+          "1": {
             p1: {
               name: "black",
               color: "#000000"
@@ -766,7 +783,7 @@ describe("EditorContainer", () => {
       wrapper.find(".undo").simulate("click");
       expect(wrapper.find(".appliedColors").text()).toEqual(
         JSON.stringify({
-          Standard: {}
+          "1": {}
         })
       );
     });
@@ -824,14 +841,14 @@ describe("EditorContainer", () => {
       // Start redoing actions one at a time.
       expect(wrapper.find(".appliedColors").text()).toEqual(
         JSON.stringify({
-          Standard: {}
+          "1": {}
         })
       );
 
       wrapper.find(".redo").simulate("click");
       expect(wrapper.find(".appliedColors").text()).toEqual(
         JSON.stringify({
-          Standard: {
+          "1": {
             p1: {
               name: "black",
               color: "#000000"
@@ -842,7 +859,7 @@ describe("EditorContainer", () => {
       wrapper.find(".redo").simulate("click");
       expect(wrapper.find(".appliedColors").text()).toEqual(
         JSON.stringify({
-          Standard: {
+          "1": {
             p1: {
               name: "black",
               color: "#000000"
@@ -857,7 +874,7 @@ describe("EditorContainer", () => {
       wrapper.find(".redo").simulate("click");
       expect(wrapper.find(".appliedColors").text()).toEqual(
         JSON.stringify({
-          Standard: {
+          "1": {
             p1: {
               name: "black",
               color: "#000000"
@@ -876,7 +893,7 @@ describe("EditorContainer", () => {
       wrapper.find(".redo").simulate("click");
       expect(wrapper.find(".appliedColors").text()).toEqual(
         JSON.stringify({
-          Standard: {
+          "1": {
             p1: {
               name: "red",
               color: "#ff0000"
@@ -1031,10 +1048,12 @@ describe("EditorContainer", () => {
       defaultProps.product = getMockProduct({
         variations: [
           {
+            id: "0",
             name: "Standard",
             svg: ""
           },
           {
+            id: "1",
             name: "Vented",
             svg: ""
           }
@@ -1069,13 +1088,13 @@ describe("EditorContainer", () => {
 
       expect(wrapper.find(".appliedColors").text()).toEqual(
         JSON.stringify({
-          Standard: {
+          "0": {
             p1: {
               name: "black",
               color: "#000000"
             }
           },
-          Vented: {
+          "1": {
             p1: {
               name: "black",
               color: "#000000"
@@ -1087,7 +1106,7 @@ describe("EditorContainer", () => {
       wrapper.find(".undo").simulate("click");
       expect(wrapper.find(".appliedColors").text()).toEqual(
         JSON.stringify({
-          Standard: {
+          "0": {
             p1: {
               name: "black",
               color: "#000000"
@@ -1099,13 +1118,13 @@ describe("EditorContainer", () => {
       wrapper.find(".redo").simulate("click");
       expect(wrapper.find(".appliedColors").text()).toEqual(
         JSON.stringify({
-          Standard: {
+          "0": {
             p1: {
               name: "black",
               color: "#000000"
             }
           },
-          Vented: {
+          "1": {
             p1: {
               name: "black",
               color: "#000000"
@@ -1145,14 +1164,14 @@ describe("EditorContainer", () => {
 
       expect(wrapper.find(".appliedColors").text()).toEqual(
         JSON.stringify({
-          Standard: {}
+          "1": {}
         })
       );
 
       wrapper.find(".undo").simulate("click");
       expect(wrapper.find(".appliedColors").text()).toEqual(
         JSON.stringify({
-          Standard: {
+          "1": {
             p1: {
               name: "black",
               color: "#000000"
@@ -1164,7 +1183,7 @@ describe("EditorContainer", () => {
       wrapper.find(".redo").simulate("click");
       expect(wrapper.find(".appliedColors").text()).toEqual(
         JSON.stringify({
-          Standard: {}
+          "1": {}
         })
       );
     });

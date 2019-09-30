@@ -70,6 +70,7 @@ Product.propTypes = {
     ),
     variations: PropTypes.arrayOf(
       PropTypes.shape({
+        id: PropTypes.string,
         name: PropTypes.string.isRequired,
         svg: PropTypes.string.isRequired
       })
@@ -104,6 +105,7 @@ const getMockProduct = (overrides = {}) =>
         ],
         variations: [
           {
+            id: "1",
             name: "Standard",
             svg: "<div>Kool Kite</div>"
           }

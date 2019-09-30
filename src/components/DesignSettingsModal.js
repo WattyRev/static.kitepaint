@@ -105,14 +105,12 @@ const Content = ({
       </Label>
       <Select
         className="select-primary"
-        value={
-          design.get("variations").find(variation => variation.primary).name
-        }
+        value={design.get("variations").find(variation => variation.primary).id}
         onChange={e => onChangePrimary(e.target.value)}
       >
-        {design.get("variations").map(option => (
-          <option key={option.name} value={option.name}>
-            {option.name}
+        {design.get("variations").map(variation => (
+          <option key={variation.id} value={variation.id}>
+            {variation.name}
           </option>
         ))}
       </Select>
@@ -185,7 +183,7 @@ class DesignSettingsModal extends React.Component {
     });
   handleChangePrimary = value => {
     const variations = this.state.design.get("variations").map(variation => {
-      if (variation.name === value) {
+      if (variation.id === value) {
         variation.primary = true;
         return variation;
       }

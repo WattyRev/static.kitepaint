@@ -86,11 +86,13 @@ describe("Sidebar", () => {
     expect.assertions(2);
     defaultProps.design = defaultProps.design.set("variations", [
       {
+        id: "0",
         svg: "<div>SVG</div>",
         name: "Standard",
         primary: true
       },
       {
+        id: "1",
         svg: "<div>SVG</div>",
         name: "Vented",
         primary: false
@@ -107,6 +109,6 @@ describe("Sidebar", () => {
       .at(1)
       .simulate("click");
     expect(defaultProps.onVariationSelect).toHaveBeenCalled();
-    expect(defaultProps.onVariationSelect.mock.calls[0][0]).toEqual("Vented");
+    expect(defaultProps.onVariationSelect.mock.calls[0][0]).toEqual("1");
   });
 });

@@ -46,7 +46,7 @@ const DesignManager = ({ design, product, manufacturer, onDelete }) => (
     </div>
     <div className="previews">
       {design.get("variations").map(variation => (
-        <Svg key={variation.name} svg={variation.svg} />
+        <Svg key={variation.id} svg={variation.svg} />
       ))}
     </div>
     <div>

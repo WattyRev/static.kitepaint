@@ -82,6 +82,7 @@ Design.propTypes = {
   user: PropTypes.string,
   variations: PropTypes.arrayOf(
     PropTypes.shape({
+      id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       svg: PropTypes.string.isRequired,
       primary: PropTypes.bool.isRequired
@@ -113,6 +114,7 @@ const getMockDesign = (overrides = {}) =>
         product: getMockProduct().id,
         variations: [
           {
+            id: "1",
             name: "Standard",
             svg: "<div>picasso standard</div>",
             primary: true
