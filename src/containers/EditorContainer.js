@@ -398,10 +398,10 @@ export class EditorContainer extends React.Component {
    * Handles update by parsing data and submitting a request to update the design.
    */
   handleUpdate = () => {
-    const design = {
-      id: this.props.design.get("id"),
-      variations: this.generateDesignVariations()
-    };
+    const design = this.props.design.set(
+      "variations",
+      this.generateDesignVariations()
+    );
     this.props.onUpdate(design);
   };
 
