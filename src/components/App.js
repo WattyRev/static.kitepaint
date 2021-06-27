@@ -20,12 +20,14 @@ import Home from "./home";
 import Login from "./login";
 import MyDesigns from "./my-designs";
 import View from "./view";
+import GlobalStyles from "./GlobalStyles";
 
 /**
  * The entry for the app. The router will go here.
  */
 const App = ({ _isEmbedded }) => (
   <React.Fragment>
+    <GlobalStyles />
     <EmbeddedCss />
     {!_isEmbedded && <Header />}
     <LegacyRedirect />
