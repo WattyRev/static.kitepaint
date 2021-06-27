@@ -6,10 +6,10 @@ import { isBeta, isProduction } from "../constants/environment";
  */
 export default function getAssetUrl(path) {
   if (isBeta) {
-    return `//static.beta.kitepaint.com${path}`;
+    return `//beta.kitepaint.com/static${path}`;
   }
   if (isProduction) {
-    return `//static.kitepaint.com${path}`;
+    return `//kitepaint.com/static${path}`;
   }
   return path;
 }
