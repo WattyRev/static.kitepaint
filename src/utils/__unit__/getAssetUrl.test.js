@@ -14,14 +14,14 @@ describe("getAssetUrl", () => {
     expect.assertions(1);
     environment.isProduction = true;
     environment.isBeta = false;
-    expect(getAssetUrl("/abc/def")).toEqual("//static.kitepaint.com/abc/def");
+    expect(getAssetUrl("/abc/def")).toEqual("//kitepaint.com/static/abc/def");
   });
   it("returns a beta url when in beta", () => {
     expect.assertions(1);
     environment.isProduction = false;
     environment.isBeta = true;
     expect(getAssetUrl("/abc/def")).toEqual(
-      "//static.beta.kitepaint.com/abc/def"
+      "//beta.kitepaint.com/static/abc/def"
     );
   });
 });
