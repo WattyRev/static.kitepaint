@@ -5,7 +5,6 @@ import "normalize.css";
 import AppContainer from "./containers/AppContainer";
 import polyfill from "./utils/polyfill";
 import Store from "./redux";
-import "./index.css";
 
 polyfill();
 
