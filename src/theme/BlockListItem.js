@@ -9,7 +9,6 @@ const BlockListItem = styled.div`
       props.isLight ? props.theme.colors.grayDark : props.theme.colors.gray};
   color: ${props =>
     props.isLight ? props.theme.colors.silver : props.theme.colors.black};
-  white-space: nowrap;
   padding: 8px;
   text-decoration: none;
   transition: 0.2s background;
