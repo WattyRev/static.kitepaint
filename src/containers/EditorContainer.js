@@ -21,49 +21,85 @@ const productAppliedColorsShape = PropTypes.objectOf(appliedColorsShape);
 
 export { appliedColorsShape, productAppliedColorsShape };
 
-/**
- * Parses the variations from the provided design in order to determine what colors have been
- * applied.
- * @param {Design} design A design to parse the colors from
- * @param {Product} product The product that the design belongs to
- * @return {Object}
- */
-export function generateAppliedColors(design, product) {
-  if (!design || !product) {
-    return {};
+// Inspects rendered SVG and gets the applied colors, indexed by panel's data-id
+function getDerivedColorsFromRender(render, colors) {
+  // Find all of the colorable elements
+  const panels = render.querySelectorAll("[data-id]");
+
+  // Build an object mapping each panel to its color
+  const appliedColors = {};
+  for (let i = 0; i < panels.length; i++) {
+    const panel = panels[i];
+    const color = panel.getAttribute("fill");
+    if (color) {
+      const colorMatch = colors.find(storedColor =>
+        softCompareStrings(storedColor.color, color)
+      );
+      const colorName = colorMatch ? colorMatch.name : color;
+      appliedColors[panel.getAttribute("data-id")] = {
+        color,
+        name: colorName
+      };
+    }
+  }
+  return appliedColors;
+}
+
+// Builds a map of data-id to data-autofill ids from  the provided render to
+// drive autofill behavior
+function getAutofillMapFromRender(render) {
+  // Find all of the colorable elements
+  const panels = render.querySelectorAll("[data-id]");
+
+  // Build an object mapping each panel ID to the autofill ids
+  const autofillMap = {};
+  for (let i = 0; i < panels.length; i++) {
+    const panel = panels[i];
+    const autofill = panel.getAttribute("data-autofill");
+    if (!autofill) {
+      continue;
+    }
+    autofillMap[panel.getAttribute("data-id")] = panel
+      .getAttribute("data-autofill")
+      .trim()
+      .split(" ");
+  }
+  return autofillMap;
+}
+
+// Renders the provided design or product and derives information based on that
+// render.
+// Derives appliedColors and autofillMap
+export function deriveDataFromDesign(design, product) {
+  if (!product) {
+    return { appliedColors: {}, autofillMap: {} };
   }
   const colors = product.get("colors");
 
+  const variations = design
+    ? design.get("variations")
+    : product.get("variations");
+
   // Loop through each variation to grab the colors per panel
-  return design.get("variations").reduce((accumulated, variation) => {
-    const { svg, id } = variation;
+  return variations.reduce(
+    (accumulated, variation) => {
+      const { svg, id } = variation;
+      // Render the variation's SVG
+      const render = new window.DOMParser().parseFromString(svg, "text/xml");
 
-    // Render the variation's SVG
-    const render = new window.DOMParser().parseFromString(svg, "text/xml");
+      if (design) {
+        const appliedColors = getDerivedColorsFromRender(render, colors);
 
-    // Find all of the colorable elements
-    const panels = render.querySelectorAll("[data-id]");
-
-    // Build an object mapping each panel to its color
-    const appliedColors = {};
-    for (let i = 0; i < panels.length; i++) {
-      const panel = panels[i];
-      const color = panel.getAttribute("fill");
-      if (color) {
-        const colorMatch = colors.find(storedColor =>
-          softCompareStrings(storedColor.color, color)
-        );
-        const colorName = colorMatch ? colorMatch.name : color;
-        appliedColors[panel.getAttribute("data-id")] = {
-          color,
-          name: colorName
-        };
+        accumulated.appliedColors[id] = appliedColors;
       }
-    }
 
-    accumulated[id] = appliedColors;
-    return accumulated;
-  }, {});
+      const autofillMap = getAutofillMapFromRender(render);
+      accumulated.autofillMap[id] = autofillMap;
+
+      return accumulated;
+    },
+    { appliedColors: {}, autofillMap: {} }
+  );
 }
 
 /**
@@ -128,7 +164,7 @@ export class EditorContainer extends React.Component {
         .find(variation => variation.id === props.defaultVariation);
     }
 
-    const appliedColors = generateAppliedColors(
+    const { appliedColors, autofillMap } = deriveDataFromDesign(
       this.props.design,
       this.props.product
     );
@@ -161,7 +197,8 @@ export class EditorContainer extends React.Component {
        */
       appliedColors,
       appliedColorsHistory: [],
-      undoDepth: 0
+      undoDepth: 0,
+      autofillMap
     };
   }
 
@@ -419,10 +456,19 @@ export class EditorContainer extends React.Component {
    */
   handleAutofill = () => {
     const currentColors = this.getCurrentVariationColors();
+    const autofillMap = this.state.autofillMap[this.state.currentVariation.id];
     const variations = this.props.product.get("variations");
+    const fullColors = Object.entries(currentColors).reduce(
+      (accumulated, [panelId, color]) => {
+        const autofillToIds = autofillMap[panelId] || [];
+        autofillToIds.forEach(id => (accumulated[id] = color));
+        return accumulated;
+      },
+      {}
+    );
     const appliedColors = variations.reduce((accumulated, variation) => {
       accumulated[variation.id] = {
-        ...currentColors
+        ...fullColors
       };
       return accumulated;
     }, {});

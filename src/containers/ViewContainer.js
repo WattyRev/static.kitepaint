@@ -18,7 +18,51 @@ import User from "../models/User";
 import { isEmbedded, defaultBackground } from "../constants/embed";
 import ErrorPage from "../components/ErrorPage";
 import { softCompareStrings, makeCancelable, embedAllowed } from "../utils";
-import { generateAppliedColors } from "./EditorContainer";
+
+/**
+ * Parses the variations from the provided design in order to determine what colors have been
+ * applied.
+ * @param {Design} design A design to parse the colors from
+ * @param {Product} product The product that the design belongs to
+ * @return {Object}
+ */
+function generateAppliedColors(design, product) {
+  if (!design || !product) {
+    return {};
+  }
+  const colors = product.get("colors");
+
+  // Loop through each variation to grab the colors per panel
+  return design.get("variations").reduce((accumulated, variation) => {
+    const { svg, id } = variation;
+
+    // Render the variation's SVG
+    const render = new window.DOMParser().parseFromString(svg, "text/xml");
+
+    // Find all of the colorable elements
+    const panels = render.querySelectorAll("[data-id]");
+
+    // Build an object mapping each panel to its color
+    const appliedColors = {};
+    for (let i = 0; i < panels.length; i++) {
+      const panel = panels[i];
+      const color = panel.getAttribute("fill");
+      if (color) {
+        const colorMatch = colors.find(storedColor =>
+          softCompareStrings(storedColor.color, color)
+        );
+        const colorName = colorMatch ? colorMatch.name : color;
+        appliedColors[panel.getAttribute("data-id")] = {
+          color,
+          name: colorName
+        };
+      }
+    }
+
+    accumulated[id] = appliedColors;
+    return accumulated;
+  }, {});
+}
 
 /**
  * A container that provides data management for the View page.
