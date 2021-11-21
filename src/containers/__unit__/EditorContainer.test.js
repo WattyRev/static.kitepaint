@@ -265,111 +265,220 @@ describe("EditorContainer", () => {
       }
     });
   });
-  it("generates and saves a new design", () => {
-    expect.assertions(2);
+  describe("save", () => {
+    it("generates and saves a new design", () => {
+      expect.assertions(2);
 
-    // Create some mock variations
-    defaultProps.product = getMockProduct({
-      variations: [
-        {
-          id: "0",
-          name: "Standard",
-          svg: `
-          <svg viewBox="0 0 1963.2 651.1">
-              <polygon data-id="p1" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
-              <polygon data-id="p2" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
-            </svg>
-        `
-        },
-        {
-          id: "1",
-          name: "Vented",
-          svg: `
-          <svg viewBox="0 0 1963.2 651.1">
-              <polygon data-id="p1" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
-              <polygon data-id="p2" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
-            </svg>
-        `
-        }
-      ]
-    });
-    const wrapper = mount(
-      <EditorContainer {...defaultProps}>
-        {data => (
-          <div
-            className="target"
-            onClick={() =>
-              data.actions.save({
-                name: "boogers",
-                user: "123"
-              })
+      // Create some mock variations
+      defaultProps.product = getMockProduct({
+        variations: [
+          {
+            id: "0",
+            name: "Standard",
+            svg: `
+            <svg viewBox="0 0 1963.2 651.1">
+                <polygon data-id="p1" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+                <polygon data-id="p2" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+              </svg>
+          `
+          },
+          {
+            id: "1",
+            name: "Vented",
+            svg: `
+            <svg viewBox="0 0 1963.2 651.1">
+                <polygon data-id="p1" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+                <polygon data-id="p2" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+              </svg>
+          `
+          }
+        ]
+      });
+      const wrapper = mount(
+        <EditorContainer {...defaultProps}>
+          {data => (
+            <div
+              className="target"
+              onClick={() =>
+                data.actions.save({
+                  name: "boogers",
+                  user: "123"
+                })
+              }
+            />
+          )}
+        </EditorContainer>
+      );
+
+      // Set state to behave as if we have added colors to the variations
+      wrapper.instance().setState({
+        appliedColors: {
+          "0": {
+            p1: {
+              name: "black",
+              color: "#000000"
+            },
+            p2: {
+              name: "red",
+              color: "#ff0000"
             }
-          />
-        )}
-      </EditorContainer>
-    );
-
-    // Set state to behave as if we have added colors to the variations
-    wrapper.instance().setState({
-      appliedColors: {
-        "0": {
-          p1: {
-            name: "black",
-            color: "#000000"
           },
-          p2: {
-            name: "red",
-            color: "#ff0000"
-          }
-        },
-        "1": {
-          p1: {
-            name: "red",
-            color: "#ff0000"
-          },
-          p2: {
-            name: "black",
-            color: "#000000"
+          "1": {
+            p1: {
+              name: "red",
+              color: "#ff0000"
+            },
+            p2: {
+              name: "black",
+              color: "#000000"
+            }
           }
         }
-      }
+      });
+
+      // Click to save the design
+      wrapper.find(".target").simulate("click");
+
+      expect(defaultProps.onSave).toHaveBeenCalled();
+      expect(defaultProps.onSave.mock.calls[0][0].get("json")).toEqual({
+        id: null,
+        created: null,
+        productStatus: null,
+        updated: null,
+        name: "boogers",
+        user: "123",
+        product: defaultProps.product.get("id"),
+        status: Status.UNLISTED,
+        variations: [
+          {
+            id: "0",
+            name: "Standard",
+            primary: true,
+            svg: `
+              <svg viewBox="0 0 1963.2 651.1">
+                <polygon data-id="p1" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+                <polygon data-id="p2" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+              </svg>`.trim()
+          },
+          {
+            id: "1",
+            name: "Vented",
+            primary: false,
+            svg: `
+              <svg viewBox="0 0 1963.2 651.1">
+                <polygon data-id="p1" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+                <polygon data-id="p2" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+              </svg>`.trim()
+          }
+        ]
+      });
     });
+    it("automatically selects the primary variation", () => {
+      expect.assertions(2);
 
-    // Click to save the design
-    wrapper.find(".target").simulate("click");
+      // Create some mock variations
+      defaultProps.product = getMockProduct({
+        variations: [
+          {
+            id: "0",
+            name: "Standard",
+            svg: `
+            <svg viewBox="0 0 1963.2 651.1">
+                <polygon data-id="p1" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+                <polygon data-id="p2" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+              </svg>
+          `
+          },
+          {
+            id: "1",
+            name: "Vented",
+            svg: `
+            <svg viewBox="0 0 1963.2 651.1">
+                <polygon data-id="p1" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+                <polygon data-id="p2" fill="#FFFFFF" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+              </svg>
+          `
+          }
+        ]
+      });
+      const wrapper = mount(
+        <EditorContainer {...defaultProps}>
+          {data => (
+            <div
+              className="target"
+              onClick={() =>
+                data.actions.save({
+                  name: "boogers",
+                  user: "123"
+                })
+              }
+            />
+          )}
+        </EditorContainer>
+      );
 
-    expect(defaultProps.onSave).toHaveBeenCalled();
-    expect(defaultProps.onSave.mock.calls[0][0].get("json")).toEqual({
-      id: null,
-      created: null,
-      productStatus: null,
-      updated: null,
-      name: "boogers",
-      user: "123",
-      product: defaultProps.product.get("id"),
-      status: Status.UNLISTED,
-      variations: [
-        {
-          id: "0",
-          name: "Standard",
-          primary: true,
-          svg: `
-            <svg viewBox="0 0 1963.2 651.1">
-              <polygon data-id="p1" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
-              <polygon data-id="p2" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
-            </svg>`.trim()
-        },
-        {
-          id: "1",
-          name: "Vented",
-          primary: false,
-          svg: `
-            <svg viewBox="0 0 1963.2 651.1">
-              <polygon data-id="p1" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
-              <polygon data-id="p2" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
-            </svg>`.trim()
+      // Set state to behave as if we have added colors to the variations
+      wrapper.instance().setState({
+        appliedColors: {
+          "0": {
+            p1: {
+              name: "white",
+              color: "#ffffff"
+            },
+            p2: {
+              name: "red",
+              color: "#ff0000"
+            }
+          },
+          "1": {
+            p1: {
+              name: "red",
+              color: "#ff0000"
+            },
+            p2: {
+              name: "black",
+              color: "#000000"
+            }
+          }
         }
-      ]
+      });
+
+      // Click to save the design
+      wrapper.find(".target").simulate("click");
+
+      expect(defaultProps.onSave).toHaveBeenCalled();
+      expect(defaultProps.onSave.mock.calls[0][0].get("json")).toEqual({
+        id: null,
+        created: null,
+        productStatus: null,
+        updated: null,
+        name: "boogers",
+        user: "123",
+        product: defaultProps.product.get("id"),
+        status: Status.UNLISTED,
+        variations: [
+          {
+            id: "0",
+            name: "Standard",
+            primary: false,
+            svg: `
+              <svg viewBox="0 0 1963.2 651.1">
+                <polygon data-id="p1" fill="#ffffff" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+                <polygon data-id="p2" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+              </svg>`.trim()
+          },
+          {
+            id: "1",
+            name: "Vented",
+            primary: true, // This is more colored, so it should be the primary
+            svg: `
+              <svg viewBox="0 0 1963.2 651.1">
+                <polygon data-id="p1" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+                <polygon data-id="p2" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+              </svg>`.trim()
+          }
+        ]
+      });
     });
   });
   it("generates applied colors based on the provided design", () => {
