@@ -21,6 +21,7 @@ const productAppliedColorsShape = PropTypes.objectOf(appliedColorsShape);
 
 export { appliedColorsShape, productAppliedColorsShape };
 
+// Inspects rendered SVG and gets the applied colors, indexed by panel's data-id
 function getDerivedColorsFromRender(render, colors) {
   // Find all of the colorable elements
   const panels = render.querySelectorAll("[data-id]");
@@ -44,6 +45,8 @@ function getDerivedColorsFromRender(render, colors) {
   return appliedColors;
 }
 
+// Builds a map of data-id to data-autofill ids from  the provided render to
+// drive autofill behavior
 function getAutofillMapFromRender(render) {
   // Find all of the colorable elements
   const panels = render.querySelectorAll("[data-id]");
@@ -64,6 +67,9 @@ function getAutofillMapFromRender(render) {
   return autofillMap;
 }
 
+// Renders the provided design or product and derives information based on that
+// render.
+// Derives appliedColors and autofillMap
 export function deriveDataFromDesign(design, product) {
   if (!product) {
     return { appliedColors: {}, autofillMap: {} };
