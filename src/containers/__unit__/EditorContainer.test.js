@@ -440,12 +440,12 @@ describe("EditorContainer", () => {
           {
             id: "0",
             name: "Standard",
-            svg: ""
+            svg: `<svg><path data-id="p1" data-autofill="p1 p2" /></svg>`
           },
           {
             id: "1",
             name: "Vented",
-            svg: ""
+            svg: `<svg><path data-id="p1" data-autofill="p1" /><path data-id="p2" data-autofill="p2" /></svg>`
           }
         ]
       });
@@ -469,14 +469,6 @@ describe("EditorContainer", () => {
         appliedColors: {
           "0": {
             p1: {
-              name: "black",
-              color: "#000000"
-            },
-            p2: {
-              name: "red",
-              color: "#ff0000"
-            },
-            p3: {
               name: "green",
               color: "#00ff00"
             }
@@ -500,30 +492,22 @@ describe("EditorContainer", () => {
       expect(JSON.parse(wrapper.find(".output").text())).toEqual({
         "0": {
           p1: {
-            name: "black",
-            color: "#000000"
+            color: "#00ff00",
+            name: "green"
           },
           p2: {
-            name: "red",
-            color: "#ff0000"
-          },
-          p3: {
-            name: "green",
-            color: "#00ff00"
+            color: "#00ff00",
+            name: "green"
           }
         },
         "1": {
           p1: {
-            name: "black",
-            color: "#000000"
+            color: "#00ff00",
+            name: "green"
           },
           p2: {
-            name: "red",
-            color: "#ff0000"
-          },
-          p3: {
-            name: "green",
-            color: "#00ff00"
+            color: "#00ff00",
+            name: "green"
           }
         }
       });
@@ -536,22 +520,22 @@ describe("EditorContainer", () => {
       expect(JSON.parse(wrapper.find(".output").text())).toEqual({
         "0": {
           p1: {
-            name: "red",
-            color: "#ff0000"
+            color: "#ff0000",
+            name: "red"
           },
           p2: {
-            name: "black",
-            color: "#000000"
+            color: "#000000",
+            name: "black"
           }
         },
         "1": {
           p1: {
-            name: "red",
-            color: "#ff0000"
+            color: "#ff0000",
+            name: "red"
           },
           p2: {
-            name: "black",
-            color: "#000000"
+            color: "#000000",
+            name: "black"
           }
         }
       });
@@ -575,10 +559,18 @@ describe("EditorContainer", () => {
           p1: {
             name: "black",
             color: "#000000"
+          },
+          p2: {
+            name: "black",
+            color: "#000000"
           }
         },
         "1": {
           p1: {
+            name: "black",
+            color: "#000000"
+          },
+          p2: {
             name: "black",
             color: "#000000"
           }
@@ -1050,12 +1042,12 @@ describe("EditorContainer", () => {
           {
             id: "0",
             name: "Standard",
-            svg: ""
+            svg: `<svg><path data-id="p1" data-autofill="p1" /></svg>`
           },
           {
             id: "1",
             name: "Vented",
-            svg: ""
+            svg: `<svg><path data-id="p1" data-autofill="p1" /></svg>`
           }
         ]
       });
