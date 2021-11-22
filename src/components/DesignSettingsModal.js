@@ -28,7 +28,6 @@ const Content = ({
   onCancel,
   onChangeName,
   onChangeStatus,
-  onChangePrimary,
   isPending
 }) => {
   if (!design) {
@@ -95,25 +94,6 @@ const Content = ({
           </option>
         ))}
       </Select>
-      <Label>
-        Primary Variation{" "}
-        <Tooltip>
-          The primary variation is the one that will be displayed in thumbnails
-          and will be selected by default in the editor or view pages for this
-          design.
-        </Tooltip>
-      </Label>
-      <Select
-        className="select-primary"
-        value={design.get("variations").find(variation => variation.primary).id}
-        onChange={e => onChangePrimary(e.target.value)}
-      >
-        {design.get("variations").map(variation => (
-          <option key={variation.id} value={variation.id}>
-            {variation.name}
-          </option>
-        ))}
-      </Select>
       <Button
         className="submit-button"
         type="submit"
@@ -137,9 +117,6 @@ Content.propTypes = {
   onChangeName: PropTypes.func.isRequired,
   /** Called when the status changes. Is provided with the new status as the first parameter */
   onChangeStatus: PropTypes.func.isRequired,
-  /** Called when the primary variation changes. Is provided with the name of
-   the new primary variation */
-  onChangePrimary: PropTypes.func.isRequired,
   /** Disables the button if true */
   isPending: PropTypes.bool.isRequired
 };
@@ -181,19 +158,6 @@ class DesignSettingsModal extends React.Component {
     this.setState({
       design: this.state.design.set("status", value)
     });
-  handleChangePrimary = value => {
-    const variations = this.state.design.get("variations").map(variation => {
-      if (variation.id === value) {
-        variation.primary = true;
-        return variation;
-      }
-      variation.primary = false;
-      return variation;
-    });
-    this.setState({
-      design: this.state.design.set("variations", variations)
-    });
-  };
 
   /** Handles submission by calling onSubmit with the relevant data and handling
    the promise that it may return. */
@@ -228,7 +192,6 @@ class DesignSettingsModal extends React.Component {
             onSubmit={this.handleSubmit}
             onChangeName={this.handleChangeName}
             onChangeStatus={this.handleChangeStatus}
-            onChangePrimary={this.handleChangePrimary}
             isPending={this.state.isPending}
           />
         }

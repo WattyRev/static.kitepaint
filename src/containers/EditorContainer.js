@@ -369,8 +369,13 @@ export class EditorContainer extends React.Component {
     const appliedColors = this.state.appliedColors;
     const productVariations = this.props.product.get("variations");
 
+    // Veriables for determining what the primary variation should be, based on
+    // which design is colored the most
+    let highestColorRatio = 0;
+    let mostColoredVariationIndex = 0;
+
     // Build each variation
-    return productVariations.map((variation, index) => {
+    const variations = productVariations.map((variation, index) => {
       // Render the blank variation from the product in memory
       const render = new window.DOMParser().parseFromString(
         variation.svg,
@@ -378,6 +383,9 @@ export class EditorContainer extends React.Component {
       );
       const colorMap = appliedColors[variation.id] || {};
 
+      // Variables for calculating the ratio of colored panels to colorable panels
+      let panelCount = 0;
+      let coloredPanelCount = 0;
       // Apply each color to the rendered variation
       Object.keys(colorMap).forEach(id => {
         const color = colorMap[id].color;
@@ -385,8 +393,26 @@ export class EditorContainer extends React.Component {
         if (!panel) {
           return;
         }
+
+        // Count panels and uncolored panels. White is default, so consider that
+        // uncolored.
+        panelCount++;
+        if (color.toLowerCase() !== "#ffffff") {
+          coloredPanelCount++;
+        }
+
+        // Fill the panel with the appropriate color
         panel.setAttribute("fill", color);
       });
+
+      // Determine if this variation should be the primary
+      if (panelCount) {
+        const colorRatio = coloredPanelCount / panelCount;
+        if (colorRatio > highestColorRatio) {
+          highestColorRatio = colorRatio;
+          mostColoredVariationIndex = index;
+        }
+      }
 
       // Get the new SVG string from the render.
       const svg = render.querySelector("svg").outerHTML;
@@ -395,10 +421,15 @@ export class EditorContainer extends React.Component {
       return {
         id: variation.id,
         name: variation.name,
-        primary: !index,
+        primary: false,
         svg
       };
     });
+
+    // Set the primary variation
+    variations[mostColoredVariationIndex].primary = true;
+
+    return variations;
   };
 
   /** Clears all colors from the current variation */
