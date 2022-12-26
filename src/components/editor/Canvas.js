@@ -52,6 +52,8 @@ class Canvas extends React.Component {
      *
      * A panel/group may also have a data-whitelist property that contains a comma separated list of
      * color names that may be used on that panel/group.
+     * A panel/group may also have a data-blacklist property that contains a comma separated list of
+     * color names that may not be used on that panel/group.
      */
     svg: PropTypes.string.isRequired,
     /**
@@ -93,8 +95,16 @@ class Canvas extends React.Component {
       );
     };
 
-    // Parses a string form the data-whitelist property into an array of lowercase,trimmed values
-    const processWhitelist = whitelistString => {
+    const checkBlacklist = blacklist => {
+      return (
+        !blacklist ||
+        !blacklist.length ||
+        !blacklist.includes(this.props.currentColor.toLowerCase())
+      );
+    };
+
+    // Parses a string form the data-whitelist or data-blacklist property into an array of lowercase,trimmed values
+    const processColorList = whitelistString => {
       return whitelistString
         .split(",")
         .map(color => color.trim().toLowerCase())
@@ -107,10 +117,15 @@ class Canvas extends React.Component {
       // Get the data-whitelist attribute which contains a comma separated list of color names that can
       // be applied
       const whitelistString = event.target.getAttribute("data-whitelist") || "";
-      const whitelist = processWhitelist(whitelistString);
+      const whitelist = processColorList(whitelistString);
 
-      // If the whitelist is empty or it contains the current color, trigger onClick
-      if (checkWhitelist(whitelist)) {
+      // Get the data-blacklist attribute which contains a comma separated list of color names that can
+      // be applied
+      const blacklistString = event.target.getAttribute("data-blacklist") || "";
+      const blacklist = processColorList(blacklistString);
+
+      // If the color satisfies blacklist and whitelist, trigger onClick
+      if (checkWhitelist(whitelist) && checkBlacklist(blacklist)) {
         this.props.onClick(targetId);
         return;
       }
@@ -133,10 +148,16 @@ class Canvas extends React.Component {
     // Get the whitelist of colors for the group
     const whitelistString =
       event.target.parentElement.getAttribute("data-whitelist") || "";
-    const whitelist = processWhitelist(whitelistString);
+    const whitelist = processColorList(whitelistString);
 
-    // Call onClick if the current color is in the whitelist or if the whitelist is empty
-    if (checkWhitelist(whitelist)) {
+    // Get the data-blacklist attribute which contains a comma separated list of color names that can
+    // be applied
+    const blacklistString =
+      event.target.parentElement.getAttribute("data-blacklist") || "";
+    const blacklist = processColorList(blacklistString);
+
+    // Call onClick if the current color satisfies blacklist and whitelist
+    if (checkWhitelist(whitelist) && checkBlacklist(blacklist)) {
       this.props.onClick(parentGroupId);
       return;
     }
