@@ -35,12 +35,13 @@ describe("Canvas", () => {
   });
 
   describe("#handleClick", () => {
-    function createMockElement(dataId, dataWhitelist, parent) {
+    function createMockElement(dataId, dataWhitelist, dataBlacklist, parent) {
       return {
         getAttribute: jest.fn(attributeName => {
           const map = {
             "data-id": dataId,
-            "data-whitelist": dataWhitelist
+            "data-whitelist": dataWhitelist,
+            "data-blacklist": dataBlacklist
           };
           return map[attributeName];
         }),
@@ -51,11 +52,11 @@ describe("Canvas", () => {
       defaultProps.onClick = jest.fn();
       defaultProps.currentColor = "orange";
     });
-    it("triggers onClick if the clicked element has data-id and no data-whitelist", () => {
+    it("triggers onClick if the clicked element has data-id and no data-whitelist or data-blacklist", () => {
       expect.assertions(2);
       const subject = new Canvas(defaultProps);
       const event = {
-        target: createMockElement("p1", "")
+        target: createMockElement("p1", "", "")
       };
       subject.handleClick(event);
       expect(defaultProps.onClick).toHaveBeenCalled();
@@ -68,18 +69,37 @@ describe("Canvas", () => {
         target: createMockElement(
           "p1",
           // Testing trimming and case insenstivity
-          "Blue, white,OranGe , black"
+          "Blue, white,OranGe , black",
+          ""
         )
       };
       subject.handleClick(event);
       expect(defaultProps.onClick).toHaveBeenCalled();
       expect(defaultProps.onClick.mock.calls[0][0]).toEqual("p1");
     });
-    it("triggers onClick if the clicked element has a parent with data-id and no data-whitelist", () => {
+    it("does not trigger onClick if the clicked element has data-id and matching data-blacklist", () => {
+      const subject = new Canvas(defaultProps);
+      const event = {
+        target: createMockElement(
+          "p1",
+          "",
+          // Testing trimming and case insenstivity
+          "Blue, white,OranGe , black"
+        )
+      };
+      subject.handleClick(event);
+      expect(defaultProps.onClick).not.toHaveBeenCalled();
+    });
+    it("triggers onClick if the clicked element has a parent with data-id and no data-whitelist or data-blacklist", () => {
       expect.assertions(2);
       const subject = new Canvas(defaultProps);
       const event = {
-        target: createMockElement(null, null, createMockElement("g1", null))
+        target: createMockElement(
+          null,
+          null,
+          null,
+          createMockElement("g1", null, null)
+        )
       };
       subject.handleClick(event);
       expect(defaultProps.onClick).toHaveBeenCalled();
@@ -92,18 +112,32 @@ describe("Canvas", () => {
         target: createMockElement(
           null,
           null,
-          createMockElement("g1", "orange, black, red")
+          null,
+          createMockElement("g1", "orange, black, red", "")
         )
       };
       subject.handleClick(event);
       expect(defaultProps.onClick).toHaveBeenCalled();
       expect(defaultProps.onClick.mock.calls[0][0]).toEqual("g1");
     });
+    it("does not trigger onClick if the clicked element has a parent with data-id and matching data-blacklist", () => {
+      const subject = new Canvas(defaultProps);
+      const event = {
+        target: createMockElement(
+          null,
+          null,
+          null,
+          createMockElement("g1", "", "orange, black, red")
+        )
+      };
+      subject.handleClick(event);
+      expect(defaultProps.onClick).not.toHaveBeenCalled();
+    });
     it("does not trigger onClick if neither the clicked element nor the parent have data-id", () => {
       expect.assertions(1);
       const subject = new Canvas(defaultProps);
       const event = {
-        target: createMockElement(null, null)
+        target: createMockElement(null, null, null)
       };
       subject.handleClick(event);
       expect(defaultProps.onClick).not.toHaveBeenCalled();
@@ -112,10 +146,19 @@ describe("Canvas", () => {
       expect.assertions(1);
       const subject = new Canvas(defaultProps);
       const event = {
-        target: createMockElement("p1", "White, Black")
+        target: createMockElement("p1", "White, Black", "")
       };
       subject.handleClick(event);
       expect(defaultProps.onClick).not.toHaveBeenCalled();
+    });
+    it("triggers onClick if the clicked element has data-id and a non-matching data-blacklist", () => {
+      expect.assertions(1);
+      const subject = new Canvas(defaultProps);
+      const event = {
+        target: createMockElement("p1", "", "White, Black")
+      };
+      subject.handleClick(event);
+      expect(defaultProps.onClick).toHaveBeenCalledWith("p1");
     });
     it("does not trigger onClick if the parent element has data-id and a non-matching data-whitelist", () => {
       expect.assertions(1);
@@ -124,11 +167,26 @@ describe("Canvas", () => {
         target: createMockElement(
           null,
           null,
-          createMockElement("g1", "Blue, Green")
+          null,
+          createMockElement("g1", "Blue, Green", "")
         )
       };
       subject.handleClick(event);
       expect(defaultProps.onClick).not.toHaveBeenCalled();
+    });
+    it("triggers onClick if the parent element has data-id and a non-matching data-blacklist", () => {
+      expect.assertions(1);
+      const subject = new Canvas(defaultProps);
+      const event = {
+        target: createMockElement(
+          null,
+          null,
+          null,
+          createMockElement("g1", "", "Blue, Green")
+        )
+      };
+      subject.handleClick(event);
+      expect(defaultProps.onClick).toHaveBeenCalledWith("g1");
     });
   });
 });
