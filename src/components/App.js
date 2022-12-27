@@ -13,6 +13,7 @@ import Account from "./account";
 import Activate from "./activate";
 import Create from "./create";
 import CreateNew from "./createNew";
+import Manufacturer from "./manufacturer";
 import Designs from "./designs";
 import Edit from "./edit";
 import ErrorPage from "./ErrorPage";
@@ -41,6 +42,11 @@ const App = ({ _isEmbedded }) => (
         component={Activate}
       />
       <RestrictedRoute exact path="/create" component={Create} />
+      <RestrictedRoute
+        exact
+        path="/manufacturer/:manufacturerName"
+        component={Manufacturer}
+      />
       <Route exact path="/create/:productId" component={CreateNew} />
       <RestrictedRoute exact path="/designs" component={Designs} />
       <Route exact path="/edit/:designId" component={Edit} />
