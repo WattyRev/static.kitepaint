@@ -33,6 +33,7 @@ export const getPublicProductsGrouped = (state, groupBy) => {
   return products
     .filter(product => product.get("status") === Status.PUBLIC)
     .toList()
+    .sortBy(product => product.get("name"))
     .groupBy(product => product.get(groupBy))
     .toJS();
 };
