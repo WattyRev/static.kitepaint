@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
+import { success } from "../../theme/Alert";
 import { appliedColorsShape } from "../../containers/EditorContainer";
 import ColorableSvg from "./ColorableSvg";
 
@@ -81,11 +82,7 @@ class Canvas extends React.Component {
     currentColor: ""
   };
 
-  /**
-   * Handle click events by deciding if it is a relevant item that was clicked.
-   * @param  {Object} event The DOM click event
-   */
-  handleClick = event => {
+  colorPanel = event => {
     // Checks if the the currentColor can be applied given the content or absence of a whitelist.
     const checkWhitelist = whitelist => {
       return (
@@ -163,10 +160,47 @@ class Canvas extends React.Component {
     }
   };
 
+  alertCurrentColor = event => {
+    // Get the ID and color of the panel clicked
+    const targetId = event.target.getAttribute("data-id");
+    if (targetId) {
+      const colorEntry = this.props.colorMap[targetId];
+      const colorName = colorEntry.name;
+      return success(colorName);
+    }
+
+    // If was no id on the panel, look for a parent group.
+
+    // If there is no parent element, return
+    if (!event.target.parentElement) {
+      return;
+    }
+
+    // Get the color from the parent
+    const parentGroupId = event.target.parentElement.getAttribute("data-id");
+
+    if (parentGroupId) {
+      const colorEntry = this.props.colorMap[parentGroupId];
+      const colorName = colorEntry.name;
+      return success(colorName);
+    }
+  };
+
+  /**
+   * Handle click events by deciding if it is a relevant item that was clicked.
+   * @param  {Object} event The DOM click event
+   */
+  handleClick = event => {
+    if (this.props.isReadOnly) {
+      return this.alertCurrentColor(event);
+    }
+    return this.colorPanel(event);
+  };
+
   render() {
     return (
       <StyleWrapper
-        onClick={this.props.isReadOnly ? () => {} : this.handleClick}
+        onClick={this.handleClick}
         isReadOnly={this.props.isReadOnly}
         background={this.props.background}
       >

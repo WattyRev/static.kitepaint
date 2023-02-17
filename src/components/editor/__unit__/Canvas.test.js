@@ -2,6 +2,23 @@ import React from "react";
 import { shallow, mount } from "enzyme";
 import Theme from "../../../theme";
 import Canvas, { StyleWrapper } from "../Canvas";
+import { success } from "../../../theme/Alert";
+
+jest.mock("../../../theme/Alert");
+
+function createMockElement(dataId, dataWhitelist, dataBlacklist, parent) {
+  return {
+    getAttribute: jest.fn(attributeName => {
+      const map = {
+        "data-id": dataId,
+        "data-whitelist": dataWhitelist,
+        "data-blacklist": dataBlacklist
+      };
+      return map[attributeName];
+    }),
+    parentElement: parent
+  };
+}
 
 describe("Canvas", () => {
   describe("StyleWrapper", () => {
@@ -27,6 +44,8 @@ describe("Canvas", () => {
     defaultProps = {
       svg: '<div class="testing_target">test</div>'
     };
+
+    success.mockReset();
   });
   it("renders", () => {
     expect.assertions(1);
@@ -34,20 +53,83 @@ describe("Canvas", () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  describe("#handleClick", () => {
-    function createMockElement(dataId, dataWhitelist, dataBlacklist, parent) {
-      return {
-        getAttribute: jest.fn(attributeName => {
-          const map = {
-            "data-id": dataId,
-            "data-whitelist": dataWhitelist,
-            "data-blacklist": dataBlacklist
-          };
-          return map[attributeName];
-        }),
-        parentElement: parent
+  describe("in readOnly mode", () => {
+    beforeEach(() => {
+      defaultProps = {
+        ...defaultProps,
+        isReadOnly: true,
+        colorMap: {
+          p1: {
+            color: "#ffffff",
+            name: "white"
+          },
+          g1: {
+            color: "#ff0000",
+            name: "red"
+          }
+        }
       };
-    }
+    });
+    describe("on panel click", () => {
+      it("alerts with the color name of the panel", () => {
+        expect.assertions(1);
+        const event = {
+          target: createMockElement("p1", "", "")
+        };
+        const wrapper = shallow(<Canvas {...defaultProps} />);
+        wrapper.find(StyleWrapper).prop("onClick")(event);
+        expect(success).toHaveBeenCalledWith("white");
+      });
+      it("alerts with the color name of the group if it is in a colored group", () => {
+        const event = {
+          target: createMockElement("", "", "", createMockElement("g1"))
+        };
+        const wrapper = shallow(<Canvas {...defaultProps} />);
+        wrapper.find(StyleWrapper).prop("onClick")(event);
+        expect(success).toHaveBeenCalledWith("red");
+      });
+      it("does not alert if no valid panel was clicked", () => {
+        const event = {
+          target: createMockElement("", "", "")
+        };
+        const wrapper = shallow(<Canvas {...defaultProps} />);
+        wrapper.find(StyleWrapper).prop("onClick")(event);
+        expect(success).not.toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe("when not in readonly mode", () => {
+    beforeEach(() => {
+      defaultProps = {
+        ...defaultProps,
+        isReadOnly: false,
+        colorMap: {
+          p1: {
+            color: "#ffffff",
+            name: "white"
+          },
+          g1: {
+            color: "#ff0000",
+            name: "red"
+          }
+        }
+      };
+    });
+    describe("on panel click", () => {
+      it("does not alert", () => {
+        expect.assertions(1);
+        const event = {
+          target: createMockElement("p1", "", "")
+        };
+        const wrapper = shallow(<Canvas {...defaultProps} />);
+        wrapper.find(StyleWrapper).prop("onClick")(event);
+        expect(success).not.toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe("#colorPanel", () => {
     beforeEach(() => {
       defaultProps.onClick = jest.fn();
       defaultProps.currentColor = "orange";
@@ -58,7 +140,7 @@ describe("Canvas", () => {
       const event = {
         target: createMockElement("p1", "", "")
       };
-      subject.handleClick(event);
+      subject.colorPanel(event);
       expect(defaultProps.onClick).toHaveBeenCalled();
       expect(defaultProps.onClick.mock.calls[0][0]).toEqual("p1");
     });
@@ -73,7 +155,7 @@ describe("Canvas", () => {
           ""
         )
       };
-      subject.handleClick(event);
+      subject.colorPanel(event);
       expect(defaultProps.onClick).toHaveBeenCalled();
       expect(defaultProps.onClick.mock.calls[0][0]).toEqual("p1");
     });
@@ -87,7 +169,7 @@ describe("Canvas", () => {
           "Blue, white,OranGe , black"
         )
       };
-      subject.handleClick(event);
+      subject.colorPanel(event);
       expect(defaultProps.onClick).not.toHaveBeenCalled();
     });
     it("triggers onClick if the clicked element has a parent with data-id and no data-whitelist or data-blacklist", () => {
@@ -101,7 +183,7 @@ describe("Canvas", () => {
           createMockElement("g1", null, null)
         )
       };
-      subject.handleClick(event);
+      subject.colorPanel(event);
       expect(defaultProps.onClick).toHaveBeenCalled();
       expect(defaultProps.onClick.mock.calls[0][0]).toEqual("g1");
     });
@@ -116,7 +198,7 @@ describe("Canvas", () => {
           createMockElement("g1", "orange, black, red", "")
         )
       };
-      subject.handleClick(event);
+      subject.colorPanel(event);
       expect(defaultProps.onClick).toHaveBeenCalled();
       expect(defaultProps.onClick.mock.calls[0][0]).toEqual("g1");
     });
@@ -130,7 +212,7 @@ describe("Canvas", () => {
           createMockElement("g1", "", "orange, black, red")
         )
       };
-      subject.handleClick(event);
+      subject.colorPanel(event);
       expect(defaultProps.onClick).not.toHaveBeenCalled();
     });
     it("does not trigger onClick if neither the clicked element nor the parent have data-id", () => {
@@ -139,7 +221,7 @@ describe("Canvas", () => {
       const event = {
         target: createMockElement(null, null, null)
       };
-      subject.handleClick(event);
+      subject.colorPanel(event);
       expect(defaultProps.onClick).not.toHaveBeenCalled();
     });
     it("does not trigger onClick if the clicked element has data-id and a non-matching data-whitelist", () => {
@@ -148,7 +230,7 @@ describe("Canvas", () => {
       const event = {
         target: createMockElement("p1", "White, Black", "")
       };
-      subject.handleClick(event);
+      subject.colorPanel(event);
       expect(defaultProps.onClick).not.toHaveBeenCalled();
     });
     it("triggers onClick if the clicked element has data-id and a non-matching data-blacklist", () => {
@@ -157,7 +239,7 @@ describe("Canvas", () => {
       const event = {
         target: createMockElement("p1", "", "White, Black")
       };
-      subject.handleClick(event);
+      subject.colorPanel(event);
       expect(defaultProps.onClick).toHaveBeenCalledWith("p1");
     });
     it("does not trigger onClick if the parent element has data-id and a non-matching data-whitelist", () => {
@@ -171,7 +253,7 @@ describe("Canvas", () => {
           createMockElement("g1", "Blue, Green", "")
         )
       };
-      subject.handleClick(event);
+      subject.colorPanel(event);
       expect(defaultProps.onClick).not.toHaveBeenCalled();
     });
     it("triggers onClick if the parent element has data-id and a non-matching data-blacklist", () => {
@@ -185,7 +267,7 @@ describe("Canvas", () => {
           createMockElement("g1", "", "Blue, Green")
         )
       };
-      subject.handleClick(event);
+      subject.colorPanel(event);
       expect(defaultProps.onClick).toHaveBeenCalledWith("g1");
     });
   });
