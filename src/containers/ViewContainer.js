@@ -136,12 +136,12 @@ export class ViewContainer extends React.Component {
     }
 
     const appliedColors = generateAppliedColors(props.design, props.product);
+
     // Set the appied colors if not already set
     if (!state.appliedColors) {
       newState.appliedColors = appliedColors;
     }
 
-    // console.log('appliedColors', appliedColors);
     // Loop through the applied to grab the colors used in each
     newState.usedColors = Object.entries(appliedColors).reduce(
       (accumulated, [variationId, panelColors]) => {
