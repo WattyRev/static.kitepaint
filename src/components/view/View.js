@@ -7,6 +7,7 @@ import Toolbar from "../editor/Toolbar";
 import Sidebar from "./Sidebar";
 import Canvas from "../editor/Canvas";
 import ErrorPage from "../ErrorPage";
+import InvalidColorsModal from "./InvalidColorsModal";
 
 const PageLayout = styled.div`
   display: flex;
@@ -33,6 +34,9 @@ const View = ({ match }) => (
       }
       return (
         <React.Fragment>
+          <InvalidColorsModal
+            hasInvalidColors={viewData.props.hasInvalidColors}
+          />
           <Toolbar
             design={viewData.props.design}
             hideOutlines={viewData.props.hideOutlines}

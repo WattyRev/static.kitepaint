@@ -4,7 +4,10 @@ import { getMockDesign } from "../../../models/Design";
 import { getMockProduct } from "../../../models/Product";
 import { getMockManufacturer } from "../../../models/Manufacturer";
 import { getMockUser } from "../../../models/User";
+import { success } from "../../../theme/Alert";
 import Sidebar, { StyledSidebar } from "../Sidebar";
+
+jest.mock("../../../theme/Alert");
 
 describe("Sidebar", () => {
   let defaultProps;
@@ -110,5 +113,30 @@ describe("Sidebar", () => {
       .simulate("click");
     expect(defaultProps.onVariationSelect).toHaveBeenCalled();
     expect(defaultProps.onVariationSelect.mock.calls[0][0]).toEqual("1");
+  });
+  it("alerts the name of the color when a color is clicked", () => {
+    defaultProps.usedColors = {
+      Standard: [
+        {
+          name: "white",
+          color: "#ffffff"
+        },
+        {
+          name: "boogers",
+          color: "#00ff00"
+        }
+      ]
+    };
+
+    const wrapper = shallow(<Sidebar {...defaultProps} />);
+    const sidebarUI = shallow(
+      <div>{wrapper.find(StyledSidebar).prop("children")(sidebarData)}</div>
+    );
+    sidebarUI
+      .find(".testing_used-color")
+      .at(1)
+      .simulate("click");
+
+    expect(success).toHaveBeenCalledWith("boogers");
   });
 });

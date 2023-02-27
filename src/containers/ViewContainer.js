@@ -19,6 +19,8 @@ import { isEmbedded, defaultBackground } from "../constants/embed";
 import ErrorPage from "../components/ErrorPage";
 import { softCompareStrings, makeCancelable, embedAllowed } from "../utils";
 
+const INVALID_COLOR_PREFIX = "Invalid Color";
+
 /**
  * Parses the variations from the provided design in order to determine what colors have been
  * applied.
@@ -51,7 +53,9 @@ function generateAppliedColors(design, product) {
         const colorMatch = colors.find(storedColor =>
           softCompareStrings(storedColor.color, color)
         );
-        const colorName = colorMatch ? colorMatch.name : color;
+        const colorName = colorMatch
+          ? colorMatch.name
+          : `${INVALID_COLOR_PREFIX}: ${color}`;
         appliedColors[panel.getAttribute("data-id")] = {
           color,
           name: colorName
@@ -113,10 +117,18 @@ export class ViewContainer extends React.Component {
 
   state = {
     isLoading: true,
+    // An itemized list of colorable panels and their colors for each variation
+    // eg { [variationId]: { [panelId]: { colorName, color } } }
+    appliedColors: null,
+    // A condensed list of colors used in each variation
+    // eg { [variationId]: [{ colorName, color }] }
     usedColors: {},
     currentVariation: null,
     background: defaultBackground || null,
-    hideOutlines: false
+    hideOutlines: false,
+    // Indicates if the current design contains colors that no longer exist in
+    // the color palette
+    hasInvalidColors: false
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -135,32 +147,52 @@ export class ViewContainer extends React.Component {
       );
     }
 
-    const appliedColors = generateAppliedColors(props.design, props.product);
+    const hasUsedColors = Object.keys(state.usedColors).length > 0;
 
-    // Set the appied colors if not already set
-    if (!state.appliedColors) {
-      newState.appliedColors = appliedColors;
-    }
+    if (!hasUsedColors || !state.appliedColors) {
+      const appliedColors = generateAppliedColors(props.design, props.product);
 
-    // Loop through the applied to grab the colors used in each
-    newState.usedColors = Object.entries(appliedColors).reduce(
-      (accumulated, [variationId, panelColors]) => {
-        const condensedColorsList = Object.values(panelColors).reduce(
-          (accumulated, colorInfo) => {
-            if (accumulated.found.includes(colorInfo.color)) {
-              return accumulated;
-            }
-            accumulated.found.push(colorInfo.color);
-            accumulated.usedColors.push(colorInfo);
+      // Set the appied colors if not already set
+      if (!state.appliedColors) {
+        newState.appliedColors = appliedColors;
+      }
+
+      // Set used colors if not already done
+      if (!hasUsedColors) {
+        newState.usedColors = Object.entries(appliedColors).reduce(
+          (accumulated, [variationId, panelColors]) => {
+            const condensedColorsList = Object.values(panelColors).reduce(
+              (accumulated, colorInfo) => {
+                if (accumulated.found.includes(colorInfo.color)) {
+                  return accumulated;
+                }
+                accumulated.found.push(colorInfo.color);
+                accumulated.usedColors.push(colorInfo);
+                return accumulated;
+              },
+              { found: [], usedColors: [] }
+            ).usedColors;
+            accumulated[variationId] = condensedColorsList;
             return accumulated;
           },
-          { found: [], usedColors: [] }
-        ).usedColors;
-        accumulated[variationId] = condensedColorsList;
-        return accumulated;
-      },
-      {}
-    );
+          {}
+        );
+
+        // Detect if the design contains invalid colors
+        const foundInvalidVariation = Object.values(newState.usedColors).find(
+          variationColors => {
+            const foundInvalidColor = variationColors.find(({ name }) => {
+              if (name.includes(INVALID_COLOR_PREFIX)) {
+                return true;
+              }
+              return false;
+            });
+            return !!foundInvalidColor;
+          }
+        );
+        newState.hasInvalidColors = !!foundInvalidVariation;
+      }
+    }
 
     return newState;
   }
@@ -253,6 +285,7 @@ export class ViewContainer extends React.Component {
         currentVariationColors: this.getCurrentVariationColors(),
         background: this.state.background,
         hideOutlines: this.state.hideOutlines,
+        hasInvalidColors: this.state.hasInvalidColors,
         currentVariation: this.state.currentVariation,
         isLoading: this.state.isLoading,
         design: this.props.design,

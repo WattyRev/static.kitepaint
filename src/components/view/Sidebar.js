@@ -8,6 +8,7 @@ import User from "../../models/User";
 import ColorTile from "../editor/ColorTile";
 import { Icon, FillToBottom, Sidebar as SidebarUI } from "../../theme";
 import { getAssetUrl } from "../../utils";
+import { success } from "../../theme/Alert";
 import ManufacturerLogo from "../ManufacturerLogo";
 import Svg from "../Svg";
 
@@ -131,7 +132,12 @@ const Sidebar = ({
         </sidebar.components.Heading>
         <FillToBottom offset={35}>
           {usedColors[selectedVariation].map(color => (
-            <sidebar.components.Item isLight key={color.color}>
+            <sidebar.components.Item
+              className="testing_used-color"
+              isLight
+              key={color.color}
+              onClick={() => success(color.name)}
+            >
               <ColorTile color={color.color} className="color-tile" />
               <span className="color-label"> {color.name}</span>
             </sidebar.components.Item>
