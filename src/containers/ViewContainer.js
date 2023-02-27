@@ -135,48 +135,32 @@ export class ViewContainer extends React.Component {
       );
     }
 
+    const appliedColors = generateAppliedColors(props.design, props.product);
     // Set the appied colors if not already set
     if (!state.appliedColors) {
-      newState.appliedColors = generateAppliedColors(
-        props.design,
-        props.product
-      );
+      newState.appliedColors = appliedColors;
     }
 
-    // Loop through the variations to grab the colors used in each
-    newState.usedColors = variations.reduce((accumulated, variation) => {
-      const svg = variation.svg;
-      const fillRegex = /\sfill=".{4,7}"/g;
-      const matches = svg.match(fillRegex) || [];
-
-      // Loop through the found colors and match them to the product colors, if possible, with no
-      // duplicates
-      const colors = matches.reduce((accumulatedColors, match) => {
-        const colorValue = match.split('"')[1];
-        const alreadyFound = accumulatedColors.find(color =>
-          softCompareStrings(color.color, colorValue)
-        );
-        if (alreadyFound) {
-          return accumulatedColors;
-        }
-
-        const color = productColors.find(color =>
-          softCompareStrings(color.color, colorValue)
-        );
-        if (color) {
-          accumulatedColors.push(color);
-          return accumulatedColors;
-        }
-
-        accumulatedColors.push({
-          name: "",
-          color: colorValue
-        });
-        return accumulatedColors;
-      }, []);
-      accumulated[variation.id] = colors;
-      return accumulated;
-    }, {});
+    // console.log('appliedColors', appliedColors);
+    // Loop through the applied to grab the colors used in each
+    newState.usedColors = Object.entries(appliedColors).reduce(
+      (accumulated, [variationId, panelColors]) => {
+        const condensedColorsList = Object.values(panelColors).reduce(
+          (accumulated, colorInfo) => {
+            if (accumulated.found.includes(colorInfo.color)) {
+              return accumulated;
+            }
+            accumulated.found.push(colorInfo.color);
+            accumulated.usedColors.push(colorInfo);
+            return accumulated;
+          },
+          { found: [], usedColors: [] }
+        ).usedColors;
+        accumulated[variationId] = condensedColorsList;
+        return accumulated;
+      },
+      {}
+    );
 
     return newState;
   }
