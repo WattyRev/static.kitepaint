@@ -23,7 +23,7 @@
     "canvg": "^1.5.3",
     "immutable": "^3.8.2",
     "manikin-model": "^1.0.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "normalize.css": "^8.0.0",
     "prettier": "^1.14.3",
     "prop-types": "^15.6.2",
