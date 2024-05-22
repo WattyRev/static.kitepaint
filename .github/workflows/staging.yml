@@ -24,4 +24,7 @@ jobs:
         with:
           node-version: '8.x'
       - run: npm ci
-      - run: SFTP_USER=${SFTP_USER} SFTP_PASS=${SFTP_PASS} npm run deploy:beta
+      - env:
+          SFTP_USER: ${{ secrets.SFTP_USER }}
+          SFTP_PASS: ${{ secrets.SFTP_PASS }}
+        run: npm run deploy:beta
