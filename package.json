@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "build": "react-scripts build",
-    "deploy:beta": "PUBLIC_URL=https://beta.kitepaint.com/static npm run build && SFTP_HOST=ftp.wattyrev.com SFTP_PATH=./public_html/static.beta.kitepaint.com/ node sftp-deployment.js",
-    "deploy:prod": "PUBLIC_URL=https://kitepaint.com/static npm run build && SFTP_HOST=ftp.wattyrev.com SFTP_PATH=./public_html/static.kitepaint.com/ node sftp-deployment.js",
+    "deploy:beta": "PUBLIC_URL=https://beta.kitepaint.com/static npm run build && SFTP_HOST=192.254.225.178 SFTP_PATH=./public_html/static.beta.kitepaint.com/ node sftp-deployment.js",
+    "deploy:prod": "PUBLIC_URL=https://kitepaint.com/static npm run build && SFTP_HOST=192.254.225.178 SFTP_PATH=./public_html/static.kitepaint.com/ node sftp-deployment.js",
     "eject": "react-scripts eject",
     "lint": "eslint ./src",
     "pretest": "npm run lint",
