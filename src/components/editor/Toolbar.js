@@ -14,6 +14,10 @@ const backgroundOptions = [
     value: null
   },
   {
+    label: "White",
+    value: getAssetUrl("/backgrounds/white.jpg")
+  },
+  {
     label: "Beach",
     value: getAssetUrl("/backgrounds/beach.jpg")
   },
