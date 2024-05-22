@@ -1,0 +1,30 @@
+name: Staging
+run-name: Test and deploy staging
+on:
+  push:
+    branches:
+      - staging
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '8.x'
+      - run: npm ci
+      - run: npm run test -- --coverage
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '8.x'
+      - run: npm ci
+      - env:
+          SFTP_USER: ${{ secrets.SFTP_USER }}
+          SFTP_PASS: ${{ secrets.SFTP_PASS }}
+        run: npm run deploy:beta
