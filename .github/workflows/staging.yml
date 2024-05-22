@@ -15,3 +15,13 @@ jobs:
           node-version: '8.x'
       - run: npm ci
       - run: npm run test -- --coverage
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '8.x'
+      - run: npm ci
+      - run: SFTP_USER=${SFTP_USER} SFTP_PASS=${SFTP_PASS} npm run deploy:beta
