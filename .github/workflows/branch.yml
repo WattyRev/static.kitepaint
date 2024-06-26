@@ -1,0 +1,18 @@
+name: Staging
+run-name: Test and deploy staging
+on:
+  push:
+    branches:
+      - "!staging"
+      - "!master"
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '8.x'
+      - run: npm ci
+      - run: npm run test -- --coverage
