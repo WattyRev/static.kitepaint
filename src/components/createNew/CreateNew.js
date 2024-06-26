@@ -4,12 +4,24 @@ import styled from "styled-components";
 import CreateNewContainer from "../../containers/CreateNewContainer";
 import EditorContainer from "../../containers/EditorContainer";
 import UserContainer from "../../containers/UserContainer";
-import { PageLoader } from "../../theme";
+import { PageLoader, P } from "../../theme";
 import Toolbar from "../editor/Toolbar";
 import Sidebar from "../editor/Sidebar";
 import Canvas from "../editor/Canvas";
 import ProductNotes from "../editor/ProductNotes";
 import ErrorPage from "../ErrorPage";
+
+const EditorInfo = styled.div`
+  background: ${({ theme }) => theme.colors.grayDarker}
+  padding: 8px;
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  ${props => props.theme.media.mediaMd} {
+    display: none;
+  }
+`;
 
 const PageLayout = styled.div`
   display: flex;
@@ -84,7 +96,14 @@ const CreateNew = ({ match }) => (
                   svg={editorData.props.currentVariation.svg}
                   onClick={editorData.actions.applyColor}
                   currentColor={editorData.props.currentColor.name}
-                />
+                >
+                  <EditorInfo>
+                    <P isLight>
+                      {editorData.props.currentVariation.name} | Current Color:{" "}
+                      {editorData.props.currentColor.name}
+                    </P>
+                  </EditorInfo>
+                </Canvas>
                 {createNewData.props.product.get("notes") &&
                   !!createNewData.props.product.get("notes").length && (
                     <ProductNotes

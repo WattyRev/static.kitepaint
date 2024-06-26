@@ -17,13 +17,6 @@ export const StyleWrapper = styled.div`
           background-position: center;
         `
       : null};
-
-  > div {
-    min-height: 50vh;
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
   svg {
     position: absolute;
     top: 50%;
@@ -74,7 +67,9 @@ class Canvas extends React.Component {
     /**
      * Indicates that the canvas is read-only. Will not fire onClick events.
      */
-    isReadOnly: PropTypes.bool
+    isReadOnly: PropTypes.bool,
+
+    children: PropTypes.node
   };
   static defaultProps = {
     onClick: () => {},
@@ -204,6 +199,7 @@ class Canvas extends React.Component {
         isReadOnly={this.props.isReadOnly}
         background={this.props.background}
       >
+        {this.props.children}
         <ColorableSvg
           hideOutlines={this.props.hideOutlines}
           svg={this.props.svg}
