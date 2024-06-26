@@ -107,7 +107,7 @@ const getMockProduct = (overrides = {}) =>
           {
             id: "1",
             name: "Standard",
-            svg: "<div>Kool Kite</div>"
+            svg: `<div>Kool Kite<div data-id="1"></div></div>`
           }
         ],
         status: Status.PUBLIC

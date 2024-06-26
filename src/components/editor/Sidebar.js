@@ -61,6 +61,60 @@ export const StyledSidebar = styled(SidebarUI)`
   }
 `;
 
+export function getSupportedColors(colors, svg) {
+  const render = new window.DOMParser().parseFromString(svg, "text/xml");
+  let supportedColors = [];
+  const panels = Array.from(render.querySelectorAll("[data-id]"));
+  panels.find(panel => {
+    let blacklistString = panel.attributes["data-blacklist"];
+    blacklistString = blacklistString ? blacklistString.textContent : null;
+    let whitelistString = panel.attributes["data-whitelist"];
+    whitelistString = whitelistString ? whitelistString.textContent : null;
+
+    if (!blacklistString && !whitelistString) {
+      supportedColors = colors.map(color => color.name);
+      return true;
+    }
+    if (whitelistString) {
+      const whitelistArray = whitelistString
+        .split(",")
+        .map(color => color.trim());
+      supportedColors = [...supportedColors, ...whitelistArray].reduce(
+        (deduped, item) => {
+          if (deduped.includes(item)) {
+            return deduped;
+          }
+          return [...deduped, item];
+        },
+        []
+      );
+    }
+    if (blacklistString) {
+      const blacklistArray = blacklistString
+        .split(",")
+        .map(color => color.trim());
+      const whitelistArray = colors
+        .filter(color => !blacklistArray.includes(color.name))
+        .map(color => color.name);
+      supportedColors = [...supportedColors, ...whitelistArray].reduce(
+        (deduped, item) => {
+          if (deduped.includes(item)) {
+            return deduped;
+          }
+          return [...deduped, item];
+        },
+        []
+      );
+    }
+
+    if (supportedColors.length === colors.length) {
+      return true;
+    }
+    return false;
+  });
+  return colors.filter(color => supportedColors.includes(color.name));
+}
+
 /**
  * The sidebar displayed when editing/creating a new design
  */
@@ -73,78 +127,86 @@ const Sidebar = ({
   selectedColor,
   onColorSelect,
   onVariationSelect
-}) => (
-  <StyledSidebar>
-    {sidebar => (
-      <React.Fragment>
-        <sidebar.components.Item
-          className="testing_manufacturer"
-          isLight
-          as={product.get("url") || manufacturer.get("website") ? "a" : "div"}
-          href={product.get("url") || manufacturer.get("website")}
-          target="_blank"
-          hasAction={!!(product.get("url") || manufacturer.get("website"))}
-        >
-          <ManufacturerLogo
-            className="manufacturer-logo"
-            size={32}
-            noMargin
-            src={getAssetUrl(`/logos/${manufacturer.get("logo")}`)}
-          />
-          <div className="manufacturer-info">
-            {product.get("name")}
-            <br />
-            <small>by {manufacturer.get("name")}</small>
-          </div>
-        </sidebar.components.Item>
-        {design && (
-          <sidebar.components.Heading
-            className="testing_design design-heading"
-            isLight
-          >
-            {design.get("name")}
-          </sidebar.components.Heading>
-        )}
-        {product.get("variations").map(variation => (
+}) => {
+  const colors = product.get("colors");
+  const currentVariation = product
+    .get("variations")
+    .find(variation => variation.id === selectedVariation);
+  const supportedColors = getSupportedColors(colors, currentVariation.svg);
+
+  return (
+    <StyledSidebar>
+      {sidebar => (
+        <React.Fragment>
           <sidebar.components.Item
-            className="testing_variation"
+            className="testing_manufacturer"
             isLight
-            hasAction
-            isActive={variation.id === selectedVariation}
-            key={variation.id}
-            onClick={() => onVariationSelect(variation.id)}
+            as={product.get("url") || manufacturer.get("website") ? "a" : "div"}
+            href={product.get("url") || manufacturer.get("website")}
+            target="_blank"
+            hasAction={!!(product.get("url") || manufacturer.get("website"))}
           >
-            <VariationPreview className="variation-preview">
-              <ColorableSvg
-                svg={variation.svg}
-                colorMap={appliedColors[variation.id] || {}}
-              />
-            </VariationPreview>
-            <span className="variation-label"> {variation.name}</span>
+            <ManufacturerLogo
+              className="manufacturer-logo"
+              size={32}
+              noMargin
+              src={getAssetUrl(`/logos/${manufacturer.get("logo")}`)}
+            />
+            <div className="manufacturer-info">
+              {product.get("name")}
+              <br />
+              <small>by {manufacturer.get("name")}</small>
+            </div>
           </sidebar.components.Item>
-        ))}
-        <sidebar.components.Heading isLight className="colors-heading">
-          <Icon icon="palette" /> Colors
-        </sidebar.components.Heading>
-        <FillToBottom offset={33} strict minHeight={300}>
-          {product.get("colors").map(color => (
+          {design && (
+            <sidebar.components.Heading
+              className="testing_design design-heading"
+              isLight
+            >
+              {design.get("name")}
+            </sidebar.components.Heading>
+          )}
+          {product.get("variations").map(variation => (
             <sidebar.components.Item
-              className="testing_color"
+              className="testing_variation"
               isLight
               hasAction
-              key={color.name}
-              isActive={color.name === selectedColor}
-              onClick={() => onColorSelect(color.name)}
+              isActive={variation.id === selectedVariation}
+              key={variation.id}
+              onClick={() => onVariationSelect(variation.id)}
             >
-              <ColorTile color={color.color} className="color-tile" />
-              <span className="color-label"> {color.name}</span>
+              <VariationPreview className="variation-preview">
+                <ColorableSvg
+                  svg={variation.svg}
+                  colorMap={appliedColors[variation.id] || {}}
+                />
+              </VariationPreview>
+              <span className="variation-label"> {variation.name}</span>
             </sidebar.components.Item>
           ))}
-        </FillToBottom>
-      </React.Fragment>
-    )}
-  </StyledSidebar>
-);
+          <sidebar.components.Heading isLight className="colors-heading">
+            <Icon icon="palette" /> Colors
+          </sidebar.components.Heading>
+          <FillToBottom offset={33} strict minHeight={300}>
+            {supportedColors.map(color => (
+              <sidebar.components.Item
+                className="testing_color"
+                isLight
+                hasAction
+                key={color.name}
+                isActive={color.name === selectedColor}
+                onClick={() => onColorSelect(color.name)}
+              >
+                <ColorTile color={color.color} className="color-tile" />
+                <span className="color-label"> {color.name}</span>
+              </sidebar.components.Item>
+            ))}
+          </FillToBottom>
+        </React.Fragment>
+      )}
+    </StyledSidebar>
+  );
+};
 
 Sidebar.propTypes = {
   appliedColors: productAppliedColorsShape.isRequired,

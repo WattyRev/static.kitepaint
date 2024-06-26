@@ -17,13 +17,6 @@ export const StyleWrapper = styled.div`
           background-position: center;
         `
       : null};
-
-  > div {
-    min-height: 50vh;
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
   svg {
     position: absolute;
     top: 50%;
@@ -36,6 +29,14 @@ export const StyleWrapper = styled.div`
     }
   }
 `;
+
+// Parses a string form the data-whitelist or data-blacklist property into an array of lowercase,trimmed values
+const processColorList = whitelistString => {
+  return whitelistString
+    .split(",")
+    .map(color => color.trim().toLowerCase())
+    .filter(color => !!color);
+};
 
 /**
  * Canvas is a UI component for the editing area. It displays a product and allows the user to click
@@ -74,7 +75,10 @@ class Canvas extends React.Component {
     /**
      * Indicates that the canvas is read-only. Will not fire onClick events.
      */
-    isReadOnly: PropTypes.bool
+    isReadOnly: PropTypes.bool,
+    currentColorValue: PropTypes.string,
+
+    children: PropTypes.node
   };
   static defaultProps = {
     onClick: () => {},
@@ -82,31 +86,47 @@ class Canvas extends React.Component {
     currentColor: ""
   };
 
+  // returns true if the current color is allowed given the provideed whitelist
+  checkWhitelist = whitelist => {
+    return (
+      !whitelist ||
+      !whitelist.length ||
+      whitelist.includes(this.props.currentColor.toLowerCase())
+    );
+  };
+
+  // returns true if the current color is allowed given the provided blacklist
+  checkBlacklist = blacklist => {
+    return (
+      !blacklist ||
+      !blacklist.length ||
+      !blacklist.includes(this.props.currentColor.toLowerCase())
+    );
+  };
+
+  // Finds and temporariy highlights panels that accept the current color
+  temporarilyHighlightValidPanels = event => {
+    const panels = Array.from(
+      event.target.closest("svg").querySelectorAll("[data-id]")
+    );
+    const validPanels = panels.filter(panel => {
+      const whitelistString = panel.getAttribute("data-whitelist") || "";
+      const whitelist = processColorList(whitelistString);
+      const blacklistString = panel.getAttribute("data-blacklist") || "";
+      const blacklist = processColorList(blacklistString);
+
+      return this.checkWhitelist(whitelist) && this.checkBlacklist(blacklist);
+    });
+    validPanels.forEach(panel =>
+      panel.setAttribute("filter", "url(#valid-panel)")
+    );
+    setTimeout(() => {
+      validPanels.forEach(panel => panel.setAttribute("filter", ""));
+    }, 300);
+  };
+
   colorPanel = event => {
-    // Checks if the the currentColor can be applied given the content or absence of a whitelist.
-    const checkWhitelist = whitelist => {
-      return (
-        !whitelist ||
-        !whitelist.length ||
-        whitelist.includes(this.props.currentColor.toLowerCase())
-      );
-    };
-
-    const checkBlacklist = blacklist => {
-      return (
-        !blacklist ||
-        !blacklist.length ||
-        !blacklist.includes(this.props.currentColor.toLowerCase())
-      );
-    };
-
-    // Parses a string form the data-whitelist or data-blacklist property into an array of lowercase,trimmed values
-    const processColorList = whitelistString => {
-      return whitelistString
-        .split(",")
-        .map(color => color.trim().toLowerCase())
-        .filter(color => !!color);
-    };
+    // Checks if the the currentColor can be applied given the content or absence of a whitelist or blacklist.
 
     // Get the data-id attribute from the target.
     const targetId = event.target.getAttribute("data-id");
@@ -122,10 +142,11 @@ class Canvas extends React.Component {
       const blacklist = processColorList(blacklistString);
 
       // If the color satisfies blacklist and whitelist, trigger onClick
-      if (checkWhitelist(whitelist) && checkBlacklist(blacklist)) {
+      if (this.checkWhitelist(whitelist) && this.checkBlacklist(blacklist)) {
         this.props.onClick(targetId);
         return;
       }
+      this.temporarilyHighlightValidPanels(event);
       return;
     }
 
@@ -154,10 +175,13 @@ class Canvas extends React.Component {
     const blacklist = processColorList(blacklistString);
 
     // Call onClick if the current color satisfies blacklist and whitelist
-    if (checkWhitelist(whitelist) && checkBlacklist(blacklist)) {
+    if (this.checkWhitelist(whitelist) && this.checkBlacklist(blacklist)) {
       this.props.onClick(parentGroupId);
       return;
     }
+
+    // Temporarily highlight the valid panels if an invalid panel was clicked
+    this.temporarilyHighlightValidPanels(event);
   };
 
   alertCurrentColor = event => {
@@ -204,6 +228,18 @@ class Canvas extends React.Component {
         isReadOnly={this.props.isReadOnly}
         background={this.props.background}
       >
+        {this.props.children}
+        <svg>
+          <defs>
+            <filter id="valid-panel">
+              <feFlood floodColor={this.props.currentColorValue} />
+              <feComposite operator="out" in2="SourceGraphic" />
+              <feMorphology operator="dilate" radius="4" />
+              <feGaussianBlur stdDeviation="5" />
+              <feComposite operator="atop" in2="SourceGraphic" />
+            </filter>
+          </defs>
+        </svg>
         <ColorableSvg
           hideOutlines={this.props.hideOutlines}
           svg={this.props.svg}

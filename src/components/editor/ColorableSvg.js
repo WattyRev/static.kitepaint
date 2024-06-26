@@ -4,6 +4,11 @@ import styled, { css } from "styled-components";
 import { appliedColorsShape } from "../../containers/EditorContainer";
 
 const StyledDiv = styled.div`
+  min-height: 50vh;
+  width: 100%;
+  height: 100%;
+  position: relative;
+
   ${props =>
     props.hideOutlines
       ? css`
