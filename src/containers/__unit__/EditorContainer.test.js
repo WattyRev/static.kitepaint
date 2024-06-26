@@ -603,10 +603,6 @@ describe("EditorContainer", () => {
           p1: {
             color: "#00ff00",
             name: "green"
-          },
-          p2: {
-            color: "#00ff00",
-            name: "green"
           }
         },
         "1": {
@@ -631,10 +627,6 @@ describe("EditorContainer", () => {
           p1: {
             color: "#ff0000",
             name: "red"
-          },
-          p2: {
-            color: "#000000",
-            name: "black"
           }
         },
         "1": {
@@ -668,10 +660,6 @@ describe("EditorContainer", () => {
           p1: {
             name: "black",
             color: "#000000"
-          },
-          p2: {
-            name: "black",
-            color: "#000000"
           }
         },
         "1": {
@@ -682,6 +670,143 @@ describe("EditorContainer", () => {
           p2: {
             name: "black",
             color: "#000000"
+          }
+        }
+      });
+    });
+
+    it("does not autofill a color to a panel that blacklists it", () => {
+      defaultProps.product = getMockProduct({
+        variations: [
+          {
+            id: "0",
+            name: "Standard",
+            svg: `<svg><path data-id="p1" data-autofill="p1 p2" /></svg>`
+          },
+          {
+            id: "1",
+            name: "Vented",
+            svg: `<svg><path data-id="p1" data-autofill="p1" data-blacklist="green" /><path data-id="p2" data-autofill="p2" /></svg>`
+          }
+        ]
+      });
+      wrapper = mount(
+        <EditorContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div className="output">
+                {JSON.stringify(data.props.appliedColors)}
+              </div>
+              <div
+                className="select-vented"
+                onClick={() => data.actions.selectVariation("1")}
+              />
+              <div className="autofill" onClick={data.actions.autofill} />
+            </React.Fragment>
+          )}
+        </EditorContainer>
+      );
+      wrapper.instance().setState({
+        appliedColors: {
+          "0": {
+            p1: {
+              name: "green",
+              color: "#00ff00"
+            }
+          },
+          "1": {
+            p1: {
+              name: "red",
+              color: "#ff0000"
+            },
+            p2: {
+              name: "black",
+              color: "#000000"
+            }
+          }
+        }
+      });
+
+      wrapper.find(".autofill").simulate("click");
+      expect(JSON.parse(wrapper.find(".output").text())).toEqual({
+        "0": {
+          p1: {
+            color: "#00ff00",
+            name: "green"
+          }
+        },
+        "1": {
+          p2: {
+            color: "#00ff00",
+            name: "green"
+          }
+        }
+      });
+    });
+    it("does not autofill a color to a panel that does not whitelist it", () => {
+      defaultProps.product = getMockProduct({
+        variations: [
+          {
+            id: "0",
+            name: "Standard",
+            svg: `<svg><path data-id="p1" data-autofill="p1 p2" /></svg>`
+          },
+          {
+            id: "1",
+            name: "Vented",
+            svg: `<svg><path data-id="p1" data-autofill="p1" data-whitelist="red" /><path data-id="p2" data-autofill="p2" /></svg>`
+          }
+        ]
+      });
+      wrapper = mount(
+        <EditorContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div className="output">
+                {JSON.stringify(data.props.appliedColors)}
+              </div>
+              <div
+                className="select-vented"
+                onClick={() => data.actions.selectVariation("1")}
+              />
+              <div className="autofill" onClick={data.actions.autofill} />
+            </React.Fragment>
+          )}
+        </EditorContainer>
+      );
+      wrapper.instance().setState({
+        appliedColors: {
+          "0": {
+            p1: {
+              name: "green",
+              color: "#00ff00"
+            }
+          },
+          "1": {
+            p1: {
+              name: "red",
+              color: "#ff0000"
+            },
+            p2: {
+              name: "black",
+              color: "#000000"
+            }
+          }
+        }
+      });
+
+      wrapper.find(".autofill").simulate("click");
+      expect(JSON.parse(wrapper.find(".output").text())).toEqual({
+        "0": {
+          p1: {
+            color: "#00ff00",
+            name: "green"
+          }
+        },
+        "1": {
+          p2: {
+            color: "#00ff00",
+            name: "green"
           }
         }
       });

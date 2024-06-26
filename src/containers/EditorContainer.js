@@ -21,6 +21,29 @@ const productAppliedColorsShape = PropTypes.objectOf(appliedColorsShape);
 
 export { appliedColorsShape, productAppliedColorsShape };
 
+const processColorList = listString => {
+  return listString
+    .split(",")
+    .map(color => color.trim().toLowerCase())
+    .filter(color => !!color);
+};
+
+// returns true if the current color is allowed given the provideed whitelist
+const checkWhitelist = (whitelistString, color) => {
+  const whitelist = processColorList(whitelistString);
+  return (
+    !whitelist || !whitelist.length || whitelist.includes(color.toLowerCase())
+  );
+};
+
+// returns true if the current color is allowed given the provided blacklist
+const checkBlacklist = (blacklistString, color) => {
+  const blacklist = processColorList(blacklistString);
+  return (
+    !blacklist || !blacklist.length || !blacklist.includes(color.toLowerCase())
+  );
+};
+
 // Inspects rendered SVG and gets the applied colors, indexed by panel's data-id
 function getDerivedColorsFromRender(render, colors) {
   // Find all of the colorable elements
@@ -489,6 +512,8 @@ export class EditorContainer extends React.Component {
     const currentColors = this.getCurrentVariationColors();
     const autofillMap = this.state.autofillMap[this.state.currentVariation.id];
     const variations = this.props.product.get("variations");
+
+    // Build a map of panelid->color
     const fullColors = Object.entries(currentColors).reduce(
       (accumulated, [panelId, color]) => {
         const autofillToIds = autofillMap[panelId] || [];
@@ -497,12 +522,40 @@ export class EditorContainer extends React.Component {
       },
       {}
     );
+
     const appliedColors = variations.reduce((accumulated, variation) => {
-      accumulated[variation.id] = {
-        ...fullColors
-      };
+      // For each panel, look at the html for the panel to determine if the color is valid. If so, apply it.
+      const render = new window.DOMParser().parseFromString(
+        variation.svg,
+        "text/xml"
+      );
+      const panelColorMap = Object.entries(fullColors).reduce(
+        (accumulated, [autofillId, colorObject]) => {
+          const panel = render.querySelector(`[data-id="${autofillId}"]`);
+          if (!panel) {
+            return accumulated;
+          }
+          const allowedByWhitelist = checkWhitelist(
+            panel.getAttribute("data-whitelist") || "",
+            colorObject.name
+          );
+          const allowedByBlacklist = checkBlacklist(
+            panel.getAttribute("data-blacklist") || "",
+            colorObject.name
+          );
+
+          if (allowedByBlacklist && allowedByWhitelist) {
+            accumulated[autofillId] = colorObject;
+          }
+          return accumulated;
+        },
+        {}
+      );
+
+      accumulated[variation.id] = panelColorMap;
       return accumulated;
     }, {});
+
     this._applyColors([], appliedColors);
   };
 
