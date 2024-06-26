@@ -9,6 +9,7 @@ import Status from "../models/Status";
 import { isEmbedded, defaultBackground } from "../constants/embed";
 import ErrorPage from "../components/ErrorPage";
 import { softCompareStrings, makeCancelable, embedAllowed } from "../utils";
+import { checkWhitelist, checkBlacklist } from "../utils/evalWhiteBlackList";
 
 const appliedColorsShape = PropTypes.objectOf(
   PropTypes.shape({
@@ -20,29 +21,6 @@ const appliedColorsShape = PropTypes.objectOf(
 const productAppliedColorsShape = PropTypes.objectOf(appliedColorsShape);
 
 export { appliedColorsShape, productAppliedColorsShape };
-
-const processColorList = listString => {
-  return listString
-    .split(",")
-    .map(color => color.trim().toLowerCase())
-    .filter(color => !!color);
-};
-
-// returns true if the current color is allowed given the provideed whitelist
-const checkWhitelist = (whitelistString, color) => {
-  const whitelist = processColorList(whitelistString);
-  return (
-    !whitelist || !whitelist.length || whitelist.includes(color.toLowerCase())
-  );
-};
-
-// returns true if the current color is allowed given the provided blacklist
-const checkBlacklist = (blacklistString, color) => {
-  const blacklist = processColorList(blacklistString);
-  return (
-    !blacklist || !blacklist.length || !blacklist.includes(color.toLowerCase())
-  );
-};
 
 // Inspects rendered SVG and gets the applied colors, indexed by panel's data-id
 function getDerivedColorsFromRender(render, colors) {
