@@ -1,5 +1,5 @@
-name: Staging
-run-name: Test and deploy staging
+name: Branches
+run-name: Test branches
 on:
   push:
     branches:
