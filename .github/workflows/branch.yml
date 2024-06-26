@@ -3,8 +3,9 @@ run-name: Test branches
 on:
   push:
     branches:
-      - "!staging"
-      - "!master"
+      - '**'
+      - '!staging'
+      - '!master'
 jobs:
   test:
     runs-on: ubuntu-latest
