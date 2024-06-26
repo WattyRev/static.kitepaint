@@ -5,9 +5,10 @@ import { getMockDesign } from "../../models/Design";
 import Status from "../../models/Status";
 import { EditorContainer } from "../EditorContainer";
 
+jest.mock("../../utils/window");
+
 describe("EditorContainer", () => {
   let defaultProps;
-  let originalReplace = window.location.replace;
   beforeEach(() => {
     defaultProps = {
       product: getMockProduct(),
@@ -16,10 +17,6 @@ describe("EditorContainer", () => {
       }),
       onUpdate: jest.fn()
     };
-    window.location.replace = jest.fn();
-  });
-  afterEach(() => {
-    window.location.replace = originalReplace;
   });
   it("renders", () => {
     mount(
@@ -356,8 +353,8 @@ describe("EditorContainer", () => {
             primary: true,
             svg: `
               <svg viewBox="0 0 1963.2 651.1">
-                <polygon data-id="p1" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
-                <polygon data-id="p2" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+                <polygon data-id="p1" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+                <polygon data-id="p2" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
               </svg>`.trim()
           },
           {
@@ -366,8 +363,8 @@ describe("EditorContainer", () => {
             primary: false,
             svg: `
               <svg viewBox="0 0 1963.2 651.1">
-                <polygon data-id="p1" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
-                <polygon data-id="p2" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+                <polygon data-id="p1" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+                <polygon data-id="p2" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
               </svg>`.trim()
           }
         ]
@@ -463,8 +460,8 @@ describe("EditorContainer", () => {
             primary: false,
             svg: `
               <svg viewBox="0 0 1963.2 651.1">
-                <polygon data-id="p1" fill="#ffffff" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
-                <polygon data-id="p2" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+                <polygon data-id="p1" fill="#ffffff" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+                <polygon data-id="p2" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
               </svg>`.trim()
           },
           {
@@ -473,8 +470,8 @@ describe("EditorContainer", () => {
             primary: true, // This is more colored, so it should be the primary
             svg: `
               <svg viewBox="0 0 1963.2 651.1">
-                <polygon data-id="p1" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
-                <polygon data-id="p2" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+                <polygon data-id="p1" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+                <polygon data-id="p2" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
               </svg>`.trim()
           }
         ]

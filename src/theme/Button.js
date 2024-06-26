@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { TypographyStyles } from "./Text";
+import PropTypes from "prop-types";
 
 const StyledButton = styled.button`
   ${TypographyStyles};
@@ -63,4 +64,12 @@ const Button = ({ isPrimary, isBlock, children, className, ...props }) => {
     </StyledButton>
   );
 };
+
+Button.propTypes = {
+  isPrimary: PropTypes.bool,
+  isBlock: PropTypes.bool,
+  children: PropTypes.node,
+  className: PropTypes.string
+};
+
 export default Button;

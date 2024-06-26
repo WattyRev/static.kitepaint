@@ -1,3 +1,4 @@
+/* eslint-disable no-import-assign */
 import getAssetUrl from "../getAssetUrl";
 import * as environment from "../../constants/environment";
 

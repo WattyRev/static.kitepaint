@@ -4,17 +4,17 @@ exports[`ModelPrompt renders 1`] = `
 <Modal
   isOpen={false}
   modalContent={
-    <ForwardRef
+    <styled.div
       className="testing_modal"
     >
       <form
         className="testing_submit"
         onSubmit={[Function]}
       >
-        <ForwardRef>
+        <Styled(Label)>
           Do the thing.
-        </ForwardRef>
-        <ForwardRef
+        </Styled(Label)>
+        <styled.input
           className="testing_prompt-value"
           onChange={[Function]}
           type="text"
@@ -39,7 +39,7 @@ exports[`ModelPrompt renders 1`] = `
           </Button>
         </div>
       </form>
-    </ForwardRef>
+    </styled.div>
   }
   onBackdropClick={[Function]}
 >
