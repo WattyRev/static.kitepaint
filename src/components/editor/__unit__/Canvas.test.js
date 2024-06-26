@@ -16,7 +16,9 @@ function createMockElement(dataId, dataWhitelist, dataBlacklist, parent) {
       };
       return map[attributeName];
     }),
-    parentElement: parent
+    parentElement: parent,
+    closest: jest.fn(() => createMockElement()),
+    querySelectorAll: jest.fn(() => [])
   };
 }
 

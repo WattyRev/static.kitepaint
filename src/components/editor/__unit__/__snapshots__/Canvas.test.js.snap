@@ -4,6 +4,30 @@ exports[`Canvas renders 1`] = `
 <styled.div
   onClick={[Function]}
 >
+  <svg>
+    <defs>
+      <filter
+        id="valid-panel"
+      >
+        <feFlood />
+        <feComposite
+          in2="SourceGraphic"
+          operator="out"
+        />
+        <feMorphology
+          operator="dilate"
+          radius="4"
+        />
+        <feGaussianBlur
+          stdDeviation="5"
+        />
+        <feComposite
+          in2="SourceGraphic"
+          operator="atop"
+        />
+      </filter>
+    </defs>
+  </svg>
   <ColorableSvg
     colorMap={Object {}}
     svg="<div class=\\"testing_target\\">test</div>"

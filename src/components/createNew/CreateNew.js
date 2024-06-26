@@ -96,6 +96,7 @@ const CreateNew = ({ match }) => (
                   svg={editorData.props.currentVariation.svg}
                   onClick={editorData.actions.applyColor}
                   currentColor={editorData.props.currentColor.name}
+                  currentColorValue={editorData.props.currentColor.color}
                 >
                   <EditorInfo>
                     <P isLight>
