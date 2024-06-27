@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Text from "./Text";
+import propTypes from "prop-types";
 
 /**
  * A styled <h3> element.
@@ -12,6 +13,9 @@ const H3 = ({ children, ...props }) => (
     {children}
   </Text>
 );
+H3.propTypes = {
+  children: propTypes.node
+};
 const StyledH3 = styled(H3)`
   font-size: 18px;
   line-height: 24px;

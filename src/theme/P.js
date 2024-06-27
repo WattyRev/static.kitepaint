@@ -1,5 +1,6 @@
 import React from "react";
 import Text from "./Text";
+import propTypes from "prop-types";
 
 /**
  * A styled <p> element.
@@ -11,4 +12,7 @@ const P = ({ children, ...props }) => (
     {children}
   </Text>
 );
+P.propTypes = {
+  children: propTypes.node
+};
 export default P;

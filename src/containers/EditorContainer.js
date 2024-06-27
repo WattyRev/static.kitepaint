@@ -10,6 +10,7 @@ import { isEmbedded, defaultBackground } from "../constants/embed";
 import ErrorPage from "../components/ErrorPage";
 import { softCompareStrings, makeCancelable, embedAllowed } from "../utils";
 import { checkWhitelist, checkBlacklist } from "../utils/evalWhiteBlackList";
+import { locationReplace } from "../utils/window";
 
 const appliedColorsShape = PropTypes.objectOf(
   PropTypes.shape({
@@ -455,9 +456,9 @@ export class EditorContainer extends React.Component {
       const designId = response.data.id;
       if (data.user === "0") {
         // If the design was created anonymously, go to the view page
-        window.location.replace(`/view/${designId}`);
+        locationReplace(`/view/${designId}`);
       } else {
-        window.location.replace(`/edit/${designId}`);
+        locationReplace(`/edit/${designId}`);
       }
     });
     this.cancelablePromises.push(promise);
