@@ -5,9 +5,10 @@ import { getMockDesign } from "../../models/Design";
 import Status from "../../models/Status";
 import { EditorContainer } from "../EditorContainer";
 
+jest.mock("../../utils/window");
+
 describe("EditorContainer", () => {
   let defaultProps;
-  let originalReplace = window.location.replace;
   beforeEach(() => {
     defaultProps = {
       product: getMockProduct(),
@@ -16,10 +17,6 @@ describe("EditorContainer", () => {
       }),
       onUpdate: jest.fn()
     };
-    window.location.replace = jest.fn();
-  });
-  afterEach(() => {
-    window.location.replace = originalReplace;
   });
   it("renders", () => {
     mount(
@@ -356,8 +353,8 @@ describe("EditorContainer", () => {
             primary: true,
             svg: `
               <svg viewBox="0 0 1963.2 651.1">
-                <polygon data-id="p1" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
-                <polygon data-id="p2" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+                <polygon data-id="p1" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+                <polygon data-id="p2" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
               </svg>`.trim()
           },
           {
@@ -366,8 +363,8 @@ describe("EditorContainer", () => {
             primary: false,
             svg: `
               <svg viewBox="0 0 1963.2 651.1">
-                <polygon data-id="p1" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
-                <polygon data-id="p2" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+                <polygon data-id="p1" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+                <polygon data-id="p2" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
               </svg>`.trim()
           }
         ]
@@ -463,8 +460,8 @@ describe("EditorContainer", () => {
             primary: false,
             svg: `
               <svg viewBox="0 0 1963.2 651.1">
-                <polygon data-id="p1" fill="#ffffff" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
-                <polygon data-id="p2" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+                <polygon data-id="p1" fill="#ffffff" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+                <polygon data-id="p2" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
               </svg>`.trim()
           },
           {
@@ -473,8 +470,8 @@ describe("EditorContainer", () => {
             primary: true, // This is more colored, so it should be the primary
             svg: `
               <svg viewBox="0 0 1963.2 651.1">
-                <polygon data-id="p1" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
-                <polygon data-id="p2" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "></polygon>
+                <polygon data-id="p1" fill="#ff0000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
+                <polygon data-id="p2" fill="#000000" stroke="#000000" points="1769.7,48.9 1642.3,373.9 992.1,137.3 990,40.9 1069,40.6 1365.9,41.3 1549,42.7 1604.8,43.8 "/>
               </svg>`.trim()
           }
         ]
@@ -603,10 +600,6 @@ describe("EditorContainer", () => {
           p1: {
             color: "#00ff00",
             name: "green"
-          },
-          p2: {
-            color: "#00ff00",
-            name: "green"
           }
         },
         "1": {
@@ -631,10 +624,6 @@ describe("EditorContainer", () => {
           p1: {
             color: "#ff0000",
             name: "red"
-          },
-          p2: {
-            color: "#000000",
-            name: "black"
           }
         },
         "1": {
@@ -668,10 +657,6 @@ describe("EditorContainer", () => {
           p1: {
             name: "black",
             color: "#000000"
-          },
-          p2: {
-            name: "black",
-            color: "#000000"
           }
         },
         "1": {
@@ -682,6 +667,143 @@ describe("EditorContainer", () => {
           p2: {
             name: "black",
             color: "#000000"
+          }
+        }
+      });
+    });
+
+    it("does not autofill a color to a panel that blacklists it", () => {
+      defaultProps.product = getMockProduct({
+        variations: [
+          {
+            id: "0",
+            name: "Standard",
+            svg: `<svg><path data-id="p1" data-autofill="p1 p2" /></svg>`
+          },
+          {
+            id: "1",
+            name: "Vented",
+            svg: `<svg><path data-id="p1" data-autofill="p1" data-blacklist="green" /><path data-id="p2" data-autofill="p2" /></svg>`
+          }
+        ]
+      });
+      wrapper = mount(
+        <EditorContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div className="output">
+                {JSON.stringify(data.props.appliedColors)}
+              </div>
+              <div
+                className="select-vented"
+                onClick={() => data.actions.selectVariation("1")}
+              />
+              <div className="autofill" onClick={data.actions.autofill} />
+            </React.Fragment>
+          )}
+        </EditorContainer>
+      );
+      wrapper.instance().setState({
+        appliedColors: {
+          "0": {
+            p1: {
+              name: "green",
+              color: "#00ff00"
+            }
+          },
+          "1": {
+            p1: {
+              name: "red",
+              color: "#ff0000"
+            },
+            p2: {
+              name: "black",
+              color: "#000000"
+            }
+          }
+        }
+      });
+
+      wrapper.find(".autofill").simulate("click");
+      expect(JSON.parse(wrapper.find(".output").text())).toEqual({
+        "0": {
+          p1: {
+            color: "#00ff00",
+            name: "green"
+          }
+        },
+        "1": {
+          p2: {
+            color: "#00ff00",
+            name: "green"
+          }
+        }
+      });
+    });
+    it("does not autofill a color to a panel that does not whitelist it", () => {
+      defaultProps.product = getMockProduct({
+        variations: [
+          {
+            id: "0",
+            name: "Standard",
+            svg: `<svg><path data-id="p1" data-autofill="p1 p2" /></svg>`
+          },
+          {
+            id: "1",
+            name: "Vented",
+            svg: `<svg><path data-id="p1" data-autofill="p1" data-whitelist="red" /><path data-id="p2" data-autofill="p2" /></svg>`
+          }
+        ]
+      });
+      wrapper = mount(
+        <EditorContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div className="output">
+                {JSON.stringify(data.props.appliedColors)}
+              </div>
+              <div
+                className="select-vented"
+                onClick={() => data.actions.selectVariation("1")}
+              />
+              <div className="autofill" onClick={data.actions.autofill} />
+            </React.Fragment>
+          )}
+        </EditorContainer>
+      );
+      wrapper.instance().setState({
+        appliedColors: {
+          "0": {
+            p1: {
+              name: "green",
+              color: "#00ff00"
+            }
+          },
+          "1": {
+            p1: {
+              name: "red",
+              color: "#ff0000"
+            },
+            p2: {
+              name: "black",
+              color: "#000000"
+            }
+          }
+        }
+      });
+
+      wrapper.find(".autofill").simulate("click");
+      expect(JSON.parse(wrapper.find(".output").text())).toEqual({
+        "0": {
+          p1: {
+            color: "#00ff00",
+            name: "green"
+          }
+        },
+        "1": {
+          p2: {
+            color: "#00ff00",
+            name: "green"
           }
         }
       });

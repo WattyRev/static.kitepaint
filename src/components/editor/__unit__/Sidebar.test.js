@@ -3,7 +3,7 @@ import { shallow } from "enzyme";
 import { getMockManufacturer } from "../../../models/Manufacturer";
 import { getMockProduct } from "../../../models/Product";
 import { getMockDesign } from "../../../models/Design";
-import Sidebar, { StyledSidebar } from "../Sidebar";
+import Sidebar, { StyledSidebar, getSupportedColors } from "../Sidebar";
 
 describe("Sidebar", () => {
   let defaultProps;
@@ -13,7 +13,7 @@ describe("Sidebar", () => {
       appliedColors: {},
       manufacturer: getMockManufacturer(),
       product: getMockProduct(),
-      selectedVariation: "Standard",
+      selectedVariation: "1",
       selectedColor: "red",
       onColorSelect: jest.fn(),
       onVariationSelect: jest.fn()
@@ -160,5 +160,73 @@ describe("Sidebar", () => {
       .simulate("click");
     expect(defaultProps.onColorSelect).toHaveBeenCalled();
     expect(defaultProps.onColorSelect.mock.calls[0][0]).toEqual("black");
+  });
+  describe("getSupportedColors", () => {
+    const mockColors = [
+      {
+        name: "red",
+        color: "#ff0000"
+      },
+      {
+        name: "black",
+        color: "#000000"
+      }
+    ];
+    it("returns all colors if a panel has no restrictions", () => {
+      const mockSvg =
+        '<div><div data-id="1"></div><div data-id="2" data-blacklist="red"></div><div data-id="3" data-whitelist="black"></div></div>';
+      const supportedColors = getSupportedColors(mockColors, mockSvg);
+      expect(supportedColors).toMatchInlineSnapshot(`
+Array [
+  Object {
+    "color": "#ff0000",
+    "name": "red",
+  },
+  Object {
+    "color": "#000000",
+    "name": "black",
+  },
+]
+`);
+    });
+    it("excludes a color if it is blacklisted on all panels", () => {
+      const mockSvg =
+        '<div><div data-id="1" data-blacklist="red"></div><div data-id="2" data-blacklist="red"></div></div>';
+      const supportedColors = getSupportedColors(mockColors, mockSvg);
+      expect(supportedColors).toMatchInlineSnapshot(`
+Array [
+  Object {
+    "color": "#000000",
+    "name": "black",
+  },
+]
+`);
+    });
+    it("excludes a color if it is not whitelisted on all panels", () => {
+      const mockSvg =
+        '<div><div data-id="1" data-whitelist="black"></div><div data-id="2" data-whitelist="black"></div></div>';
+      const supportedColors = getSupportedColors(mockColors, mockSvg);
+      expect(supportedColors).toMatchInlineSnapshot(`
+Array [
+  Object {
+    "color": "#000000",
+    "name": "black",
+  },
+]
+`);
+    });
+    it("excludes a color if it is blacklisted or not whitelisted on all panels", () => {
+      const mockSvg =
+        '<div><div data-id="1" data-blacklist="red"></div><div data-id="2" data-whitelist="black"></div></div>';
+      const supportedColors = getSupportedColors(mockColors, mockSvg);
+      expect(supportedColors).toMatchInlineSnapshot(`
+Array [
+  Object {
+    "color": "#000000",
+    "name": "black",
+  },
+]
+`);
+    });
   });
 });
