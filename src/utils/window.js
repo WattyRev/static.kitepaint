@@ -1,1 +1,1 @@
-export const locationReplace = window.location.replace;
+export const locationReplace = url => window.location.replace(url);
