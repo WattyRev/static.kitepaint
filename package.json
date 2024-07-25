@@ -31,13 +31,13 @@
     "react-dom": "^16.6.0",
     "react-redux": "^5.1.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^5.0.1",
     "react-test-renderer": "^16.6.0",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.3",
     "redux-immutable": "^4.0.0",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^4.0.2"
+    "styled-components": "^4.0.3"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -76,7 +76,9 @@
     ]
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.24.8",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-react": "^7.24.7",
     "concurrently": "^4.1.0",
     "connect": "^3.6.6",
     "enzyme": "^3.7.0",
@@ -87,7 +89,7 @@
     "husky": "^1.1.2",
     "jest-environment-enzyme": "^7.0.1",
     "jest-enzyme": "^7.0.1",
-    "jest-styled-components": "^6.3.0",
+    "jest-styled-components": "^6.3.4",
     "lint-staged": "^7.3.0",
     "nodemon": "^1.18.9",
     "serve-static": "^1.13.2",
