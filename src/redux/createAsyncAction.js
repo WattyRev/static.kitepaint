@@ -13,17 +13,18 @@ export default function createAsyncAction(actionType, request) {
   const ACTION_FAILED = createAction(`${actionType}.FAILED`);
 
   function asyncAction(...args) {
-    return dispatch => {
+    return async dispatch => {
       dispatch(asyncAction.REQUESTED());
 
-      const promise = request(...args);
-      promise.then(payload => {
+      let payload;
+      try {
+        payload = await request(...args);
         dispatch(asyncAction.RECEIVED(payload));
-      });
-      promise.catch(payload => {
-        dispatch(asyncAction.FAILED(payload));
-      });
-      return promise;
+      } catch (error) {
+        dispatch(asyncAction.FAILED(error));
+        throw error;
+      }
+      return payload;
     };
   }
 

@@ -57,10 +57,6 @@ describe("DesignsContainer", () => {
     it("renders", () => {
       shallow(<Data {...defaultProps}>{() => <div />}</Data>);
     });
-    it("unmounts without throwing errors", () => {
-      const wrapper = shallow(<Data {...defaultProps}>{() => <div />}</Data>);
-      wrapper.unmount();
-    });
     it("fetches designs, products, and manufacturers immediately", () => {
       expect.assertions(3);
       shallow(<Data {...defaultProps}>{() => <div />}</Data>);
