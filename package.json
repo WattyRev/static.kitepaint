@@ -93,6 +93,6 @@
     "lint-staged": "^7.3.0",
     "nodemon": "^1.18.9",
     "serve-static": "^1.13.2",
-    "ssh2-sftp-client": "^2.4.3"
+    "ssh2-sftp-client": "^10.0.3"
   }
 }
