@@ -26,4 +26,4 @@ jobs:
         with:
           node-version: '20.12.1'
       - run: npm ci
-      - run: npm run build
+      - run: npm run build91824f (Add build job for branches)
