@@ -56,7 +56,11 @@ const Content = ({
     <StyleWrapper
       onSubmit={e => {
         e.preventDefault();
-        onSubmit();
+        try {
+          onSubmit();
+        } catch (error) {
+          // Do nothing
+        }
       }}
     >
       <ModalClose onClick={onCancel} />
@@ -161,20 +165,22 @@ class DesignSettingsModal extends React.Component {
 
   /** Handles submission by calling onSubmit with the relevant data and handling
    the promise that it may return. */
-  handleSubmit = () => {
-    const request = this.props.onSubmit(this.state.design);
-    if (request && request.then) {
-      this.setState({ isPending: true });
-      request.then(() => {
-        this.setState({ isPending: false });
-        this.handleClose();
-      });
-      request.catch(() => {
-        this.setState({ isPending: false });
-        this.handleClose();
-      });
+  handleSubmit = async () => {
+    let response;
+    try {
+      const request = this.props.onSubmit(this.state.design);
+      if (request && request.then) {
+        this.setState({ isPending: true });
+      }
+      response = await request;
+      this.setState({ isPending: false });
+      this.handleClose();
+    } catch (error) {
+      this.setState({ isPending: false });
+      this.handleClose();
+      throw error;
     }
-    return request;
+    return response;
   };
 
   render() {
