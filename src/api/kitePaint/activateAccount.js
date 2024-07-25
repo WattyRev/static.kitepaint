@@ -22,7 +22,7 @@ export default async function activateAccount(userId, activationCode) {
     } else {
       message = "Could not activate the account";
     }
-    return Promise.reject(message);
+    throw new Error(message);
   }
 
   return response;

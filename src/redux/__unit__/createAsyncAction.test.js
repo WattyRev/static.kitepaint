@@ -19,13 +19,12 @@ describe("createAsyncAction", () => {
     });
   });
   describe("RECEIVED", () => {
-    it("is dispatched once the request succeeds", () => {
+    it("is dispatched once the request succeeds", async () => {
       expect.assertions(1);
       const action = createAsyncAction("test", jest.fn().mockResolvedValue());
       action.RECEIVED = jest.fn();
-      return dispatchAsyncAction(action).then(() => {
-        expect(action.RECEIVED.mock.calls).toHaveLength(1);
-      });
+      await dispatchAsyncAction(action);
+      expect(action.RECEIVED.mock.calls).toHaveLength(1);
     });
     it("is not dispatched once the request fails", () => {
       expect.assertions(1);
