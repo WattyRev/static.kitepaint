@@ -90,8 +90,8 @@ export const Data = ({
       loadMore: fetchDesigns
     },
     props: {
-      hasMore: hasMore,
-      isLoading: isLoading,
+      hasMore,
+      isLoading,
       designs,
       products,
       manufacturers
