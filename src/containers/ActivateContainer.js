@@ -15,9 +15,9 @@ const ActivateContainer = ({ userId, activationCode, children }) => {
       try {
         await KitePaintApi.activateAccount(userId, activationCode);
         setPending(false);
-      } catch (error) {
+      } catch (caughtError) {
         setPending(false);
-        setError(error);
+        setError(caughtError);
       }
     })();
   }, []);
