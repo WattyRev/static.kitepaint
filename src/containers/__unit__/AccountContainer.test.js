@@ -1,5 +1,6 @@
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import React from "react";
-import { shallow } from "enzyme";
 import { AccountContainer } from "../AccountContainer";
 
 describe("AccountContainer", () => {
@@ -16,239 +17,263 @@ describe("AccountContainer", () => {
       onDeleteAccount: jest.fn().mockResolvedValue()
     };
   });
-  it("renders", () => {
-    shallow(
-      <AccountContainer {...defaultProps}>{() => <div />}</AccountContainer>
+  it("renders", async () => {
+    render(
+      <AccountContainer {...defaultProps}>
+        {() => <div data-testid="target">test content</div>}
+      </AccountContainer>
     );
+    await screen.findByTestId("target");
+    expect(screen.getByTestId("target")).toHaveTextContent("test content");
   });
   describe("changeEmail", () => {
-    it("changes the email", () => {
-      expect.assertions(2);
-      const wrapper = shallow(
+    it("changes the email", async () => {
+      render(
         <AccountContainer {...defaultProps}>
           {data => (
             <React.Fragment>
               <div
-                className="edit-email"
+                data-testid="edit-email"
                 onClick={data.actions.toggleEditEmail}
               />
               <div
-                className="click"
+                data-testid="click"
                 onClick={() => data.actions.changeEmail("newEmail")}
               />
-              <div className="target">{data.props.email}</div>
+              <div data-testid="target">{data.props.email}</div>
             </React.Fragment>
           )}
         </AccountContainer>
       );
-      wrapper.find(".edit-email").simulate("click");
-      expect(wrapper.find(".target").text()).toEqual("test@test.com");
-      wrapper.find(".click").simulate("click");
-      expect(wrapper.find(".target").text()).toEqual("newEmail");
+      await screen.findByTestId("click");
+      await userEvent.click(screen.getByTestId("edit-email"));
+      expect(screen.getByTestId("target")).toHaveTextContent("test@test.com");
+      await userEvent.click(screen.getByTestId("click"));
+      expect(screen.getByTestId("target")).toHaveTextContent("newEmail");
     });
   });
   describe("changeCurrentPassword", () => {
-    it("changes the current password", () => {
-      expect.assertions(2);
-      const wrapper = shallow(
+    it("changes the current password", async () => {
+      render(
         <AccountContainer {...defaultProps}>
           {data => (
             <React.Fragment>
               <div
-                className="click"
+                data-testid="click"
                 onClick={() => data.actions.changeCurrentPassword("hunter1")}
               />
-              <div className="target">{data.props.currentPassword}</div>
+              <div data-testid="target">{data.props.currentPassword}</div>
             </React.Fragment>
           )}
         </AccountContainer>
       );
-      expect(wrapper.find(".target").text()).toEqual("");
-      wrapper.find(".click").simulate("click");
-      expect(wrapper.find(".target").text()).toEqual("hunter1");
+      expect(screen.getByTestId("target")).toHaveTextContent("");
+      await userEvent.click(screen.getByTestId("click"));
+      expect(screen.getByTestId("target")).toHaveTextContent("hunter1");
     });
   });
   describe("changeNewPassword", () => {
-    it("changes the new password", () => {
-      expect.assertions(2);
-      const wrapper = shallow(
+    it("changes the new password", async () => {
+      render(
         <AccountContainer {...defaultProps}>
           {data => (
             <React.Fragment>
               <div
-                className="click"
+                data-testid="click"
                 onClick={() => data.actions.changeNewPassword("hunter1")}
               />
-              <div className="target">{data.props.newPassword}</div>
+              <div data-testid="target">{data.props.newPassword}</div>
             </React.Fragment>
           )}
         </AccountContainer>
       );
-      expect(wrapper.find(".target").text()).toEqual("");
-      wrapper.find(".click").simulate("click");
-      expect(wrapper.find(".target").text()).toEqual("hunter1");
+      expect(screen.getByTestId("target")).toHaveTextContent("");
+      await userEvent.click(screen.getByTestId("click"));
+      expect(screen.getByTestId("target")).toHaveTextContent("hunter1");
     });
   });
   describe("changeConfirmNewPassword", () => {
-    it("changes the new password confirmation", () => {
-      expect.assertions(2);
-      const wrapper = shallow(
+    it("changes the new password confirmation", async () => {
+      render(
         <AccountContainer {...defaultProps}>
           {data => (
             <React.Fragment>
               <div
-                className="click"
+                data-testid="click"
                 onClick={() => data.actions.changeConfirmNewPassword("hunter1")}
               />
-              <div className="target">{data.props.confirmNewPassword}</div>
+              <div data-testid="target">{data.props.confirmNewPassword}</div>
             </React.Fragment>
           )}
         </AccountContainer>
       );
-      expect(wrapper.find(".target").text()).toEqual("");
-      wrapper.find(".click").simulate("click");
-      expect(wrapper.find(".target").text()).toEqual("hunter1");
+      expect(screen.getByTestId("target")).toHaveTextContent("");
+      await userEvent.click(screen.getByTestId("click"));
+      expect(screen.getByTestId("target")).toHaveTextContent("hunter1");
     });
   });
   describe("toggleEditEmail", () => {
-    it("toggles editingEmail", () => {
-      expect.assertions(2);
-      const wrapper = shallow(
+    it("toggles editingEmail", async () => {
+      render(
         <AccountContainer {...defaultProps}>
           {data => (
             <React.Fragment>
-              <div className="click" onClick={data.actions.toggleEditEmail} />
-              <div className="target">
+              <div data-testid="click" onClick={data.actions.toggleEditEmail} />
+              <div data-testid="target">
                 {data.props.editingEmail ? "editing" : "not editing"}
               </div>
             </React.Fragment>
           )}
         </AccountContainer>
       );
-      expect(wrapper.find(".target").text()).toEqual("not editing");
-      wrapper.find(".click").simulate("click");
-      expect(wrapper.find(".target").text()).toEqual("editing");
+      expect(screen.getByTestId("target")).toHaveTextContent("not editing");
+      await userEvent.click(screen.getByTestId("click"));
+      expect(screen.getByTestId("target")).toHaveTextContent("editing");
     });
   });
   describe("toggleEditPassword", () => {
-    it("toggles editingPassword", () => {
-      expect.assertions(2);
-      const wrapper = shallow(
+    it("toggles editingPassword", async () => {
+      render(
         <AccountContainer {...defaultProps}>
           {data => (
             <React.Fragment>
               <div
-                className="click"
+                data-testid="click"
                 onClick={data.actions.toggleEditPassword}
               />
-              <div className="target">
+              <div data-testid="target">
                 {data.props.editingPassword ? "editing" : "not editing"}
               </div>
             </React.Fragment>
           )}
         </AccountContainer>
       );
-      expect(wrapper.find(".target").text()).toEqual("not editing");
-      wrapper.find(".click").simulate("click");
-      expect(wrapper.find(".target").text()).toEqual("editing");
+      expect(screen.getByTestId("target")).toHaveTextContent("not editing");
+      await userEvent.click(screen.getByTestId("click"));
+      expect(screen.getByTestId("target")).toHaveTextContent("editing");
     });
   });
   describe("submitEmail", () => {
-    it("calls onEmailChange", () => {
-      expect.assertions(1);
-      const wrapper = shallow(
+    it("calls onEmailChange", async () => {
+      render(
         <AccountContainer {...defaultProps}>
           {data => (
             <React.Fragment>
               <div
-                className="edit-email"
+                data-testid="edit-email"
                 onClick={data.actions.toggleEditEmail}
               />
               <div
-                className="set-email"
+                data-testid="set-email"
                 onClick={() => data.actions.changeEmail("newEmail")}
               />
-              <div className="save-email" onClick={data.actions.submitEmail} />
+              <div
+                data-testid="save-email"
+                onClick={data.actions.submitEmail}
+              />
             </React.Fragment>
           )}
         </AccountContainer>
       );
-      wrapper.find(".edit-email").simulate("click");
-      wrapper.find(".set-email").simulate("click");
-      wrapper
-        .find(".save-email")
-        .simulate("click", { preventDefault: jest.fn() });
+      await userEvent.click(screen.getByTestId("edit-email"));
+      await userEvent.click(screen.getByTestId("set-email"));
+      await userEvent.click(screen.getByTestId("save-email"));
       expect(defaultProps.onEmailChange).toHaveBeenCalledWith(
         "abc",
         "newEmail"
       );
     });
-    it("sets editingEmail to false when onEmailChange resolves", () => {
-      expect.assertions(1);
-      const subject = new AccountContainer({
-        ...defaultProps,
-        children: jest.fn()
-      });
-      subject.setState = jest.fn();
-      subject.state.editingEmail = true;
-      return subject
-        .handleSubmitEmail({ preventDefault: jest.fn() })
-        .then(() => {
-          expect(subject.setState).toHaveBeenCalledWith({
-            editingEmail: false
-          });
-        });
-    });
-    it("sets emailError when onEmailChange rejects", () => {
-      expect.assertions(1);
-      defaultProps.onEmailChange.mockRejectedValue("failure");
-      const subject = new AccountContainer({
-        ...defaultProps,
-        children: jest.fn()
-      });
-      subject.setState = jest.fn();
-      return subject
-        .handleSubmitEmail({ preventDefault: jest.fn() })
-        .then(() => {
-          expect(subject.setState).toHaveBeenCalledWith({
-            emailError: "failure"
-          });
-        });
-    });
-  });
-  describe("submitPassword", () => {
-    it("calls onPasswordChange", () => {
-      expect.assertions(1);
-      const wrapper = shallow(
+    it("sets editingEmail to false when onEmailChange resolves", async () => {
+      render(
         <AccountContainer {...defaultProps}>
           {data => (
             <React.Fragment>
               <div
-                className="set-current-password"
+                data-testid="edit-email"
+                onClick={data.actions.toggleEditEmail}
+              />
+              <div data-testid="target">
+                {data.props.editingEmail ? "yes editing" : "no editing"}
+              </div>
+              <div
+                data-testid="set-email"
+                onClick={() => data.actions.changeEmail("newEmail")}
+              />
+              <div
+                data-testid="save-email"
+                onClick={data.actions.submitEmail}
+              />
+            </React.Fragment>
+          )}
+        </AccountContainer>
+      );
+      expect(screen.getByTestId("target")).toHaveTextContent("no editing");
+      await userEvent.click(screen.getByTestId("edit-email"));
+      expect(screen.getByTestId("target")).toHaveTextContent("yes editing");
+      await userEvent.click(screen.getByTestId("set-email"));
+      await userEvent.click(screen.getByTestId("save-email"));
+      expect(screen.getByTestId("target")).toHaveTextContent("no editing");
+    });
+    it("sets emailError when onEmailChange rejects", async () => {
+      defaultProps.onEmailChange.mockRejectedValue("failure");
+      render(
+        <AccountContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div
+                data-testid="edit-email"
+                onClick={data.actions.toggleEditEmail}
+              />
+              <div data-testid="email-error">{data.props.emailError}</div>
+              <div
+                data-testid="set-email"
+                onClick={() => data.actions.changeEmail("newEmail")}
+              />
+              <div
+                data-testid="save-email"
+                onClick={data.actions.submitEmail}
+              />
+            </React.Fragment>
+          )}
+        </AccountContainer>
+      );
+      expect(screen.getByTestId("email-error")).toHaveTextContent("");
+      await userEvent.click(screen.getByTestId("edit-email"));
+      await userEvent.click(screen.getByTestId("set-email"));
+      await userEvent.click(screen.getByTestId("save-email"));
+      expect(screen.getByTestId("email-error")).toHaveTextContent("failure");
+    });
+  });
+  describe("submitPassword", () => {
+    it("calls onPasswordChange", async () => {
+      render(
+        <AccountContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div
+                data-testid="set-current-password"
                 onClick={() => data.actions.changeCurrentPassword("hunter1")}
               />
               <div
-                className="set-new-password"
+                data-testid="set-new-password"
                 onClick={() => data.actions.changeNewPassword("hunter2")}
               />
               <div
-                className="set-confirm-new-password"
+                data-testid="set-confirm-new-password"
                 onClick={() => data.actions.changeConfirmNewPassword("hunter3")}
               />
               <div
-                className="save-password"
+                data-testid="save-password"
                 onClick={data.actions.submitPassword}
               />
             </React.Fragment>
           )}
         </AccountContainer>
       );
-      wrapper.find(".set-current-password").simulate("click");
-      wrapper.find(".set-new-password").simulate("click");
-      wrapper.find(".set-confirm-new-password").simulate("click");
-      wrapper
-        .find(".save-password")
-        .simulate("click", { preventDefault: jest.fn() });
+      await userEvent.click(screen.getByTestId("set-current-password"));
+      await userEvent.click(screen.getByTestId("set-new-password"));
+      await userEvent.click(screen.getByTestId("set-confirm-new-password"));
+      await userEvent.click(screen.getByTestId("save-password"));
       expect(defaultProps.onPasswordChange).toHaveBeenCalledWith({
         username: "frank",
         currentPassword: "hunter1",
@@ -256,74 +281,111 @@ describe("AccountContainer", () => {
         confirmNewPassword: "hunter3"
       });
     });
-    it("sets editingPassword to false when onChangePassword resolves", () => {
-      expect.assertions(1);
-      const subject = new AccountContainer({
-        ...defaultProps,
-        children: jest.fn()
-      });
-      subject.setState = jest.fn();
-      subject.state.editingPassword = true;
-      return subject
-        .handleSubmitPassword({ preventDefault: jest.fn() })
-        .then(() => {
-          expect(subject.setState).toHaveBeenCalledWith({
-            editingPassword: false
-          });
-        });
-    });
-    it("sets emailError when onEmailChange rejects", () => {
-      expect.assertions(1);
-      defaultProps.onPasswordChange.mockRejectedValue("failure");
-      const subject = new AccountContainer({
-        ...defaultProps,
-        children: jest.fn()
-      });
-      subject.setState = jest.fn();
-      return subject
-        .handleSubmitPassword({ preventDefault: jest.fn() })
-        .then(() => {
-          expect(subject.setState).toHaveBeenCalledWith({
-            passwordError: "failure"
-          });
-        });
-    });
-  });
-  describe("deleteAccount", () => {
-    it("triggers onDeleteAccount", () => {
-      expect.assertions(1);
-      expect.assertions(1);
-      const wrapper = shallow(
+    it("sets editingPassword to false when onChangePassword resolves", async () => {
+      render(
         <AccountContainer {...defaultProps}>
           {data => (
             <React.Fragment>
               <div
-                className="delete-account"
+                data-testid="toggle-edit-password"
+                onClick={() => data.actions.toggleEditPassword()}
+              />
+              <div data-testid="editing-password">
+                {data.props.editingPassword ? "yes editing" : "no editing"}
+              </div>
+              <div
+                data-testid="set-confirm-new-password"
+                onClick={() => data.actions.changeConfirmNewPassword("hunter3")}
+              />
+              <div
+                data-testid="save-password"
+                onClick={data.actions.submitPassword}
+              />
+            </React.Fragment>
+          )}
+        </AccountContainer>
+      );
+      expect(screen.getByTestId("editing-password")).toHaveTextContent(
+        "no editing"
+      );
+      await userEvent.click(screen.getByTestId("toggle-edit-password"));
+      expect(screen.getByTestId("editing-password")).toHaveTextContent(
+        "yes editing"
+      );
+      await userEvent.click(screen.getByTestId("set-confirm-new-password"));
+      await userEvent.click(screen.getByTestId("save-password"));
+      expect(screen.getByTestId("editing-password")).toHaveTextContent(
+        "no editing"
+      );
+    });
+    it("sets passwordError when onPasswordChange rejects", async () => {
+      defaultProps.onPasswordChange.mockRejectedValue("failure");
+      render(
+        <AccountContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div
+                data-testid="toggle-edit-password"
+                onClick={() => data.actions.toggleEditPassword()}
+              />
+              <div data-testid="password-error">{data.props.passwordError}</div>
+              <div
+                data-testid="set-confirm-new-password"
+                onClick={() => data.actions.changeConfirmNewPassword("hunter3")}
+              />
+              <div
+                data-testid="save-password"
+                onClick={data.actions.submitPassword}
+              />
+            </React.Fragment>
+          )}
+        </AccountContainer>
+      );
+      expect(screen.getByTestId("password-error")).toHaveTextContent("");
+      await userEvent.click(screen.getByTestId("toggle-edit-password"));
+      await userEvent.click(screen.getByTestId("set-confirm-new-password"));
+      await userEvent.click(screen.getByTestId("save-password"));
+      expect(screen.getByTestId("password-error")).toHaveTextContent("failure");
+    });
+  });
+  describe("deleteAccount", () => {
+    it("triggers onDeleteAccount", async () => {
+      render(
+        <AccountContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div
+                data-testid="delete-account"
                 onClick={() => data.actions.deleteAccount("hunter1")}
               />
             </React.Fragment>
           )}
         </AccountContainer>
       );
-      wrapper.find(".delete-account").simulate("click");
+      await userEvent.click(screen.getByTestId("delete-account"));
       expect(defaultProps.onDeleteAccount).toHaveBeenCalledWith(
         "abc",
         "hunter1"
       );
     });
-    it("sets deleteError when onDeleteAccount rejects", () => {
-      expect.assertions(1);
+    it("sets deleteError when onDeleteAccount rejects", async () => {
       defaultProps.onDeleteAccount.mockRejectedValue("failure");
-      const subject = new AccountContainer({
-        ...defaultProps,
-        children: jest.fn()
-      });
-      subject.setState = jest.fn();
-      return subject.handleDeleteAccount("test").then(() => {
-        expect(subject.setState).toHaveBeenCalledWith({
-          deleteError: "failure"
-        });
-      });
+      render(
+        <AccountContainer {...defaultProps}>
+          {data => (
+            <React.Fragment>
+              <div
+                data-testid="delete-account"
+                onClick={() => data.actions.deleteAccount("hunter1")}
+              />
+              <div data-testid="delete-error">{data.props.deleteError}</div>
+            </React.Fragment>
+          )}
+        </AccountContainer>
+      );
+      expect(screen.getByTestId("delete-error")).toHaveTextContent("");
+      await userEvent.click(screen.getByTestId("delete-account"));
+      expect(screen.getByTestId("delete-error")).toHaveTextContent("failure");
     });
   });
 });

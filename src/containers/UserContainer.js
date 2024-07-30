@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
@@ -8,103 +8,80 @@ import { SET_RECOGNIZED_USER, LOG_OUT } from "../redux/actions";
 /**
  * Provides information and actions about/for the current user.
  */
-export class UserContainer extends React.Component {
-  static propTypes = {
-    /**
-     * A function that renders content
-     */
-    children: PropTypes.func.isRequired,
-    /**
-     * Is the current user recognized as one with an account? Provided by redux.
-     */
-    isRecognizedUser: PropTypes.bool,
-    /**
-     * Details about the current user. Provided by redux.
-     */
-    user: PropTypes.shape({
-      email: PropTypes.string,
-      id: PropTypes.string,
-      isLoggedIn: PropTypes.bool,
-      isLoggingIn: PropTypes.bool,
-      username: PropTypes.string
-    }),
-    /**
-     * A function called to log out the current user. Provided by Redux.
-     */
-    onLogOut: PropTypes.func.isRequired,
-    /**
-     * A function called to indicate if the user is recognized or not. Provided by Redux.
-     */
-    onSetRecognition: PropTypes.func.isRequired,
-    /** Called when this component triggers a redirect. Mostly used for testing */
-    onRedirect: PropTypes.func
-  };
-
-  static defaultProps = {
-    onRedirect: () => {}
-  };
-
-  state = {
-    // When true, a <Redirect> element should be rendered to redirect to the home page.
-    redirect: false
-  };
+export const UserContainer = ({
+  children,
+  isRecognizedUser,
+  user,
+  onLogOut,
+  onSetRecognition,
+  onRedirect
+}) => {
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
   /**
    * Toggles the variable in state and in local storage
    */
-  toggleRecognition = () => {
-    const { isRecognizedUser } = this.props;
-    this.props.onSetRecognition(!isRecognizedUser);
+  const toggleRecognition = () => {
+    onSetRecognition(!isRecognizedUser);
   };
-
-  /** Sets isRecognizedUser to the given value */
-  setRecognition = value => this.props.onSetRecognition(value);
 
   // Handle when the user requests to log out
-  handleLogOut = () => {
-    return this.props.onLogOut().then(() => {
-      // Turn on the redirect
-      this.setState(
-        {
-          redirect: true
-        },
-
-        // Turn the redirect back off
-        () =>
-          this.setState({
-            redirect: false
-          })
-      );
-    });
+  const handleLogOut = async () => {
+    await onLogOut();
+    setShouldRedirect(true);
   };
 
-  buildRedirect = () => {
-    this.props.onRedirect();
+  if (shouldRedirect) {
+    onRedirect?.();
     return <Redirect to="/" />;
-  };
-
-  render() {
-    if (this.state.redirect) {
-      return this.buildRedirect();
-    }
-    const { email, id, isLoggedIn, isLoggingIn, username } = this.props.user;
-    return this.props.children({
-      actions: {
-        logOut: this.handleLogOut,
-        toggleRecognition: this.toggleRecognition,
-        setRecognition: this.setRecognition
-      },
-      props: {
-        email,
-        id,
-        isLoggedIn,
-        isLoggingIn,
-        isRecognizedUser: this.props.isRecognizedUser,
-        username
-      }
-    });
   }
-}
+  const { email, id, isLoggedIn, isLoggingIn, username } = user;
+  return children({
+    actions: {
+      logOut: handleLogOut,
+      toggleRecognition,
+      setRecognition: onSetRecognition
+    },
+    props: {
+      email,
+      id,
+      isLoggedIn,
+      isLoggingIn,
+      isRecognizedUser,
+      username
+    }
+  });
+};
+UserContainer.propTypes = {
+  /**
+   * A function that renders content
+   */
+  children: PropTypes.func.isRequired,
+  /**
+   * Is the current user recognized as one with an account? Provided by redux.
+   */
+  isRecognizedUser: PropTypes.bool,
+  /**
+   * Details about the current user. Provided by redux.
+   */
+  user: PropTypes.shape({
+    email: PropTypes.string,
+    id: PropTypes.string,
+    isLoggedIn: PropTypes.bool,
+    isLoggingIn: PropTypes.bool,
+    username: PropTypes.string
+  }),
+  /**
+   * A function called to log out the current user. Provided by Redux.
+   */
+  onLogOut: PropTypes.func.isRequired,
+  /**
+   * A function called to indicate if the user is recognized or not. Provided by Redux.
+   */
+  onSetRecognition: PropTypes.func.isRequired,
+  /** Called when this component triggers a redirect. Mostly used for testing */
+  onRedirect: PropTypes.func
+};
 
 const mapStateToProps = state => ({
   user: getUser(state),
@@ -116,7 +93,4 @@ const mapDispatchToProps = {
   onSetRecognition: SET_RECOGNIZED_USER
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UserContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(UserContainer);

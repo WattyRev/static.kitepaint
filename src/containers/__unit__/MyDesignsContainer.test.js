@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import { getMockDesign } from "../../models/Design";
 import { getMockProduct } from "../../models/Product";
 import { getMockManufacturer } from "../../models/Manufacturer";
@@ -23,30 +23,26 @@ describe("MyDesignsContainer", () => {
     };
   });
   it("renders", () => {
-    shallow(
+    render(
       <MyDesignsContainer {...defaultProps}>
-        {() => <div className="target">hello!</div>}
+        {() => <div data-testid="target">hello!</div>}
       </MyDesignsContainer>
     );
+    expect(screen.getByTestId("target")).toHaveTextContent("hello!");
   });
   it("fetches designs", () => {
-    expect.assertions(2);
-    shallow(
-      <MyDesignsContainer {...defaultProps}>
-        {() => <div className="target">hello!</div>}
-      </MyDesignsContainer>
+    render(
+      <MyDesignsContainer {...defaultProps}>{() => <div />}</MyDesignsContainer>
     );
-    expect(defaultProps.onFetchDesigns).toHaveBeenCalled();
-    expect(defaultProps.onFetchDesigns.mock.calls[0][0].userId).toEqual(
-      "abc-user"
-    );
+    expect(defaultProps.onFetchDesigns).toHaveBeenCalledWith({
+      userId: "abc-user",
+      limit: null,
+      publicOnly: false
+    });
   });
-  it("fetches producgts and manufacturers", () => {
-    expect.assertions(2);
-    shallow(
-      <MyDesignsContainer {...defaultProps}>
-        {() => <div className="target">hello!</div>}
-      </MyDesignsContainer>
+  it("fetches products and manufacturers", () => {
+    render(
+      <MyDesignsContainer {...defaultProps}>{() => <div />}</MyDesignsContainer>
     );
     expect(defaultProps.onFetchProducts).toHaveBeenCalled();
     expect(defaultProps.onFetchManufacturers).toHaveBeenCalled();
@@ -60,12 +56,12 @@ describe("MyDesignsContainer", () => {
     defaultProps.manufacturers = {
       [getMockManufacturer().id]: getMockManufacturer()
     };
-    const wrapper = shallow(
+    render(
       <MyDesignsContainer {...defaultProps}>
-        {data => <div className="target">{JSON.stringify(data)}</div>}
+        {data => <div data-testid="target">{JSON.stringify(data)}</div>}
       </MyDesignsContainer>
     );
-    const data = JSON.parse(wrapper.find(".target").text());
+    const data = JSON.parse(screen.getByTestId("target").textContent);
     expect(Object.keys(data.props)).toEqual([
       "isLoading",
       "designs",

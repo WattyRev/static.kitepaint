@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import { getMockDesign } from "../../models/Design";
 import { EditContainer } from "../EditContainer";
 
@@ -14,10 +14,14 @@ describe("EditContainer", () => {
     };
   });
   it("renders", () => {
-    shallow(<EditContainer {...defaultProps}>{() => <div />}</EditContainer>);
+    render(
+      <EditContainer {...defaultProps}>
+        {() => <div data-testid="target">test</div>}
+      </EditContainer>
+    );
+    expect(screen.getByTestId("target")).toHaveTextContent("test");
   });
   it("does not provide the design if it was made by a different user", () => {
-    expect.assertions(1);
     defaultProps.user = {
       id: "abc"
     };
@@ -25,20 +29,19 @@ describe("EditContainer", () => {
       user: "def"
     });
 
-    const wrapper = shallow(
+    render(
       <EditContainer {...defaultProps}>
         {data => (
-          <div className="target">
+          <div data-testid="target">
             {data.props.design ? "yes design" : "no design"}
           </div>
         )}
       </EditContainer>
     );
 
-    expect(wrapper.find(".target").text()).toEqual("no design");
+    expect(screen.getByTestId("target")).toHaveTextContent("no design");
   });
   it("does provide the design if it was made by the current user", () => {
-    expect.assertions(1);
     defaultProps.user = {
       id: "abc"
     };
@@ -46,16 +49,16 @@ describe("EditContainer", () => {
       user: "abc"
     });
 
-    const wrapper = shallow(
+    render(
       <EditContainer {...defaultProps}>
         {data => (
-          <div className="target">
+          <div data-testid="target">
             {data.props.design ? "yes design" : "no design"}
           </div>
         )}
       </EditContainer>
     );
 
-    expect(wrapper.find(".target").text()).toEqual("yes design");
+    expect(screen.getByTestId("target")).toHaveTextContent("yes design");
   });
 });

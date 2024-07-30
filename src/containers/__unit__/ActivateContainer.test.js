@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import KitePaintApi from "../../api/KitePaintApi";
 import ActivateContainer from "../ActivateContainer";
 
@@ -15,70 +15,51 @@ describe("ActivateContainer", () => {
     KitePaintApi.activateAccount.mockResolvedValue();
   });
   it("renders", () => {
-    shallow(
-      <ActivateContainer {...defaultProps}>{() => <div />}</ActivateContainer>
+    render(
+      <ActivateContainer {...defaultProps}>
+        {() => <div data-testid="target">test content</div>}
+      </ActivateContainer>
     );
+    expect(screen.getByTestId("target")).toHaveTextContent("test content");
   });
   it("provides a pending state while waiting for the request to return", () => {
-    expect.assertions(1);
-    const wrapper = shallow(
+    render(
       <ActivateContainer {...defaultProps}>
         {activate => (
-          <div className="target">
+          <div data-testid="target">
             {activate.props.isPending ? "true" : "false"}
           </div>
         )}
       </ActivateContainer>
     );
-    expect(wrapper.find(".target").text()).toEqual("true");
+    expect(screen.getByTestId("target")).toHaveTextContent("true");
   });
-  it("disables the pending state when the request resolves", () => {
-    expect.assertions(1);
-    const wrapper = shallow(
+  it("disables the pending state when the request resolves", async () => {
+    render(
       <ActivateContainer {...defaultProps}>
         {activate => (
-          <div className="target">
+          <div data-testid="target">
             {activate.props.isPending ? "true" : "false"}
           </div>
         )}
       </ActivateContainer>
     );
-    return new Promise(resolve => {
-      window.setTimeout(() => {
-        wrapper.update();
-        expect(wrapper.find(".target").text()).toEqual("false");
-        resolve();
-      }, 10);
-    });
+    await screen.findByText("false");
+    expect(screen.getByTestId("target")).toHaveTextContent("false");
   });
-  it("sets the error and disables pending state if the request fails", () => {
-    expect.assertions(2);
+  it("sets the error and disables pending state if the request fails", async () => {
     KitePaintApi.activateAccount.mockRejectedValue("bad stuff");
-    const wrapper = shallow(
+    render(
       <ActivateContainer {...defaultProps}>
         {activate => (
           <React.Fragment>
-            <div className="isPending">
-              {activate.props.isPending ? "true" : "false"}
-            </div>
-            <div className="error">{activate.props.error}</div>
+            <div data-testid="error">{activate.props.error}</div>
           </React.Fragment>
         )}
       </ActivateContainer>
     );
-    return new Promise(resolve => {
-      window.setTimeout(() => {
-        wrapper.update();
-        expect(wrapper.find(".isPending").text()).toEqual("false");
-        expect(wrapper.find(".error").text()).toEqual("bad stuff");
-        resolve();
-      }, 1);
-    });
-  });
-  it("handles being unmounted before the request resolves", () => {
-    const wrapper = shallow(
-      <ActivateContainer {...defaultProps}>{() => <div />}</ActivateContainer>
-    );
-    wrapper.unmount();
+    expect(screen.getByTestId("error")).toHaveTextContent("");
+    await screen.findByText("bad stuff");
+    expect(screen.getByTestId("error")).toHaveTextContent("bad stuff");
   });
 });

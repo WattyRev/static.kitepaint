@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getDesignById } from "../redux/modules/designs";
@@ -17,7 +17,7 @@ import Manufacturer from "../models/Manufacturer";
 import User from "../models/User";
 import { isEmbedded, defaultBackground } from "../constants/embed";
 import ErrorPage from "../components/ErrorPage";
-import { softCompareStrings, makeCancelable, embedAllowed } from "../utils";
+import { softCompareStrings, embedAllowed } from "../utils";
 
 const INVALID_COLOR_PREFIX = "Invalid Color";
 
@@ -71,95 +71,53 @@ function generateAppliedColors(design, product) {
 /**
  * A container that provides data management for the View page.
  */
-export class ViewContainer extends React.Component {
-  static propTypes = {
-    /**
-     * A function that triggers the retrieval of a specific design. Provided by Redux.
-     */
-    onFetchDesign: PropTypes.func.isRequired,
-    /**
-     * A function that triggers the retrieval of products. Provided by Redux.
-     */
-    onFetchProducts: PropTypes.func.isRequired,
-    /**
-     * A function that triggers the retrieval of manufacturers. Provided by Redux.
-     */
-    onFetchManufacturers: PropTypes.func.isRequired,
-    /**
-     * A function that triggers the retrieval of a specific user. Provided by Redux.
-     */
-    onFetchUser: PropTypes.func.isRequired,
-    /**
-     * The design being viewed. Provided by Redux.
-     */
-    design: PropTypes.instanceOf(Design),
-    /**
-     * The ID of the design that is being viewed.
-     */
-    designId: PropTypes.string.isRequired,
-    /**
-     * The product related to the design. Provided by Redux.
-     */
-    product: PropTypes.instanceOf(Product),
-    /**
-     * The manufacturer related to the design. Provided by Redux.
-     */
-    manufacturer: PropTypes.instanceOf(Manufacturer),
-    /**
-     * The user that created the design. Provided by Redux.
-     */
-    user: PropTypes.instanceOf(User),
-    /**
-     * A function that renders content.
-     */
-    children: PropTypes.func.isRequired
-  };
+export const ViewContainer = ({
+  onFetchDesign,
+  onFetchProducts,
+  onFetchManufacturers,
+  onFetchUser,
+  design,
+  designId,
+  product,
+  manufacturer,
+  user,
+  children
+}) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [hideOutlines, setHideOutlines] = useState(false);
+  // An itemized list of colorable panels and their colors for each variation
+  // eg { [variationId]: { [panelId]: { colorName, color } } }
+  const [appliedColors, setAppliedColors] = useState(null);
+  // A condensed list of colors used in each variation
+  // eg { [variationId]: [{ colorName, color }] }
+  const [usedColors, setUsedColors] = useState({});
+  const [currentVariation, setCurrentVariation] = useState(
+    design?.get("variations").find(variation => variation.primary)
+  );
+  const [background, setBackground] = useState(defaultBackground || null);
+  // Indicates if the current design contains colors that no longer exist in
+  // the color palette
+  const [hasInvalidColors, setHasInvalidColors] = useState(false);
+  const hasUsedColors = Object.keys(usedColors).length > 0;
 
-  state = {
-    isLoading: true,
-    // An itemized list of colorable panels and their colors for each variation
-    // eg { [variationId]: { [panelId]: { colorName, color } } }
-    appliedColors: null,
-    // A condensed list of colors used in each variation
-    // eg { [variationId]: [{ colorName, color }] }
-    usedColors: {},
-    currentVariation: null,
-    background: defaultBackground || null,
-    hideOutlines: false,
-    // Indicates if the current design contains colors that no longer exist in
-    // the color palette
-    hasInvalidColors: false
-  };
-
-  static getDerivedStateFromProps(props, state) {
-    const variations = props.design && props.design.get("variations");
-    const productColors = props.product && props.product.get("colors");
+  useEffect(() => {
+    const variations = design?.get("variations");
+    const productColors = product?.get("colors");
     if (!variations || !productColors) {
-      return {};
+      return;
     }
 
-    const newState = {};
-
-    // Set the current variation if not set already
-    if (!state.currentVariation) {
-      newState.currentVariation = variations.find(
-        variation => variation.primary
-      );
-    }
-
-    const hasUsedColors = Object.keys(state.usedColors).length > 0;
-
-    if (!hasUsedColors || !state.appliedColors) {
-      const appliedColors = generateAppliedColors(props.design, props.product);
+    if (!hasUsedColors || !appliedColors) {
+      const newAppliedColors = generateAppliedColors(design, product);
 
       // Set the appied colors if not already set
-      if (!state.appliedColors) {
-        newState.appliedColors = appliedColors;
+      if (!appliedColors) {
+        setAppliedColors(newAppliedColors);
       }
 
       // Set used colors if not already done
       if (!hasUsedColors) {
-        newState.usedColors = Object.entries(appliedColors).reduce(
+        const newUsedColors = Object.entries(newAppliedColors).reduce(
           (accumulated, [variationId, panelColors]) => {
             const condensedColorsList = Object.values(panelColors).reduce(
               (accumulated, colorInfo) => {
@@ -177,9 +135,10 @@ export class ViewContainer extends React.Component {
           },
           {}
         );
+        setUsedColors(newUsedColors);
 
         // Detect if the design contains invalid colors
-        const foundInvalidVariation = Object.values(newState.usedColors).find(
+        const foundInvalidVariation = Object.values(newUsedColors).find(
           variationColors => {
             const foundInvalidColor = variationColors.find(({ name }) => {
               if (name.includes(INVALID_COLOR_PREFIX)) {
@@ -190,113 +149,123 @@ export class ViewContainer extends React.Component {
             return !!foundInvalidColor;
           }
         );
-        newState.hasInvalidColors = !!foundInvalidVariation;
+        setHasInvalidColors(!!foundInvalidVariation);
       }
     }
+  }, [hasUsedColors, appliedColors, design, product]);
 
-    return newState;
-  }
-
-  componentDidMount() {
-    const productPromise = this.props.onFetchProducts();
-    const manufacturerPromise = this.props.onFetchManufacturers();
-    const promises = [productPromise, manufacturerPromise];
-    let designPromise = Promise.resolve({
-      data: this.props.design
-    });
-    if (!this.props.design) {
-      designPromise = this.props.onFetchDesign(this.props.designId);
-    }
-    promises.push(designPromise);
-    const request = makeCancelable(Promise.all(promises));
-    this.cancelablePromises.push(request);
-    request.promise
-      .then(responses => {
-        const userId = responses[2].data.get("user");
-        return this.props.onFetchUser(userId);
-      })
-      .then(() => {
-        this.setState({
-          isLoading: false
-        });
-      })
-      .catch(() => {
-        this.setState({
-          isLoading: false
-        });
-      });
-  }
-
-  componentWillUnmount() {
-    this.cancelablePromises.forEach(cancelable => cancelable.cancel());
-  }
-
-  cancelablePromises = [];
+  useEffect(() => {
+    (async () => {
+      const promises = [onFetchProducts(), onFetchManufacturers()];
+      if (!design) {
+        promises.push(onFetchDesign(designId));
+      }
+      try {
+        const responses = await Promise.all(promises);
+        const userId = responses[2]?.data?.get("user") || design?.get("user");
+        await onFetchUser(userId);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+      }
+    })();
+  }, []);
 
   /**
    * Gets the applied colors for the current variation
    */
-  getCurrentVariationColors = () => {
-    if (!this.state.currentVariation) {
+  const getCurrentVariationColors = () => {
+    if (!currentVariation) {
       return {};
     }
-    const currentVariationId = this.state.currentVariation.id;
-    return this.state.appliedColors[currentVariationId] || {};
+    const currentVariationId = currentVariation.id;
+    return appliedColors?.[currentVariationId] || {};
   };
 
   /**
    * Handles when a different variation is selected by updating state.
    * @param  {String} variationId The id of the newly selected variation
    */
-  handleVariationSelection = variationId => {
-    const currentVariation = this.props.design
+  const handleVariationSelection = variationId => {
+    const newVariation = design
       .get("variations")
       .find(variation => variation.id === variationId);
-    this.setState({
-      currentVariation
-    });
+    setCurrentVariation(newVariation);
   };
 
-  handleBackgroundChange = value => this.setState({ background: value });
+  const handleToggleHideOutlines = () => setHideOutlines(!hideOutlines);
 
-  handleToggleHideOutlines = () =>
-    this.setState({ hideOutlines: !this.state.hideOutlines });
-
-  render() {
-    if (
-      isEmbedded &&
-      this.props.product &&
-      !embedAllowed(this.props.product.get("embed").split(","))
-    ) {
-      return (
-        <ErrorPage
-          errorCode={401}
-          errorMessage="Embedding of this page is not permitted."
-        />
-      );
-    }
-    return this.props.children({
-      actions: {
-        changeBackground: this.handleBackgroundChange,
-        selectVariation: this.handleVariationSelection,
-        toggleHideOutlines: this.handleToggleHideOutlines
-      },
-      props: {
-        currentVariationColors: this.getCurrentVariationColors(),
-        background: this.state.background,
-        hideOutlines: this.state.hideOutlines,
-        hasInvalidColors: this.state.hasInvalidColors,
-        currentVariation: this.state.currentVariation,
-        isLoading: this.state.isLoading,
-        design: this.props.design,
-        manufacturer: this.props.manufacturer,
-        product: this.props.product,
-        usedColors: this.state.usedColors,
-        user: this.props.user
-      }
-    });
+  if (isEmbedded && product && !embedAllowed(product.get("embed").split(","))) {
+    return (
+      <ErrorPage
+        errorCode={401}
+        errorMessage="Embedding of this page is not permitted."
+      />
+    );
   }
-}
+  return children({
+    actions: {
+      changeBackground: setBackground,
+      selectVariation: handleVariationSelection,
+      toggleHideOutlines: handleToggleHideOutlines
+    },
+    props: {
+      currentVariationColors: getCurrentVariationColors(),
+      background: background,
+      hideOutlines: hideOutlines,
+      hasInvalidColors: hasInvalidColors,
+      currentVariation: currentVariation,
+      isLoading: isLoading,
+      design: design,
+      manufacturer: manufacturer,
+      product: product,
+      usedColors: usedColors,
+      user: user
+    }
+  });
+};
+ViewContainer.propTypes = {
+  /**
+   * A function that triggers the retrieval of a specific design. Provided by Redux.
+   */
+  onFetchDesign: PropTypes.func.isRequired,
+  /**
+   * A function that triggers the retrieval of products. Provided by Redux.
+   */
+  onFetchProducts: PropTypes.func.isRequired,
+  /**
+   * A function that triggers the retrieval of manufacturers. Provided by Redux.
+   */
+  onFetchManufacturers: PropTypes.func.isRequired,
+  /**
+   * A function that triggers the retrieval of a specific user. Provided by Redux.
+   */
+  onFetchUser: PropTypes.func.isRequired,
+  /**
+   * The design being viewed. Provided by Redux.
+   */
+  design: PropTypes.instanceOf(Design),
+  /**
+   * The ID of the design that is being viewed.
+   */
+  designId: PropTypes.string.isRequired,
+  /**
+   * The product related to the design. Provided by Redux.
+   */
+  product: PropTypes.instanceOf(Product),
+  /**
+   * The manufacturer related to the design. Provided by Redux.
+   */
+  manufacturer: PropTypes.instanceOf(Manufacturer),
+  /**
+   * The user that created the design. Provided by Redux.
+   */
+  user: PropTypes.instanceOf(User),
+  /**
+   * A function that renders content.
+   */
+  children: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state, props) => ({
   product: getProductById(state, props.design && props.design.get("product")),

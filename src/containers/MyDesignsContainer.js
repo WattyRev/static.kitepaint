@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getUser } from "../redux/modules/user";
@@ -14,111 +14,95 @@ import {
 import Design from "../models/Design";
 import Product from "../models/Product";
 import Manufacturer from "../models/Manufacturer";
-import { makeCancelable } from "../utils";
 
 /**
  * Provides access to designs created by the current user.
  */
-export class MyDesignsContainer extends React.Component {
-  static propTypes = {
-    /**
-     * A function that is called when the user requests to delete a design.
-     */
-    onDeleteDesign: PropTypes.func.isRequired,
-    /**
-     * A function that triggers the retieval of the user's designs. Provided by Redux.
-     */
-    onFetchDesigns: PropTypes.func.isRequired,
-    /**
-     * A function that triggers the retrieval of products. Provided by Redux.
-     */
-    onFetchProducts: PropTypes.func.isRequired,
-    /**
-     * A function that triggers the retireval of manufacturers. Provided by Redux.
-     */
-    onFetchManufacturers: PropTypes.func.isRequired,
-    /**
-     * The designs created by the current user. Provided by Redux.
-     */
-    designs: PropTypes.arrayOf(PropTypes.instanceOf(Design)).isRequired,
-    /**
-     * All of the products, indexed by ID. Provided by Redux.
-     */
-    products: PropTypes.objectOf(PropTypes.instanceOf(Product)).isRequired,
-    /**
-     * All the manufacturers, indexed by ID. Provided by Redux.
-     */
-    manufacturers: PropTypes.objectOf(PropTypes.instanceOf(Manufacturer))
-      .isRequired,
-    /**
-     * The current user. Provided by Redux.
-     */
-    user: PropTypes.shape({
-      id: PropTypes.string.isRequired
-    }),
-    /**
-     * A function that renders content.
-     */
-    children: PropTypes.func.isRequired
-  };
+export const MyDesignsContainer = ({
+  onDeleteDesign,
+  onFetchDesigns,
+  onFetchProducts,
+  onFetchManufacturers,
+  designs,
+  products,
+  manufacturers,
+  user,
+  children
+}) => {
+  const [isLoading, setIsLoading] = useState(true);
 
-  state = {
-    isLoading: true
-  };
-
-  componentDidMount() {
-    const designRequest = makeCancelable(
-      this.props.onFetchDesigns({
-        userId: this.props.user.id,
-        limit: null,
-        publicOnly: false
-      })
-    );
-    const productRequest = makeCancelable(this.props.onFetchProducts());
-    const manufacturerRequest = makeCancelable(
-      this.props.onFetchManufacturers()
-    );
-    this.cancelablePromises.push(designRequest);
-    this.cancelablePromises.push(productRequest);
-    this.cancelablePromises.push(manufacturerRequest);
-
-    Promise.all([
-      designRequest.promise,
-      productRequest.promise,
-      manufacturerRequest.promise
-    ])
-      .then(() => {
-        this.setState({
-          isLoading: false
-        });
-      })
-      .catch(() => {
-        this.setState({
-          isLoading: false
-        });
-      });
-  }
-
-  componentWillUnmount() {
-    this.cancelablePromises.forEach(cancelable => cancelable.cancel());
-  }
-
-  cancelablePromises = [];
-
-  render() {
-    return this.props.children({
-      actions: {
-        deleteDesign: this.props.onDeleteDesign
-      },
-      props: {
-        isLoading: this.state.isLoading,
-        designs: this.props.designs,
-        products: this.props.products,
-        manufacturers: this.props.manufacturers
+  useEffect(() => {
+    (async () => {
+      try {
+        await Promise.all([
+          onFetchDesigns({
+            userId: user.id,
+            limit: null,
+            publicOnly: false
+          }),
+          onFetchProducts(),
+          onFetchManufacturers()
+        ]);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
       }
-    });
-  }
-}
+    })();
+  }, []);
+
+  return children({
+    actions: {
+      deleteDesign: onDeleteDesign
+    },
+    props: {
+      isLoading,
+      designs,
+      products,
+      manufacturers
+    }
+  });
+};
+MyDesignsContainer.propTypes = {
+  /**
+   * A function that is called when the user requests to delete a design.
+   */
+  onDeleteDesign: PropTypes.func.isRequired,
+  /**
+   * A function that triggers the retieval of the user's designs. Provided by Redux.
+   */
+  onFetchDesigns: PropTypes.func.isRequired,
+  /**
+   * A function that triggers the retrieval of products. Provided by Redux.
+   */
+  onFetchProducts: PropTypes.func.isRequired,
+  /**
+   * A function that triggers the retireval of manufacturers. Provided by Redux.
+   */
+  onFetchManufacturers: PropTypes.func.isRequired,
+  /**
+   * The designs created by the current user. Provided by Redux.
+   */
+  designs: PropTypes.arrayOf(PropTypes.instanceOf(Design)).isRequired,
+  /**
+   * All of the products, indexed by ID. Provided by Redux.
+   */
+  products: PropTypes.objectOf(PropTypes.instanceOf(Product)).isRequired,
+  /**
+   * All the manufacturers, indexed by ID. Provided by Redux.
+   */
+  manufacturers: PropTypes.objectOf(PropTypes.instanceOf(Manufacturer))
+    .isRequired,
+  /**
+   * The current user. Provided by Redux.
+   */
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired
+  }),
+  /**
+   * A function that renders content.
+   */
+  children: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state, props) => ({
   designs: getDesignsByUser(state, props.user && props.user.id),

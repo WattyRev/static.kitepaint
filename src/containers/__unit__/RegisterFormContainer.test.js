@@ -1,10 +1,20 @@
+/* eslint-disable react/prop-types */
 import React from "react";
-import { shallow } from "enzyme";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import RegisterForm from "../../components/RegisterForm";
 import { RegisterFormContainer } from "../RegisterFormContainer";
 
+jest.mock("../../components/RegisterForm", () => {
+  const MockRegisterForm = jest.fn();
+  return MockRegisterForm;
+});
 describe("RegisterFormContainer", () => {
   let props;
   beforeEach(() => {
+    RegisterForm.mockImplementation(() => (
+      <div data-testid="register-form">Register form</div>
+    ));
     props = {
       id: "abc",
       onLogIn: jest.fn(),
@@ -12,103 +22,158 @@ describe("RegisterFormContainer", () => {
     };
   });
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = shallow(<RegisterFormContainer {...props} />);
-    expect(wrapper).toMatchSnapshot();
+    render(<RegisterFormContainer {...props} />);
+    expect(screen.getByTestId("register-form")).toHaveTextContent(
+      "Register form"
+    );
   });
 
   describe("handleEmailChange", () => {
-    it("triggers setState with the provided value", () => {
-      expect.assertions(2);
-      const subject = new RegisterFormContainer(props);
-      subject.setState = jest.fn();
-      subject.handleEmailChange("boogers");
-      expect(subject.setState.mock.calls).toHaveLength(1);
-      expect(subject.setState.mock.calls[0][0]).toEqual({
-        email: "boogers",
-        errorMessage: null
-      });
+    it("sets the email", async () => {
+      RegisterForm.mockImplementation(({ onEmailChange, email }) => (
+        <>
+          <div data-testid="email">{email}</div>
+          <div
+            data-testid="onEmailChange"
+            onClick={() => onEmailChange("boogers")}
+          />
+        </>
+      ));
+      render(<RegisterFormContainer {...props} />);
+      expect(screen.getByTestId("email")).toHaveTextContent("");
+      await userEvent.click(screen.getByTestId("onEmailChange"));
+      expect(screen.getByTestId("email")).toHaveTextContent("boogers");
     });
   });
   describe("handleUsernameChange", () => {
-    it("triggers setState with the provided value", () => {
-      expect.assertions(2);
-      const subject = new RegisterFormContainer(props);
-      subject.setState = jest.fn();
-      subject.handleUsernameChange("boogers");
-      expect(subject.setState.mock.calls).toHaveLength(1);
-      expect(subject.setState.mock.calls[0][0]).toEqual({
-        username: "boogers",
-        errorMessage: null
-      });
+    it("sets the username", async () => {
+      RegisterForm.mockImplementation(({ onUsernameChange, username }) => (
+        <>
+          <div data-testid="username">{username}</div>
+          <div
+            data-testid="onUsernameChange"
+            onClick={() => onUsernameChange("boogers")}
+          />
+        </>
+      ));
+      render(<RegisterFormContainer {...props} />);
+      expect(screen.getByTestId("username")).toHaveTextContent("");
+      await userEvent.click(screen.getByTestId("onUsernameChange"));
+      expect(screen.getByTestId("username")).toHaveTextContent("boogers");
     });
   });
   describe("handlePasswordChange", () => {
-    it("triggers setState with the provided value", () => {
-      expect.assertions(2);
-      const subject = new RegisterFormContainer(props);
-      subject.setState = jest.fn();
-      subject.handlePasswordChange("boogers");
-      expect(subject.setState.mock.calls).toHaveLength(1);
-      expect(subject.setState.mock.calls[0][0]).toEqual({
-        password: "boogers",
-        errorMessage: null
-      });
+    it("sets the password", async () => {
+      RegisterForm.mockImplementation(({ onPasswordChange, password }) => (
+        <>
+          <div data-testid="password">{password}</div>
+          <div
+            data-testid="onPasswordChange"
+            onClick={() => onPasswordChange("boogers")}
+          />
+        </>
+      ));
+      render(<RegisterFormContainer {...props} />);
+      expect(screen.getByTestId("password")).toHaveTextContent("");
+      await userEvent.click(screen.getByTestId("onPasswordChange"));
+      expect(screen.getByTestId("password")).toHaveTextContent("boogers");
     });
   });
   describe("handlePasswordConfirmationChange", () => {
-    it("triggers setState with the provided value", () => {
-      expect.assertions(2);
-      const subject = new RegisterFormContainer(props);
-      subject.setState = jest.fn();
-      subject.handlePasswordConfirmationChange("boogers");
-      expect(subject.setState.mock.calls).toHaveLength(1);
-      expect(subject.setState.mock.calls[0][0]).toEqual({
-        passwordConfirmation: "boogers",
-        errorMessage: null
-      });
+    it("sets the confirmed password", async () => {
+      RegisterForm.mockImplementation(
+        ({ onPasswordConfirmationChange, passwordConfirmation }) => (
+          <>
+            <div data-testid="passwordConfirmation">{passwordConfirmation}</div>
+            <div
+              data-testid="onPasswordConfirmationChange"
+              onClick={() => onPasswordConfirmationChange("boogers")}
+            />
+          </>
+        )
+      );
+      render(<RegisterFormContainer {...props} />);
+      expect(screen.getByTestId("passwordConfirmation")).toHaveTextContent("");
+      await userEvent.click(screen.getByTestId("onPasswordConfirmationChange"));
+      expect(screen.getByTestId("passwordConfirmation")).toHaveTextContent(
+        "boogers"
+      );
     });
   });
   describe("handleSubmit", () => {
-    it("maintains the pendingRequest state value", () => {
-      expect.assertions(4);
-      props.onSubmit.mockResolvedValue();
-      const subject = new RegisterFormContainer(props);
-      subject.setState = jest.fn();
+    it("maintains the pendingRequest state value", async () => {
+      const MockRegisterForm = ({
+        isDisabled,
+        onSubmit,
+        onUsernameChange,
+        onPasswordChange,
+        onPasswordConfirmationChange,
+        onEmailChange
+      }) => (
+        <>
+          <div data-testid="isDisabled">
+            {isDisabled ? "yes disabled" : "no disabled"}
+          </div>
+          <div data-testid="onSubmit" onClick={() => onSubmit()} />
+          <div
+            data-testid="onUsernameChange"
+            onClick={() => onUsernameChange("mock username")}
+          />
+          <div
+            data-testid="onPasswordChange"
+            onClick={() => onPasswordChange("mockpassword")}
+          />
+          <div
+            data-testid="onPasswordConfirmationChange"
+            onClick={() => onPasswordConfirmationChange("mockconfirmpassword")}
+          />
+          <div
+            data-testid="onEmailChange"
+            onClick={() => onEmailChange("mock email")}
+          />
+        </>
+      );
+      RegisterForm.mockImplementation(MockRegisterForm);
+      props.onSubmit.mockImplementation(
+        () =>
+          new Promise(resolve => {
+            setTimeout(resolve, 10);
+          })
+      );
+      render(<RegisterFormContainer {...props} />);
 
-      let promise = subject.handleSubmit();
-      expect(subject.setState.mock.calls).toHaveLength(1);
-      expect(subject.setState.mock.calls[0][0]).toEqual({
-        pendingRequest: true
+      await userEvent.click(screen.getByTestId("onUsernameChange"));
+      await userEvent.click(screen.getByTestId("onPasswordChange"));
+      await userEvent.click(screen.getByTestId("onPasswordConfirmationChange"));
+      await userEvent.click(screen.getByTestId("onEmailChange"));
+      expect(screen.getByTestId("isDisabled")).toHaveTextContent("no disabled");
+      await userEvent.click(screen.getByTestId("onSubmit"));
+      expect(screen.getByTestId("isDisabled")).toHaveTextContent(
+        "yes disabled"
+      );
+      await screen.findByText("no disabled");
+      expect(screen.getByTestId("isDisabled")).toHaveTextContent("no disabled");
+      expect(props.onSubmit).toHaveBeenCalledWith({
+        username: "mock username",
+        password: "mockpassword",
+        password2: "mockconfirmpassword",
+        email: "mock email"
       });
-      promise = promise.then(() => {
-        expect(subject.setState.mock.calls).toHaveLength(2);
-        expect(subject.setState.mock.calls[1][0]).toEqual({
-          pendingRequest: false,
-          registrationSent: true
-        });
-      });
-      return promise;
     });
-    it("sets the error message if the call fails", () => {
-      expect.assertions(4);
+    it("sets the error message if the call fails", async () => {
+      const MockRegisterForm = ({ errorMessage, onSubmit }) => (
+        <>
+          <div data-testid="errorMessage">{errorMessage}</div>
+          <div data-testid="onSubmit" onClick={() => onSubmit()} />
+        </>
+      );
+      RegisterForm.mockImplementation(MockRegisterForm);
       props.onSubmit.mockRejectedValue("fuck you");
-      const subject = new RegisterFormContainer(props);
-      subject.setState = jest.fn();
+      render(<RegisterFormContainer {...props} />);
 
-      let promise = subject.handleSubmit();
-      expect(subject.setState.mock.calls).toHaveLength(1);
-      expect(subject.setState.mock.calls[0][0]).toEqual({
-        pendingRequest: true
-      });
-      promise = promise.then(() => {
-        expect(subject.setState.mock.calls).toHaveLength(2);
-        expect(subject.setState.mock.calls[1][0]).toEqual({
-          pendingRequest: false,
-          errorMessage: "fuck you"
-        });
-      });
-      return promise;
+      expect(screen.getByTestId("errorMessage")).toHaveTextContent("");
+      await userEvent.click(screen.getByTestId("onSubmit"));
+      expect(screen.getByTestId("errorMessage")).toHaveTextContent("fuck you");
     });
   });
 });

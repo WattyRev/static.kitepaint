@@ -1,10 +1,19 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { Redirect } from "react-router-dom";
 import { UserContainer } from "../UserContainer";
+
+jest.mock("react-router-dom", () => ({
+  Redirect: jest.fn(() => <div data-testid="redirect"></div>)
+}));
 
 describe("UserContainer", () => {
   let props;
   beforeEach(() => {
+    Redirect.mockImplementation(() => (
+      <div data-testid="redirect">Redirect</div>
+    ));
     props = {
       isRecognizedUser: false,
       user: {
@@ -19,21 +28,20 @@ describe("UserContainer", () => {
     };
   });
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = shallow(
+    render(
       <UserContainer {...props}>
-        {() => {
-          <div>Test</div>;
-        }}
+        {() => <div data-testid="target">Test</div>}
       </UserContainer>
     );
-    expect(wrapper).toMatchSnapshot();
+    expect(screen.getByTestId("target")).toHaveTextContent("Test");
   });
   it("provides the expected props", () => {
-    expect.assertions(1);
-    const children = jest.fn(() => <div>Test</div>);
-    mount(<UserContainer {...props}>{children}</UserContainer>);
-    const providedProps = children.mock.calls[0][0].props;
+    render(
+      <UserContainer {...props}>
+        {data => <div data-testid="data">{JSON.stringify(data.props)}</div>}
+      </UserContainer>
+    );
+    const providedProps = JSON.parse(screen.getByTestId("data").textContent);
     expect(providedProps).toEqual({
       email: "shit@fuck.com",
       id: "abc",
@@ -45,10 +53,17 @@ describe("UserContainer", () => {
   });
   it("provides the expected actions", () => {
     expect.assertions(1);
-    const children = jest.fn(() => <div>Test</div>);
-    mount(<UserContainer {...props}>{children}</UserContainer>);
-    const providedActions = children.mock.calls[0][0].actions;
-    const actionKeys = Object.keys(providedActions);
+    render(
+      <UserContainer {...props}>
+        {data => (
+          <div data-testid="data">
+            {JSON.stringify(Object.keys(data.actions))}
+          </div>
+        )}
+      </UserContainer>
+    );
+
+    const actionKeys = JSON.parse(screen.getByTestId("data").textContent);
     expect(actionKeys).toEqual([
       "logOut",
       "toggleRecognition",
@@ -56,43 +71,59 @@ describe("UserContainer", () => {
     ]);
   });
   describe("#toggleRecognition", () => {
-    it("should call onSetRecognition with false if it isRecognizedUser was true", () => {
-      expect.assertions(1);
+    it("should call onSetRecognition with false if it isRecognizedUser was true", async () => {
       props.isRecognizedUser = true;
-      const subject = new UserContainer(props);
-      subject.toggleRecognition();
-      expect(props.onSetRecognition.mock.calls[0][0]).toEqual(false);
+      render(
+        <UserContainer {...props}>
+          {data => (
+            <>
+              <div
+                data-testid="toggle"
+                onClick={data.actions.toggleRecognition}
+              />
+            </>
+          )}
+        </UserContainer>
+      );
+      await userEvent.click(screen.getByTestId("toggle"));
+      expect(props.onSetRecognition).toHaveBeenCalledWith(false);
     });
-    it("should call onSetRecognition with true if it isRecognizedUser was false", () => {
-      expect.assertions(1);
+    it("should call onSetRecognition with true if it isRecognizedUser was false", async () => {
       props.isRecognizedUser = false;
-      const subject = new UserContainer(props);
-      subject.toggleRecognition();
-      expect(props.onSetRecognition.mock.calls[0][0]).toEqual(true);
+      render(
+        <UserContainer {...props}>
+          {data => (
+            <>
+              <div
+                data-testid="toggle"
+                onClick={data.actions.toggleRecognition}
+              />
+            </>
+          )}
+        </UserContainer>
+      );
+      await userEvent.click(screen.getByTestId("toggle"));
+      expect(props.onSetRecognition).toHaveBeenCalledWith(true);
     });
   });
   describe("#handleLogOut", () => {
     it("does not redirect to the home page by default", () => {
-      expect.assertions(1);
       props.onRedirect = jest.fn();
-      shallow(<UserContainer {...props}>{() => <div />}</UserContainer>);
+      render(<UserContainer {...props}>{() => <div />}</UserContainer>);
       expect(props.onRedirect).not.toHaveBeenCalled();
     });
-    it("redirects to the home page after a successful log out", () => {
-      expect.assertions(1);
+    it("redirects to the home page after a successful log out", async () => {
       props.onLogOut.mockResolvedValue();
       props.onRedirect = jest.fn();
-      const wrapper = shallow(
+      render(
         <UserContainer {...props}>
-          {data => <div className="logOut" onClick={data.actions.logOut} />}
+          {data => <div data-testid="logOut" onClick={data.actions.logOut} />}
         </UserContainer>
       );
-      return wrapper
-        .find(".logOut")
-        .prop("onClick")()
-        .then(() => {
-          expect(props.onRedirect).toHaveBeenCalled();
-        });
+      await userEvent.click(screen.getByTestId("logOut"));
+      expect(props.onLogOut).toHaveBeenCalled();
+      expect(props.onRedirect).toHaveBeenCalled();
+      expect(screen.getByTestId("redirect")).toHaveTextContent("Redirect");
     });
   });
 });
