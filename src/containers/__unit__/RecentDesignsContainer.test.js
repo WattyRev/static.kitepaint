@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import { getMockDesign } from "../../models/Design";
 import { RecentDesignsContainer } from "../RecentDesignsContainer";
 
@@ -16,38 +16,37 @@ describe("RecentDesignsContainer", () => {
     };
   });
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = shallow(
+    render(
       <RecentDesignsContainer {...props}>
-        {() => <div>test</div>}
+        {() => <div data-testid="target">test</div>}
       </RecentDesignsContainer>
     );
-    expect(wrapper).toMatchSnapshot();
+    expect(screen.getByTestId("target")).toHaveTextContent("test");
   });
   it("triggers getDesigns when mounting", () => {
-    expect.assertions(1);
-    shallow(
+    render(
       <RecentDesignsContainer {...props}>
         {() => <div>test</div>}
       </RecentDesignsContainer>
     );
-    expect(props.getDesigns.mock.calls).toHaveLength(1);
+    expect(props.getDesigns).toHaveBeenCalledWith({ limit: 6 });
   });
   it("provides the designs in the render", () => {
-    expect.assertions(1);
     const design = getMockDesign({
       name: "my-design"
     });
     props.designs = [design];
-    const wrapper = shallow(
+    render(
       <RecentDesignsContainer {...props}>
         {data => (
-          <div className="testing_target">
+          <div data-testid="testing_target">
             {data.props.designs.map(design => design.get("name"))}
           </div>
         )}
       </RecentDesignsContainer>
     );
-    expect(wrapper.find(".testing_target").text()).toEqual("my-design");
+    expect(screen.getByTestId("testing_target").textContent).toEqual(
+      "my-design"
+    );
   });
 });

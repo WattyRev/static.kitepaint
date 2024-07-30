@@ -1,5 +1,5 @@
 import React from "react";
-import { mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import { getMockProduct } from "../../models/Product";
 import { getMockManufacturer } from "../../models/Manufacturer";
 import { CreateNewContainer } from "../CreateNewContainer";
@@ -14,17 +14,15 @@ describe("CreateNewContainer", () => {
     };
   });
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = mount(
+    render(
       <CreateNewContainer {...defaultProps}>
-        {() => <div>test</div>}
+        {() => <div data-testid="target">test</div>}
       </CreateNewContainer>
     );
-    expect(wrapper).toMatchSnapshot();
+    expect(screen.getByTestId("target")).toHaveTextContent("test");
   });
   it("requests for products to be fetched if no product was provided", () => {
-    expect.assertions(1);
-    mount(
+    render(
       <CreateNewContainer {...defaultProps}>
         {() => <div>test</div>}
       </CreateNewContainer>
@@ -32,8 +30,7 @@ describe("CreateNewContainer", () => {
     expect(defaultProps.onRequestProduct).toHaveBeenCalled();
   });
   it("requests for manufacturers to be fetched if no manufacturer was provided", () => {
-    expect.assertions(1);
-    mount(
+    render(
       <CreateNewContainer {...defaultProps}>
         {() => <div>test</div>}
       </CreateNewContainer>
@@ -41,20 +38,20 @@ describe("CreateNewContainer", () => {
     expect(defaultProps.onRequestManufacturer).toHaveBeenCalled();
   });
   it("displays the child render if the manufacturer and product are provided", () => {
-    expect.assertions(2);
     defaultProps.manufacturer = getMockManufacturer();
     defaultProps.product = getMockProduct();
-    const wrapper = mount(
+    render(
       <CreateNewContainer {...defaultProps}>
         {data => (
-          <div className="content">
+          <div data-testid="content">
             {data.props.product.get("name")} by{" "}
             {data.props.manufacturer.get("name")}
           </div>
         )}
       </CreateNewContainer>
     );
-    expect(wrapper.find(".loading")).toHaveLength(0);
-    expect(wrapper.find(".content")).toHaveLength(1);
+    expect(screen.getByTestId("content")).toHaveTextContent(
+      "Krazy Kite by Krazy Kites"
+    );
   });
 });

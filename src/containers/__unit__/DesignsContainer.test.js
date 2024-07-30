@@ -1,41 +1,58 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import DesignsContainer, { Counter, Data } from "../DesignsContainer";
+
+jest.mock("react-redux", () => ({
+  connect: (mapStateToProps, mapDispatchToProps) => {
+    return Component => {
+      const WrappedComponent = props => (
+        <Component {...mapStateToProps} {...mapDispatchToProps} {...props} />
+      );
+      return WrappedComponent;
+    };
+  }
+}));
 
 describe("DesignsContainer", () => {
   it("renders", () => {
-    shallow(<DesignsContainer>{() => <div />}</DesignsContainer>);
+    render(
+      <DesignsContainer>
+        {() => <div data-testid="target">test</div>}
+      </DesignsContainer>
+    );
+    expect(screen.getByTestId("target")).toHaveTextContent("test");
   });
   describe("Counter", () => {
     it("renders", () => {
-      shallow(<Counter>{() => <div />}</Counter>);
+      render(<Counter>{() => <div data-testid="target">test</div>}</Counter>);
+      expect(screen.getByTestId("target")).toHaveTextContent("test");
     });
     it("provides the count to the children", () => {
-      expect.assertions(1);
-      const wrapper = shallow(
+      render(
         <Counter>
-          {data => <div className="count">{data.props.count}</div>}
+          {data => <div data-testid="count">{data.props.count}</div>}
         </Counter>
       );
-      expect(wrapper.find(".count").text()).toEqual("0");
+      expect(screen.getByTestId("count")).toHaveTextContent("0");
     });
-    it("increases the count by the provided amount when updateCount is called", () => {
-      expect.assertions(1);
-      const wrapper = shallow(
+    it("increases the count by the provided amount when updateCount is called", async () => {
+      render(
         <Counter>
           {data => (
             <React.Fragment>
               <div
-                className="increment"
+                data-testid="increment"
                 onClick={() => data.actions.updateCount(7)}
               />
-              <div className="count">{data.props.count}</div>
+              <div data-testid="count">{data.props.count}</div>
             </React.Fragment>
           )}
         </Counter>
       );
-      wrapper.find(".increment").simulate("click");
-      expect(wrapper.find(".count").text()).toEqual("7");
+      expect(screen.getByTestId("count")).toHaveTextContent("0");
+      await userEvent.click(screen.getByTestId("increment"));
+      expect(screen.getByTestId("count")).toHaveTextContent("7");
     });
   });
   describe("Data", () => {
@@ -55,25 +72,28 @@ describe("DesignsContainer", () => {
       };
     });
     it("renders", () => {
-      shallow(<Data {...defaultProps}>{() => <div />}</Data>);
+      render(
+        <Data {...defaultProps}>
+          {() => <div data-testid="target">test</div>}
+        </Data>
+      );
+      expect(screen.getByTestId("target")).toHaveTextContent("test");
     });
     it("fetches designs, products, and manufacturers immediately", () => {
-      expect.assertions(3);
-      shallow(<Data {...defaultProps}>{() => <div />}</Data>);
+      render(<Data {...defaultProps}>{() => <div />}</Data>);
       expect(defaultProps.onFetchDesigns).toHaveBeenCalled();
       expect(defaultProps.onFetchProducts).toHaveBeenCalled();
       expect(defaultProps.onFetchManufacturers).toHaveBeenCalled();
     });
-    it("fetches designs when loadMore is called", () => {
-      expect.assertions(1);
-      const wrapper = shallow(
+    it("fetches designs when loadMore is called", async () => {
+      render(
         <Data {...defaultProps}>
           {data => (
-            <div className="load-more" onClick={data.actions.loadMore} />
+            <div data-testid="load-more" onClick={data.actions.loadMore} />
           )}
         </Data>
       );
-      wrapper.find(".load-more").simulate("click");
+      await userEvent.click(screen.getByTestId("load-more"));
       expect(defaultProps.onFetchDesigns).toHaveBeenCalledTimes(2);
     });
   });

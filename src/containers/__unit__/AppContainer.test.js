@@ -1,7 +1,15 @@
 import React from "react";
-import { shallow } from "enzyme";
-import App from "../../components/App";
+import { render, screen } from "@testing-library/react";
 import { AppContainer } from "../AppContainer";
+
+jest.mock("../../components/App", () => {
+  const MockApp = () => <div data-testId="app">App</div>;
+  return MockApp;
+});
+jest.mock("../../theme", () => ({
+  default: {},
+  PageLoader: () => <div data-testId="page-loader">PageLoader</div>
+}));
 
 describe("AppContainer", () => {
   let props;
@@ -12,7 +20,8 @@ describe("AppContainer", () => {
     };
   });
   it("renders", () => {
-    shallow(<AppContainer {...props} />);
+    render(<AppContainer {...props} />);
+    expect(screen.getByTestId("app")).toHaveTextContent("App");
   });
   describe(".props", () => {
     describe(".isCheckingLogin", () => {
@@ -20,27 +29,28 @@ describe("AppContainer", () => {
         beforeEach(() => {
           props.isCheckingLogin = true;
         });
-        it("should not render the app", () => {
-          expect.assertions(1);
-          const wrapper = shallow(<AppContainer {...props} />);
-          expect(wrapper.find(App)).toHaveLength(0);
+        it("should render PageLoader, not App", () => {
+          render(<AppContainer {...props} />);
+          expect(screen.getByTestId("page-loader")).toHaveTextContent(
+            "PageLoader"
+          );
+          expect(screen.queryByTestId("app")).toBeNull();
         });
       });
       describe("if false", () => {
         beforeEach(() => {
           props.isCheckingLogin = false;
         });
-        it("should render the app", () => {
-          expect.assertions(1);
-          const wrapper = shallow(<AppContainer {...props} />);
-          expect(wrapper.find(App)).toHaveLength(1);
+        it("should render the App, not PageLoader", () => {
+          render(<AppContainer {...props} />);
+          expect(screen.getByTestId("app")).toHaveTextContent("App");
+          expect(screen.queryByTestId("page-loader")).toBeNull();
         });
       });
     });
     describe("#onCheckLogin", () => {
       it("should be called when the component is rendered", () => {
-        expect.assertions(1);
-        shallow(<AppContainer {...props} />);
+        render(<AppContainer {...props} />);
         expect(props.onCheckLogin.mock.calls).toHaveLength(1);
       });
     });
