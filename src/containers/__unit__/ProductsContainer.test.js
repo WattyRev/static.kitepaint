@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import { getMockProduct } from "../../models/Product";
 import { getMockManufacturer } from "../../models/Manufacturer";
 import { ProductsContainer } from "../ProductsContainer";
@@ -18,19 +18,28 @@ describe("ProductsContainer", () => {
   });
   it("renders with the expected data", () => {
     expect.assertions(1);
-    const render = jest.fn(() => <div>Test</div>);
-    shallow(<ProductsContainer {...defaultProps}>{render}</ProductsContainer>);
-    expect(render.mock.calls[0][0]).toEqual({
-      props: {
-        isLoading: true,
-        products: defaultProps.products,
-        manufacturers: defaultProps.manufacturers
-      }
+    render(
+      <ProductsContainer {...defaultProps}>
+        {data => (
+          <div data-testid="data">
+            {JSON.stringify({
+              isLoading: data.props.isLoading,
+              productId: Object.values(data.props.products)[0][0].get("id"),
+              firstManufacturerId: data.props.manufacturers[0].get("id")
+            })}
+          </div>
+        )}
+      </ProductsContainer>
+    );
+    const renderedData = JSON.parse(screen.getByTestId("data").textContent);
+    expect(renderedData).toEqual({
+      isLoading: true,
+      productId: "product-1",
+      firstManufacturerId: "manufacturer-1"
     });
   });
   it("triggers getProducts when mounted", () => {
-    expect.assertions(1);
-    mount(
+    render(
       <ProductsContainer {...defaultProps}>
         {() => <div>Test</div>}
       </ProductsContainer>
@@ -38,8 +47,7 @@ describe("ProductsContainer", () => {
     expect(defaultProps.getProducts).toHaveBeenCalled();
   });
   it("triggers getManufacturers when mounted", () => {
-    expect.assertions(1);
-    mount(
+    render(
       <ProductsContainer {...defaultProps}>
         {() => <div>Test</div>}
       </ProductsContainer>
