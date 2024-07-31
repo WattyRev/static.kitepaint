@@ -64,7 +64,11 @@ const Modal = ({ children, isOpen, modalContent, onBackdropClick }) => (
     {children}
     {isOpen && (
       <BodyPortal>
-        <ModalBackdrop onClick={onBackdropClick} className="testing_backdrop" />
+        <ModalBackdrop
+          onClick={onBackdropClick}
+          data-testid="modal-backdrop"
+          className="testing_backdrop"
+        />
         <StyledModal className="testing_modal">{modalContent}</StyledModal>
       </BodyPortal>
     )}

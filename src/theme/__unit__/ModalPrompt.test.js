@@ -1,13 +1,15 @@
 import React from "react";
-import { mount, shallow } from "enzyme";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { ThemeProvider } from "styled-components";
 import Theme from "../../theme";
-import Modal from "../Modal";
 import ModalPrompt, { StyleWrapper } from "../ModalPrompt";
 
 describe("ModelPrompt", () => {
   describe("StyleWrapper", () => {
     it("renders", () => {
-      mount(<StyleWrapper theme={Theme} />);
+      render(<StyleWrapper data-testid="target" theme={Theme} />);
+      expect(screen.getByTestId("target")).toBeInTheDocument();
     });
   });
 
@@ -19,99 +21,94 @@ describe("ModelPrompt", () => {
     };
   });
   it("renders", () => {
-    expect.assertions(1);
-    const wrapper = shallow(
-      <ModalPrompt {...defaultProps}>
-        {modal => <div className="target" onClick={modal.actions.open} />}
-      </ModalPrompt>
+    render(
+      <ThemeProvider theme={Theme}>
+        <ModalPrompt {...defaultProps}>
+          {modal => <div data-testid="target" onClick={modal.actions.open} />}
+        </ModalPrompt>
+      </ThemeProvider>
     );
-    expect(wrapper).toMatchSnapshot();
+    expect(screen.getByTestId("target")).toBeInTheDocument();
   });
   it("does not display the modal by default", () => {
-    expect.assertions(1);
-    const wrapper = shallow(
-      <ModalPrompt {...defaultProps}>
-        {modal => (
-          <div className="target" onClick={modal.actions.open}>
-            {modal.props.isOpen ? "open" : "closed"}
-          </div>
-        )}
-      </ModalPrompt>
+    render(
+      <ThemeProvider theme={Theme}>
+        <ModalPrompt {...defaultProps}>
+          {modal => (
+            <div data-testid="target" onClick={modal.actions.open}>
+              {modal.props.isOpen ? "open" : "closed"}
+            </div>
+          )}
+        </ModalPrompt>
+      </ThemeProvider>
     );
-    expect(wrapper.find(".target").text()).toEqual("closed");
+    expect(screen.getByTestId("target")).toHaveTextContent("closed");
   });
-  it("opens a modal when the target is clicked", () => {
-    expect.assertions(1);
-    const wrapper = shallow(
-      <ModalPrompt {...defaultProps}>
-        {modal => (
-          <div className="target" onClick={modal.actions.open}>
-            {modal.props.isOpen ? "open" : "closed"}
-          </div>
-        )}
-      </ModalPrompt>
+  it("opens a modal when the target is clicked", async () => {
+    render(
+      <ThemeProvider theme={Theme}>
+        <ModalPrompt {...defaultProps}>
+          {modal => (
+            <div data-testid="target" onClick={modal.actions.open}>
+              {modal.props.isOpen ? "open" : "closed"}
+            </div>
+          )}
+        </ModalPrompt>
+      </ThemeProvider>
     );
-    wrapper.find(".target").simulate("click");
-    expect(wrapper.find(".target").text()).toEqual("open");
+    await userEvent.click(screen.getByTestId("target"));
+    expect(screen.getByTestId("target")).toHaveTextContent("open");
   });
-  it("Closes the modal when clicking on the cancel button", () => {
-    expect.assertions(1);
-    const wrapper = shallow(
-      <ModalPrompt {...defaultProps}>
-        {modal => (
-          <div className="target" onClick={modal.actions.open}>
-            {modal.props.isOpen ? "open" : "closed"}
-          </div>
-        )}
-      </ModalPrompt>
+  it("Closes the modal when clicking on the cancel button", async () => {
+    render(
+      <ThemeProvider theme={Theme}>
+        <ModalPrompt {...defaultProps}>
+          {modal => (
+            <div data-testid="target" onClick={modal.actions.open}>
+              {modal.props.isOpen ? "open" : "closed"}
+            </div>
+          )}
+        </ModalPrompt>
+      </ThemeProvider>
     );
-    const modalWrapper = shallow(
-      <div>{wrapper.find(Modal).prop("modalContent")}</div>
-    );
-    wrapper.find(".target").simulate("click");
-    modalWrapper.find(".testing_cancel").simulate("click");
-    expect(wrapper.find(".target").text()).toEqual("closed");
+    await userEvent.click(screen.getByTestId("target"));
+    await userEvent.click(screen.getByTestId("cancel"));
+    expect(screen.getByTestId("target")).toHaveTextContent("closed");
   });
-  it("Closes the modal when clicking on the backdrop", () => {
-    expect.assertions(1);
-    const wrapper = shallow(
-      <ModalPrompt {...defaultProps}>
-        {modal => (
-          <div className="target" onClick={modal.actions.open}>
-            {modal.props.isOpen ? "open" : "closed"}
-          </div>
-        )}
-      </ModalPrompt>
+  it("Closes the modal when clicking on the backdrop", async () => {
+    render(
+      <ThemeProvider theme={Theme}>
+        <ModalPrompt {...defaultProps}>
+          {modal => (
+            <div data-testid="target" onClick={modal.actions.open}>
+              {modal.props.isOpen ? "open" : "closed"}
+            </div>
+          )}
+        </ModalPrompt>
+      </ThemeProvider>
     );
-    wrapper.find(".target").simulate("click");
-    wrapper.find(Modal).prop("onBackdropClick")();
-    expect(wrapper.find(".target").text()).toEqual("closed");
+    await userEvent.click(screen.getByTestId("target"));
+    await userEvent.click(screen.getByTestId("modal-backdrop"));
+    expect(screen.getByTestId("target")).toHaveTextContent("closed");
   });
-  it("submits with the value and closes the modal", () => {
-    expect.assertions(3);
-    const wrapper = shallow(
-      <ModalPrompt {...defaultProps}>
-        {modal => (
-          <div className="target" onClick={modal.actions.open}>
-            {modal.props.isOpen ? "open" : "closed"}
-          </div>
-        )}
-      </ModalPrompt>
+  it("submits with the value and closes the modal", async () => {
+    render(
+      <ThemeProvider theme={Theme}>
+        <ModalPrompt {...defaultProps}>
+          {modal => (
+            <div data-testid="target" onClick={modal.actions.open}>
+              {modal.props.isOpen ? "open" : "closed"}
+            </div>
+          )}
+        </ModalPrompt>
+      </ThemeProvider>
     );
-    const modalWrapper = shallow(
-      <div>{wrapper.find(Modal).prop("modalContent")}</div>
-    );
-    wrapper.find(".target").simulate("click");
-    modalWrapper.find(".testing_prompt-value").simulate("change", {
-      target: {
-        value: "boogers"
-      }
-    });
-    modalWrapper.find(".testing_submit").simulate("submit", {
-      preventDefault: jest.fn()
-    });
+
+    await userEvent.click(screen.getByTestId("target"));
+    await userEvent.type(screen.getByTestId("prompt-value"), "boogers");
+    await userEvent.click(screen.getByTestId("submit"));
     expect(defaultProps.onSubmit).toHaveBeenCalled();
     expect(defaultProps.onSubmit.mock.calls[0][0]).toEqual("boogers");
-    expect(wrapper.find(".target").text()).toEqual("closed");
+    expect(screen.getByTestId("target")).toHaveTextContent("closed");
   });
 });

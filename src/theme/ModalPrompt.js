@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Label from "./Label";
@@ -23,138 +23,132 @@ export const StyleWrapper = styled.div`
 /**
  * Modal prompt prompts the user for a single string value and has submit and cancel buttons.
  */
-class ModalPrompt extends React.Component {
-  static propTypes = {
-    /**
-     * Triggered when the prompt has been submitted. Is provided the user-provided string value as
-     * the first parameter.
-     */
-    onSubmit: PropTypes.func.isRequired,
-    /**
-     * Triggerd when the cancel button is pressed, or when the backdrop is clicked on.
-     */
-    onCancel: PropTypes.func,
-    /**
-     * A message to pose to the user to guide them on what value should be entered.
-     */
-    message: PropTypes.string.isRequired,
-    /**
-     * The text to display on the submit button.
-     */
-    submitText: PropTypes.string,
-    /**
-     * The text to display on the cancel button.
-     */
-    cancelText: PropTypes.string,
-    /**
-     * A function that renders content that can trigger the modal.
-     */
-    children: PropTypes.func.isRequired,
-    /**
-     * The value for the type attribute on the input.
-     */
-    inputType: PropTypes.oneOf(["text", "number", "password", "email"])
-  };
+const ModalPrompt = ({
+  onSubmit,
+  onCancel = () => {},
+  message,
+  submitText = "Submit",
+  cancelText = "Cancel",
+  children,
+  inputType = "input"
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [value, setValue] = useState("");
+  const promptInput = useRef(null);
 
-  static defaultProps = {
-    submitText: "Submit",
-    cancelText: "Cancel",
-    inputType: "text",
-    onCancel: () => {}
-  };
-
-  state = {
-    /**
-     * Is the modal currently open?
-     */
-    isOpen: false,
-    /**
-     * What is the user provided value?
-     */
-    value: ""
-  };
-
-  componentDidUpdate(prevProps, prevState) {
-    // Auto focus the input when the modal opens
-    if (!prevState.isOpen && this.state.isOpen && this.promptInput) {
-      this.promptInput.focus();
+  useEffect(() => {
+    if (isOpen) {
+      promptInput.current.focus();
     }
-  }
+  }, [isOpen, promptInput]);
 
   /**
    * Handles the submission event by calling onSubmit with the value and closing/resetting the
    * modal. This does not call onSubmit if the value is empty.
    * @param  {Object} event A DOM submit event
    */
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
-    if (!this.state.value) {
+    if (!value) {
       return;
     }
-    this.props.onSubmit(this.state.value);
-    this.setState({ isOpen: false, value: "" });
+    onSubmit(value);
+    setIsOpen(false);
+    setValue("");
   };
 
   /**
    * Handles the cancelation by closing/resetting the modal and triggering onCancel.
    */
-  handleCancel = () => {
-    this.setState({ isOpen: false, value: "" });
-    this.props.onCancel();
+  const handleCancel = () => {
+    setIsOpen(false);
+    setValue("");
+    onCancel();
   };
 
   /**
    * Handles a change in the provided value by updating state.
    * @param  {Object} event A DOM change event
    */
-  handleValueChange = event => {
-    this.setState({ value: event.target.value });
+  const handleValueChange = event => {
+    setValue(event.target.value);
   };
 
-  render() {
-    const data = {
-      actions: {
-        open: () => this.setState({ isOpen: true })
-      },
-      props: {
-        isOpen: this.state.isOpen
+  const data = {
+    actions: {
+      open: () => setIsOpen(true)
+    },
+    props: {
+      isOpen
+    }
+  };
+  return (
+    <Modal
+      isOpen={isOpen}
+      onBackdropClick={handleCancel}
+      modalContent={
+        <StyleWrapper data-testid="modal-prompt" className="testing_modal">
+          <form onSubmit={handleSubmit} className="testing_submit">
+            <Label>{message}</Label>
+            <Input
+              type={inputType}
+              ref={promptInput}
+              data-testid="prompt-value"
+              className="testing_prompt-value"
+              value={value}
+              onChange={handleValueChange}
+            />
+            <div className="buttons">
+              <Button data-testid="submit" type="submit" isPrimary>
+                {submitText}
+              </Button>{" "}
+              <Button
+                type="button"
+                data-testid="cancel"
+                className="testing_cancel"
+                onClick={handleCancel}
+              >
+                {cancelText}
+              </Button>
+            </div>
+          </form>
+        </StyleWrapper>
       }
-    };
-    return (
-      <Modal
-        isOpen={this.state.isOpen}
-        onBackdropClick={this.handleCancel}
-        modalContent={
-          <StyleWrapper className="testing_modal">
-            <form onSubmit={this.handleSubmit} className="testing_submit">
-              <Label>{this.props.message}</Label>
-              <Input
-                type={this.props.inputType}
-                ref={input => (this.promptInput = input)}
-                className="testing_prompt-value"
-                value={this.state.value}
-                onChange={this.handleValueChange}
-              />
-              <div className="buttons">
-                <Button type="submit" isPrimary>
-                  {this.props.submitText}
-                </Button>{" "}
-                <Button
-                  type="button"
-                  className="testing_cancel"
-                  onClick={this.handleCancel}
-                >
-                  {this.props.cancelText}
-                </Button>
-              </div>
-            </form>
-          </StyleWrapper>
-        }
-      >
-        {this.props.children(data)}
-      </Modal>
-    );
-  }
-}
+    >
+      {children(data)}
+    </Modal>
+  );
+};
+ModalPrompt.propTypes = {
+  /**
+   * Triggered when the prompt has been submitted. Is provided the user-provided string value as
+   * the first parameter.
+   */
+  onSubmit: PropTypes.func.isRequired,
+  /**
+   * Triggerd when the cancel button is pressed, or when the backdrop is clicked on.
+   */
+  onCancel: PropTypes.func,
+  /**
+   * A message to pose to the user to guide them on what value should be entered.
+   */
+  message: PropTypes.string.isRequired,
+  /**
+   * The text to display on the submit button.
+   */
+  submitText: PropTypes.string,
+  /**
+   * The text to display on the cancel button.
+   */
+  cancelText: PropTypes.string,
+  /**
+   * A function that renders content that can trigger the modal.
+   */
+  children: PropTypes.func.isRequired,
+  /**
+   * The value for the type attribute on the input.
+   */
+  inputType: PropTypes.oneOf(["text", "number", "password", "email"])
+};
 
 export default ModalPrompt;
