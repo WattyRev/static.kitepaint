@@ -10,9 +10,7 @@ exports[`LogInForm renders 1`] = `
   >
     Username
      
-    <Tooltip
-      fadeSpeedMs={250}
-    >
+    <Tooltip>
       Usernames may be between 3-30 characters.
       <br />
       They may include these characters: a-z, A-Z, 0-9.
@@ -27,9 +25,7 @@ exports[`LogInForm renders 1`] = `
   >
     Password
      
-    <Tooltip
-      fadeSpeedMs={250}
-    >
+    <Tooltip>
       Passwords may be between 6-15 characters.
       <br />
       They may include these characters: a-z, A-Z, 0-9, #, @, or *.

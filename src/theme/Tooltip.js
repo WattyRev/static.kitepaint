@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import PropTypes from "prop-types";
 import BodyPortal from "./utilities/BodyPortal";
@@ -83,110 +83,89 @@ const TooltipText = styled(Text)`
  * A component that displays a small info icon. When hovering over the icon, a tooltip will appear
  * floating above that icon, containing the provided content.
  */
-class Tooltip extends React.Component {
-  static defaultProps = {
-    fadeSpeedMs: 250
-  };
-  static propTypes = {
-    /**
-     * The speed of the fade animation in milliseconds.
-     */
-    fadeSpeedMs: PropTypes.number.isRequired,
-
-    /**
-     * The content to be displayed in the tooltip
-     */
-    children: PropTypes.node.isRequired
-  };
-  state = {
-    /**
-     * Indicates if the tooltip should be rendered to the dom.
-     * @type {Boolean}
-     */
-    renderTooltip: false,
-    /**
-     * Indicates that we are about to remove the tooltip from the dom. Allows for the tooltip to
-     * fade out before being removed.
-     * @type {Boolean}
-     */
-    removingTooltip: false,
-    /**
-     * The top position of the info icon, used for targeting the tooltip.
-     */
-    top: null,
-    /**
-     * The left position of the info icon, used for targeting the tooltip.
-     */
-    left: null
-  };
-
+const Tooltip = ({ children, fadeSpeedMs = 250, ...props }) => {
   /**
-   * Clean up any pending timeouts when unmounting.
+   * Indicates if the tooltip should be rendered to the dom.
+   * @type {Boolean}
    */
-  componentWillUnmount() {
-    window.clearTimeout(this.fadeTimer);
-  }
-
+  const [renderTooltip, setRenderTooltip] = useState(false);
   /**
-   * The stored fade out timer. Allows for cancellation.
+   * Indicates that we are about to remove the tooltip from the dom. Allows for the tooltip to
+   * fade out before being removed.
+   * @type {Boolean}
    */
-  fadeTimer = null;
+  const [removingTooltip, setRemovingTooltip] = useState(false);
+  /**
+   * The top position of the info icon, used for targeting the tooltip.
+   */
+  const [top, setTop] = useState(null);
+  /**
+   * The left position of the info icon, used for targeting the tooltip.
+   */
+  const [left, setLeft] = useState(null);
+
+  let fadeTimer;
 
   /**
    * Displays the tooltip when the info icon is hovered over.
    * @param  {Object} event The mouseenter event from the DOM
    */
-  handleMouseEnter = event => {
-    window.clearTimeout(this.fadeTimer);
+  const handleMouseEnter = event => {
+    window.clearTimeout(fadeTimer);
     const targetBounds = event.target.getBoundingClientRect();
-    this.setState({
-      renderTooltip: true,
-      removingTooltip: false,
-      top: targetBounds.y,
-      left: targetBounds.x
-    });
+    setTop(targetBounds.y);
+    setLeft(targetBounds.x);
+    setRenderTooltip(true);
+    setRemovingTooltip(false);
   };
 
   /**
    * Removes the tooltip when the info icon is no longer hovered over.
    */
-  handleMouseLeave = () => {
-    this.setState({
-      removingTooltip: true
-    });
-    this.fadeTimer = window.setTimeout(() => {
-      this.setState({
-        removingTooltip: false,
-        renderTooltip: false
-      });
-    }, this.props.fadeSpeedMs);
+  const handleMouseLeave = () => {
+    setRemovingTooltip(true);
+    fadeTimer = window.setTimeout(() => {
+      setRenderTooltip(false);
+      setRemovingTooltip(false);
+    }, fadeSpeedMs);
   };
 
-  render() {
-    return (
-      <React.Fragment>
-        <TooltipIcon
-          icon="info"
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave}
-        />
-        {this.state.renderTooltip && (
-          <BodyPortal>
-            <StyleWrapper
-              className="testing_tooltip"
-              top={this.state.top}
-              left={this.state.left}
-              isVisible={this.state.displayTooltip}
-              fadeSpeed={this.props.fadeSpeedMs / 1000}
-              removing={this.state.removingTooltip}
-            >
-              <TooltipText>{this.props.children}</TooltipText>
-            </StyleWrapper>
-          </BodyPortal>
-        )}
-      </React.Fragment>
-    );
-  }
-}
+  return (
+    <React.Fragment>
+      <TooltipIcon
+        data-testid="tooltip-icon"
+        icon="info"
+        {...props}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      />
+      {renderTooltip && (
+        <BodyPortal>
+          <StyleWrapper
+            data-testid="tooltip"
+            className="testing_tooltip"
+            top={top}
+            left={left}
+            fadeSpeed={fadeSpeedMs / 1000}
+            removing={removingTooltip}
+          >
+            <TooltipText>{children}</TooltipText>
+          </StyleWrapper>
+        </BodyPortal>
+      )}
+    </React.Fragment>
+  );
+};
+Tooltip.propTypes = {
+  /**
+   * The speed of the fade animation in milliseconds.
+   */
+  fadeSpeedMs: PropTypes.number.isRequired,
+
+  /**
+   * The content to be displayed in the tooltip
+   */
+  children: PropTypes.node.isRequired
+};
 
 export default Tooltip;
