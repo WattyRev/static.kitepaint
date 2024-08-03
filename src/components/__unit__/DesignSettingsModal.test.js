@@ -230,7 +230,7 @@ describe("DesignSettingsModal", () => {
   it("disables the submit button while waiting for submit", async () => {
     defaultProps.onSubmit = () =>
       new Promise(resolve => {
-        setTimeout(() => resolve(), 10);
+        setTimeout(() => resolve(), 100);
       });
     render(
       <ThemeProvider theme={Theme}>

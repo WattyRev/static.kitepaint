@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render } from "@testing-library/react";
 import { LegacyRedirect } from "../LegacyRedirect";
 
 describe("LegacyRedirect", () => {
@@ -15,10 +15,10 @@ describe("LegacyRedirect", () => {
     };
   });
   it("renders", () => {
-    shallow(<LegacyRedirect {...defaultProps} />);
+    render(<LegacyRedirect {...defaultProps} />);
   });
   it("does nothing if there is no hash", () => {
-    shallow(<LegacyRedirect {...defaultProps} />);
+    render(<LegacyRedirect {...defaultProps} />);
     expect(defaultProps.history.push).not.toHaveBeenCalled();
   });
   it("redirects simple pages", () => {
@@ -43,33 +43,33 @@ describe("LegacyRedirect", () => {
     expect.assertions(options.length);
     options.forEach(option => {
       defaultProps.history.location.hash = option.from;
-      shallow(<LegacyRedirect {...defaultProps} />);
+      render(<LegacyRedirect {...defaultProps} />);
       expect(defaultProps.history.push).toHaveBeenCalledWith(option.to);
     });
   });
   it("redirects the activate page", () => {
     defaultProps.history.location.hash = "#!/activate?uid=abc&actcode=def";
-    shallow(<LegacyRedirect {...defaultProps} />);
+    render(<LegacyRedirect {...defaultProps} />);
     expect(defaultProps.history.push).toHaveBeenCalledWith("/activate/abc/def");
   });
   it("redirects the edit/new page", () => {
     defaultProps.history.location.hash = "#!/edit/new?id=abc";
-    shallow(<LegacyRedirect {...defaultProps} />);
+    render(<LegacyRedirect {...defaultProps} />);
     expect(defaultProps.history.push).toHaveBeenCalledWith("/create/abc");
   });
   it("redirects the edit/saved page", () => {
     defaultProps.history.location.hash = "#!/edit/saved?id=abc";
-    shallow(<LegacyRedirect {...defaultProps} />);
+    render(<LegacyRedirect {...defaultProps} />);
     expect(defaultProps.history.push).toHaveBeenCalledWith("/edit/abc");
   });
   it("redirects the view page", () => {
     defaultProps.history.location.hash = "#!/view?id=abc";
-    shallow(<LegacyRedirect {...defaultProps} />);
+    render(<LegacyRedirect {...defaultProps} />);
     expect(defaultProps.history.push).toHaveBeenCalledWith("/view/abc");
   });
   it("redirects unsupported urls to an error page", () => {
     defaultProps.history.location.hash = "#!/boogers";
-    shallow(<LegacyRedirect {...defaultProps} />);
+    render(<LegacyRedirect {...defaultProps} />);
     expect(defaultProps.history.push).toHaveBeenCalledWith("/error");
   });
 });

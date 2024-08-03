@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 
@@ -18,21 +18,10 @@ const generateObjectFromQueryParams = queryParams => {
 /**
  * Provides redirection from old Angular URLs to new urls.
  */
-export class LegacyRedirect extends React.Component {
-  static propTypes = {
-    /** The history object provided by react-router-dom */
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-      location: PropTypes.shape({
-        hash: PropTypes.string
-      })
-    }).isRequired
-  };
-
-  constructor(props, ...rest) {
-    super(props, ...rest);
+export const LegacyRedirect = ({ history }) => {
+  useEffect(() => {
     // Check for a path intended for the old Angular application
-    const legacyPath = props.history.location.hash.replace("#!/", "");
+    const legacyPath = history.location.hash.replace("#!/", "");
 
     // If no legacy path exists, we're done here.
     if (!legacyPath) {
@@ -121,7 +110,7 @@ export class LegacyRedirect extends React.Component {
 
     // If we have no relevant rule, redirect to an error page
     if (!relevantRedirectRule) {
-      props.history.push("/error");
+      history.push("/error");
       return;
     }
 
@@ -131,12 +120,19 @@ export class LegacyRedirect extends React.Component {
     }, relevantRedirectRule.to);
 
     // Redirect
-    props.history.push(redirectTo);
-  }
+    history.push(redirectTo);
+  }, [history]);
 
-  render() {
-    return null;
-  }
-}
+  return null;
+};
+LegacyRedirect.propTypes = {
+  /** The history object provided by react-router-dom */
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+    location: PropTypes.shape({
+      hash: PropTypes.string
+    })
+  }).isRequired
+};
 
 export default withRouter(LegacyRedirect);
