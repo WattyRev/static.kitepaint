@@ -1,8 +1,10 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { ThemeProvider } from "styled-components";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { getMockDesign } from "../../models/Design";
 import Status from "../../models/Status";
-import { Modal } from "../../theme";
+import Theme from "../../theme";
 import DesignSettingsModal, { Content } from "../DesignSettingsModal";
 
 describe("DesignSettingsModal", () => {
@@ -20,77 +22,95 @@ describe("DesignSettingsModal", () => {
       };
     });
     it("renders", () => {
-      shallow(<Content {...defaultProps} />);
+      render(
+        <ThemeProvider theme={Theme}>
+          <Content data-testid="content" {...defaultProps} />
+        </ThemeProvider>
+      );
+      expect(screen.getByTestId("content")).toBeInTheDocument();
     });
     it("shows the design status if it is more restrictive", () => {
-      expect.assertions(1);
       defaultProps.design = getMockDesign({
         status: Status.PRIVATE,
         productStatus: Status.PUBLIC
       });
-      const wrapper = shallow(<Content {...defaultProps} />);
-      expect(wrapper.find(".select-status").prop("value")).toEqual(
-        Status.PRIVATE
+      render(
+        <ThemeProvider theme={Theme}>
+          <Content {...defaultProps} />
+        </ThemeProvider>
       );
+      expect(screen.getByTestId("select-status")).toHaveValue(Status.PRIVATE);
     });
-    it("shows the produ'ct status if it is more restrictive", () => {
-      expect.assertions(1);
+    it("shows the product status if it is more restrictive", () => {
       defaultProps.design = getMockDesign({
         status: Status.PUBLIC,
         productStatus: Status.UNLISTED
       });
-      const wrapper = shallow(<Content {...defaultProps} />);
-      expect(wrapper.find(".select-status").prop("value")).toEqual(
-        Status.UNLISTED
+      render(
+        <ThemeProvider theme={Theme}>
+          <Content {...defaultProps} />
+        </ThemeProvider>
       );
+      expect(screen.getByTestId("select-status")).toHaveValue(Status.UNLISTED);
     });
-    it("correctly enables status options", () => {
-      expect.assertions(1);
+    it("enables all status options if the product is public", () => {
       defaultProps.design = getMockDesign({
         productStatus: Status.PUBLIC
       });
-      const wrapper = shallow(<Content {...defaultProps} />);
-      expect(wrapper.find("option[disabled=true]")).toHaveLength(0);
+      render(
+        <ThemeProvider theme={Theme}>
+          <Content {...defaultProps} />
+        </ThemeProvider>
+      );
+      const options = screen.getAllByRole("option");
+      options.forEach(option => {
+        expect(option).not.toBeDisabled();
+      });
     });
-    it("correctly disables status options", () => {
-      expect.assertions(2);
+    it("disables the public option if the product is unlisted", () => {
       // If the productStatus is UNLISTED, the public option should be disabled.
       defaultProps.design = getMockDesign({
         productStatus: Status.UNLISTED
       });
-      const wrapper = shallow(<Content {...defaultProps} />);
-      expect(wrapper.find("option[disabled=true]")).toHaveLength(1);
-      expect(wrapper.find("option[disabled=true]").key()).toEqual(
-        Status.PUBLIC
+      render(
+        <ThemeProvider theme={Theme}>
+          <Content {...defaultProps} />
+        </ThemeProvider>
       );
+      expect(screen.getByText(Status[Status.PUBLIC])).toBeDisabled();
+      expect(screen.getByText(Status[Status.UNLISTED])).not.toBeDisabled();
+      expect(screen.getByText(Status[Status.PRIVATE])).not.toBeDisabled();
     });
-    it("triggers onSubmit when the form is submitted", () => {
-      expect.assertions(1);
-      const wrapper = shallow(<Content {...defaultProps} />);
-      wrapper.simulate("submit", {
-        preventDefault: jest.fn()
-      });
+    it("triggers onSubmit when the form is submitted", async () => {
+      render(
+        <ThemeProvider theme={Theme}>
+          <Content {...defaultProps} />
+        </ThemeProvider>
+      );
+      await userEvent.click(screen.getByTestId("submit-button"));
       expect(defaultProps.onSubmit).toHaveBeenCalled();
     });
-    it("calls onChangeName with the new name when the name changes", () => {
-      expect.assertions(1);
-      const wrapper = shallow(<Content {...defaultProps} />);
-      wrapper.find(".input-name").simulate("change", {
-        target: {
-          value: "boogers"
-        }
-      });
-      expect(defaultProps.onChangeName).toHaveBeenCalledWith("boogers");
+    it("calls onChangeName with the new name when the name changes", async () => {
+      defaultProps.design = defaultProps.design.set("name", "");
+      render(
+        <ThemeProvider theme={Theme}>
+          <Content {...defaultProps} />
+        </ThemeProvider>
+      );
+      await userEvent.type(screen.getByTestId("input-name"), "b");
+      expect(defaultProps.onChangeName).toHaveBeenCalledWith("b");
     });
-    it("calls onChangeStatus with the new status when the status changes", () => {
-      expect.assertions(1);
-      const wrapper = shallow(<Content {...defaultProps} />);
-      wrapper.find(".select-status").simulate("change", {
-        target: {
-          value: "boogers"
-        }
-      });
-      expect(defaultProps.onChangeStatus).toHaveBeenCalledWith("boogers");
+    it("calls onChangeStatus with the new status when the status changes", async () => {
+      render(
+        <ThemeProvider theme={Theme}>
+          <Content {...defaultProps} />
+        </ThemeProvider>
+      );
+      await userEvent.selectOptions(
+        screen.getByTestId("select-status"),
+        "Private"
+      );
+      expect(defaultProps.onChangeStatus).toHaveBeenCalledWith("0");
     });
   });
 
@@ -102,190 +122,155 @@ describe("DesignSettingsModal", () => {
     };
   });
   it("renders", () => {
-    shallow(
-      <DesignSettingsModal {...defaultProps}>
-        {() => <div />}
-      </DesignSettingsModal>
+    render(
+      <ThemeProvider theme={Theme}>
+        <DesignSettingsModal {...defaultProps}>
+          {() => <div data-testId="target" />}
+        </DesignSettingsModal>
+      </ThemeProvider>
     );
+    expect(screen.getByTestId("target")).toBeInTheDocument();
   });
   it("provides the expected data", () => {
-    expect.assertions(1);
-    const wrapper = shallow(
-      <DesignSettingsModal {...defaultProps}>
-        {modal => (
-          <div className="actions">{Object.keys(modal.actions).join(", ")}</div>
-        )}
-      </DesignSettingsModal>
+    render(
+      <ThemeProvider theme={Theme}>
+        <DesignSettingsModal {...defaultProps}>
+          {modal => (
+            <div data-testid="actions">
+              {Object.keys(modal.actions).join(", ")}
+            </div>
+          )}
+        </DesignSettingsModal>
+      </ThemeProvider>
     );
-    expect(wrapper.find(".actions").text()).toEqual("open");
+    expect(screen.getByTestId("actions").textContent).toEqual("open");
   });
-  it("opens the modal when the actions.open is called", () => {
-    expect.assertions(2);
-    const wrapper = shallow(
-      <DesignSettingsModal {...defaultProps}>
-        {modal => <div className="open" onClick={modal.actions.open} />}
-      </DesignSettingsModal>
+  it("opens the modal when the actions.open is called", async () => {
+    render(
+      <ThemeProvider theme={Theme}>
+        <DesignSettingsModal {...defaultProps}>
+          {modal => <div data-testid="open" onClick={modal.actions.open} />}
+        </DesignSettingsModal>
+      </ThemeProvider>
     );
-    expect(wrapper.find(Modal).prop("isOpen")).toEqual(false);
-    wrapper.find(".open").simulate("click");
-    expect(wrapper.find(Modal).prop("isOpen")).toEqual(true);
+    expect(screen.queryByTestId("content")).toBeNull();
+    await userEvent.click(screen.getByTestId("open"));
+    expect(screen.getByTestId("content")).toBeInTheDocument();
   });
-  it("closes the modal when the backdrop is clicked", () => {
-    expect.assertions(1);
-    const wrapper = shallow(
-      <DesignSettingsModal {...defaultProps}>
-        {modal => <div className="open" onClick={modal.actions.open} />}
-      </DesignSettingsModal>
+  it("closes the modal when the backdrop is clicked", async () => {
+    render(
+      <ThemeProvider theme={Theme}>
+        <DesignSettingsModal {...defaultProps}>
+          {modal => <div data-testid="open" onClick={modal.actions.open} />}
+        </DesignSettingsModal>
+      </ThemeProvider>
     );
-    wrapper.find(".open").simulate("click");
-    wrapper.find(Modal).prop("onBackdropClick")();
-    expect(wrapper.find(Modal).prop("isOpen")).toEqual(false);
+    await userEvent.click(screen.getByTestId("open"));
+    expect(screen.getByTestId("content")).toBeInTheDocument();
+    await userEvent.click(screen.getByTestId("modal-backdrop"));
+    expect(screen.queryByTestId("content")).toBeNull();
   });
-  it("handles a change in the design name", () => {
-    expect.assertions(1);
+  it("handles a change in the design name", async () => {
     defaultProps.design = getMockDesign({
       name: "Not Boogers"
     });
-    const wrapper = shallow(
-      <DesignSettingsModal {...defaultProps}>
-        {() => <div />}
-      </DesignSettingsModal>
+    render(
+      <ThemeProvider theme={Theme}>
+        <DesignSettingsModal {...defaultProps}>
+          {modal => <div data-testid="open" onClick={modal.actions.open} />}
+        </DesignSettingsModal>
+      </ThemeProvider>
     );
-    let contentWrapper = shallow(
-      <div>{wrapper.find(Modal).prop("modalContent")}</div>
-    );
-    contentWrapper.find(Content).prop("onChangeName")("Boogers");
-    contentWrapper = shallow(
-      <div>{wrapper.find(Modal).prop("modalContent")}</div>
-    );
-    expect(
-      contentWrapper
-        .find(Content)
-        .prop("design")
-        .get("name")
-    ).toEqual("Boogers");
+    await userEvent.click(screen.getByTestId("open"));
+    await userEvent.clear(screen.getByTestId("input-name"));
+    await userEvent.type(screen.getByTestId("input-name"), "Boogers");
+    await userEvent.click(screen.getByTestId("submit-button"));
+
+    const designName = defaultProps.onSubmit.mock.calls[0][0].get("name");
+    expect(designName).toEqual("Boogers");
   });
-  it("handles a change in the design status", () => {
-    expect.assertions(1);
+  it("handles a change in the design status", async () => {
     defaultProps.design = getMockDesign({
       status: Status.PRIVATE
     });
-    const wrapper = shallow(
-      <DesignSettingsModal {...defaultProps}>
-        {() => <div />}
-      </DesignSettingsModal>
+    render(
+      <ThemeProvider theme={Theme}>
+        <DesignSettingsModal {...defaultProps}>
+          {modal => <div data-testid="open" onClick={modal.actions.open} />}
+        </DesignSettingsModal>
+      </ThemeProvider>
     );
-    let contentWrapper = shallow(
-      <div>{wrapper.find(Modal).prop("modalContent")}</div>
+    await userEvent.click(screen.getByTestId("open"));
+    await userEvent.selectOptions(
+      screen.getByTestId("select-status"),
+      "Public"
     );
-    contentWrapper.find(Content).prop("onChangeStatus")(Status.PUBLIC);
-    contentWrapper = shallow(
-      <div>{wrapper.find(Modal).prop("modalContent")}</div>
-    );
-    expect(
-      contentWrapper
-        .find(Content)
-        .prop("design")
-        .get("status")
-    ).toEqual(Status.PUBLIC);
+    await userEvent.click(screen.getByTestId("submit-button"));
+
+    const designStatus = defaultProps.onSubmit.mock.calls[0][0].get("status");
+    expect(designStatus).toEqual(Status.PUBLIC);
   });
-  it("calls onSubmit when the form is submitted", () => {
-    expect.assertions(1);
+  it("calls onSubmit when the form is submitted", async () => {
     defaultProps.design = getMockDesign({
       id: "abc",
       name: "boogies",
       status: Status.PRIVATE
     });
-    const wrapper = shallow(
-      <DesignSettingsModal {...defaultProps}>
-        {() => <div />}
-      </DesignSettingsModal>
+    render(
+      <ThemeProvider theme={Theme}>
+        <DesignSettingsModal {...defaultProps}>
+          {modal => <div data-testid="open" onClick={modal.actions.open} />}
+        </DesignSettingsModal>
+      </ThemeProvider>
     );
-    const contentWrapper = shallow(
-      <div>{wrapper.find(Modal).prop("modalContent")}</div>
-    );
-    contentWrapper.find(Content).prop("onSubmit")();
+    await userEvent.click(screen.getByTestId("open"));
+    await userEvent.click(screen.getByTestId("submit-button"));
     expect(defaultProps.onSubmit).toHaveBeenCalledWith(defaultProps.design);
   });
-  it("does not set isPending if onSubmit does not return a promise", () => {
-    expect.assertions(1);
-    const wrapper = shallow(
-      <DesignSettingsModal {...defaultProps}>
-        {() => <div />}
-      </DesignSettingsModal>
-    );
-    let contentWrapper = shallow(
-      <div>{wrapper.find(Modal).prop("modalContent")}</div>
-    );
-    contentWrapper.find(Content).prop("onSubmit")();
-
-    wrapper.render();
-    contentWrapper = shallow(
-      <div>{wrapper.find(Modal).prop("modalContent")}</div>
-    );
-    expect(contentWrapper.find(Content).prop("isPending")).toEqual(false);
-  });
-  it("sets isPending if onSubmit returns a promise", () => {
-    expect.assertions(1);
-    defaultProps.onSubmit.mockResolvedValue();
-    const wrapper = shallow(
-      <DesignSettingsModal {...defaultProps}>
-        {() => <div />}
-      </DesignSettingsModal>
-    );
-    let contentWrapper = shallow(
-      <div>{wrapper.find(Modal).prop("modalContent")}</div>
-    );
-    contentWrapper.find(Content).prop("onSubmit")();
-
-    wrapper.render();
-    contentWrapper = shallow(
-      <div>{wrapper.find(Modal).prop("modalContent")}</div>
-    );
-    expect(contentWrapper.find(Content).prop("isPending")).toEqual(true);
-  });
-  it("restores isPending when onSubmit resolves", () => {
-    expect.assertions(1);
-    defaultProps.onSubmit.mockResolvedValue();
-    const wrapper = shallow(
-      <DesignSettingsModal {...defaultProps}>
-        {() => <div />}
-      </DesignSettingsModal>
-    );
-    let contentWrapper = shallow(
-      <div>{wrapper.find(Modal).prop("modalContent")}</div>
-    );
-    return contentWrapper
-      .find(Content)
-      .prop("onSubmit")()
-      .then(() => {
-        wrapper.render();
-        contentWrapper = shallow(
-          <div>{wrapper.find(Modal).prop("modalContent")}</div>
-        );
-        expect(contentWrapper.find(Content).prop("isPending")).toEqual(false);
+  it("disables the submit button while waiting for submit", async () => {
+    defaultProps.onSubmit = () =>
+      new Promise(resolve => {
+        setTimeout(() => resolve(), 10);
       });
+    render(
+      <ThemeProvider theme={Theme}>
+        <DesignSettingsModal {...defaultProps}>
+          {modal => <div data-testid="open" onClick={modal.actions.open} />}
+        </DesignSettingsModal>
+      </ThemeProvider>
+    );
+
+    await userEvent.click(screen.getByTestId("open"));
+    await userEvent.click(screen.getByTestId("submit-button"));
+
+    expect(screen.getByTestId("submit-button")).toBeDisabled();
   });
-  it("restores isPending when onSubmit rejects", () => {
-    expect.assertions(1);
+  it("closes the modal with submit finishes", async () => {
+    defaultProps.onSubmit.mockResolvedValue();
+    render(
+      <ThemeProvider theme={Theme}>
+        <DesignSettingsModal {...defaultProps}>
+          {modal => <div data-testid="open" onClick={modal.actions.open} />}
+        </DesignSettingsModal>
+      </ThemeProvider>
+    );
+    await userEvent.click(screen.getByTestId("open"));
+    await userEvent.click(screen.getByTestId("submit-button"));
+
+    expect(screen.queryByTestId("content")).toBeNull();
+  });
+  it("closes the modal with submit fails", async () => {
     defaultProps.onSubmit.mockRejectedValue();
-    const wrapper = shallow(
-      <DesignSettingsModal {...defaultProps}>
-        {() => <div />}
-      </DesignSettingsModal>
+    render(
+      <ThemeProvider theme={Theme}>
+        <DesignSettingsModal {...defaultProps}>
+          {modal => <div data-testid="open" onClick={modal.actions.open} />}
+        </DesignSettingsModal>
+      </ThemeProvider>
     );
-    let contentWrapper = shallow(
-      <div>{wrapper.find(Modal).prop("modalContent")}</div>
-    );
-    return contentWrapper
-      .find(Content)
-      .prop("onSubmit")()
-      .catch(() => {
-        wrapper.render();
-        contentWrapper = shallow(
-          <div>{wrapper.find(Modal).prop("modalContent")}</div>
-        );
-        expect(contentWrapper.find(Content).prop("isPending")).toEqual(false);
-      });
+    await userEvent.click(screen.getByTestId("open"));
+    await userEvent.click(screen.getByTestId("submit-button"));
+
+    expect(screen.queryByTestId("content")).toBeNull();
   });
 });

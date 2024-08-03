@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Design from "../models/Design";
@@ -28,7 +28,8 @@ const Content = ({
   onCancel,
   onChangeName,
   onChangeStatus,
-  isPending
+  isPending,
+  ...props
 }) => {
   if (!design) {
     return null;
@@ -54,6 +55,7 @@ const Content = ({
   ];
   return (
     <StyleWrapper
+      {...props}
       onSubmit={e => {
         e.preventDefault();
         try {
@@ -67,6 +69,7 @@ const Content = ({
       <Label>Design Name</Label>
       <Input
         className="input-name"
+        data-testid="input-name"
         value={design.get("name")}
         onChange={e => onChangeName(e.target.value)}
         required
@@ -85,6 +88,7 @@ const Content = ({
       </Label>
       <Select
         className="select-status"
+        data-testid="select-status"
         value={design.get("currentStatus")}
         onChange={e => onChangeStatus(e.target.value)}
       >
@@ -100,6 +104,7 @@ const Content = ({
       </Select>
       <Button
         className="submit-button"
+        data-testid="submit-button"
         type="submit"
         isPrimary
         disabled={isPending}
@@ -129,87 +134,71 @@ export { Content };
 
 /** A stateful modal that allows for changing settings of a design like Status
  and name */
-class DesignSettingsModal extends React.Component {
-  static propTypes = {
-    /** The design being modified */
-    design: PropTypes.instanceOf(Design),
-    /** Called when the form is submitted. Is provided an object with the id,
-     name, and status of the design */
-    onSubmit: PropTypes.func.isRequired,
-    /** A function that returns renderable content. This is usually used to
-     render a button that triggers the modal to open. */
-    children: PropTypes.func.isRequired
-  };
+const DesignSettingsModal = ({ design, onSubmit, children }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isPending, setIsPending] = useState(false);
+  const [currentDesign, setCurrentDesign] = useState(design);
 
-  constructor(props, ...rest) {
-    super(props, ...rest);
-    this.state = {
-      /** Is the modal open? */
-      isOpen: false,
-      /** Are we processing the submission? */
-      isPending: false,
-      design: props.design
-    };
-  }
-
-  handleOpen = () => this.setState({ isOpen: true });
-  handleClose = () => this.setState({ isOpen: false });
-  handleChangeName = value =>
-    this.setState({
-      design: this.state.design.set("name", value)
-    });
-  handleChangeStatus = value =>
-    this.setState({
-      design: this.state.design.set("status", value)
-    });
+  const handleChangeName = value =>
+    setCurrentDesign(currentDesign.set("name", value));
+  const handleChangeStatus = value =>
+    setCurrentDesign(currentDesign.set("status", value));
 
   /** Handles submission by calling onSubmit with the relevant data and handling
    the promise that it may return. */
-  handleSubmit = async () => {
+  const handleSubmit = async () => {
     let response;
     try {
-      const request = this.props.onSubmit(this.state.design);
+      const request = onSubmit(currentDesign);
       if (request && request.then) {
-        this.setState({ isPending: true });
+        setIsPending(true);
       }
       response = await request;
-      this.setState({ isPending: false });
-      this.handleClose();
+      setIsPending(false);
+      setIsOpen(false);
     } catch (error) {
-      this.setState({ isPending: false });
-      this.handleClose();
-      throw error;
+      setIsPending(false);
+      setIsOpen(false);
     }
     return response;
   };
 
-  render() {
-    if (!this.props.design) {
-      return this.props.children({});
-    }
-    return (
-      <Modal
-        isOpen={this.state.isOpen}
-        onBackdropClick={this.handleClose}
-        modalContent={
-          <Content
-            design={this.state.design}
-            onCancel={this.handleClose}
-            onSubmit={this.handleSubmit}
-            onChangeName={this.handleChangeName}
-            onChangeStatus={this.handleChangeStatus}
-            isPending={this.state.isPending}
-          />
-        }
-      >
-        {this.props.children({
-          actions: {
-            open: this.handleOpen
-          }
-        })}
-      </Modal>
-    );
+  if (!design) {
+    return children({});
   }
-}
+  return (
+    <Modal
+      isOpen={isOpen}
+      onBackdropClick={() => setIsOpen(false)}
+      modalContent={
+        <Content
+          design={currentDesign}
+          onCancel={() => setIsOpen(false)}
+          onSubmit={handleSubmit}
+          onChangeName={handleChangeName}
+          onChangeStatus={handleChangeStatus}
+          isPending={isPending}
+          data-testid="content"
+        />
+      }
+    >
+      {children({
+        actions: {
+          open: () => setIsOpen(true)
+        }
+      })}
+    </Modal>
+  );
+};
+DesignSettingsModal.propTypes = {
+  /** The design being modified */
+  design: PropTypes.instanceOf(Design),
+  /** Called when the form is submitted. Is provided an object with the id,
+   name, and status of the design */
+  onSubmit: PropTypes.func.isRequired,
+  /** A function that returns renderable content. This is usually used to
+   render a button that triggers the modal to open. */
+  children: PropTypes.func.isRequired
+};
 
 export default DesignSettingsModal;
