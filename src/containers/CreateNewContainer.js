@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getProductById } from "../redux/modules/products";
@@ -6,79 +6,62 @@ import { getManufacturerByProductId } from "../redux/modules/manufacturers";
 import { GET_PRODUCTS, GET_MANUFACTURERS } from "../redux/actions";
 import Product from "../models/Product";
 import Manufacturer from "../models/Manufacturer";
-import { makeCancelable } from "../utils";
 
-/**
- * Provides information about a specific product.
- */
-export class CreateNewContainer extends React.Component {
-  static propTypes = {
-    /**
-     * The ID of the product to get information about.
-     */
-    productId: PropTypes.string.isRequired,
-    /**
-     * The product. Provided by redux.
-     */
-    product: PropTypes.instanceOf(Product),
-    /**
-     * The manufactuer of the product. Provided by redux.
-     */
-    manufacturer: PropTypes.instanceOf(Manufacturer),
-    /**
-     * A function to request the product be fetched. Provided by redux.
-     */
-    onRequestProduct: PropTypes.func.isRequired,
-    /**
-     * A function to request the manufacturer of the product be fetched. Provided by redux.
-     */
-    onRequestManufacturer: PropTypes.func.isRequired,
-    /**
-     * A function that returns the content to be rendered.
-     */
-    children: PropTypes.func.isRequired
-  };
+export const CreateNewContainer = ({
+  product,
+  manufacturer,
+  onRequestProduct,
+  onRequestManufacturer,
+  children
+}) => {
+  const [isLoading, setIsLoading] = useState(true);
 
-  state = {
-    isLoading: true
-  };
-
-  componentDidMount() {
-    const productRequest = makeCancelable(this.props.onRequestProduct());
-    const manufacturerRequest = makeCancelable(
-      this.props.onRequestManufacturer()
-    );
-    this.cancelablePromises.push(productRequest);
-    this.cancelablePromises.push(manufacturerRequest);
-    Promise.all([productRequest.promise, manufacturerRequest.promise])
-      .then(() => {
-        this.setState({
-          isLoading: false
-        });
-      })
-      .catch(() => {
-        this.setState({
-          isLoading: false
-        });
-      });
-  }
-
-  componentWillUnmount() {
-    this.cancelablePromises.forEach(cancelable => cancelable.cancel());
-  }
-
-  cancelablePromises = [];
-
-  render() {
-    return this.props.children({
-      props: {
-        isLoading: this.state.isLoading,
-        product: this.props.product,
-        manufacturer: this.props.manufacturer
+  useEffect(() => {
+    (async () => {
+      try {
+        await Promise.all([onRequestProduct(), onRequestManufacturer()]);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
       }
-    });
-  }
-}
+    })();
+  }, []);
+
+  return children({
+    props: {
+      isLoading,
+      product,
+      manufacturer
+    }
+  });
+};
+
+CreateNewContainer.propTypes = {
+  /**
+   * The ID of the product to get information about.
+   */
+  productId: PropTypes.string.isRequired,
+  /**
+   * The product. Provided by redux.
+   */
+  product: PropTypes.instanceOf(Product),
+  /**
+   * The manufactuer of the product. Provided by redux.
+   */
+  manufacturer: PropTypes.instanceOf(Manufacturer),
+  /**
+   * A function to request the product be fetched. Provided by redux.
+   */
+  onRequestProduct: PropTypes.func.isRequired,
+  /**
+   * A function to request the manufacturer of the product be fetched. Provided by redux.
+   */
+  onRequestManufacturer: PropTypes.func.isRequired,
+  /**
+   * A function that returns the content to be rendered.
+   */
+  children: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state, props) => ({
   product: getProductById(state, props.productId),
@@ -90,7 +73,4 @@ const mapDispatchToProps = {
   onRequestManufacturer: GET_MANUFACTURERS
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CreateNewContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateNewContainer);

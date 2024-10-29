@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from "enzyme";
+const { render, screen } = require("@testing-library/react");
 import { getMockDesign } from "../../models/Design";
 import { getMockProduct } from "../../models/Product";
 import { ViewContainer } from "../ViewContainer";
@@ -16,12 +16,14 @@ describe("ViewContainer", () => {
     };
   });
   it("renders", () => {
-    shallow(
-      <ViewContainer {...defaultProps}>{() => <div>test</div>}</ViewContainer>
+    render(
+      <ViewContainer {...defaultProps}>
+        {() => <div data-testid="target">test</div>}
+      </ViewContainer>
     );
+    expect(screen.getByTestId("target")).toHaveTextContent("test");
   });
   it("selects the primary variation as the currentVariation", () => {
-    expect.assertions(1);
     defaultProps.product = getMockProduct();
     defaultProps.design = getMockDesign({
       variations: [
@@ -39,17 +41,16 @@ describe("ViewContainer", () => {
         }
       ]
     });
-    const wrapper = shallow(
+    render(
       <ViewContainer {...defaultProps}>
         {viewData => (
-          <div className="target">{viewData.props.currentVariation.name}</div>
+          <div data-testid="target">{viewData.props.currentVariation.name}</div>
         )}
       </ViewContainer>
     );
-    expect(wrapper.find(".target").text()).toEqual("Vented");
+    expect(screen.getByTestId("target").textContent).toEqual("Vented");
   });
   it("provides the colors used in the current variation", () => {
-    expect.assertions(1);
     defaultProps.product = getMockProduct({
       colors: [
         {
@@ -85,16 +86,18 @@ describe("ViewContainer", () => {
         }
       ]
     });
-    const wrapper = shallow(
+    render(
       <ViewContainer {...defaultProps}>
         {viewData => (
-          <div className="target">
-            {viewData.props.usedColors["0"].map(color => color.name).join(", ")}
+          <div data-testid="target">
+            {viewData.props.usedColors["0"]
+              ?.map(color => color.name)
+              .join(", ")}
           </div>
         )}
       </ViewContainer>
     );
-    expect(wrapper.find(".target").text()).toEqual("Red, Black");
+    expect(screen.getByTestId("target").textContent).toEqual("Red, Black");
   });
   it("does not provide colors from non-colorable panels as used colors", () => {
     expect.assertions(1);
@@ -134,16 +137,18 @@ describe("ViewContainer", () => {
         }
       ]
     });
-    const wrapper = shallow(
+    render(
       <ViewContainer {...defaultProps}>
         {viewData => (
-          <div className="target">
-            {viewData.props.usedColors["0"].map(color => color.name).join(", ")}
+          <div data-testid="target">
+            {viewData.props.usedColors["0"]
+              ?.map(color => color.name)
+              .join(", ")}
           </div>
         )}
       </ViewContainer>
     );
-    expect(wrapper.find(".target").text()).toEqual("Black");
+    expect(screen.getByTestId("target").textContent).toEqual("Black");
   });
   it("identifies the colors used in each panel", () => {
     defaultProps.product = getMockProduct({
@@ -182,16 +187,16 @@ describe("ViewContainer", () => {
         }
       ]
     });
-    const wrapper = shallow(
+    render(
       <ViewContainer {...defaultProps}>
         {viewData => (
-          <div className="target">
+          <div data-testid="target">
             {JSON.stringify(viewData.props.currentVariationColors)}
           </div>
         )}
       </ViewContainer>
     );
-    expect(wrapper.find(".target").text()).toEqual(
+    expect(screen.getByTestId("target").textContent).toEqual(
       '{"p1":{"color":"#000000","name":"Black"},"p2":{"color":"#000000","name":"Black"}}'
     );
   });
@@ -233,10 +238,10 @@ describe("ViewContainer", () => {
         }
       ]
     });
-    const wrapper = shallow(
+    render(
       <ViewContainer {...defaultProps}>
         {viewData => (
-          <div className="target">
+          <div data-testid="target">
             {viewData.props.hasInvalidColors
               ? "hasInvalidColors"
               : "test failed"}
@@ -244,6 +249,8 @@ describe("ViewContainer", () => {
         )}
       </ViewContainer>
     );
-    expect(wrapper.find(".target").text()).toEqual("hasInvalidColors");
+    expect(screen.getByTestId("target").textContent).toEqual(
+      "hasInvalidColors"
+    );
   });
 });
