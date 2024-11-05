@@ -16,6 +16,7 @@ const StyleWrapper = styled.div`
     display: flex;
     margin: 8px 0 24px;
     justify-content: space-around;
+    flex-flow: wrap;
   }
   .heading {
     padding: 8px 16px;

@@ -10,7 +10,7 @@ import Svg from "../Svg";
  * Provides styling for the showcase
  */
 export const StyleWrapper = styled.div`
-  flex-basis: 500px;
+  flex-basis: 300px;
   margin: 8px;
   flex-shrink: 1;
   border: 1px solid ${props => props.theme.colors.gray};
