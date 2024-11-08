@@ -39,6 +39,7 @@
     "module": true,
     "require": true,
     "process": true,
-    "setTimeout": true
+    "setTimeout": true,
+    "gtag": true,
   }
 }

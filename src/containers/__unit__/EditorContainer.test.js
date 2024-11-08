@@ -7,6 +7,7 @@ import Status from "../../models/Status";
 import { EditorContainer } from "../EditorContainer";
 
 jest.mock("../../utils/window");
+jest.mock("../../utils/gaEvents");
 
 describe("EditorContainer", () => {
   let defaultProps;
