@@ -9,6 +9,14 @@ import Status from "../models/Status";
 import { isEmbedded, defaultBackground } from "../constants/embed";
 import ErrorPage from "../components/ErrorPage";
 import { softCompareStrings, embedAllowed } from "../utils";
+import {
+  undoEvent,
+  redoEvent,
+  backgroundChangeEvent,
+  hideOutlinesEvent,
+  autofillEvent,
+  resetEvent
+} from "../utils/gaEvents";
 import { checkWhitelist, checkBlacklist } from "../utils/evalWhiteBlackList";
 import { locationReplace } from "../utils/window";
 
@@ -218,6 +226,10 @@ export const EditorContainer = ({
    * Undo the previous change based on undoDepth and appliedColorsHistory
    */
   const handleUndo = () => {
+    undoEvent({
+      product_id: product.get("id"),
+      product_name: product.get("name")
+    });
     let updatedAppliedColors;
     const currentUndoDepth = undoDepth;
 
@@ -243,6 +255,10 @@ export const EditorContainer = ({
    * Redo the last undone change based on undoDepth and appliedColorsHistory
    */
   const handleRedo = () => {
+    redoEvent({
+      product_id: product.get("id"),
+      product_name: product.get("name")
+    });
     let updatedAppliedColors;
     const currentUndoDepth = undoDepth;
 
@@ -363,7 +379,13 @@ export const EditorContainer = ({
   };
 
   /** Clears all colors from the current variation */
-  const handleReset = () => applyColors([currentVariation.id], {});
+  const handleReset = () => {
+    resetEvent({
+      product_id: product.get("id"),
+      product_name: product.get("name")
+    });
+    return applyColors([currentVariation.id], {});
+  };
 
   /**
    * Handles save by parsing data and submitting a request to create a new design. Redirects to that
@@ -410,6 +432,10 @@ export const EditorContainer = ({
    * applied to every other variation.
    */
   const handleAutofill = () => {
+    autofillEvent({
+      product_id: product.get("id"),
+      product_name: product.get("name")
+    });
     const currentColors = getCurrentVariationColors();
     const currentAutofillMap = autofillMap[currentVariation.id];
     const variations = product.get("variations");
@@ -460,7 +486,24 @@ export const EditorContainer = ({
     applyColors([], newAppliedColors);
   };
 
-  const handleToggleHideOutlines = () => setHideOutlines(!hideOutlines);
+  const handleToggleHideOutlines = () => {
+    if (!hideOutlines) {
+      hideOutlinesEvent({
+        product_id: product.get("id"),
+        product_name: product.get("name")
+      });
+    }
+    return setHideOutlines(!hideOutlines);
+  };
+
+  const handleSetBackground = background => {
+    backgroundChangeEvent({
+      product_id: product.get("id"),
+      product_name: product.get("name"),
+      background
+    });
+    return setBackground(background);
+  };
 
   if (isEmbedded && product && !embedAllowed(product.get("embed").split(","))) {
     return (
@@ -474,7 +517,7 @@ export const EditorContainer = ({
     actions: {
       applyColor: handleColorApplied,
       autofill: handleAutofill,
-      changeBackground: setBackground,
+      changeBackground: handleSetBackground,
       redo: handleRedo,
       reset: handleReset,
       save: handleSave,
