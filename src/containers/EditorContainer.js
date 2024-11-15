@@ -15,7 +15,10 @@ import {
   backgroundChangeEvent,
   hideOutlinesEvent,
   autofillEvent,
-  resetEvent
+  resetEvent,
+  saveEvent,
+  updateEvent,
+  applyColorEvent
 } from "../utils/gaEvents";
 import { checkWhitelist, checkBlacklist } from "../utils/evalWhiteBlackList";
 import { locationReplace } from "../utils/window";
@@ -173,7 +176,7 @@ export const EditorContainer = ({
    * @param  {String[]} keys The series of keys that point to the value to
    * change. Is provided to Immutable's setIn. If the array is empty, the value
    * will be used to overwrite the entire appliedColors value.
-   * @param  {*} value The new value to set
+   * @param  {*} value The new `value` to set
    * @private
    */
   const applyColors = (keys, value) => {
@@ -306,8 +309,14 @@ export const EditorContainer = ({
    * Set the color for the specified id on the current variation to the current color.
    * @param  {String} id The ID of the panel, taken from data-id on the element.
    */
-  const handleColorApplied = id =>
-    applyColors([currentVariation.id, id], currentColor);
+  const handleColorApplied = id => {
+    applyColorEvent({
+      product_id: product.get("id"),
+      product_name: product.get("name"),
+      color: currentColor?.name
+    });
+    return applyColors([currentVariation.id, id], currentColor);
+  };
 
   /**
    * Generates the design variations based on the product variations and the applied colors.
@@ -393,6 +402,10 @@ export const EditorContainer = ({
    * @param  {Object} data must contain name and user(id)
    */
   const handleSave = async data => {
+    saveEvent({
+      product_id: product.get("id"),
+      product_name: product.get("name")
+    });
     const { name, user } = data;
     const design = new Design({
       name,
@@ -415,6 +428,10 @@ export const EditorContainer = ({
    * Handles update by parsing data and submitting a request to update the design.
    */
   const handleUpdate = () => {
+    updateEvent({
+      product_id: product.get("id"),
+      product_name: product.get("name")
+    });
     const updatedDesign = design.set("variations", generateDesignVariations());
     onUpdate(updatedDesign);
   };
