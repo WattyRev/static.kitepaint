@@ -1,21 +1,23 @@
-export const undoEvent = (attr = {}) => gtag("event", "undo_click", attr);
+export const undoEvent = (attr = {}) => gtag("event", "kp_undo_click", attr);
 
-export const redoEvent = (attr = {}) => gtag("event", "redo_click", attr);
+export const redoEvent = (attr = {}) => gtag("event", "kp_redo_click", attr);
 
 export const backgroundChangeEvent = (attr = {}) =>
-  gtag("event", "background_change", attr);
+  gtag("event", "kp_background_change", attr);
 
 export const hideOutlinesEvent = (attr = {}) =>
-  gtag("event", "hide_outlines_click", attr);
+  gtag("event", "kp_hide_outlines_click", attr);
 
 export const autofillEvent = (attr = {}) =>
-  gtag("event", "autofill_click", attr);
+  gtag("event", "kp_autofill_click", attr);
 
-export const resetEvent = (attr = {}) => gtag("event", "reset_click", attr);
+export const resetEvent = (attr = {}) => gtag("event", "kp_reset_click", attr);
 
-export const saveEvent = (attr = {}) => gtag("event", "save_new_click", attr);
+export const saveEvent = (attr = {}) =>
+  gtag("event", "kp_save_new_click", attr);
 
-export const updateEvent = (attr = {}) => gtag("event", "update_click", attr);
+export const updateEvent = (attr = {}) =>
+  gtag("event", "kp_update_click", attr);
 
 export const applyColorEvent = (attr = {}) =>
-  gtag("event", "apply_color_click", attr);
+  gtag("event", "kp_apply_color_click", attr);
