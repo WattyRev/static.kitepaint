@@ -23,7 +23,7 @@ describe("ViewContainer", () => {
     );
     expect(screen.getByTestId("target")).toHaveTextContent("test");
   });
-  it("selects the primary variation as the currentVariation", () => {
+  it("selects the primary variation as the currentVariation", async () => {
     defaultProps.product = getMockProduct();
     defaultProps.design = getMockDesign({
       variations: [
@@ -41,7 +41,7 @@ describe("ViewContainer", () => {
         }
       ]
     });
-    render(
+    await render(
       <ViewContainer {...defaultProps}>
         {viewData => (
           <div data-testid="target">{viewData.props.currentVariation.name}</div>
