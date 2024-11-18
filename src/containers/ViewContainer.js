@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getDesignById } from "../redux/modules/designs";
@@ -85,74 +85,73 @@ export const ViewContainer = ({
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [hideOutlines, setHideOutlines] = useState(false);
+  const [currentVariation, setCurrentVariation] = useState(null);
+  const [background, setBackground] = useState(defaultBackground || null);
+
+  const intitialVariation = useMemo(() => {
+    return design?.get("variations").find(variation => variation.primary);
+  }, design);
+
   // An itemized list of colorable panels and their colors for each variation
   // eg { [variationId]: { [panelId]: { colorName, color } } }
-  const [appliedColors, setAppliedColors] = useState(null);
-  // A condensed list of colors used in each variation
-  // eg { [variationId]: [{ colorName, color }] }
-  const [usedColors, setUsedColors] = useState({});
-  const [currentVariation, setCurrentVariation] = useState(
-    design?.get("variations").find(variation => variation.primary)
-  );
-  const [background, setBackground] = useState(defaultBackground || null);
-  // Indicates if the current design contains colors that no longer exist in
-  // the color palette
-  const [hasInvalidColors, setHasInvalidColors] = useState(false);
-  const hasUsedColors = Object.keys(usedColors).length > 0;
-
-  useEffect(() => {
+  const appliedColors = useMemo(() => {
     const variations = design?.get("variations");
     const productColors = product?.get("colors");
+
     if (!variations || !productColors) {
       return;
     }
 
-    if (!hasUsedColors || !appliedColors) {
-      const newAppliedColors = generateAppliedColors(design, product);
+    return generateAppliedColors(design, product);
+  }, [design, product]);
 
-      // Set the appied colors if not already set
-      if (!appliedColors) {
-        setAppliedColors(newAppliedColors);
-      }
-
-      // Set used colors if not already done
-      if (!hasUsedColors) {
-        const newUsedColors = Object.entries(newAppliedColors).reduce(
-          (accumulated, [variationId, panelColors]) => {
-            const condensedColorsList = Object.values(panelColors).reduce(
-              (accumulated, colorInfo) => {
-                if (accumulated.found.includes(colorInfo.color)) {
-                  return accumulated;
-                }
-                accumulated.found.push(colorInfo.color);
-                accumulated.usedColors.push(colorInfo);
-                return accumulated;
-              },
-              { found: [], usedColors: [] }
-            ).usedColors;
-            accumulated[variationId] = condensedColorsList;
+  // A condensed list of colors used in each variation
+  // eg { [variationId]: [{ colorName, color }] }
+  const usedColors = useMemo(() => {
+    if (!appliedColors) {
+      return;
+    }
+    return Object.entries(appliedColors).reduce(
+      (accumulated, [variationId, panelColors]) => {
+        const condensedColorsList = Object.values(panelColors).reduce(
+          (accumulated, colorInfo) => {
+            if (accumulated.found.includes(colorInfo.color)) {
+              return accumulated;
+            }
+            accumulated.found.push(colorInfo.color);
+            accumulated.usedColors.push(colorInfo);
             return accumulated;
           },
-          {}
-        );
-        setUsedColors(newUsedColors);
+          { found: [], usedColors: [] }
+        ).usedColors;
+        accumulated[variationId] = condensedColorsList;
+        return accumulated;
+      },
+      {}
+    );
+  }, [appliedColors]);
 
-        // Detect if the design contains invalid colors
-        const foundInvalidVariation = Object.values(newUsedColors).find(
-          variationColors => {
-            const foundInvalidColor = variationColors.find(({ name }) => {
-              if (name.includes(INVALID_COLOR_PREFIX)) {
-                return true;
-              }
-              return false;
-            });
-            return !!foundInvalidColor;
-          }
-        );
-        setHasInvalidColors(!!foundInvalidVariation);
-      }
+  // Indicates if the current design contains colors that no longer exist in
+  // the color palette
+  const hasInvalidColors = useMemo(() => {
+    if (!usedColors) {
+      return;
     }
-  }, [hasUsedColors, appliedColors, design, product]);
+
+    // Detect if the design contains invalid colors
+    const foundInvalidVariation = Object.values(usedColors).find(
+      variationColors => {
+        const foundInvalidColor = variationColors.find(({ name }) => {
+          if (name.includes(INVALID_COLOR_PREFIX)) {
+            return true;
+          }
+          return false;
+        });
+        return !!foundInvalidColor;
+      }
+    );
+    return !!foundInvalidVariation;
+  }, [usedColors]);
 
   useEffect(() => {
     (async () => {
@@ -175,10 +174,11 @@ export const ViewContainer = ({
    * Gets the applied colors for the current variation
    */
   const getCurrentVariationColors = () => {
-    if (!currentVariation) {
+    const variation = currentVariation || intitialVariation;
+    if (!variation) {
       return {};
     }
-    const currentVariationId = currentVariation.id;
+    const currentVariationId = variation.id;
     return appliedColors?.[currentVariationId] || {};
   };
 
@@ -214,7 +214,7 @@ export const ViewContainer = ({
       background: background,
       hideOutlines: hideOutlines,
       hasInvalidColors: hasInvalidColors,
-      currentVariation: currentVariation,
+      currentVariation: currentVariation || intitialVariation,
       isLoading: isLoading,
       design: design,
       manufacturer: manufacturer,
