@@ -48,7 +48,7 @@ const View = ({ match }) => (
               manufacturer={viewData.props.manufacturer}
               product={viewData.props.product}
               design={viewData.props.design}
-              selectedVariation={viewData.props.currentVariation.id}
+              selectedVariation={viewData.props.currentVariation?.id}
               usedColors={viewData.props.usedColors}
               user={viewData.props.user}
               onVariationSelect={viewData.actions.selectVariation}
