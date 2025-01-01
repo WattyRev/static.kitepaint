@@ -11,14 +11,10 @@ describe("#getDesign", () => {
     };
   });
   it("makes the relevant request", async () => {
-    expect.assertions(2);
     await Api.getDesign("abc").catch(() => {});
-    expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual("/designs.php");
-    expect(Api.axiosInstance.get.mock.calls[0][1]).toEqual({
-      params: {
-        id: "abc"
-      }
-    });
+    expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual(
+      "/designs.php?filter%5Bid%5D=abc"
+    );
   });
   it("does not make identical requests when they have been cached", async () => {
     expect.assertions(1);
