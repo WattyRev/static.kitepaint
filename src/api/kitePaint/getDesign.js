@@ -1,3 +1,4 @@
+import Qs from "qs";
 import Design from "../../models/Design";
 import { error } from "../../theme/Alert";
 
@@ -15,11 +16,15 @@ export default async function getDesign(id, useCache = true) {
       return cache;
     }
   }
-  const response = await this.axiosInstance.get("/designs.php", {
-    params: {
+  const requestData = {
+    filter: {
       id
     }
-  });
+  };
+  const requestString = Qs.stringify(requestData);
+  const response = await this.axiosInstance.get(
+    `/designs.php?${requestString}`
+  );
 
   // Handle invalid responses
   if (!response.data || !response.data.length) {
