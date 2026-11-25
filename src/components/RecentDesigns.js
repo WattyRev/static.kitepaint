@@ -68,7 +68,14 @@ const RecentDesigns = ({ designs, products, manufacturers, cta }) => {
       <div className="designs">
         {designs.map(design => {
           const product = products[design.get("product")];
-          const manufacturer = manufacturers[product.get("manufacturer")];
+          const manufacturer = product
+            ? manufacturers[product.get("manufacturer")]
+            : null;
+          // Products and manufacturers may still be loading while designs are already available.
+          // Skip the design until the data it depends on has arrived.
+          if (!product || !manufacturer) {
+            return null;
+          }
           return (
             <Link
               key={design.get("id")}
