@@ -1,4 +1,5 @@
 import { error, success } from "../../theme/Alert";
+import serializeForApi from "./serializeForApi";
 
 /**
  * Update an existing design
@@ -9,7 +10,7 @@ export default async function updateDesign(design) {
   const data = design.get("json");
   if (data.variations) {
     // Stringify the variations since that's what the API handles for now.
-    data.variations = JSON.stringify(data.variations);
+    data.variations = serializeForApi(data.variations);
   }
 
   const bodyFormData = new FormData();
