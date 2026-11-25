@@ -1,4 +1,5 @@
 import { error, success } from "../../theme/Alert";
+import serializeForApi from "./serializeForApi";
 
 /**
  * Creates a new design based on the provided data.
@@ -16,7 +17,7 @@ export default async function createDesign(design) {
   );
 
   // Stringify the variations since that's what the API handles for now.
-  data.variations = JSON.stringify(data.variations);
+  data.variations = serializeForApi(data.variations);
   const bodyFormData = new FormData();
   Object.keys(data).forEach(key => bodyFormData.append(key, data[key]));
 
