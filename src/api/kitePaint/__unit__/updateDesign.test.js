@@ -36,6 +36,16 @@ describe("#updateDesign", () => {
       variations: "[]"
     });
   });
+  it("does not send raw angle brackets in the variations", () => {
+    expect.assertions(2);
+    const variations = [{ id: 1, svg: '<svg><g id="a"></g></svg>' }];
+    Api.updateDesign(
+      new Design({ name: "test", user: "1", product: "2", variations })
+    ).catch(() => {});
+    const sent = getObjectFromFormData(Api.axiosInstance.post.mock.calls[0][1]);
+    expect(sent.variations).not.toMatch(/[<>]/);
+    expect(JSON.parse(sent.variations)).toEqual(variations);
+  });
   it("rejects if the api call fails", () => {
     expect.assertions(1);
     Api.axiosInstance.post.mockReturnValue(
