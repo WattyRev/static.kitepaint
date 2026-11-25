@@ -30,4 +30,18 @@ describe("RecentDesigns", () => {
   it("renders", () => {
     shallow(<RecentDesigns {...props} />);
   });
+  it("renders the designs when their products and manufacturers are loaded", () => {
+    const wrapper = shallow(<RecentDesigns {...props} />);
+    expect(wrapper.find(".design-wrapper")).toHaveLength(1);
+  });
+  it("does not throw when designs are loaded before products", () => {
+    props.products = {};
+    const wrapper = shallow(<RecentDesigns {...props} />);
+    expect(wrapper.find(".design-wrapper")).toHaveLength(0);
+  });
+  it("does not throw when designs are loaded before manufacturers", () => {
+    props.manufacturers = {};
+    const wrapper = shallow(<RecentDesigns {...props} />);
+    expect(wrapper.find(".design-wrapper")).toHaveLength(0);
+  });
 });
