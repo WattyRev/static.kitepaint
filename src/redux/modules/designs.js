@@ -75,6 +75,18 @@ export const getRecentDesigns = (state, count) => {
 };
 
 /**
+ * Get the designs with the specified IDs, in the order the IDs were provided.
+ * IDs that are not in the store are skipped.
+ * @param  {Map} state
+ * @param  {String[]} ids The IDs of the designs to retrieve
+ * @return {Design[]}
+ */
+export const getDesignsByIds = (state, ids) => {
+  const designs = state.get("designs");
+  return ids.map(id => designs.get(id)).filter(design => !!design);
+};
+
+/**
  * Get designs created by the specified user
  * @param  {Map} state
  * @param  {Object[]} userId The ID of the user

@@ -5,6 +5,7 @@ import Reducer, {
   defaultState,
   getRecentDesigns,
   getDesignsByUser,
+  getDesignsByIds,
   getDesignById
 } from "../designs";
 import {
@@ -206,6 +207,20 @@ describe("Designs redux module", () => {
           "234",
           "123"
         ]);
+      });
+    });
+    describe("getDesignsByIds", () => {
+      it("returns the designs in the order of the provided IDs, skipping missing ones", () => {
+        expect.assertions(1);
+        const mockState = fromJS({
+          designs: {
+            "123": new Design({ id: "123", name: "a" }),
+            "234": new Design({ id: "234", name: "b" }),
+            "345": new Design({ id: "345", name: "c" })
+          }
+        });
+        const response = getDesignsByIds(mockState, ["345", "999", "123"]);
+        expect(response.map(item => item.get("id"))).toEqual(["345", "123"]);
       });
     });
     describe("getDesignsByUser", () => {

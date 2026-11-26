@@ -1,113 +1,166 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getRecentDesigns } from "../redux/modules/designs";
+import { getDesignsByIds } from "../redux/modules/designs";
 import { getProductsWithIndex } from "../redux/modules/products";
 import { getManufacturersWithIndex } from "../redux/modules/manufacturers";
 import { GET_DESIGNS, GET_PRODUCTS, GET_MANUFACTURERS } from "../redux/actions";
-import Design from "../models/Design";
 import Product from "../models/Product";
 import Manufacturer from "../models/Manufacturer";
 
-const PAGE_SIZE = 50;
+export const PAGE_SIZE = 50;
 
 /**
- * Manages pagination for the DesignsContainer
+ * Reads the page number from a location search string (e.g. "?page=2").
+ * Missing or invalid values result in page 1.
+ *
+ * @param {String} [search=""]
+ * @return {Number}
  */
-export const Counter = ({ children }) => {
-  const [count, setCount] = useState(0);
-
-  const updateCount = pageSize => {
-    setCount(count + pageSize);
-  };
-  return children({ actions: { updateCount }, props: { count } });
+export const getPageFromSearch = (search = "") => {
+  const match = /[?&]page=([^&]*)/.exec(search || "");
+  const page = match ? parseInt(match[1], 10) : 1;
+  return Number.isInteger(page) && page > 0 ? page : 1;
 };
-Counter.propTypes = {
-  children: PropTypes.func.isRequired
+
+export const EMPTY_FILTERS = Object.freeze({
+  manufacturers: [],
+  products: [],
+  name: ""
+});
+
+const splitList = value =>
+  (value || "")
+    .split(",")
+    .map(item => item.trim())
+    .filter(item => item.length > 0);
+
+/**
+ * Reads the design filters from a location search string
+ * (e.g. "?manufacturers=a,b&products=x&name=blue").
+ * Missing values result in empty filters.
+ *
+ * @param {String} [search=""]
+ * @return {{ manufacturers: String[], products: String[], name: String }}
+ */
+export const getFiltersFromSearch = (search = "") => {
+  const params = new window.URLSearchParams(search || "");
+  return {
+    manufacturers: splitList(params.get("manufacturers")),
+    products: splitList(params.get("products")),
+    name: (params.get("name") || "").trim()
+  };
 };
 
 export const Data = ({
-  loadedCount,
-  onChangeLoadedCount,
+  page,
+  filters,
+  onPageOutOfRange,
   onFetchDesigns,
   onFetchProducts,
   onFetchManufacturers,
-  designs,
+  selectDesigns,
   products,
   manufacturers,
   children
 }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [hasMore, setHasMore] = useState(true);
+  const [designIds, setDesignIds] = useState([]);
+  const [total, setTotal] = useState(0);
+  const hasFetchedOnce = useRef(false);
 
-  /**
-   * Fetches the designs. Fetches more designs each time it is
-   * called.
-   * Retrurns a Promise that is already cancelable.
-   *
-   * @param {Boolean} [setLoading=true] If true, will toggle isLoading on state.
-   * @return {Promise}
-   */
-  const fetchDesigns = async (setLoading = true) => {
-    if (setLoading) {
-      setIsLoading(true);
-    }
-    const fetchedDesigns = await onFetchDesigns(
-      {
-        limit: `${loadedCount}, ${loadedCount + PAGE_SIZE}`,
-        publicOnly: true
-      },
-      false // dont cache this request
-    );
-
-    // Get the number of items returned
-    const count = fetchedDesigns.data.length;
-    setHasMore(count >= loadedCount + PAGE_SIZE);
-    onChangeLoadedCount(count);
-    if (setLoading) {
-      setIsLoading(false);
-    }
-    return fetchedDesigns;
-  };
-
+  // Products and manufacturers are only needed once.
   useEffect(() => {
+    Promise.all([onFetchProducts(), onFetchManufacturers()]).catch(() => {});
+  }, []);
+
+  // Compare filters by value so that a new (but equal) filters object does not trigger a refetch.
+  const filtersKey = JSON.stringify([
+    filters.manufacturers,
+    filters.products,
+    filters.name
+  ]);
+
+  // Fetch the requested page of designs whenever the page or filters change.
+  useEffect(() => {
+    let isCancelled = false;
+
+    // Bring the user back to the top when moving between pages.
+    if (hasFetchedOnce.current && typeof window.scrollTo === "function") {
+      window.scrollTo(0, 0);
+    }
+    hasFetchedOnce.current = true;
+
     (async () => {
+      setIsLoading(true);
+      setDesignIds([]);
       try {
-        await Promise.all([
-          fetchDesigns(false),
-          onFetchProducts(),
-          onFetchManufacturers()
-        ]);
-        setIsLoading(false);
+        const response = await onFetchDesigns(
+          {
+            limit: `${(page - 1) * PAGE_SIZE}, ${PAGE_SIZE}`,
+            publicOnly: true,
+            includeTotal: true,
+            manufacturers: filters.manufacturers,
+            products: filters.products,
+            name: filters.name
+          },
+          false // dont cache this request
+        );
+        if (isCancelled) {
+          return;
+        }
+        const newTotal = response.total || 0;
+        const lastPage = Math.max(1, Math.ceil(newTotal / PAGE_SIZE));
+        setTotal(newTotal);
+        setDesignIds(response.data.map(design => design.get("id")));
+        if (page > lastPage && onPageOutOfRange) {
+          onPageOutOfRange(lastPage);
+        }
       } catch (error) {
+        // Errors are surfaced by the request itself; just show an empty page.
+      }
+      if (!isCancelled) {
         setIsLoading(false);
       }
     })();
-  }, []);
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [page, filtersKey]);
 
   return children({
-    actions: {
-      loadMore: fetchDesigns
-    },
     props: {
-      hasMore,
+      page,
+      totalPages: Math.max(1, Math.ceil(total / PAGE_SIZE)),
       isLoading,
-      designs,
+      designs: selectDesigns(designIds),
       products,
       manufacturers
     }
   });
 };
 
+const filtersPropType = PropTypes.shape({
+  manufacturers: PropTypes.arrayOf(PropTypes.string),
+  products: PropTypes.arrayOf(PropTypes.string),
+  name: PropTypes.string
+});
+
+Data.defaultProps = {
+  filters: EMPTY_FILTERS,
+  onPageOutOfRange: null
+};
+
 Data.propTypes = {
-  /** Indicates how many items should be loaded for sake of pagination. Provided as a prop so it can be provided in mapDispatchToProps. */
-  loadedCount: PropTypes.number.isRequired,
-  /** Called after each request for designs to increase the
-   loadedCount. Is provided with the amount to increase the count
-   by as the first param.*/
-  onChangeLoadedCount: PropTypes.func.isRequired,
+  /** The (1-based) page of designs to display. */
+  page: PropTypes.number.isRequired,
+  /** Narrows the designs by manufacturer IDs, product IDs, and a case insensitive name search. */
+  filters: filtersPropType,
+  /** Called with the last valid page when the requested page is beyond the last page. */
+  onPageOutOfRange: PropTypes.func,
   /**
-   * A function that triggers the retieval of the user's designs. Provided by Redux.
+   * A function that triggers the retrieval of public designs. Provided by Redux.
    */
   onFetchDesigns: PropTypes.func.isRequired,
   /**
@@ -119,9 +172,9 @@ Data.propTypes = {
    */
   onFetchManufacturers: PropTypes.func.isRequired,
   /**
-   * The designs created by the current user. Provided by Redux.
+   * Looks up designs in the store by their IDs, preserving order. Provided by Redux.
    */
-  designs: PropTypes.arrayOf(PropTypes.instanceOf(Design)).isRequired,
+  selectDesigns: PropTypes.func.isRequired,
   /**
    * All of the products, indexed by ID. Provided by Redux.
    */
@@ -137,8 +190,8 @@ Data.propTypes = {
   children: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, props) => ({
-  designs: getRecentDesigns(state, props.loadedCount),
+const mapStateToProps = state => ({
+  selectDesigns: ids => getDesignsByIds(state, ids),
   products: getProductsWithIndex(state),
   manufacturers: getManufacturersWithIndex(state)
 });
@@ -152,22 +205,28 @@ const mapDispatchToProps = {
 const DataConnected = connect(mapStateToProps, mapDispatchToProps)(Data);
 
 /**
- * Retrieves and manages public designs with pagination
+ * Retrieves public designs one page (50 designs) at a time.
  */
-const DesignsContainer = ({ children }) => (
-  <Counter>
-    {counter => (
-      <DataConnected
-        loadedCount={counter.props.count}
-        onChangeLoadedCount={counter.actions.updateCount}
-      >
-        {data => children(data)}
-      </DataConnected>
-    )}
-  </Counter>
+const DesignsContainer = ({ page, filters, onPageOutOfRange, children }) => (
+  <DataConnected
+    page={page}
+    filters={filters}
+    onPageOutOfRange={onPageOutOfRange}
+  >
+    {data => children(data)}
+  </DataConnected>
 );
 
+DesignsContainer.defaultProps = {
+  page: 1,
+  filters: EMPTY_FILTERS,
+  onPageOutOfRange: null
+};
+
 DesignsContainer.propTypes = {
+  page: PropTypes.number,
+  filters: filtersPropType,
+  onPageOutOfRange: PropTypes.func,
   children: PropTypes.func.isRequired
 };
 
