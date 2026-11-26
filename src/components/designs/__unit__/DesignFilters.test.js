@@ -8,7 +8,9 @@ import DesignFilters, { NAME_DEBOUNCE_MS } from "../DesignFilters";
 
 const manufacturers = {
   m1: getMockManufacturer({ id: "m1", name: "Zeta Kites" }),
-  m2: getMockManufacturer({ id: "m2", name: "Alpha Kites" })
+  m2: getMockManufacturer({ id: "m2", name: "Alpha Kites" }),
+  // Has no public products, so it should never be offered as a filter.
+  m3: getMockManufacturer({ id: "m3", name: "Peter Lynn Kites" })
 };
 const products = {
   p1: getMockProduct({ id: "p1", name: "Zeta Delta", manufacturer: "m1" }),
@@ -18,6 +20,12 @@ const products = {
     id: "p4",
     name: "Hidden Zeta",
     manufacturer: "m1",
+    status: "0"
+  }),
+  p5: getMockProduct({
+    id: "p5",
+    name: "Peter Lynn Private",
+    manufacturer: "m3",
     status: "0"
   })
 };
@@ -53,7 +61,7 @@ describe("DesignFilters", () => {
     jest.useRealTimers();
   });
 
-  it("lists the manufacturers sorted by name", () => {
+  it("lists only manufacturers that have public products, sorted by name", () => {
     renderFilters();
     openDropdown("Manufacturers");
     expect(getOptionLabels()).toEqual(["Alpha Kites", "Zeta Kites"]);

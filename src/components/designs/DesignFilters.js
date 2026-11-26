@@ -51,8 +51,9 @@ const toOption = model => ({ id: model.get("id"), label: model.get("name") });
 
 /**
  * Filters for the public designs list, shown on a single line: a case insensitive name search,
- * a manufacturers drop down, and a products drop down. The products drop down is enabled once a
- * manufacturer is selected and only lists the products of the selected manufacturers.
+ * a manufacturers drop down, and a products drop down. Only manufacturers with a public product
+ * are listed. The products drop down is enabled once a manufacturer is selected and only lists
+ * the public products of the selected manufacturers.
  */
 const DesignFilters = ({ filters, manufacturers, products, onChange }) => {
   const [name, setName] = useState(filters.name);
@@ -86,7 +87,14 @@ const DesignFilters = ({ filters, manufacturers, products, onChange }) => {
     return () => window.clearTimeout(timeout);
   }, [name]);
 
+  // Only manufacturers that have a public product can ever match a public design.
+  const manufacturersWithPublicProducts = Object.values(products)
+    .filter(product => product.get("status") === Status.PUBLIC)
+    .map(product => product.get("manufacturer"));
   const manufacturerOptions = Object.values(manufacturers)
+    .filter(manufacturer =>
+      manufacturersWithPublicProducts.includes(manufacturer.get("id"))
+    )
     .sort(byName)
     .map(toOption);
   const productOptions = Object.values(products)
