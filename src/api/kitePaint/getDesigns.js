@@ -55,6 +55,19 @@ export default async function getDesigns(filter = {}, useCache = true) {
   if (filterWithDefaults.name) {
     requestData.name = filterWithDefaults.name;
   }
+  // Colors are hex strings ("#rrggbb"). colorsMatch is "any" (default) or "all", and colorsOnly
+  // limits the results to designs that use nothing but the selected colors.
+  if (
+    Array.isArray(filterWithDefaults.colors) &&
+    filterWithDefaults.colors.length
+  ) {
+    requestData.colors = filterWithDefaults.colors;
+    requestData.colorsMatch =
+      filterWithDefaults.colorsMatch === "all" ? "all" : "any";
+    if (filterWithDefaults.colorsOnly) {
+      requestData.colorsOnly = 1;
+    }
+  }
 
   // Convert the request data to query params using Qs. This is done because providing nested
   // parms to Axios's params config prop doesn't work correctly.

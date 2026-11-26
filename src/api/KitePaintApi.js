@@ -9,6 +9,7 @@ import deleteAccount from "./kitePaint/deleteAccount";
 import deleteDesign from "./kitePaint/deleteDesign";
 import getDesign from "./kitePaint/getDesign";
 import getDesigns from "./kitePaint/getDesigns";
+import getDesignColors from "./kitePaint/getDesignColors";
 import getManufacturers from "./kitePaint/getManufacturers";
 import getProducts from "./kitePaint/getProducts";
 import getUser from "./kitePaint/getUser";
@@ -251,6 +252,15 @@ export class KitePaintApi {
    */
   getDesigns(filter = {}, useCache = true) {
     return getDesigns.call(this, filter, useCache);
+  }
+
+  /**
+   * Get the colors used by public designs, optionally narrowed by manufacturer and product IDs.
+   * @param  {Object}  [filter={}] Set manufacturers (IDs) and/or products (IDs) to narrow the colors.
+   * @return {Promise} Resolves with { data: String[] } of "#rrggbb" colors.
+   */
+  getDesignColors(filter = {}) {
+    return getDesignColors.call(this, filter);
   }
 
   /**
