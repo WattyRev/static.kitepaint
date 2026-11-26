@@ -1,39 +1,40 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { Input, Label, Spacer, TextButton, Text } from "../../theme";
+import { Input, MultiSelect, TextButton } from "../../theme";
 import Product from "../../models/Product";
 import Manufacturer from "../../models/Manufacturer";
 import Status from "../../models/Status";
 
 export const NAME_DEBOUNCE_MS = 300;
 
+// Everything sits on one line from tablet width up. On phones the controls wrap onto extra lines.
 const Wrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   padding: 0 16px;
+  margin: 8px 0;
 
-  fieldset {
-    margin: 8px 0 0;
-    padding: 0;
-    border: 0;
-    min-width: 0;
+  > * {
+    flex: 1 1 100%;
+    margin: 4px 8px 4px 0;
   }
-  legend {
-    padding: 0;
-    margin: 8px 0 4px;
-    font-weight: 600;
+  > .clear {
+    flex: 0 0 auto;
+    white-space: nowrap;
   }
-  .options {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .option {
-    display: flex;
-    align-items: center;
-    margin: 0 16px 4px 0;
-    cursor: pointer;
-  }
-  .option input {
-    margin: 0 4px 0 0;
+
+  ${props => props.theme.media.mediaSm} {
+    flex-wrap: nowrap;
+
+    > .name {
+      flex: 1 1 200px;
+      min-width: 120px;
+    }
+    > .select {
+      flex: 0 0 180px;
+    }
   }
 `;
 
@@ -46,12 +47,12 @@ const byName = (a, b) => {
   return aName > bName ? 1 : 0;
 };
 
-const toggle = (list, value) =>
-  list.includes(value) ? list.filter(item => item !== value) : [...list, value];
+const toOption = model => ({ id: model.get("id"), label: model.get("name") });
 
 /**
- * Filters for the public designs list: a case insensitive name search, manufacturers, and (once
- * a manufacturer is selected) the products of the selected manufacturers.
+ * Filters for the public designs list, shown on a single line: a case insensitive name search,
+ * a manufacturers drop down, and a products drop down. The products drop down is enabled once a
+ * manufacturer is selected and only lists the products of the selected manufacturers.
  */
 const DesignFilters = ({ filters, manufacturers, products, onChange }) => {
   const [name, setName] = useState(filters.name);
@@ -85,17 +86,20 @@ const DesignFilters = ({ filters, manufacturers, products, onChange }) => {
     return () => window.clearTimeout(timeout);
   }, [name]);
 
-  const manufacturerList = Object.values(manufacturers).sort(byName);
-  const productList = Object.values(products)
+  const manufacturerOptions = Object.values(manufacturers)
+    .sort(byName)
+    .map(toOption);
+  const productOptions = Object.values(products)
     .filter(
       product =>
         product.get("status") === Status.PUBLIC &&
         filters.manufacturers.includes(product.get("manufacturer"))
     )
-    .sort(byName);
+    .sort(byName)
+    .map(toOption);
+  const hasManufacturers = filters.manufacturers.length > 0;
 
-  const toggleManufacturer = id => {
-    const newManufacturers = toggle(filters.manufacturers, id);
+  const changeManufacturers = newManufacturers => {
     // Products can only be selected for selected manufacturers.
     const newProducts = filters.products.filter(productId => {
       const product = products[productId];
@@ -108,14 +112,14 @@ const DesignFilters = ({ filters, manufacturers, products, onChange }) => {
     });
   };
 
-  const toggleProduct = id => {
-    onChange({ ...filters, products: toggle(filters.products, id) });
+  const changeProducts = newProducts => {
+    onChange({ ...filters, products: newProducts });
   };
 
   const hasFilters =
     name.trim() !== "" ||
     filters.name !== "" ||
-    filters.manufacturers.length > 0 ||
+    hasManufacturers ||
     filters.products.length > 0;
 
   const clear = () => {
@@ -126,60 +130,40 @@ const DesignFilters = ({ filters, manufacturers, products, onChange }) => {
 
   return (
     <Wrapper>
-      <Label htmlFor="design-filter-name">Search by name</Label>
       <Input
-        id="design-filter-name"
+        className="name"
+        aria-label="Search by name"
         type="search"
         value={name}
-        placeholder="Design name"
+        placeholder="Search by name"
         onChange={event => setName(event.target.value)}
       />
-      {manufacturerList.length > 0 && (
-        <fieldset>
-          <Text as="legend">Manufacturers</Text>
-          <div className="options">
-            {manufacturerList.map(manufacturer => {
-              const id = manufacturer.get("id");
-              return (
-                <label key={id} className="option">
-                  <input
-                    type="checkbox"
-                    checked={filters.manufacturers.includes(id)}
-                    onChange={() => toggleManufacturer(id)}
-                  />
-                  <Text as="span">{manufacturer.get("name")}</Text>
-                </label>
-              );
-            })}
-          </div>
-        </fieldset>
+      {manufacturerOptions.length > 0 && (
+        <MultiSelect
+          className="select"
+          aria-label="Manufacturers"
+          placeholder="Manufacturers"
+          options={manufacturerOptions}
+          value={filters.manufacturers}
+          onChange={changeManufacturers}
+        />
       )}
-      {productList.length > 0 && (
-        <fieldset>
-          <Text as="legend">Products</Text>
-          <div className="options">
-            {productList.map(product => {
-              const id = product.get("id");
-              return (
-                <label key={id} className="option">
-                  <input
-                    type="checkbox"
-                    checked={filters.products.includes(id)}
-                    onChange={() => toggleProduct(id)}
-                  />
-                  <Text as="span">{product.get("name")}</Text>
-                </label>
-              );
-            })}
-          </div>
-        </fieldset>
+      {manufacturerOptions.length > 0 && (
+        <MultiSelect
+          className="select"
+          aria-label="Products"
+          placeholder="Products"
+          title={hasManufacturers ? undefined : "Select a manufacturer first"}
+          disabled={!hasManufacturers}
+          options={productOptions}
+          value={filters.products}
+          onChange={changeProducts}
+        />
       )}
       {hasFilters && (
-        <Spacer top="sm">
-          <TextButton type="button" onClick={clear}>
-            Clear filters
-          </TextButton>
-        </Spacer>
+        <TextButton className="clear" type="button" onClick={clear}>
+          Clear filters
+        </TextButton>
       )}
     </Wrapper>
   );

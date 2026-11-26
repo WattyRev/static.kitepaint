@@ -20,6 +20,7 @@ import ModalClose from "./ModalClose";
 import ModalConfirm from "./ModalConfirm";
 import ModalPrompt from "./ModalPrompt";
 import P from "./P";
+import MultiSelect from "./MultiSelect";
 import PageLoader from "./PageLoader";
 import Select from "./Select";
 import Sidebar from "./Sidebar";
@@ -51,6 +52,7 @@ export {
   ModalClose,
   ModalConfirm,
   ModalPrompt,
+  MultiSelect,
   P,
   PageLoader,
   Select,

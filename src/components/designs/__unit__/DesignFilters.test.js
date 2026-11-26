@@ -23,19 +23,27 @@ const products = {
 };
 const emptyFilters = { manufacturers: [], products: [], name: "" };
 
+// The options are in a drop down that has to be opened first.
+const openDropdown = name =>
+  fireEvent.click(screen.getByRole("button", { name }));
+const getOptionLabels = () =>
+  screen
+    .getAllByRole("checkbox")
+    .map(checkbox => checkbox.parentElement.textContent);
+
 describe("DesignFilters", () => {
   let onChange;
-  const renderFilters = (filters = emptyFilters) =>
-    render(
-      <ThemeProvider theme={Theme}>
-        <DesignFilters
-          filters={filters}
-          manufacturers={manufacturers}
-          products={products}
-          onChange={onChange}
-        />
-      </ThemeProvider>
-    );
+  const getUi = (filters = emptyFilters) => (
+    <ThemeProvider theme={Theme}>
+      <DesignFilters
+        filters={filters}
+        manufacturers={manufacturers}
+        products={products}
+        onChange={onChange}
+      />
+    </ThemeProvider>
+  );
+  const renderFilters = (filters = emptyFilters) => render(getUi(filters));
 
   beforeEach(() => {
     jest.useFakeTimers();
@@ -47,38 +55,44 @@ describe("DesignFilters", () => {
 
   it("lists the manufacturers sorted by name", () => {
     renderFilters();
-    const labels = screen
-      .getAllByRole("checkbox")
-      .map(checkbox => checkbox.parentElement.textContent);
-    expect(labels).toEqual(["Alpha Kites", "Zeta Kites"]);
+    openDropdown("Manufacturers");
+    expect(getOptionLabels()).toEqual(["Alpha Kites", "Zeta Kites"]);
   });
-  it("does not list products until a manufacturer is selected", () => {
+  it("disables the products drop down until a manufacturer is selected", () => {
     renderFilters();
-    expect(screen.queryByText("Products")).not.toBeInTheDocument();
-    expect(screen.queryByLabelText("Zeta Delta")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Products" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Products" })).toHaveAttribute(
+      "title",
+      "Select a manufacturer first"
+    );
   });
   it("only lists public products of the selected manufacturers, sorted by name", () => {
     renderFilters({ ...emptyFilters, manufacturers: ["m1"] });
-    expect(screen.getByLabelText("Zeta Alpha")).toBeInTheDocument();
-    expect(screen.getByLabelText("Zeta Delta")).toBeInTheDocument();
-    expect(screen.queryByLabelText("Alpha Kite")).not.toBeInTheDocument();
-    expect(screen.queryByLabelText("Hidden Zeta")).not.toBeInTheDocument();
-    const productNames = screen
-      .getAllByRole("checkbox")
-      .map(checkbox => checkbox.parentElement.textContent)
-      .filter(text => text.startsWith("Zeta ") && text !== "Zeta Kites");
-    expect(productNames).toEqual(["Zeta Alpha", "Zeta Delta"]);
+    expect(screen.getByRole("button", { name: "Products" })).toBeEnabled();
+    openDropdown("Products");
+    expect(getOptionLabels()).toEqual(["Zeta Alpha", "Zeta Delta"]);
+  });
+  it("lists the products of every selected manufacturer", () => {
+    renderFilters({ ...emptyFilters, manufacturers: ["m1", "m2"] });
+    openDropdown("Products");
+    expect(getOptionLabels()).toEqual([
+      "Alpha Kite",
+      "Zeta Alpha",
+      "Zeta Delta"
+    ]);
   });
   it("selects a manufacturer", () => {
     renderFilters();
+    openDropdown("Manufacturers");
     fireEvent.click(screen.getByLabelText("Alpha Kites"));
     expect(onChange).toHaveBeenCalledWith({
       ...emptyFilters,
       manufacturers: ["m2"]
     });
   });
-  it("selects and deselects a product", () => {
+  it("selects a product", () => {
     renderFilters({ ...emptyFilters, manufacturers: ["m1"] });
+    openDropdown("Products");
     fireEvent.click(screen.getByLabelText("Zeta Delta"));
     expect(onChange).toHaveBeenLastCalledWith({
       ...emptyFilters,
@@ -86,12 +100,26 @@ describe("DesignFilters", () => {
       products: ["p1"]
     });
   });
+  it("summarizes the selection on the drop downs", () => {
+    renderFilters({
+      ...emptyFilters,
+      manufacturers: ["m1", "m2"],
+      products: ["p1"]
+    });
+    expect(
+      screen.getByRole("button", { name: "Manufacturers" })
+    ).toHaveTextContent("2 selected");
+    expect(screen.getByRole("button", { name: "Products" })).toHaveTextContent(
+      "Zeta Delta"
+    );
+  });
   it("deselects products when their manufacturer is deselected", () => {
     renderFilters({
       ...emptyFilters,
       manufacturers: ["m1", "m2"],
       products: ["p1", "p3"]
     });
+    openDropdown("Manufacturers");
     fireEvent.click(screen.getByLabelText("Zeta Kites"));
     expect(onChange).toHaveBeenCalledWith({
       ...emptyFilters,
@@ -117,16 +145,7 @@ describe("DesignFilters", () => {
   });
   it("updates the name input when the filters change externally", () => {
     const { rerender } = renderFilters();
-    rerender(
-      <ThemeProvider theme={Theme}>
-        <DesignFilters
-          filters={{ ...emptyFilters, name: "kite" }}
-          manufacturers={manufacturers}
-          products={products}
-          onChange={onChange}
-        />
-      </ThemeProvider>
-    );
+    rerender(getUi({ ...emptyFilters, name: "kite" }));
     expect(screen.getByLabelText("Search by name")).toHaveValue("kite");
     expect(onChange).not.toHaveBeenCalled();
   });
