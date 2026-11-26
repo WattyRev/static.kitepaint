@@ -33,8 +33,47 @@ describe("Designs", () => {
     expect(wrapper.find("DesignsContainer").prop("filters")).toEqual({
       manufacturers: ["m1", "m2"],
       products: ["p1"],
-      name: "blue"
+      name: "blue",
+      colors: [],
+      colorsMatch: "any",
+      colorsOnly: false
     });
+  });
+  it("passes the color filters from the query string to the container", () => {
+    const wrapper = shallow(
+      <Designs
+        location={{
+          search: "?colors=ff0000,00ff00&colorsMatch=all&colorsOnly=1"
+        }}
+      />
+    );
+    expect(wrapper.find("DesignsContainer").prop("filters")).toEqual(
+      expect.objectContaining({
+        colors: ["#ff0000", "#00ff00"],
+        colorsMatch: "all",
+        colorsOnly: true
+      })
+    );
+  });
+  it("replaces the URL when selected colors are no longer offered", () => {
+    const history = { replace: jest.fn() };
+    const wrapper = shallow(
+      <Designs
+        location={{ search: "?page=2&manufacturers=m1&colors=ff0000,00ff00" }}
+        history={history}
+      />
+    );
+    wrapper.find("DesignsContainer").prop("onColorsUnavailable")({
+      manufacturers: ["m1"],
+      products: [],
+      name: "",
+      colors: ["#ff0000"],
+      colorsMatch: "any",
+      colorsOnly: false
+    });
+    expect(history.replace).toHaveBeenCalledWith(
+      "/designs?manufacturers=m1&colors=ff0000"
+    );
   });
   it("keeps the filters when replacing an out of range page", () => {
     const history = { replace: jest.fn() };
@@ -115,6 +154,29 @@ describe("Designs", () => {
           filters: { manufacturers: ["a"], products: ["x"], name: "a&b c" }
         })
       ).toEqual("/designs?page=4&manufacturers=a&products=x&name=a%26b%20c");
+    });
+    it("writes the colors without # and only includes the modes when they are not the default", () => {
+      expect(
+        getDesignsUrl({
+          filters: { colors: ["#ff0000", "#00ff00"] }
+        })
+      ).toEqual("/designs?colors=ff0000%2C00ff00");
+      expect(
+        getDesignsUrl({
+          filters: {
+            colors: ["#ff0000"],
+            colorsMatch: "all",
+            colorsOnly: true
+          }
+        })
+      ).toEqual("/designs?colors=ff0000&colorsMatch=all&colorsOnly=1");
+    });
+    it("leaves out the color modes when no colors are selected", () => {
+      expect(
+        getDesignsUrl({
+          filters: { colors: [], colorsMatch: "all", colorsOnly: true }
+        })
+      ).toEqual("/designs");
     });
   });
 });

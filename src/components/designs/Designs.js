@@ -15,11 +15,19 @@ import DesignFilters from "./DesignFilters";
  *
  * @param {Object} [options]
  * @param {Number} [options.page=1]
- * @param {Object} [options.filters] manufacturers (IDs), products (IDs), and name
+ * @param {Object} [options.filters] manufacturers (IDs), products (IDs), name, colors ("#rrggbb"),
+ * colorsMatch ("any" or "all"), and colorsOnly
  * @return {String}
  */
 export const getDesignsUrl = ({ page = 1, filters = {} } = {}) => {
-  const { manufacturers = [], products = [], name = "" } = filters;
+  const {
+    manufacturers = [],
+    products = [],
+    name = "",
+    colors = [],
+    colorsMatch = "any",
+    colorsOnly = false
+  } = filters;
   const params = [];
   if (page > 1) {
     params.push(`page=${page}`);
@@ -32,6 +40,17 @@ export const getDesignsUrl = ({ page = 1, filters = {} } = {}) => {
   }
   if (name) {
     params.push(`name=${encodeURIComponent(name)}`);
+  }
+  // Colors are written without the leading "#".
+  if (colors.length) {
+    const hexes = colors.map(color => color.replace(/^#/, ""));
+    params.push(`colors=${encodeURIComponent(hexes.join(","))}`);
+    if (colorsMatch === "all") {
+      params.push("colorsMatch=all");
+    }
+    if (colorsOnly) {
+      params.push("colorsOnly=1");
+    }
   }
   return params.length ? `/designs?${params.join("&")}` : "/designs";
 };
@@ -56,6 +75,12 @@ const Designs = ({ location, history }) => {
               history.replace(getPageUrl(lastPage));
             }
           }}
+          onColorsUnavailable={newFilters => {
+            // Selected colors that the manufacturer and product filters no longer offer are dropped.
+            if (history) {
+              history.replace(getDesignsUrl({ filters: newFilters }));
+            }
+          }}
         >
           {designs => (
             <React.Fragment>
@@ -63,6 +88,7 @@ const Designs = ({ location, history }) => {
                 filters={filters}
                 manufacturers={designs.props.manufacturers}
                 products={designs.props.products}
+                colors={designs.props.colors}
                 onChange={newFilters => {
                   // Changing the filters always goes back to the first page.
                   if (history) {

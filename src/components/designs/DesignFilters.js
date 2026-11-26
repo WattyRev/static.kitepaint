@@ -2,13 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Input, MultiSelect, TextButton } from "../../theme";
+// Imported directly rather than from the theme index; see the note in theme/ColorSwatchSelect.js.
+import ColorSwatchSelect from "../../theme/ColorSwatchSelect";
 import Product from "../../models/Product";
 import Manufacturer from "../../models/Manufacturer";
 import Status from "../../models/Status";
 
 export const NAME_DEBOUNCE_MS = 300;
 
-// Everything sits on one line from tablet width up. On phones the controls wrap onto extra lines.
+// Controls sit on one line when there is room and wrap onto extra lines when there is not.
 const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -26,8 +28,6 @@ const Wrapper = styled.div`
   }
 
   ${props => props.theme.media.mediaSm} {
-    flex-wrap: nowrap;
-
     > .name {
       flex: 1 1 200px;
       min-width: 120px;
@@ -35,6 +35,25 @@ const Wrapper = styled.div`
     > .select {
       flex: 0 0 180px;
     }
+  }
+`;
+
+// A group of radio buttons shown inside the color picker.
+const ModeGroup = styled.div`
+  font-size: 13px;
+
+  label {
+    display: flex;
+    align-items: center;
+    padding: 2px 0;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  input {
+    margin: 0 6px 0 0;
+  }
+  & + & {
+    margin-top: 6px;
   }
 `;
 
@@ -50,12 +69,19 @@ const byName = (a, b) => {
 const toOption = model => ({ id: model.get("id"), label: model.get("name") });
 
 /**
- * Filters for the public designs list, shown on a single line: a case insensitive name search,
- * a manufacturers drop down, and a products drop down. Only manufacturers with a public product
- * are listed. The products drop down is enabled once a manufacturer is selected and only lists
- * the public products of the selected manufacturers.
+ * Filters for the public designs list: a case insensitive name search, a manufacturers drop down,
+ * a products drop down, and a color picker that holds the controls for how the colors are matched. Only
+ * manufacturers with a public product are listed. The products drop down is enabled once a
+ * manufacturer is selected and only lists the public products of the selected manufacturers.
+ * The color picker offers the colors (`colors`) that the manufacturer and product filters allow.
  */
-const DesignFilters = ({ filters, manufacturers, products, onChange }) => {
+const DesignFilters = ({
+  filters,
+  manufacturers,
+  products,
+  colors,
+  onChange
+}) => {
   const [name, setName] = useState(filters.name);
 
   // Always use the latest props inside of the debounce timer.
@@ -106,6 +132,9 @@ const DesignFilters = ({ filters, manufacturers, products, onChange }) => {
     .sort(byName)
     .map(toOption);
   const hasManufacturers = filters.manufacturers.length > 0;
+  const hasColors = filters.colors.length > 0;
+  // The color picker is shown when there are colors to pick from, or colors already picked.
+  const showColorPicker = colors.length > 0 || hasColors;
 
   const changeManufacturers = newManufacturers => {
     // Products can only be selected for selected manufacturers.
@@ -124,16 +153,36 @@ const DesignFilters = ({ filters, manufacturers, products, onChange }) => {
     onChange({ ...filters, products: newProducts });
   };
 
+  const changeColors = newColors => {
+    onChange({ ...filters, colors: newColors });
+  };
+
+  const changeColorsMatch = colorsMatch => {
+    onChange({ ...filters, colorsMatch });
+  };
+
+  const changeColorsOnly = colorsOnly => {
+    onChange({ ...filters, colorsOnly });
+  };
+
   const hasFilters =
     name.trim() !== "" ||
     filters.name !== "" ||
     hasManufacturers ||
-    filters.products.length > 0;
+    filters.products.length > 0 ||
+    hasColors;
 
   const clear = () => {
     lastEmittedName.current = "";
     setName("");
-    onChange({ manufacturers: [], products: [], name: "" });
+    onChange({
+      manufacturers: [],
+      products: [],
+      name: "",
+      colors: [],
+      colorsMatch: "any",
+      colorsOnly: false
+    });
   };
 
   return (
@@ -168,6 +217,63 @@ const DesignFilters = ({ filters, manufacturers, products, onChange }) => {
           onChange={changeProducts}
         />
       )}
+      {showColorPicker && (
+        <ColorSwatchSelect
+          className="select"
+          aria-label="Colors"
+          placeholder="Colors"
+          title={colors.length > 0 ? undefined : "No colors for these filters"}
+          disabled={colors.length === 0}
+          colors={colors}
+          value={filters.colors}
+          onChange={changeColors}
+        >
+          {hasColors && (
+            <React.Fragment>
+              <ModeGroup role="radiogroup" aria-label="Color match">
+                <label>
+                  <input
+                    type="radio"
+                    name="colorsMatch"
+                    checked={filters.colorsMatch === "any"}
+                    onChange={() => changeColorsMatch("any")}
+                  />
+                  Match any selected color
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="colorsMatch"
+                    checked={filters.colorsMatch === "all"}
+                    onChange={() => changeColorsMatch("all")}
+                  />
+                  Match all selected colors
+                </label>
+              </ModeGroup>
+              <ModeGroup role="radiogroup" aria-label="Other colors">
+                <label>
+                  <input
+                    type="radio"
+                    name="colorsOnly"
+                    checked={!filters.colorsOnly}
+                    onChange={() => changeColorsOnly(false)}
+                  />
+                  Include other colors
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="colorsOnly"
+                    checked={filters.colorsOnly}
+                    onChange={() => changeColorsOnly(true)}
+                  />
+                  Only selected colors
+                </label>
+              </ModeGroup>
+            </React.Fragment>
+          )}
+        </ColorSwatchSelect>
+      )}
       {hasFilters && (
         <TextButton className="clear" type="button" onClick={clear}>
           Clear filters
@@ -179,7 +285,8 @@ const DesignFilters = ({ filters, manufacturers, products, onChange }) => {
 
 DesignFilters.defaultProps = {
   manufacturers: {},
-  products: {}
+  products: {},
+  colors: []
 };
 
 DesignFilters.propTypes = {
@@ -187,12 +294,17 @@ DesignFilters.propTypes = {
   filters: PropTypes.shape({
     manufacturers: PropTypes.arrayOf(PropTypes.string).isRequired,
     products: PropTypes.arrayOf(PropTypes.string).isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    colors: PropTypes.arrayOf(PropTypes.string).isRequired,
+    colorsMatch: PropTypes.oneOf(["any", "all"]).isRequired,
+    colorsOnly: PropTypes.bool.isRequired
   }).isRequired,
   /** All the manufacturers, indexed by ID. */
   manufacturers: PropTypes.objectOf(PropTypes.instanceOf(Manufacturer)),
   /** All the products, indexed by ID. */
   products: PropTypes.objectOf(PropTypes.instanceOf(Product)),
+  /** The colors offered for the manufacturer and product filters, as "#rrggbb" strings. */
+  colors: PropTypes.arrayOf(PropTypes.string),
   /** Called with the complete new filters whenever a filter changes. */
   onChange: PropTypes.func.isRequired
 };

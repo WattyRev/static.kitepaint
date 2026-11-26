@@ -155,4 +155,68 @@ describe("#getDesigns", () => {
       });
     });
   });
+
+  describe("colors", () => {
+    const requestedUrl = () => Api.axiosInstance.get.mock.calls[0][0];
+
+    it("includes the colors with an any match by default", async () => {
+      expect.assertions(3);
+      await Api.getDesigns({ colors: ["#ff0000", "#00ff00"] }).catch(() => {});
+      const url = requestedUrl();
+      expect(url).toEqual(expect.stringContaining("colors%5B0%5D=%23ff0000"));
+      expect(url).toEqual(expect.stringContaining("colors%5B1%5D=%2300ff00"));
+      expect(url).toEqual(expect.stringContaining("colorsMatch=any"));
+    });
+
+    it("sends an all match when requested", async () => {
+      expect.assertions(1);
+      await Api.getDesigns({
+        colors: ["#ff0000"],
+        colorsMatch: "all"
+      }).catch(() => {});
+      expect(requestedUrl()).toEqual(
+        expect.stringContaining("colorsMatch=all")
+      );
+    });
+
+    it("falls back to any for an unknown match mode", async () => {
+      expect.assertions(1);
+      await Api.getDesigns({
+        colors: ["#ff0000"],
+        colorsMatch: "some"
+      }).catch(() => {});
+      expect(requestedUrl()).toEqual(
+        expect.stringContaining("colorsMatch=any")
+      );
+    });
+
+    it("sends colorsOnly only when it is set", async () => {
+      expect.assertions(2);
+      await Api.getDesigns({
+        colors: ["#ff0000"],
+        colorsOnly: true
+      }).catch(() => {});
+      expect(requestedUrl()).toEqual(expect.stringContaining("colorsOnly=1"));
+      await Api.getDesigns({
+        colors: ["#ff0000"],
+        colorsOnly: false
+      }).catch(() => {});
+      expect(Api.axiosInstance.get.mock.calls[1][0]).toEqual(
+        expect.not.stringContaining("colorsOnly")
+      );
+    });
+
+    it("excludes the color params when no colors are selected", async () => {
+      expect.assertions(3);
+      await Api.getDesigns({
+        colors: [],
+        colorsMatch: "all",
+        colorsOnly: true
+      }).catch(() => {});
+      const url = requestedUrl();
+      expect(url).toEqual(expect.not.stringContaining("colors"));
+      expect(url).toEqual(expect.not.stringContaining("colorsMatch"));
+      expect(url).toEqual(expect.not.stringContaining("colorsOnly"));
+    });
+  });
 });

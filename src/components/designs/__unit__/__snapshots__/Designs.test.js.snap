@@ -19,11 +19,15 @@ exports[`Designs renders 1`] = `
   <DesignsContainer
     filters={
       Object {
+        "colors": Array [],
+        "colorsMatch": "any",
+        "colorsOnly": false,
         "manufacturers": Array [],
         "name": "",
         "products": Array [],
       }
     }
+    onColorsUnavailable={[Function]}
     onPageOutOfRange={[Function]}
     page={1}
   >

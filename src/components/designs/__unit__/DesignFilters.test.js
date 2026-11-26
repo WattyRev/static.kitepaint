@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent, act } from "@testing-library/react";
+import { render, screen, fireEvent, act, within } from "@testing-library/react";
 import { ThemeProvider } from "styled-components";
 import Theme from "../../../theme";
 import { getMockProduct } from "../../../models/Product";
@@ -29,7 +29,15 @@ const products = {
     status: "0"
   })
 };
-const emptyFilters = { manufacturers: [], products: [], name: "" };
+const emptyFilters = {
+  manufacturers: [],
+  products: [],
+  name: "",
+  colors: [],
+  colorsMatch: "any",
+  colorsOnly: false
+};
+const offeredColors = ["#00ff00", "#ff0000", "#ffffff"];
 
 // The options are in a drop down that has to be opened first.
 const openDropdown = name =>
@@ -146,6 +154,7 @@ describe("DesignFilters", () => {
     });
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange).toHaveBeenCalledWith({
+      ...emptyFilters,
       manufacturers: ["m2"],
       products: [],
       name: "blue"
@@ -163,6 +172,7 @@ describe("DesignFilters", () => {
   });
   it("clears all the filters", () => {
     renderFilters({
+      ...emptyFilters,
       manufacturers: ["m1"],
       products: ["p1"],
       name: "kite"
@@ -170,5 +180,204 @@ describe("DesignFilters", () => {
     fireEvent.click(screen.getByText("Clear filters"));
     expect(onChange).toHaveBeenCalledWith(emptyFilters);
     expect(screen.getByLabelText("Search by name")).toHaveValue("");
+  });
+
+  describe("colors", () => {
+    const openColors = () =>
+      fireEvent.click(screen.getByRole("button", { name: "Colors" }));
+    const getSwatchLabels = () =>
+      within(screen.getByRole("group", { name: "Colors" }))
+        .getAllByRole("button")
+        .map(button => button.getAttribute("aria-label"));
+
+    it("hides the color picker when no colors are offered or selected", () => {
+      renderFilters();
+      expect(
+        screen.queryByRole("button", { name: "Colors" })
+      ).not.toBeInTheDocument();
+    });
+
+    it("offers the colors that are provided", () => {
+      render(
+        <ThemeProvider theme={Theme}>
+          <DesignFilters
+            filters={emptyFilters}
+            manufacturers={manufacturers}
+            products={products}
+            colors={offeredColors}
+            onChange={onChange}
+          />
+        </ThemeProvider>
+      );
+      openColors();
+      // Neutrals first, then colors by hue.
+      expect(getSwatchLabels()).toEqual(["#ffffff", "#ff0000", "#00ff00"]);
+    });
+
+    it("selects a color", () => {
+      render(
+        <ThemeProvider theme={Theme}>
+          <DesignFilters
+            filters={emptyFilters}
+            manufacturers={manufacturers}
+            products={products}
+            colors={offeredColors}
+            onChange={onChange}
+          />
+        </ThemeProvider>
+      );
+      openColors();
+      fireEvent.click(screen.getByRole("button", { name: "#ff0000" }));
+      expect(onChange).toHaveBeenCalledWith({
+        ...emptyFilters,
+        colors: ["#ff0000"]
+      });
+    });
+
+    it("deselects a color that is already selected", () => {
+      render(
+        <ThemeProvider theme={Theme}>
+          <DesignFilters
+            filters={{ ...emptyFilters, colors: ["#ff0000", "#00ff00"] }}
+            manufacturers={manufacturers}
+            products={products}
+            colors={offeredColors}
+            onChange={onChange}
+          />
+        </ThemeProvider>
+      );
+      openColors();
+      fireEvent.click(screen.getByRole("button", { name: "#ff0000" }));
+      expect(onChange).toHaveBeenCalledWith({
+        ...emptyFilters,
+        colors: ["#00ff00"]
+      });
+    });
+
+    const renderWithColors = filters =>
+      render(
+        <ThemeProvider theme={Theme}>
+          <DesignFilters
+            filters={filters}
+            manufacturers={manufacturers}
+            products={products}
+            colors={offeredColors}
+            onChange={onChange}
+          />
+        </ThemeProvider>
+      );
+
+    it("keeps the match and inclusion controls out of the filter row", () => {
+      renderWithColors({ ...emptyFilters, colors: ["#ff0000"] });
+      // They are only in the color dropdown, which is closed.
+      expect(screen.queryByRole("radiogroup")).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole("combobox", { name: "Color match" })
+      ).toBeNull();
+      expect(
+        screen.queryByRole("combobox", { name: "Other colors" })
+      ).toBeNull();
+    });
+
+    it("shows the match and inclusion controls in the dropdown only once colors are selected", () => {
+      const { unmount } = renderWithColors(emptyFilters);
+      openColors();
+      expect(screen.queryByRole("radiogroup")).not.toBeInTheDocument();
+      unmount();
+
+      renderWithColors({ ...emptyFilters, colors: ["#ff0000"] });
+      openColors();
+      const panel = screen.getByRole("group", { name: "Colors" });
+      const match = within(panel).getByRole("radiogroup", {
+        name: "Color match"
+      });
+      const only = within(panel).getByRole("radiogroup", {
+        name: "Other colors"
+      });
+      expect(
+        within(match).getByLabelText("Match any selected color")
+      ).toBeChecked();
+      expect(
+        within(match).getByLabelText("Match all selected colors")
+      ).not.toBeChecked();
+      expect(within(only).getByLabelText("Include other colors")).toBeChecked();
+      expect(
+        within(only).getByLabelText("Only selected colors")
+      ).not.toBeChecked();
+    });
+
+    it("reflects the current match and inclusion modes", () => {
+      renderWithColors({
+        ...emptyFilters,
+        colors: ["#ff0000"],
+        colorsMatch: "all",
+        colorsOnly: true
+      });
+      openColors();
+      expect(screen.getByLabelText("Match all selected colors")).toBeChecked();
+      expect(screen.getByLabelText("Only selected colors")).toBeChecked();
+    });
+
+    it("changes how the colors are matched", () => {
+      renderWithColors({ ...emptyFilters, colors: ["#ff0000"] });
+      openColors();
+      fireEvent.click(screen.getByLabelText("Match all selected colors"));
+      expect(onChange).toHaveBeenCalledWith({
+        ...emptyFilters,
+        colors: ["#ff0000"],
+        colorsMatch: "all"
+      });
+    });
+
+    it("changes the match back to any", () => {
+      renderWithColors({
+        ...emptyFilters,
+        colors: ["#ff0000"],
+        colorsMatch: "all"
+      });
+      openColors();
+      fireEvent.click(screen.getByLabelText("Match any selected color"));
+      expect(onChange).toHaveBeenCalledWith({
+        ...emptyFilters,
+        colors: ["#ff0000"],
+        colorsMatch: "any"
+      });
+    });
+
+    it("keeps the dropdown open while the modes change", () => {
+      renderWithColors({ ...emptyFilters, colors: ["#ff0000"] });
+      openColors();
+      fireEvent.click(screen.getByLabelText("Only selected colors"));
+      expect(screen.getByRole("group", { name: "Colors" })).toBeInTheDocument();
+    });
+
+    it("changes whether other colors are included", () => {
+      renderWithColors({ ...emptyFilters, colors: ["#ff0000"] });
+      openColors();
+      fireEvent.click(screen.getByLabelText("Only selected colors"));
+      expect(onChange).toHaveBeenCalledWith({
+        ...emptyFilters,
+        colors: ["#ff0000"],
+        colorsOnly: true
+      });
+    });
+
+    it("clears the selected colors and modes with the other filters", () => {
+      renderFilters({
+        ...emptyFilters,
+        colors: ["#ff0000"],
+        colorsMatch: "all",
+        colorsOnly: true
+      });
+      fireEvent.click(screen.getByText("Clear filters"));
+      expect(onChange).toHaveBeenCalledWith(emptyFilters);
+    });
+
+    it("disables the picker and explains why when the selection has no offered colors", () => {
+      renderFilters({ ...emptyFilters, colors: ["#ff0000"] });
+      const picker = screen.getByRole("button", { name: "Colors" });
+      expect(picker).toBeDisabled();
+      expect(picker).toHaveAttribute("title", "No colors for these filters");
+    });
   });
 });

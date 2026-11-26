@@ -109,6 +109,17 @@ export const GET_DESIGNS = createAsyncAction(
 );
 
 /**
+ * Retrieves the colors used by public designs, narrowed by the manufacturer and product filters.
+ * @param {Object} [filters={}] manufacturers (IDs) and/or products (IDs)
+ */
+export const GET_DESIGN_COLORS = createAsyncAction(
+  "GET_DESIGN_COLORS",
+  filters => {
+    return KitePaintApi.getDesignColors(filters);
+  }
+);
+
+/**
  * Retrieves a design with the given ID.
  * @param {String} id
  */
