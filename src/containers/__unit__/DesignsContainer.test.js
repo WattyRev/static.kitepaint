@@ -3,6 +3,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import DesignsContainer, {
   Data,
   PAGE_SIZE,
+  getFiltersFromSearch,
   getPageFromSearch
 } from "../DesignsContainer";
 
@@ -54,6 +55,30 @@ describe("DesignsContainer", () => {
       expect(getPageFromSearch("?page=")).toEqual(1);
     });
   });
+  describe("getFiltersFromSearch", () => {
+    it("defaults to empty filters", () => {
+      const empty = { manufacturers: [], products: [], name: "" };
+      expect(getFiltersFromSearch()).toEqual(empty);
+      expect(getFiltersFromSearch("")).toEqual(empty);
+      expect(getFiltersFromSearch("?page=2")).toEqual(empty);
+    });
+    it("reads the filters from the query string", () => {
+      expect(
+        getFiltersFromSearch(
+          "?page=2&manufacturers=m1,m2&products=p1&name=blue+kite"
+        )
+      ).toEqual({
+        manufacturers: ["m1", "m2"],
+        products: ["p1"],
+        name: "blue kite"
+      });
+    });
+    it("ignores empty list items and trims the name", () => {
+      expect(
+        getFiltersFromSearch("?manufacturers=,m1,&products=&name=%20kite%20")
+      ).toEqual({ manufacturers: ["m1"], products: [], name: "kite" });
+    });
+  });
   describe("Data", () => {
     let defaultProps;
     let renderChildren;
@@ -103,9 +128,69 @@ describe("DesignsContainer", () => {
         expect(defaultProps.onFetchDesigns).toHaveBeenCalled()
       );
       expect(defaultProps.onFetchDesigns).toHaveBeenCalledWith(
-        { limit: `0, ${PAGE_SIZE}`, publicOnly: true, includeTotal: true },
+        {
+          limit: `0, ${PAGE_SIZE}`,
+          publicOnly: true,
+          includeTotal: true,
+          manufacturers: [],
+          products: [],
+          name: ""
+        },
         false
       );
+    });
+    it("passes the filters to the request", async () => {
+      renderData({
+        filters: { manufacturers: ["m1"], products: ["p1", "p2"], name: "blue" }
+      });
+      await waitFor(() =>
+        expect(defaultProps.onFetchDesigns).toHaveBeenCalled()
+      );
+      expect(defaultProps.onFetchDesigns.mock.calls[0][0]).toEqual(
+        expect.objectContaining({
+          manufacturers: ["m1"],
+          products: ["p1", "p2"],
+          name: "blue"
+        })
+      );
+    });
+    it("refetches when the filters change", async () => {
+      const { rerender } = renderData();
+      await waitFor(() =>
+        expect(screen.getByTestId("target")).toHaveTextContent("1/3/false")
+      );
+      rerender(
+        <Data
+          {...defaultProps}
+          filters={{ manufacturers: [], products: [], name: "kite" }}
+        >
+          {data => renderChildren(data)}
+        </Data>
+      );
+      await waitFor(() =>
+        expect(defaultProps.onFetchDesigns).toHaveBeenCalledTimes(2)
+      );
+      expect(defaultProps.onFetchDesigns.mock.calls[1][0].name).toEqual("kite");
+    });
+    it("does not refetch when equal filters are provided as a new object", async () => {
+      const { rerender } = renderData({
+        filters: { manufacturers: ["m1"], products: [], name: "" }
+      });
+      await waitFor(() =>
+        expect(screen.getByTestId("target")).toHaveTextContent("1/3/false")
+      );
+      rerender(
+        <Data
+          {...defaultProps}
+          filters={{ manufacturers: ["m1"], products: [], name: "" }}
+        >
+          {data => renderChildren(data)}
+        </Data>
+      );
+      await waitFor(() =>
+        expect(screen.getByTestId("target")).toHaveTextContent("1/3/false")
+      );
+      expect(defaultProps.onFetchDesigns).toHaveBeenCalledTimes(1);
     });
     it("fetches the correct offset for later pages", async () => {
       renderData({ page: 3 });

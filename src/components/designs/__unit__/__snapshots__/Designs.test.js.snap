@@ -17,6 +17,13 @@ exports[`Designs renders 1`] = `
     Designs that were made by other KitePaint users and are set to public.
   </P>
   <DesignsContainer
+    filters={
+      Object {
+        "manufacturers": Array [],
+        "name": "",
+        "products": Array [],
+      }
+    }
     onPageOutOfRange={[Function]}
     page={1}
   >

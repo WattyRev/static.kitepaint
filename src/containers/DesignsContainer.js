@@ -23,8 +23,38 @@ export const getPageFromSearch = (search = "") => {
   return Number.isInteger(page) && page > 0 ? page : 1;
 };
 
+export const EMPTY_FILTERS = Object.freeze({
+  manufacturers: [],
+  products: [],
+  name: ""
+});
+
+const splitList = value =>
+  (value || "")
+    .split(",")
+    .map(item => item.trim())
+    .filter(item => item.length > 0);
+
+/**
+ * Reads the design filters from a location search string
+ * (e.g. "?manufacturers=a,b&products=x&name=blue").
+ * Missing values result in empty filters.
+ *
+ * @param {String} [search=""]
+ * @return {{ manufacturers: String[], products: String[], name: String }}
+ */
+export const getFiltersFromSearch = (search = "") => {
+  const params = new window.URLSearchParams(search || "");
+  return {
+    manufacturers: splitList(params.get("manufacturers")),
+    products: splitList(params.get("products")),
+    name: (params.get("name") || "").trim()
+  };
+};
+
 export const Data = ({
   page,
+  filters,
   onPageOutOfRange,
   onFetchDesigns,
   onFetchProducts,
@@ -44,7 +74,14 @@ export const Data = ({
     Promise.all([onFetchProducts(), onFetchManufacturers()]).catch(() => {});
   }, []);
 
-  // Fetch the requested page of designs whenever the page changes.
+  // Compare filters by value so that a new (but equal) filters object does not trigger a refetch.
+  const filtersKey = JSON.stringify([
+    filters.manufacturers,
+    filters.products,
+    filters.name
+  ]);
+
+  // Fetch the requested page of designs whenever the page or filters change.
   useEffect(() => {
     let isCancelled = false;
 
@@ -62,7 +99,10 @@ export const Data = ({
           {
             limit: `${(page - 1) * PAGE_SIZE}, ${PAGE_SIZE}`,
             publicOnly: true,
-            includeTotal: true
+            includeTotal: true,
+            manufacturers: filters.manufacturers,
+            products: filters.products,
+            name: filters.name
           },
           false // dont cache this request
         );
@@ -87,7 +127,7 @@ export const Data = ({
     return () => {
       isCancelled = true;
     };
-  }, [page]);
+  }, [page, filtersKey]);
 
   return children({
     props: {
@@ -101,13 +141,22 @@ export const Data = ({
   });
 };
 
+const filtersPropType = PropTypes.shape({
+  manufacturers: PropTypes.arrayOf(PropTypes.string),
+  products: PropTypes.arrayOf(PropTypes.string),
+  name: PropTypes.string
+});
+
 Data.defaultProps = {
+  filters: EMPTY_FILTERS,
   onPageOutOfRange: null
 };
 
 Data.propTypes = {
   /** The (1-based) page of designs to display. */
   page: PropTypes.number.isRequired,
+  /** Narrows the designs by manufacturer IDs, product IDs, and a case insensitive name search. */
+  filters: filtersPropType,
   /** Called with the last valid page when the requested page is beyond the last page. */
   onPageOutOfRange: PropTypes.func,
   /**
@@ -158,19 +207,25 @@ const DataConnected = connect(mapStateToProps, mapDispatchToProps)(Data);
 /**
  * Retrieves public designs one page (50 designs) at a time.
  */
-const DesignsContainer = ({ page, onPageOutOfRange, children }) => (
-  <DataConnected page={page} onPageOutOfRange={onPageOutOfRange}>
+const DesignsContainer = ({ page, filters, onPageOutOfRange, children }) => (
+  <DataConnected
+    page={page}
+    filters={filters}
+    onPageOutOfRange={onPageOutOfRange}
+  >
     {data => children(data)}
   </DataConnected>
 );
 
 DesignsContainer.defaultProps = {
   page: 1,
+  filters: EMPTY_FILTERS,
   onPageOutOfRange: null
 };
 
 DesignsContainer.propTypes = {
   page: PropTypes.number,
+  filters: filtersPropType,
   onPageOutOfRange: PropTypes.func,
   children: PropTypes.func.isRequired
 };

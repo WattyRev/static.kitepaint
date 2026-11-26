@@ -61,6 +61,32 @@ describe("#getDesigns", () => {
       expect.not.stringContaining("includeTotal")
     );
   });
+  it("includes the manufacturers, products and name filters if provided", async () => {
+    expect.assertions(3);
+    await Api.getDesigns({
+      manufacturers: ["m1", "m2"],
+      products: ["p1"],
+      name: "blue kite"
+    }).catch(() => {});
+    const url = Api.axiosInstance.get.mock.calls[0][0];
+    expect(url).toEqual(
+      expect.stringContaining("manufacturers%5B0%5D=m1&manufacturers%5B1%5D=m2")
+    );
+    expect(url).toEqual(expect.stringContaining("products%5B0%5D=p1"));
+    expect(url).toEqual(expect.stringContaining("name=blue%20kite"));
+  });
+  it("excludes empty manufacturers, products and name filters", async () => {
+    expect.assertions(3);
+    await Api.getDesigns({
+      manufacturers: [],
+      products: [],
+      name: ""
+    }).catch(() => {});
+    const url = Api.axiosInstance.get.mock.calls[0][0];
+    expect(url).toEqual(expect.not.stringContaining("manufacturers"));
+    expect(url).toEqual(expect.not.stringContaining("products"));
+    expect(url).toEqual(expect.not.stringContaining("name"));
+  });
   it("resolves with the designs and total when the response includes a total", async () => {
     expect.assertions(3);
     Api.axiosInstance.get.mockResolvedValue({

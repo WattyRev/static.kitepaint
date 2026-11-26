@@ -6,7 +6,8 @@ import { error } from "../../theme/Alert";
  * Get saved designs.
  * @param  {Object}  [filter={}] A list of filters. See filterDefaults as an example. Set
  * includeTotal to true to have the total number of matching designs (ignoring limit) provided as
- * `total` on the response.
+ * `total` on the response. Set manufacturers (array of IDs), products (array of IDs) and/or name
+ * (case insensitive "contains" search) to narrow the designs that are returned.
  * @param {Boolean} [useCache=true] If true, the request will be cached, and subsequent duplicate
  * requests will not be made within 10 minutes.
  * @return {Promise}
@@ -38,6 +39,21 @@ export default async function getDesigns(filter = {}, useCache = true) {
   }
   if (filterWithDefaults.includeTotal) {
     requestData.includeTotal = 1;
+  }
+  if (
+    Array.isArray(filterWithDefaults.manufacturers) &&
+    filterWithDefaults.manufacturers.length
+  ) {
+    requestData.manufacturers = filterWithDefaults.manufacturers;
+  }
+  if (
+    Array.isArray(filterWithDefaults.products) &&
+    filterWithDefaults.products.length
+  ) {
+    requestData.products = filterWithDefaults.products;
+  }
+  if (filterWithDefaults.name) {
+    requestData.name = filterWithDefaults.name;
   }
 
   // Convert the request data to query params using Qs. This is done because providing nested

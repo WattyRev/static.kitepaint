@@ -1,61 +1,111 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DesignsContainer, {
-  getPageFromSearch
+  getPageFromSearch,
+  getFiltersFromSearch
 } from "../../containers/DesignsContainer";
 import { Loading, Spacer, H1, P } from "../../theme";
 import RecentDesigns from "../RecentDesigns";
 import Pagination from "../Pagination";
+import DesignFilters from "./DesignFilters";
 
-const getPageUrl = page => `/designs?page=${page}`;
+/**
+ * Builds the URL for a page of designs with the provided filters. Empty filters and the first
+ * page are left out of the URL.
+ *
+ * @param {Object} [options]
+ * @param {Number} [options.page=1]
+ * @param {Object} [options.filters] manufacturers (IDs), products (IDs), and name
+ * @return {String}
+ */
+export const getDesignsUrl = ({ page = 1, filters = {} } = {}) => {
+  const { manufacturers = [], products = [], name = "" } = filters;
+  const params = [];
+  if (page > 1) {
+    params.push(`page=${page}`);
+  }
+  if (manufacturers.length) {
+    params.push(`manufacturers=${encodeURIComponent(manufacturers.join(","))}`);
+  }
+  if (products.length) {
+    params.push(`products=${encodeURIComponent(products.join(","))}`);
+  }
+  if (name) {
+    params.push(`name=${encodeURIComponent(name)}`);
+  }
+  return params.length ? `/designs?${params.join("&")}` : "/designs";
+};
 
-const Designs = ({ location, history }) => (
-  <Spacer top="md" right="md" left="md" bottom="md">
-    <React.Fragment>
-      <H1>Public Designs</H1>
-      <Spacer bottom="md" />
-      <P>
-        Designs that were made by other KitePaint users and are set to public.
-      </P>
-      <DesignsContainer
-        page={getPageFromSearch(location && location.search)}
-        onPageOutOfRange={lastPage => {
-          if (history) {
-            history.replace(getPageUrl(lastPage));
-          }
-        }}
-      >
-        {designs => (
-          <React.Fragment>
-            {designs.props.isLoading && (
-              <Spacer top="md" bottom="md">
-                <Loading />
-              </Spacer>
-            )}
-            <RecentDesigns
-              designs={designs.props.designs}
-              products={designs.props.products}
-              manufacturers={designs.props.manufacturers}
-            />
-            <Pagination
-              page={designs.props.page}
-              totalPages={designs.props.totalPages}
-              getPageUrl={getPageUrl}
-            />
-          </React.Fragment>
-        )}
-      </DesignsContainer>
-    </React.Fragment>
-  </Spacer>
-);
+const Designs = ({ location, history }) => {
+  const search = location && location.search;
+  const filters = getFiltersFromSearch(search);
+  const getPageUrl = page => getDesignsUrl({ page, filters });
+  return (
+    <Spacer top="md" right="md" left="md" bottom="md">
+      <React.Fragment>
+        <H1>Public Designs</H1>
+        <Spacer bottom="md" />
+        <P>
+          Designs that were made by other KitePaint users and are set to public.
+        </P>
+        <DesignsContainer
+          page={getPageFromSearch(search)}
+          filters={filters}
+          onPageOutOfRange={lastPage => {
+            if (history) {
+              history.replace(getPageUrl(lastPage));
+            }
+          }}
+        >
+          {designs => (
+            <React.Fragment>
+              <DesignFilters
+                filters={filters}
+                manufacturers={designs.props.manufacturers}
+                products={designs.props.products}
+                onChange={newFilters => {
+                  // Changing the filters always goes back to the first page.
+                  if (history) {
+                    history.push(getDesignsUrl({ filters: newFilters }));
+                  }
+                }}
+              />
+              {designs.props.isLoading && (
+                <Spacer top="md" bottom="md">
+                  <Loading />
+                </Spacer>
+              )}
+              {!designs.props.isLoading && designs.props.designs.length === 0 && (
+                <Spacer top="md" bottom="md" left="md" right="md">
+                  <P>No designs match your filters.</P>
+                </Spacer>
+              )}
+              <RecentDesigns
+                designs={designs.props.designs}
+                products={designs.props.products}
+                manufacturers={designs.props.manufacturers}
+              />
+              <Pagination
+                page={designs.props.page}
+                totalPages={designs.props.totalPages}
+                getPageUrl={getPageUrl}
+              />
+            </React.Fragment>
+          )}
+        </DesignsContainer>
+      </React.Fragment>
+    </Spacer>
+  );
+};
 
 Designs.propTypes = {
-  /** Provided by React Router. Used to read the current page from the query string. */
+  /** Provided by React Router. Used to read the current page and filters from the query string. */
   location: PropTypes.shape({
     search: PropTypes.string
   }),
-  /** Provided by React Router. Used to correct out-of-range pages. */
+  /** Provided by React Router. Used to update the filters and correct out-of-range pages. */
   history: PropTypes.shape({
+    push: PropTypes.func,
     replace: PropTypes.func
   })
 };
