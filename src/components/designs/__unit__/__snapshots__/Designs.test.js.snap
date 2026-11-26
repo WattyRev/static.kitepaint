@@ -16,7 +16,10 @@ exports[`Designs renders 1`] = `
   <P>
     Designs that were made by other KitePaint users and are set to public.
   </P>
-  <DesignsContainer>
+  <DesignsContainer
+    onPageOutOfRange={[Function]}
+    page={1}
+  >
     <Component />
   </DesignsContainer>
 </Spacer>

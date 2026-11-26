@@ -45,6 +45,40 @@ describe("#getDesigns", () => {
       expect.not.stringContaining("limit")
     );
   });
+  it("includes includeTotal in the request if provided", async () => {
+    expect.assertions(1);
+    await Api.getDesigns({
+      includeTotal: true
+    }).catch(() => {});
+    expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual(
+      expect.stringContaining("includeTotal=1")
+    );
+  });
+  it("does not include includeTotal by default", async () => {
+    expect.assertions(1);
+    await Api.getDesigns().catch(() => {});
+    expect(Api.axiosInstance.get.mock.calls[0][0]).toEqual(
+      expect.not.stringContaining("includeTotal")
+    );
+  });
+  it("resolves with the designs and total when the response includes a total", async () => {
+    expect.assertions(3);
+    Api.axiosInstance.get.mockResolvedValue({
+      data: {
+        data: [
+          {
+            id: "123",
+            variations: "[]"
+          }
+        ],
+        total: 120
+      }
+    });
+    const response = await Api.getDesigns({ includeTotal: true });
+    expect(response.total).toEqual(120);
+    expect(response.data).toHaveLength(1);
+    expect(response.data[0].get("id")).toEqual("123");
+  });
   it("does not make identical requests when they have been cached", async () => {
     expect.assertions(1);
     await Api.getDesigns().catch(() => {});

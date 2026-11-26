@@ -4,7 +4,9 @@ import { error } from "../../theme/Alert";
 
 /**
  * Get saved designs.
- * @param  {Object}  [filter={}] A list of filters. See filterDefaults as an example.
+ * @param  {Object}  [filter={}] A list of filters. See filterDefaults as an example. Set
+ * includeTotal to true to have the total number of matching designs (ignoring limit) provided as
+ * `total` on the response.
  * @param {Boolean} [useCache=true] If true, the request will be cached, and subsequent duplicate
  * requests will not be made within 10 minutes.
  * @return {Promise}
@@ -34,6 +36,9 @@ export default async function getDesigns(filter = {}, useCache = true) {
   if (filterWithDefaults.userId) {
     requestData.filter.user = filterWithDefaults.userId;
   }
+  if (filterWithDefaults.includeTotal) {
+    requestData.includeTotal = 1;
+  }
 
   // Convert the request data to query params using Qs. This is done because providing nested
   // parms to Axios's params config prop doesn't work correctly.
@@ -61,7 +66,14 @@ export default async function getDesigns(filter = {}, useCache = true) {
     return new Promise((resolve, reject) => reject(message));
   }
 
-  response.data = response.data.map(design => {
+  // When includeTotal is requested, the API responds with { data, total } instead of an array.
+  let designs = response.data;
+  if (!Array.isArray(designs) && Array.isArray(designs.data)) {
+    response.total = Number(designs.total) || 0;
+    designs = designs.data;
+  }
+
+  response.data = designs.map(design => {
     design.variations = JSON.parse(design.variations);
     return new Design(design);
   });
