@@ -210,7 +210,8 @@ describe("DesignFilters", () => {
         </ThemeProvider>
       );
       openColors();
-      expect(getSwatchLabels()).toEqual(offeredColors);
+      // Neutrals first, then colors by hue.
+      expect(getSwatchLabels()).toEqual(["#ffffff", "#ff0000", "#00ff00"]);
     });
 
     it("selects a color", () => {
@@ -253,40 +254,11 @@ describe("DesignFilters", () => {
       });
     });
 
-    it("shows the match and inclusion controls only once colors are selected", () => {
-      const { rerender } = render(
-        <ThemeProvider theme={Theme}>
-          <DesignFilters
-            filters={emptyFilters}
-            manufacturers={manufacturers}
-            products={products}
-            colors={offeredColors}
-            onChange={onChange}
-          />
-        </ThemeProvider>
-      );
-      expect(screen.queryByLabelText("Color match")).not.toBeInTheDocument();
-      expect(screen.queryByLabelText("Other colors")).not.toBeInTheDocument();
-      rerender(
-        <ThemeProvider theme={Theme}>
-          <DesignFilters
-            filters={{ ...emptyFilters, colors: ["#ff0000"] }}
-            manufacturers={manufacturers}
-            products={products}
-            colors={offeredColors}
-            onChange={onChange}
-          />
-        </ThemeProvider>
-      );
-      expect(screen.getByLabelText("Color match")).toHaveValue("any");
-      expect(screen.getByLabelText("Other colors")).toHaveValue("include");
-    });
-
-    it("changes how the colors are matched", () => {
+    const renderWithColors = filters =>
       render(
         <ThemeProvider theme={Theme}>
           <DesignFilters
-            filters={{ ...emptyFilters, colors: ["#ff0000"] }}
+            filters={filters}
             manufacturers={manufacturers}
             products={products}
             colors={offeredColors}
@@ -294,9 +266,62 @@ describe("DesignFilters", () => {
           />
         </ThemeProvider>
       );
-      fireEvent.change(screen.getByLabelText("Color match"), {
-        target: { value: "all" }
+
+    it("keeps the match and inclusion controls out of the filter row", () => {
+      renderWithColors({ ...emptyFilters, colors: ["#ff0000"] });
+      // They are only in the color dropdown, which is closed.
+      expect(screen.queryByRole("radiogroup")).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole("combobox", { name: "Color match" })
+      ).toBeNull();
+      expect(
+        screen.queryByRole("combobox", { name: "Other colors" })
+      ).toBeNull();
+    });
+
+    it("shows the match and inclusion controls in the dropdown only once colors are selected", () => {
+      const { unmount } = renderWithColors(emptyFilters);
+      openColors();
+      expect(screen.queryByRole("radiogroup")).not.toBeInTheDocument();
+      unmount();
+
+      renderWithColors({ ...emptyFilters, colors: ["#ff0000"] });
+      openColors();
+      const panel = screen.getByRole("group", { name: "Colors" });
+      const match = within(panel).getByRole("radiogroup", {
+        name: "Color match"
       });
+      const only = within(panel).getByRole("radiogroup", {
+        name: "Other colors"
+      });
+      expect(
+        within(match).getByLabelText("Match any selected color")
+      ).toBeChecked();
+      expect(
+        within(match).getByLabelText("Match all selected colors")
+      ).not.toBeChecked();
+      expect(within(only).getByLabelText("Include other colors")).toBeChecked();
+      expect(
+        within(only).getByLabelText("Only selected colors")
+      ).not.toBeChecked();
+    });
+
+    it("reflects the current match and inclusion modes", () => {
+      renderWithColors({
+        ...emptyFilters,
+        colors: ["#ff0000"],
+        colorsMatch: "all",
+        colorsOnly: true
+      });
+      openColors();
+      expect(screen.getByLabelText("Match all selected colors")).toBeChecked();
+      expect(screen.getByLabelText("Only selected colors")).toBeChecked();
+    });
+
+    it("changes how the colors are matched", () => {
+      renderWithColors({ ...emptyFilters, colors: ["#ff0000"] });
+      openColors();
+      fireEvent.click(screen.getByLabelText("Match all selected colors"));
       expect(onChange).toHaveBeenCalledWith({
         ...emptyFilters,
         colors: ["#ff0000"],
@@ -304,21 +329,32 @@ describe("DesignFilters", () => {
       });
     });
 
-    it("changes whether other colors are included", () => {
-      render(
-        <ThemeProvider theme={Theme}>
-          <DesignFilters
-            filters={{ ...emptyFilters, colors: ["#ff0000"] }}
-            manufacturers={manufacturers}
-            products={products}
-            colors={offeredColors}
-            onChange={onChange}
-          />
-        </ThemeProvider>
-      );
-      fireEvent.change(screen.getByLabelText("Other colors"), {
-        target: { value: "only" }
+    it("changes the match back to any", () => {
+      renderWithColors({
+        ...emptyFilters,
+        colors: ["#ff0000"],
+        colorsMatch: "all"
       });
+      openColors();
+      fireEvent.click(screen.getByLabelText("Match any selected color"));
+      expect(onChange).toHaveBeenCalledWith({
+        ...emptyFilters,
+        colors: ["#ff0000"],
+        colorsMatch: "any"
+      });
+    });
+
+    it("keeps the dropdown open while the modes change", () => {
+      renderWithColors({ ...emptyFilters, colors: ["#ff0000"] });
+      openColors();
+      fireEvent.click(screen.getByLabelText("Only selected colors"));
+      expect(screen.getByRole("group", { name: "Colors" })).toBeInTheDocument();
+    });
+
+    it("changes whether other colors are included", () => {
+      renderWithColors({ ...emptyFilters, colors: ["#ff0000"] });
+      openColors();
+      fireEvent.click(screen.getByLabelText("Only selected colors"));
       expect(onChange).toHaveBeenCalledWith({
         ...emptyFilters,
         colors: ["#ff0000"],

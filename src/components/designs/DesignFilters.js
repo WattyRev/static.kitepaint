@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { Input, MultiSelect, Select, TextButton } from "../../theme";
+import { Input, MultiSelect, TextButton } from "../../theme";
 // Imported directly rather than from the theme index; see the note in theme/ColorSwatchSelect.js.
 import ColorSwatchSelect from "../../theme/ColorSwatchSelect";
 import Product from "../../models/Product";
@@ -38,6 +38,25 @@ const Wrapper = styled.div`
   }
 `;
 
+// A group of radio buttons shown inside the color picker.
+const ModeGroup = styled.div`
+  font-size: 13px;
+
+  label {
+    display: flex;
+    align-items: center;
+    padding: 2px 0;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  input {
+    margin: 0 6px 0 0;
+  }
+  & + & {
+    margin-top: 6px;
+  }
+`;
+
 const byName = (a, b) => {
   const aName = (a.get("name") || "").toLowerCase();
   const bName = (b.get("name") || "").toLowerCase();
@@ -51,7 +70,7 @@ const toOption = model => ({ id: model.get("id"), label: model.get("name") });
 
 /**
  * Filters for the public designs list: a case insensitive name search, a manufacturers drop down,
- * a products drop down, and a color picker with controls for how the colors are matched. Only
+ * a products drop down, and a color picker that holds the controls for how the colors are matched. Only
  * manufacturers with a public product are listed. The products drop down is enabled once a
  * manufacturer is selected and only lists the public products of the selected manufacturers.
  * The color picker offers the colors (`colors`) that the manufacturer and product filters allow.
@@ -208,31 +227,52 @@ const DesignFilters = ({
           colors={colors}
           value={filters.colors}
           onChange={changeColors}
-        />
-      )}
-      {hasColors && (
-        <div className="select">
-          <Select
-            aria-label="Color match"
-            value={filters.colorsMatch}
-            onChange={event => changeColorsMatch(event.target.value)}
-          >
-            <option value="any">Match any selected color</option>
-            <option value="all">Match all selected colors</option>
-          </Select>
-        </div>
-      )}
-      {hasColors && (
-        <div className="select">
-          <Select
-            aria-label="Other colors"
-            value={filters.colorsOnly ? "only" : "include"}
-            onChange={event => changeColorsOnly(event.target.value === "only")}
-          >
-            <option value="include">Include other colors</option>
-            <option value="only">Only selected colors</option>
-          </Select>
-        </div>
+        >
+          {hasColors && (
+            <React.Fragment>
+              <ModeGroup role="radiogroup" aria-label="Color match">
+                <label>
+                  <input
+                    type="radio"
+                    name="colorsMatch"
+                    checked={filters.colorsMatch === "any"}
+                    onChange={() => changeColorsMatch("any")}
+                  />
+                  Match any selected color
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="colorsMatch"
+                    checked={filters.colorsMatch === "all"}
+                    onChange={() => changeColorsMatch("all")}
+                  />
+                  Match all selected colors
+                </label>
+              </ModeGroup>
+              <ModeGroup role="radiogroup" aria-label="Other colors">
+                <label>
+                  <input
+                    type="radio"
+                    name="colorsOnly"
+                    checked={!filters.colorsOnly}
+                    onChange={() => changeColorsOnly(false)}
+                  />
+                  Include other colors
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="colorsOnly"
+                    checked={filters.colorsOnly}
+                    onChange={() => changeColorsOnly(true)}
+                  />
+                  Only selected colors
+                </label>
+              </ModeGroup>
+            </React.Fragment>
+          )}
+        </ColorSwatchSelect>
       )}
       {hasFilters && (
         <TextButton className="clear" type="button" onClick={clear}>

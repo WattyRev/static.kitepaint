@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { TypographyStyles } from "./Text";
+import sortColorsByHue from "../utils/sortColorsByHue";
 
 // This component is intentionally not exported from theme/index.js. Adding it there made the
 // Canvas test suite fail to run (styled-components v4 style tag insertion under Jest), so import
@@ -81,7 +82,7 @@ const Panel = styled.div`
   z-index: 10;
   top: calc(100% + 4px);
   left: 0;
-  width: 220px;
+  width: 240px;
   max-width: 100vw;
   max-height: 240px;
   overflow-y: auto;
@@ -94,6 +95,13 @@ const Panel = styled.div`
   border-radius: 4px;
   border: 1px solid ${props => props.theme.colors.gray};
   box-shadow: 0px 2px 2px -1px ${props => props.theme.colors.grayDarker};
+`;
+
+// Extra controls shown above the swatches, spanning the full width of the panel.
+const Extras = styled.div`
+  grid-column: 1 / -1;
+  padding-bottom: 8px;
+  border-bottom: 1px solid ${props => props.theme.colors.gray};
 `;
 
 const SwatchButton = styled.button`
@@ -116,7 +124,9 @@ const SwatchButton = styled.button`
 
 /**
  * A drop down of color swatches that allows selecting several colors. The panel closes when
- * clicking outside of it or pressing Escape. Each color is identified by its "#rrggbb" value.
+ * clicking outside of it or pressing Escape. Each color is identified by its "#rrggbb" value. The
+ * swatches are arranged as a palette: neutrals first, then colors by hue. Any children are shown
+ * above the swatches inside the panel.
  */
 const ColorSwatchSelect = ({
   colors,
@@ -126,7 +136,8 @@ const ColorSwatchSelect = ({
   disabled,
   title,
   className,
-  "aria-label": ariaLabel
+  "aria-label": ariaLabel,
+  children
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const node = useRef(null);
@@ -194,7 +205,8 @@ const ColorSwatchSelect = ({
       </Toggle>
       {isOpen && (
         <Panel role="group" aria-label={ariaLabel}>
-          {colors.map(color => (
+          {children && <Extras>{children}</Extras>}
+          {sortColorsByHue(colors).map(color => (
             <SwatchButton
               key={color}
               type="button"
@@ -219,7 +231,8 @@ ColorSwatchSelect.defaultProps = {
   disabled: false,
   title: undefined,
   className: undefined,
-  "aria-label": undefined
+  "aria-label": undefined,
+  children: undefined
 };
 
 ColorSwatchSelect.propTypes = {
@@ -233,7 +246,9 @@ ColorSwatchSelect.propTypes = {
   disabled: PropTypes.bool,
   title: PropTypes.string,
   className: PropTypes.string,
-  "aria-label": PropTypes.string
+  "aria-label": PropTypes.string,
+  /** Extra controls shown above the swatches when the panel is open. */
+  children: PropTypes.node
 };
 
 export default ColorSwatchSelect;
