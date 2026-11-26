@@ -3,6 +3,7 @@ import LogInForm from "../components/LogInForm";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { LOG_IN } from "../redux/actions";
+import KitePaintApi from "../api/KitePaintApi";
 
 export const LogInFormContainer = ({
   id,
@@ -31,6 +32,21 @@ export const LogInFormContainer = ({
    * @type {Boolean}
    */
   const [pendingRequest, setPendingRequest] = useState(false);
+  /**
+   * Whether the resend activation email field is shown.
+   * @type {Boolean}
+   */
+  const [showResend, setShowResend] = useState(false);
+  /**
+   * The email address entered for the resend activation email.
+   * @type {String}
+   */
+  const [resendEmail, setResendEmail] = useState("");
+  /**
+   * A message shown after a resend activation email request.
+   * @type {String}
+   */
+  const [resendMessage, setResendMessage] = useState(null);
 
   /**
    * Handles changes to the username field by storing it in state
@@ -65,6 +81,38 @@ export const LogInFormContainer = ({
     }
   };
 
+  /**
+   * Shows or hides the resend activation email field.
+   */
+  const handleToggleResend = () => {
+    setShowResend(!showResend);
+    setResendMessage(null);
+  };
+
+  /**
+   * Handles changes to the resend activation email field
+   * @param  {String} newEmail The new email address
+   */
+  const handleResendEmailChange = newEmail => {
+    setResendEmail(newEmail);
+    setResendMessage(null);
+  };
+
+  /**
+   * Asks the API to send a new activation email, and shows the result.
+   */
+  const handleResendSubmit = async () => {
+    try {
+      setResendMessage(await KitePaintApi.resendActivation(resendEmail));
+    } catch (message) {
+      setResendMessage(
+        typeof message === "string"
+          ? message
+          : "The activation email could not be sent."
+      );
+    }
+  };
+
   return (
     <LogInForm
       id={id}
@@ -77,6 +125,12 @@ export const LogInFormContainer = ({
       onSubmit={handleSubmit}
       onRegister={onRegister}
       onResetPassword={onResetPassword}
+      showResend={showResend}
+      resendEmail={resendEmail}
+      resendMessage={resendMessage}
+      onToggleResend={handleToggleResend}
+      onResendEmailChange={handleResendEmailChange}
+      onResendSubmit={handleResendSubmit}
     />
   );
 };

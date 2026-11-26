@@ -15,8 +15,10 @@ const ChangeEmail = ({
   email,
   error,
   onChangeEmail,
+  onChangePassword,
   onSubmit,
-  onToggleEdit
+  onToggleEdit,
+  password
 }) => (
   <StyledForm
     onSubmit={e => {
@@ -36,6 +38,18 @@ const ChangeEmail = ({
       value={email}
       onChange={e => onChangeEmail(e.target.value)}
     />
+    {editing && (
+      <React.Fragment>
+        <Label htmlFor="email-current-password">Current Password</Label>
+        <Input
+          id="email-current-password"
+          type="password"
+          value={password}
+          onChange={e => onChangePassword(e.target.value)}
+          required
+        />
+      </React.Fragment>
+    )}
     {error && (
       <Spacer top="sm">
         <Error>
@@ -60,16 +74,22 @@ ChangeEmail.propTypes = {
   error: PropTypes.string,
   /** Called when the user changes the email address. Given the new value as the first param. */
   onChangeEmail: PropTypes.func.isRequired,
+  /** Called when the current password changes. Given the new value as the first param. */
+  onChangePassword: PropTypes.func,
   /** Called when the form is submitted */
   onSubmit: PropTypes.func.isRequired,
   /** Called when the user wishes to toggle the editing state */
-  onToggleEdit: PropTypes.func.isRequired
+  onToggleEdit: PropTypes.func.isRequired,
+  /** The current password, required to change the email address */
+  password: PropTypes.string
 };
 
 ChangeEmail.defaultProps = {
   editing: false,
   email: null,
-  error: null
+  error: null,
+  onChangePassword: () => {},
+  password: ""
 };
 
 export default ChangeEmail;

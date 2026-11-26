@@ -36,6 +36,11 @@ export const AccountContainer = ({
    */
   const [email, setEmail] = useState("");
   /**
+   * The current password, entered to confirm an email change.
+   * @type {String}
+   */
+  const [emailPassword, setEmailPassword] = useState("");
+  /**
    * An error message explaining an error that occurred while updating the email address.
    * @type {String}
    */
@@ -68,6 +73,7 @@ export const AccountContainer = ({
     setEmailError(null);
     setEditingEmail(!editingEmail);
     setEmail(user.email);
+    setEmailPassword("");
   };
 
   /**
@@ -88,6 +94,15 @@ export const AccountContainer = ({
   const handleEmailChange = newEmail => {
     setEmailError(null);
     setEmail(newEmail);
+  };
+
+  /**
+   * Handles a change to the current password input shown when changing the email
+   * @param  {String} newPassword The typed password
+   */
+  const handleEmailPasswordChange = newPassword => {
+    setEmailError(null);
+    setEmailPassword(newPassword);
   };
 
   /**
@@ -125,7 +140,7 @@ export const AccountContainer = ({
     // successful.
     try {
       if (email !== user.email) {
-        await onEmailChange(user.id, email);
+        await onEmailChange(user.id, email, emailPassword);
       }
       setEditingEmail(false);
     } catch (message) {
@@ -165,6 +180,7 @@ export const AccountContainer = ({
   return children({
     actions: {
       changeEmail: handleEmailChange,
+      changeEmailPassword: handleEmailPasswordChange,
       changeCurrentPassword: handleCurrentPasswordChange,
       changeNewPassword: handleNewPasswordChange,
       changeConfirmNewPassword: handleConfirmNewPasswordChange,
@@ -181,6 +197,7 @@ export const AccountContainer = ({
       editingEmail: editingEmail,
       editingPassword: editingPassword,
       email: editingEmail ? email : user.email,
+      emailPassword: emailPassword,
       emailError: emailError,
       newPassword: newPassword,
       passwordError: passwordError,

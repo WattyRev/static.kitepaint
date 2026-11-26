@@ -11,10 +11,16 @@ const LogInForm = ({
   errorMessage,
   onPasswordChange,
   onRegister,
+  onResendEmailChange,
+  onResendSubmit,
   onResetPassword,
   onSubmit,
+  onToggleResend,
   onUsernameChange,
   password,
+  resendEmail,
+  resendMessage,
+  showResend,
   username
 }) => (
   <form
@@ -71,6 +77,28 @@ const LogInForm = ({
         Register
       </A>
     </P>
+    <P>
+      <A className="testing_resend-activation" onClick={onToggleResend}>
+        Resend activation email
+      </A>
+    </P>
+    {showResend && (
+      <React.Fragment>
+        <Label htmlFor={`${id}-resend-email`}>Email Address</Label>
+        <Input
+          id={`${id}-resend-email`}
+          type="email"
+          value={resendEmail}
+          onChange={e => onResendEmailChange(e.target.value)}
+        />
+        <Button type="button" isBlock onClick={onResendSubmit}>
+          Send Activation Email
+        </Button>
+        {resendMessage && (
+          <P className="testing_resend-message">{resendMessage}</P>
+        )}
+      </React.Fragment>
+    )}
   </form>
 );
 
@@ -97,9 +125,21 @@ LogInForm.propTypes = {
    */
   onRegister: PropTypes.func.isRequired,
   /**
+   * A function called when the resend activation email field changes. Called with the new value.
+   */
+  onResendEmailChange: PropTypes.func,
+  /**
+   * A function called when the resend activation email button is clicked.
+   */
+  onResendSubmit: PropTypes.func,
+  /**
    * A function called when the link to the reset password form is clicked.
    */
   onResetPassword: PropTypes.func.isRequired,
+  /**
+   * A function called when the resend activation email link is clicked.
+   */
+  onToggleResend: PropTypes.func,
   /**
    * A function called when the form is submitted.
    */
@@ -114,9 +154,30 @@ LogInForm.propTypes = {
    */
   password: PropTypes.string,
   /**
+   * The email address entered for the resend activation email.
+   */
+  resendEmail: PropTypes.string,
+  /**
+   * A message shown after a resend activation email request.
+   */
+  resendMessage: PropTypes.string,
+  /**
+   * Whether the resend activation email field is shown.
+   */
+  showResend: PropTypes.bool,
+  /**
    * The value for the username field.
    */
   username: PropTypes.string
+};
+
+LogInForm.defaultProps = {
+  onResendEmailChange: () => {},
+  onResendSubmit: () => {},
+  onToggleResend: () => {},
+  resendEmail: "",
+  resendMessage: null,
+  showResend: false
 };
 
 export default LogInForm;

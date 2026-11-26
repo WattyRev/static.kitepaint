@@ -4,13 +4,15 @@ import { error, success } from "../../theme/Alert";
  * Changes the email address for the user's account
  * @param  {String}  userId The user's id
  * @param  {String}  newEmail The user's new email address
+ * @param  {String}  password The user's current password
  * @return {Promise}
  */
-export default async function changeEmail(userId, newEmail) {
+export default async function changeEmail(userId, newEmail, password) {
   // Build the form data
   const bodyFormData = new FormData();
   bodyFormData.append("id", userId);
   bodyFormData.append("email", newEmail);
+  bodyFormData.append("password", password);
 
   // Make the request
   const response = await this.axiosInstance.post(
