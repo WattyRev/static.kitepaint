@@ -49,12 +49,13 @@ export const RESET_PASSWORD = createAsyncAction(
  * Changes the email address for the user's account
  * @param  {String}  userId The user's id
  * @param  {String}  email The user's new email address
+ * @param  {String}  password The user's current password
  * @return {Promise}
  */
 export const CHANGE_EMAIL = createAsyncAction(
   "CHANGE_EMAIL",
-  (userId, email) => {
-    return KitePaintApi.changeEmail(userId, email);
+  (userId, email, password) => {
+    return KitePaintApi.changeEmail(userId, email, password);
   }
 );
 

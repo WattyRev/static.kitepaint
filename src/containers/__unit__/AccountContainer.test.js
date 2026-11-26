@@ -180,7 +180,8 @@ describe("AccountContainer", () => {
       await userEvent.click(screen.getByTestId("save-email"));
       expect(defaultProps.onEmailChange).toHaveBeenCalledWith(
         "abc",
-        "newEmail"
+        "newEmail",
+        ""
       );
     });
     it("sets editingEmail to false when onEmailChange resolves", async () => {

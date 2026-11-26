@@ -42,8 +42,10 @@ const Account = () => (
                 email={accountData.props.email}
                 error={accountData.props.emailError}
                 onChangeEmail={accountData.actions.changeEmail}
+                onChangePassword={accountData.actions.changeEmailPassword}
                 onSubmit={accountData.actions.submitEmail}
                 onToggleEdit={accountData.actions.toggleEditEmail}
+                password={accountData.props.emailPassword}
               />
               <ChangePassword
                 confirmNewPassword={accountData.props.confirmNewPassword}

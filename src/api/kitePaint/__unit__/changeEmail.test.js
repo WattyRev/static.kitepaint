@@ -13,13 +13,14 @@ describe("#changeEmail", () => {
   });
   it("should make the correct request with the provided data", () => {
     expect.assertions(3);
-    Api.changeEmail("stuff", "things@poop.com").catch(() => {});
+    Api.changeEmail("stuff", "things@poop.com", "secret1").catch(() => {});
     expect(Api.axiosInstance.post.mock.calls).toHaveLength(1);
     const postCall = Api.axiosInstance.post.mock.calls[0];
     expect(postCall[0]).toEqual("/change_email.php");
     expect(getObjectFromFormData(postCall[1])).toEqual({
       id: "stuff",
-      email: "things@poop.com"
+      email: "things@poop.com",
+      password: "secret1"
     });
   });
   it("should reject if the api call fails", () => {
@@ -27,14 +28,14 @@ describe("#changeEmail", () => {
     Api.axiosInstance.post.mockReturnValue(
       new Promise((resolve, reject) => reject({}))
     );
-    return Api.changeEmail("stuff", "things@poop.com").catch(() => {
+    return Api.changeEmail("stuff", "things@poop.com", "secret1").catch(() => {
       expect(true).toEqual(true);
     });
   });
   it("should reject if the api returns no data", () => {
     expect.assertions(1);
     Api.axiosInstance.post.mockReturnValue(new Promise(resolve => resolve({})));
-    return Api.changeEmail("stuff", "things@poop.com").catch(() => {
+    return Api.changeEmail("stuff", "things@poop.com", "secret1").catch(() => {
       expect(true).toEqual(true);
     });
   });
@@ -49,7 +50,7 @@ describe("#changeEmail", () => {
         })
       )
     );
-    return Api.changeEmail("stuff", "things@poop.com").catch(() => {
+    return Api.changeEmail("stuff", "things@poop.com", "secret1").catch(() => {
       expect(true).toEqual(true);
     });
   });
@@ -64,7 +65,7 @@ describe("#changeEmail", () => {
         })
       )
     );
-    return Api.changeEmail("stuff", "things@poop.com").then(() => {
+    return Api.changeEmail("stuff", "things@poop.com", "secret1").then(() => {
       expect(true).toEqual(true);
     });
   });

@@ -14,6 +14,7 @@ import getProducts from "./kitePaint/getProducts";
 import getUser from "./kitePaint/getUser";
 import logIn from "./kitePaint/logIn";
 import logOut from "./kitePaint/logOut";
+import resendActivation from "./kitePaint/resendActivation";
 import resetPassword from "./kitePaint/resetPassword";
 import updateDesign from "./kitePaint/updateDesign";
 
@@ -170,6 +171,15 @@ export class KitePaintApi {
   }
 
   /**
+   * Sends a new activation email to an account that hasn't been activated yet.
+   * @param  {String}  email
+   * @return {Promise}
+   */
+  resendActivation(email) {
+    return resendActivation.call(this, email);
+  }
+
+  /**
    * Sends a request to reset a user's password.
    * @param  {String} username The username of the user to reset the password for.
    * @param  {String} email The email address that is on the user's account.
@@ -183,10 +193,11 @@ export class KitePaintApi {
    * Changes the email address for the user's account
    * @param  {String}  userId The user's id
    * @param  {String}  newEmail The user's new email address
+   * @param  {String}  password The user's current password
    * @return {Promise}
    */
-  changeEmail(userId, newEmail) {
-    return changeEmail.call(this, userId, newEmail);
+  changeEmail(userId, newEmail, password) {
+    return changeEmail.call(this, userId, newEmail, password);
   }
 
   /**

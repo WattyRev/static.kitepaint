@@ -63,5 +63,13 @@ exports[`LogInForm renders 1`] = `
       Register
     </styled.a>
   </P>
+  <P>
+    <styled.a
+      className="testing_resend-activation"
+      onClick={[Function]}
+    >
+      Resend activation email
+    </styled.a>
+  </P>
 </form>
 `;

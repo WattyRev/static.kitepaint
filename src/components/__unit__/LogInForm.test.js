@@ -21,6 +21,38 @@ describe("LogInForm", () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  describe("resend activation email", () => {
+    it("calls onToggleResend when the link is clicked", () => {
+      expect.assertions(1);
+      defaultProps.onToggleResend = jest.fn();
+      const wrapper = shallow(<LogInForm {...defaultProps} />);
+      wrapper.find(".testing_resend-activation").simulate("click");
+      expect(defaultProps.onToggleResend).toHaveBeenCalled();
+    });
+    it("hides the email field unless showResend is true", () => {
+      expect.assertions(2);
+      const hidden = shallow(
+        <LogInForm {...defaultProps} showResend={false} />
+      );
+      expect(hidden.find("#abc-resend-email")).toHaveLength(0);
+      const shown = shallow(<LogInForm {...defaultProps} showResend={true} />);
+      expect(shown.find("#abc-resend-email")).toHaveLength(1);
+    });
+    it("shows the resend message when provided", () => {
+      expect.assertions(1);
+      const wrapper = shallow(
+        <LogInForm
+          {...defaultProps}
+          showResend={true}
+          resendMessage="Check your inbox."
+        />
+      );
+      expect(wrapper.find(".testing_resend-message").prop("children")).toEqual(
+        "Check your inbox."
+      );
+    });
+  });
+
   describe(".props", () => {
     describe(".id", () => {
       it("should be applied to any form or input elements", () => {

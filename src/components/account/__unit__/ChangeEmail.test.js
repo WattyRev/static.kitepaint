@@ -43,6 +43,28 @@ describe("ChangeEmail", () => {
     });
     expect(defaultProps.onChangeEmail).toHaveBeenCalledWith("boogers");
   });
+  it("shows the current password field only while editing", () => {
+    expect.assertions(2);
+    const viewing = shallow(<ChangeEmail {...defaultProps} editing={false} />);
+    expect(viewing.find("#email-current-password")).toHaveLength(0);
+    const editing = shallow(<ChangeEmail {...defaultProps} editing={true} />);
+    expect(editing.find("#email-current-password")).toHaveLength(1);
+  });
+  it("calls onChangePassword when the current password changes", () => {
+    expect.assertions(1);
+    const onChangePassword = jest.fn();
+    const wrapper = shallow(
+      <ChangeEmail
+        {...defaultProps}
+        editing={true}
+        onChangePassword={onChangePassword}
+      />
+    );
+    wrapper.find("#email-current-password").simulate("change", {
+      target: { value: "secret1" }
+    });
+    expect(onChangePassword).toHaveBeenCalledWith("secret1");
+  });
   it("displays the error if provided", () => {
     expect.assertions(1);
     defaultProps.error = "bad things";
