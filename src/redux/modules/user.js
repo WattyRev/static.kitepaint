@@ -1,5 +1,6 @@
 import { handleActions } from "redux-actions";
 import { fromJS } from "immutable";
+import * as storage from "../../utils/storage";
 import {
   SET_RECOGNIZED_USER,
   LOG_IN,
@@ -16,7 +17,7 @@ export const defaultState = fromJS({
   isCheckingLogin: true,
   isLoggedIn: false,
   isLoggingIn: false,
-  isRecognizedUser: localStorage.getItem("isRecognizedUser") === "true",
+  isRecognizedUser: storage.getItem("isRecognizedUser") === "true",
   lastName: null,
   username: null
 });

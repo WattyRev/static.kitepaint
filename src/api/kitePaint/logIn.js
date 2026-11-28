@@ -1,3 +1,5 @@
+import * as storage from "../../utils/storage";
+
 /**
  * Log in to a KitePaint account.
  * @param  {String}  username
@@ -25,7 +27,7 @@ export default async function logIn(username, password) {
   }
 
   // Store the user data in session storage
-  localStorage.setItem("user", JSON.stringify(response.data));
+  storage.setItem("user", JSON.stringify(response.data));
 
   // Return the response
   return response;

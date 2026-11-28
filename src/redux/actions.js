@@ -1,5 +1,6 @@
 import { createAction } from "redux-actions";
 import KitePaintApi from "../api/KitePaintApi";
+import * as storage from "../utils/storage";
 import createAsyncAction from "./createAsyncAction";
 
 /**
@@ -90,7 +91,7 @@ export const DELETE_ACCOUNT = createAsyncAction(
 export const SET_RECOGNIZED_USER = createAction(
   "SET_RECOGNIZED_USER",
   newValue => {
-    localStorage.setItem("isRecognizedUser", newValue);
+    storage.setItem("isRecognizedUser", newValue);
     return newValue;
   }
 );

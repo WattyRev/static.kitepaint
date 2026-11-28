@@ -1,4 +1,5 @@
 import { success } from "../../theme/Alert";
+import * as storage from "../../utils/storage";
 
 /**
  * Logs out the user and destroys their session.
@@ -7,5 +8,5 @@ import { success } from "../../theme/Alert";
 export default async function logOut() {
   await this.axiosInstance.post("/logout.php");
   success("You have been logged out.");
-  localStorage.removeItem("user");
+  storage.removeItem("user");
 }
