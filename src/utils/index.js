@@ -4,6 +4,7 @@ import getAssetUrl from "./getAssetUrl";
 import getQueryParams from "./getQueryParams";
 import redirect from "./redirect";
 import softCompareStrings from "./softCompareStrings";
+import * as storage from "./storage";
 
 export {
   embedAllowed,
@@ -11,5 +12,6 @@ export {
   getAssetUrl,
   getQueryParams,
   redirect,
-  softCompareStrings
+  softCompareStrings,
+  storage
 };

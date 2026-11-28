@@ -1,10 +1,12 @@
+import * as storage from "../../utils/storage";
+
 /**
  * Check if the user is already logged in based on session data.
  * @return {Promise}
  */
 export default async function checkLoginStatus() {
   // Get the user data from session storage
-  const sessionData = localStorage.getItem("user");
+  const sessionData = storage.getItem("user");
   let parsedSessionData;
   try {
     parsedSessionData = JSON.parse(sessionData);
@@ -37,7 +39,7 @@ export default async function checkLoginStatus() {
   }
 
   // Store the user data in session storage
-  localStorage.setItem("user", JSON.stringify(response.data));
+  storage.setItem("user", JSON.stringify(response.data));
 
   // Return the response
   return response;
